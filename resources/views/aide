@@ -1,0 +1,176 @@
+composer create-project --prefer-dist laravel/laravel find-house
+
+php artisan make:migration create_type_proprietes_table
+
+
+href="{{asset('assets/ .css')}}"
+href="{{asset('assets/admin/
+
+$table->integer('age');
+$table->bigInteger('balance');
+$table->float('price');
+$table->double('amount', 8, 2); // (total digits, decimal digits)
+$table->boolean('is_active');
+$table->date('birth_date');
+$table->time('start_time');
+$table->text('description');
+$table->json('settings');
+$table->enum('status', ['active', 'inactive', 'pending']);
+
+
+
+
+composer require krlove/eloquent-model-generator --dev
+
+
+@foreach ($typeProprietes as $item)
+{{ $item->id}}
+@endforeach
+
+
+action="{{ route('admin.post-type-propriete') }}"
+
+
+
+php artisan krlove:generate:model User --table-name=users
+php artisan krlove:generate:model TypePropriete --table-name=type_proprietes
+php artisan krlove:generate:model Propriete --table-name=proprietes
+php artisan krlove:generate:model Comment --table-name=comments
+php artisan krlove:generate:model Message --table-name=messages
+php artisan krlove:generate:model Newslater --table-name=newslaters
+php artisan krlove:generate:model Caracteristique --table-name=caracteristiques
+php artisan krlove:generate:model ProprieteImage --table-name=propriete_images
+php artisan krlove:generate:model ProprieteCaracteristique --table-name=propriete_caracteristiques
+
+
+row justify-content-center align-items-center"
+
+
+
+@yield('nomPage') 
+
+
+
+@extends('base')
+
+@section('nomPage')
+Propriétés | Find Houses
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('body')
+inner-pages homepage-4 agents hp-6 full hd-white
+@endsection
+
+@section('header')
+
+@endsection
+
+@section('header2')
+
+@endsection
+
+@section('logo')
+
+@endsection
+
+@section('navigation')
+
+@endsection
+
+
+@section('content')
+
+
+
+@endsection
+
+@section('script')
+
+
+@endsection
+
+php artisan cache:clear
+
+
+
+
+{{ route('pages.search') }}
+
+{{ route('pages.recherche-patient') }}
+
+href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "  class="{{ request()->route()->getName() == 'pages.agent' ? 'active' : '' }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- resources/views/admin/property-list.blade.php -->
+@extends('layouts.app')
+
+@section('title', 'Liste des Propriétés')
+
+@section('content')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
