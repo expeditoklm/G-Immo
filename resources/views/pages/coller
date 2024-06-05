@@ -1,0 +1,37 @@
+INSERT INTO `proprietes` (
+    `titre`, `description`, `status`, `nbPiece`, `nbChambre`, `nbToillete`, `prix`, `surface`, `adresse`, 
+    `pays`, `ville`, `quartier`, `type_propriete_id`, `user_id`, 
+    `deleted`, `created_at`, `updated_at`
+) VALUES
+('Beautiful Apartment', 'A beautiful apartment in a prime location.', 'For Sale', 3, 2, 1, 250000, 85.50, '123 Main St', 'USA', 'New York', 'Manhattan', 1, 6, 0, NOW(), NOW()),
+('Luxury Villa', 'A luxurious villa with stunning views.', 'For Sale', 6, 4, 3, 1200000, 300.75, '456 Ocean Drive', 'France', 'Nice', 'Promenade des Anglais', 2, 6, 0, NOW(), NOW()),
+('Cozy Cottage', 'A cozy cottage in the countryside.', 'Rental', 4, 3, 2, 80000, 150.00, '789 Country Road', 'UK', 'Bath', 'Somerset', 3, 6, 0, NOW(), NOW()),
+('Modern Condo', 'A modern condo in the heart of the city.', 'For Sale', 2, 1, 1, 300000, 75.20, '101 City Center', 'Canada', 'Toronto', 'Downtown', 4, 6, 0, NOW(), NOW()),
+('Spacious Loft', 'A spacious loft with an open floor plan.', 'Rental', 3, 1, 1, 180000, 110.40, '202 Industrial Way', 'Germany', 'Berlin', 'Kreuzberg', 5, 6, 0, NOW(), NOW()),
+('Beachfront Bungalow', 'A charming bungalow right on the beach.', 'For Sale', 5, 3, 2, 900000, 200.00, '303 Beach Blvd', 'Australia', 'Sydney', 'Bondi Beach', 6, 6, 0, NOW(), NOW()),
+('Penthouse Suite', 'A luxurious penthouse suite with a private terrace.', 'Rental', 4, 2, 2, 600000, 180.75, '404 Skyline Tower', 'Singapore', 'Singapore', 'Marina Bay', 5, 6, 0, NOW(), NOW()),
+('Urban Studio', 'A trendy studio in a bustling urban area.', 'For Sale', 1, 1, 1, 150000, 45.30, '505 Downtown Ave', 'Japan', 'Tokyo', 'Shibuya', 4, 6, 0, NOW(), NOW()),
+('Mountain Retreat', 'A peaceful retreat in the mountains.', 'Rental', 4, 3, 2, 700000, 220.50, '606 Mountain Pass', 'Switzerland', 'Zermatt', 'Alps', 3, 6, 0, NOW(), NOW()),
+('Riverside Cabin', 'A quaint cabin by the river.', 'For Sale', 3, 2, 1, 50000, 90.25, '707 Riverside Dr', 'Norway', 'Oslo', 'Grünerløkka', 2, 6, 0, NOW(), NOW()),
+
+('Historic Mansion', 'A historic mansion with modern amenities.', 'Rental', 8, 6, 5, 2000000, 500.00, '808 Heritage Ln', 'Italy', 'Rome', 'Trastevere', 8, 6, 0, NOW(), NOW()),
+('Downtown Flat', 'A convenient flat in the downtown area.', 'For Sale', 2, 1, 1, 320000, 70.00, '909 Central St', 'Netherlands', 'Amsterdam', 'De Pijp', 8, 6, 0, NOW(), NOW()),
+('Countryside Villa', 'A serene villa in the countryside.', 'Rental', 5, 4, 3, 750000, 250.50, '1010 Country Ln', 'Spain', 'Barcelona', 'Eixample', 7, 6, 0, NOW(), NOW()),
+('Charming Duplex', 'A charming duplex with a garden.', 'For Sale', 4, 2, 2, 450000, 160.30, '1111 Elm St', 'USA', 'San Francisco', 'Nob Hill', 6, 6, 0, NOW(), NOW()),
+('Modern Office', 'A modern office space in a prime location.', 'Rental', 0, 0, 2, 5000, 100.00, '1212 Business Park', 'UK', 'London', 'Canary Wharf', 5, 6, 0, NOW(), NOW()),
+('Luxury Penthouse', 'A luxury penthouse with stunning views.', 'For Sale', 6, 4, 3, 2200000, 350.75, '1313 Skyline Dr', 'France', 'Paris', 'Le Marais', 5, 6, 0, NOW(), NOW()),
+('Seaside Villa', 'A seaside villa with a private beach.', 'Rental', 5, 3, 3, 1800000, 450.50, '1414 Ocean View', 'Portugal', 'Lisbon', 'Belém', 4, 6, 0, NOW(), NOW()),
+('Eco-friendly House', 'An eco-friendly house with solar panels.', 'For Sale', 4, 2, 2, 600000, 200.00, '1515 Green Way', 'Germany', 'Munich', 'Schwabing', 3, 6, 0, NOW(), NOW()),
+('City Loft', 'A city loft with an open floor plan.', 'Rental', 3, 1, 1, 350000, 120.40, '1616 Industrial Blvd', 'USA', 'Chicago', 'The Loop', 2, 6, 0, NOW(), NOW()),
+('Countryside Farmhouse', 'A charming farmhouse in the countryside.', 'For Sale', 6, 4, 3, 900000, 300.50, '1717 Rural Route', 'Canada', 'Vancouver', 'Kitsilano', 1, 6, 0, NOW(), NOW()),
+
+('Mountain Chalet', 'A cozy chalet in the mountains.', 'Rental', 5, 3, 2, 800000, 220.50, '1818 Alpine Rd', 'Switzerland', 'Zurich', 'Old Town', 1, 6, 0, NOW(), NOW()),
+('Urban Penthouse', 'A luxurious penthouse in the city.', 'For Sale', 4, 2, 2, 1500000, 280.75, '1919 Metropolitan Blvd', 'USA', 'Miami', 'Brickell', 2, 6, 0, NOW(), NOW()),
+('Beach House', 'A beautiful house right on the beach.', 'Rental', 6, 4, 3, 2000000, 400.00, '2020 Oceanfront Ave', 'Australia', 'Gold Coast', 'Surfers Paradise', 5, 6, 0, NOW(), NOW()),
+('Downtown Studio', 'A convenient studio in the heart of downtown.', 'For Sale', 1, 1, 1, 250000, 50.30, '2121 City Plaza', 'Japan', 'Osaka', 'Umeda', 4, 6, 0, NOW(), NOW()),
+('Suburban House', 'A spacious house in a suburban neighborhood.', 'Rental', 5, 3, 2, 600000, 180.00, '2222 Suburbia St', 'USA', 'Los Angeles', 'Beverly Hills', 8, 6, 0, NOW(), NOW()),
+('Luxury Mansion', 'A luxurious mansion with a large garden.', 'For Sale', 8, 6, 5, 3000000, 500.00, '2323 Estate Dr', 'Italy', 'Florence', 'Santa Croce', 8, 6, 0, NOW(), NOW()),
+('Cozy Apartment', 'A cozy apartment in a quiet area.', 'Rental', 2, 1, 1, 300000, 65.00, '2424 Peaceful Ln', 'UK', 'Edinburgh', 'Old Town', 7, 6, 0, NOW(), NOW()),
+('Modern Flat', 'A modern flat in the city center.', 'For Sale', 3, 2, 1, 500000, 85.50, '2525 Central Ave', 'Netherlands', 'Rotterdam', 'City Center', 5, 6, 0, NOW(), NOW()),
+('Country House', 'A charming house in the countryside.', 'Rental', 4, 3, 2, 700000, 200.00, '2626 Country Rd', 'Spain', 'Madrid', 'La Latina', 3, 6, 0, NOW(), NOW()),
+('Luxury Condo', 'A luxurious condo with city views.', 'For Sale', 5, 3, 2, 900000, 150.75, '2727 Skyline Blvd', 'Canada', 'Toronto', 'Downtown', 2, 6, 0, NOW(), NOW());
