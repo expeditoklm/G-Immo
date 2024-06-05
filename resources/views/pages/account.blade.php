@@ -50,9 +50,40 @@ top-header-inner
 </div>
 <!-- End Page Banner Area -->
 
+
+
 <!-- Start Profile Authentication Area -->
 <div class="profile-authentication-area ptb-120">
     <div class="container">
+
+
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show m-2" role="alert">
+            <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
+                <span class="fw-bold d-block mx-auto">
+
+                    <ul>
+                        @foreach(session('error') as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </span> <!-- Utilisez mx-auto pour centrer le span -->
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        @if(session('success'))
+        <div class="alert alert-primary alert-dismissible fade show m-2" role="alert">
+            <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
+                <span class="fw-bold d-block mx-auto">{{ session('success') }}</span> <!-- Utilisez mx-auto pour centrer le span -->
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
+
+
+
         <div class="profile-authentication-inner">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-12">
@@ -61,7 +92,7 @@ top-header-inner
                             <h3>Sign In</h3>
                             <p>Don't have an account yet? <a href="my-account.html">Sign up here</a></p>
                         </div>
-                        <form method="POST" class="authentication-form" action="{{ route('pages.agent') }}" >
+                        <form method="POST" class="authentication-form" action="{{ route('login') }}">
                             @csrf
                             <div class="google-btn">
                                 <button type="submit"><img src="{{asset('assets/images/google.svg')}}" alt="google">Sign in with Google</button>
@@ -104,7 +135,7 @@ top-header-inner
                             <h3>Create Your Account</h3>
                             <p>Already have an account? <a href="my-account.html">Sign in here</a></p>
                         </div>
-                        <form method="POST" class="authentication-form" action="{{ route('pages.agent') }}" >
+                        <form method="POST" class="authentication-form" action="{{ route('register') }}">
                             @csrf
                             <div class="google-btn">
                                 <button type="submit"><img src="{{asset('assets/images/google.svg')}}" alt="google">Sign in with Google</button>
@@ -114,15 +145,15 @@ top-header-inner
                             </div>
                             <div class="form-group">
                                 <label>Your Name</label>
-                                <input type="text" name="nom_prenom" class="form-control" placeholder="Enter name">
+                                <input type="text" name="nom_prenom" class="form-control" value="{{ old('nom_prenom') }}" placeholder="Enter name">
                                 <div class="icon">
                                     <i class="ri-user-3-line"></i>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Email Address</label>
-                                <input type="email" name="email" class="form-control" placeholder="Enter email address">
+                                <input type="email" name="email"  class="form-control" value="{{ old('email') }}" placeholder="Enter email address">
                                 <div class="icon">
                                     <i class="ri-mail-line"></i>
                                 </div>
@@ -130,14 +161,14 @@ top-header-inner
 
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input type="number" name="telephone" class="form-control" placeholder="Enter phone">
+                                <input type="number" name="telephone"  class="form-control" value="{{ old('telephone') }}" placeholder="Enter phone">
                                 <div class="icon">
                                     <i class="ri-mail-line"></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Country</label>
-                                <select class="form-control" name="pays" id="abcd" aria-label="Default select example">
+                                <select  class="form-control" value="{{ old('pays') }}" name="pays" id="abcd" aria-label="Default select example">
                                     <option selected="">Select your country</option>
                                     <option value="Cotonou">Cotonou</option>
                                     <option value="Abuja">Abuja</option>
@@ -151,7 +182,7 @@ top-header-inner
 
                             <div class="form-group">
                                 <label>City</label>
-                                <select class="form-control" name="ville" id="abcd" aria-label="Default select example">
+                                <select  class="form-control" value="{{ old('ville') }}" name="ville" id="abcd" aria-label="Default select example">
                                     <option selected="">Select your city</option>
                                     <option value="Cotonou">Cotonou</option>
                                     <option value="Abuja">Abuja</option>

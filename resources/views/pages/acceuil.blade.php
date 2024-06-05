@@ -239,7 +239,7 @@ row justify-content-center align-items-center
                             </div>
                             <div class="content">
                                 <h3>
-                                    <a href="{{ route('pages.search') }}">Vacation & Resort</a>
+                                    <a href="{{ route('pages.search') }}">Farm/Agricultural estate</a>
                                 </h3>
                                 <span>(37 Properties)</span>
                             </div>
@@ -265,7 +265,7 @@ row justify-content-center align-items-center
                             </div>
                             <div class="content">
                                 <h3>
-                                    <a href="{{ route('pages.search') }}">New Construction</a>
+                                    <a href="{{ route('pages.search') }}">Duplex/Triplex/Quadruplex</a>
                                 </h3>
                                 <span>(123 Properties)</span>
                             </div>
@@ -278,7 +278,7 @@ row justify-content-center align-items-center
                             </div>
                             <div class="content">
                                 <h3>
-                                    <a href="{{ route('pages.search') }}">Luxury Estate</a>
+                                    <a href="{{ route('pages.search') }}">Office</a>
                                 </h3>
                                 <span>(355 Properties)</span>
                             </div>
@@ -291,7 +291,7 @@ row justify-content-center align-items-center
                             </div>
                             <div class="content">
                                 <h3>
-                                    <a href="{{ route('pages.search') }}">Eco-Friendly</a>
+                                    <a href="{{ route('pages.search') }}">Warehouse</a>
                                 </h3>
                                 <span>(89 Properties)</span>
                             </div>

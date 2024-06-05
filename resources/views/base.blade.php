@@ -138,18 +138,22 @@
                         <div class="user-info">
                         <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="{{ request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="nav-link {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}"> Log In / Registera</a>
+                            <a href="{{ request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="nav-link {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}"> Log In / Register</a>
                             </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="option-item">
-                        <a href="{{ request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
-                    </div>
+                    @auth
+    <div class="option-item">
+        <a href="{{ request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
+    </div>
+@endauth
+
                 </div>
             </div>
         </div>
     </nav>
+    
 
     @yield('div_finish') 
     <!-- End Navbar Area -->
@@ -190,7 +194,9 @@
 
                 <div class="option-item nav-item">
                     <a href="{{ request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="default-btn {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}" style="margin-right: 70px; margin-bottom: 10px;">Log In / Register</a>
+                    @auth
                     <a href="{{ request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
+                    @endauth
                 </div>
                 <div class="option-item">
                     <form class="search-form">

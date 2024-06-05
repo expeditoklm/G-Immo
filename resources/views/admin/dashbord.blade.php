@@ -50,7 +50,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <p class="type ml-1">Published Property</p>
                     </div>
                 </div>
-            </div>
+            </div>  
             <div class="col-lg-3 col-md-6 col-xs-12 dar rev mr-3">
                 <div class="item">
                     <div class="icon">
@@ -62,7 +62,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-12 dar com mr-3">
+            <div class="col-lg-3 col-md-6 dar com mr-3">
                 <div class="item mb-0">
                     <div class="icon">
                         <i class="fas fa-comments"></i>
@@ -73,6 +73,9 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                 </div>
             </div>
+
+            
+            
             
         </div>
     </div>
