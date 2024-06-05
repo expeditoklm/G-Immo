@@ -21,7 +21,7 @@ class Comment extends Model
     /**
      * @var array
      */
-    protected $fillable = ['propriete_id', 'nom_prenom', 'email', 'comment', 'note', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['propriete_id','user_id', 'nom_prenom', 'email', 'comment', 'note', 'deleted', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -29,5 +29,10 @@ class Comment extends Model
     public function propriete()
     {
         return $this->belongsTo('App\Models\Propriete');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
