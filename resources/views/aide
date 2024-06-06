@@ -136,7 +136,11 @@ href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' :
 
 
 
-
+<form method="post" action="{{ route('edit.category', ['id'=> $item->id]) }}" enctype="multipart/form-data">
+                        @csrf
+                        <button href="#" class="edit" data-bs-toggle="modal" data-bs-target="#suppFichierAnalyse"><i class="lni-pencil"></i>Edit</button>
+                        <button href="#" data-bs-toggle="modal" data-bs-target="#suppFichierAnalyse"><i class="far fa-trash-alt"></i></button>
+                    </form>
 
 
 

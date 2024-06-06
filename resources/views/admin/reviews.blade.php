@@ -39,15 +39,24 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
     <table class="table-responsive">
         <thead>
             <tr>
-                <th class="pl-2">My Properties</th>
+                <th class="pl-2">Comments</th>
+                <th>Properties</th>
                 <th class="p-0"></th>
-                <th>Date Added</th>
-                <th>Views</th>
+                <th>Custumers</th>
+
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr>
+                <td>
+                    <textarea name="" id="" cols="30" class="form-control border-0 " rows="5">
+
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, numquam.
+                   
+                </textarea>
+                </td>
+
                 <td class="image myelist">
                     <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}" class="img-fluid"></a>
                 </td>
@@ -72,173 +81,20 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         </ul>
                     </div>
                 </td>
-                <td>08.14.2020</td>
-                <td>163</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-2.jpg')}}" class="img-fluid"></a>
-                </td>
                 <td>
                     <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star-o"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
+                        <h2>Nom et Prenom</h2>
+                        <figure><i class="lni-map-marker"></i> Email / Telephone</figure>
+                        <h6>Date et Heure</h2>
                     </div>
                 </td>
-                <td>08.14.2020</td>
-                <td>202</td>
+                
                 <td class="actions">
                     <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
                     <a href="#"><i class="far fa-trash-alt"></i></a>
                 </td>
             </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-3.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>412</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-4.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star-o"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>675</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-5.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>325</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-6.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star-o"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>247</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
+
         </tbody>
     </table>
     <div class="pagination-container">

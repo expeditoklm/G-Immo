@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Message;
 use Auth;
 use App\Models\Patient;
 use App\Models\Propriete;
+use App\Models\TypePropriete;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Carbon;
@@ -16,6 +18,18 @@ class PagesController extends Controller
 
     public function acceuil()
     {
+        $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function($query) {
+            $query->where('proprietes.status', 'For Sale');
+        }])
+        ->get();
+
+        $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function($query) {
+            $query->where('proprietes.status', 'Rental');
+        }])
+        ->get();
+
+        $uniqueCities = Propriete::select('ville')->distinct()->get();
+
         $nbResidential = Propriete::where('type_propriete_id', 1)->count();
         $nbCommercial = Propriete::where('type_propriete_id', 2)->count();
         $nbFarm = Propriete::where('type_propriete_id', 3)->count();
@@ -24,7 +38,6 @@ class PagesController extends Controller
         $nbOffice = Propriete::where('type_propriete_id', 6)->count();
         $nbApartment = Propriete::where('type_propriete_id', 7)->count();
         $nbWarehouse = Propriete::where('type_propriete_id', 8)->count();
-
 
 
         $propertiesForSalle = Propriete::where('status', 'For Sale')
@@ -93,6 +106,9 @@ class PagesController extends Controller
 
         //dd($comments);
         return view('pages/acceuil', compact(
+            'typeProprieteForSale',
+            'typeProprieteRental',
+            'uniqueCities',
             'nbResidential',
             'nbCommercial',
             'nbFarm',
@@ -116,48 +132,51 @@ class PagesController extends Controller
     }
 
 
-
     public function search()
     {
-        
+        $properties = Propriete::paginate(2);
+        return view('pages/search',compact('properties'));
+    }
 
-        // Start building the query
+
+    public function searchPost(Request $request)
+    {
+        // Retrieve the form inputs
+        $status = $request->input('status');
+        $type_propriete_id = $request->input('type_propriete_id');
+        $ville = $request->input('ville');
+        $prix = $request->input('prix');
+        $nbChambre = $request->input('nbChambre');
+        $nbPiece = $request->input('nbPiece');
+
         $query = Propriete::query();
 
-        // Filter by property status if provided
         if (!empty($status)) {
-            $query->where('status', 'Rental');
+            $query->where('status', $status);
         }
 
-        // Filter by property type if provided
         if (!empty($type_propriete_id)) {
-            $query->where('type_propriete_id', 3);
+            $query->where('type_propriete_id', $type_propriete_id);
         }
 
-        // Filter by location if provided
         if (!empty($ville)) {
-            $query->where('ville', 'New York');
+            $query->where('ville', $ville);
         }
 
-        // Filter by maximum price if provided
         if (!empty($prix)) {
-            $query->where('prix', '250000');
+            $query->where('prix', $prix);
         }
 
-        // Filter by number of bedrooms if provided
         if (!empty($nbChambre)) {
-            $query->where('nbChambre', 2);
+            $query->where('nbChambre', $nbChambre);
         }
 
-        // Filter by number of rooms if provided
         if (!empty($nbPiece)) {
-            $query->where('nbPiece', 3);
+            $query->where('nbPiece', $nbPiece);
         }
+        $properties = $query->paginate(2);
 
-        // Execute the query and retrieve the results
-        $properties = $query->get();
-
-        dd($properties);
+        //dd($properties);
 
         // Return the results to the view
         return view('pages/search', compact('properties'));
@@ -174,9 +193,13 @@ class PagesController extends Controller
         return view('pages/details');
     }
 
-    public function single()
+    public function single(Request $request)
     {
-        return view('pages/single');
+        $id = $request->id;
+        
+        $propertiesSingle = Propriete::where('id', $id)->first();
+        //dd($propertiesSingle);
+        return view('pages/single',compact('propertiesSingle'));
     }
 
     public function contactUs()
@@ -198,6 +221,21 @@ class PagesController extends Controller
 
     public function dashbord()
     {
+        $nbProperties = Propriete::where('user_id', 'personne connecte id ')->count();
+        $nbReviews = Comment::where('user_id', 'personne connecte id ')->count();
+        $nbMessages = Message::where('user_id', 'personne connecte id ')->count();
+
+        $Messages = Message::where('user_id', 'personne connecte id ')
+        ->limit(3)
+        ->order_by('created_at','desc')
+        ->get();
+
+
+        $Reviews = Comment::where('user_id', 'personne connecte id ')
+        ->limit(3)
+        ->order_by('created_at','desc')
+        ->get();
+
         return view('admin/dashbord');
     }
 
@@ -210,6 +248,7 @@ class PagesController extends Controller
 
     public function myProperties()
     {
+        $Reviews = Comment::where('user_id', 'personne connecte id ')->get();
         return view('admin/my-properties');
     }
 

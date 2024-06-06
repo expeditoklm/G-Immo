@@ -43,19 +43,18 @@ row justify-content-center align-items-center
                         </ul>
                         <div class="tab-content" id="search_tab_content">
                             <div class="tab-pane fade show active" id="sell" role="tabpanel">
-                                <form class="search-form" method="POST" action="{{ route('pages.search') }}">
-                                @csrf
+                                <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
+                                    @csrf
                                     <input type="hidden" name="status" value="For Sale">
                                     <div class="row justify-content-center align-items-end">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
                                                 <label>Property type For</label>
                                                 <select name="type_propriete_id" class="form-select form-control">
-                                                    <option selected>Property status</option>
-                                                    <option value="1">Active (55)</option>
-                                                    <option value="2">Open House (65)</option>
-                                                    <option value="3">Hot Offer (45)</option>
-                                                    <option value="4">Sold (78)</option>
+                                                    <option value="" selected>Property status</option>
+                                                    @foreach ($typeProprieteForSale as $item)
+                                                    <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -63,12 +62,13 @@ row justify-content-center align-items-center
                                             <div class="form-group">
                                                 <label>Location</label>
                                                 <select name="ville" class="form-select form-control">
-                                                    <option selected>All cities</option>
-                                                    <option value="1">Liverpool</option>
-                                                    <option value="2">Bristol</option>
-                                                    <option value="3">Nottingham</option>
-                                                    <option value="4">Leicester</option>
-                                                    <option value="5">Coventry</option>
+                                                    <option value="" selected >All cities</option>
+                                                    @foreach ($uniqueCities as $item)
+
+                                                    <option value="{{ $item->ville}}">{{ $item->ville}}</option>
+
+                                                    @endforeach
+
                                                 </select>
                                             </div>
                                         </div>
@@ -103,19 +103,18 @@ row justify-content-center align-items-center
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="rent" role="tabpanel">
-                            <form class="search-form"method="POST" action="{{ route('pages.search') }}">
-                                @csrf
-                                <input type="hidden" name="status" value="Rental">
+                                <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
+                                    @csrf
+                                    <input type="hidden" name="status" value="Rental">
                                     <div class="row justify-content-center align-items-end">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
                                                 <label>Property type For</label>
                                                 <select name="type_propriete_id" class="form-select form-control">
-                                                    <option selected>Property status</option>
-                                                    <option value="1">Active (55)</option>
-                                                    <option value="2">Open House (65)</option>
-                                                    <option value="3">Hot Offer (45)</option>
-                                                    <option value="4">Sold (78)</option>
+                                                    <option value="" selected >Property status</option>
+                                                    @foreach ($typeProprieteRental as $item)
+                                                    <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -123,12 +122,10 @@ row justify-content-center align-items-center
                                             <div class="form-group">
                                                 <label>Location</label>
                                                 <select name="ville" class="form-select form-control">
-                                                    <option selected>All cities</option>
-                                                    <option value="1">Liverpool</option>
-                                                    <option value="2">Bristol</option>
-                                                    <option value="3">Nottingham</option>
-                                                    <option value="4">Leicester</option>
-                                                    <option value="5">Coventry</option>
+                                                    <option value="" selected >All cities</option>
+                                                    @foreach ($uniqueCities as $item)
+                                                    <option value="{{ $item->ville}}">{{ $item->ville}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

@@ -22,8 +22,10 @@ Route::get('/', function () {
 });
 Route::get('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
 Route::get('/search', [PagesController::class, 'search'])->name('pages.search');
+Route::get('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
+Route::post('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
 Route::get('/details', [PagesController::class, 'details'])->name('pages.details');
-Route::get('/single', [PagesController::class, 'single'])->name('pages.single');
+Route::post('/single', [PagesController::class, 'single'])->name('pages.single');
 Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
 Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
 Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
