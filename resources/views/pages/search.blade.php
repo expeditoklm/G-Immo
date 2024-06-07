@@ -59,56 +59,52 @@ top-header-inner
             </ul>
             <div class="tab-content" id="search_tab_content">
                 <div class="tab-pane fade show active" id="sell" role="tabpanel">
-                    <form class="search-form">
+                    <form class="search-form" method="get" action="{{ route('pages.search-post') }}">
+                        @csrf
+                        <input type="hidden" name="status" value="For Sale">
                         <div class="row justify-content-center align-items-end">
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Looking For</label>
-                                    <select class="form-select form-control">
-                                        <option selected>Property type</option>
-                                        <option value="1">Multifamily</option>
-                                        <option value="2">Detached house</option>
-                                        <option value="3">Industrial</option>
-                                        <option value="4">Townhouse</option>
-                                        <option value="5">Apartment</option>
+                                    <label>Property type For</label>
+                                    <select name="type_propriete_id" class="form-select form-control">
+                                        <option value="" selected>Property status</option>
+                                        @foreach ($typeProprieteForSale as $item)
+                                        <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
                                     <label>Location</label>
-                                    <select class="form-select form-control">
-                                        <option selected>All cities</option>
-                                        <option value="1">Liverpool</option>
-                                        <option value="2">Bristol</option>
-                                        <option value="3">Nottingham</option>
-                                        <option value="4">Leicester</option>
-                                        <option value="5">Coventry</option>
+                                    <select name="ville" class="form-select form-control">
+                                        <option value="" selected>All cities</option>
+                                        @foreach ($uniqueCities as $item)
+
+                                        <option value="{{ $item->ville}}">{{ $item->ville}}</option>
+
+                                        @endforeach
+
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
                                     <label>Your Price</label>
-                                    <input type="text" class="form-control" placeholder="Max price">
+                                    <input type="number" name="prix" class="form-control" placeholder="Max price">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Min Lot size</label>
-                                    <input type="text" class="form-control" placeholder="Property lot size">
+                                    <label>Bedrooms</label>
+                                    <input type="number" name="nbChambre" class="form-control" placeholder="Number of bedrooms">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Status</label>
-                                    <select class="form-select form-control">
-                                        <option selected>Property status</option>
-                                        <option value="1">Active (55)</option>
-                                        <option value="2">Open House (65)</option>
-                                        <option value="3">Hot Offer (45)</option>
-                                        <option value="4">Sold (78)</option>
-                                    </select>
+                                    <label>Rooms</label>
+                                    <input type="number" name="nbPiece" class="form-control" placeholder="Number of rooms">
+
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
@@ -126,56 +122,52 @@ top-header-inner
                     </form>
                 </div>
                 <div class="tab-pane fade" id="rent" role="tabpanel">
-                    <form class="search-form">
+                <form class="search-form" method="get" action="{{ route('pages.search-post') }}">
+                        @csrf
+                        <input type="hidden" name="status" value="Rental">
                         <div class="row justify-content-center align-items-end">
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Looking For</label>
-                                    <select class="form-select form-control">
-                                        <option selected>Property type</option>
-                                        <option value="1">Multifamily</option>
-                                        <option value="2">Detached house</option>
-                                        <option value="3">Industrial</option>
-                                        <option value="4">Townhouse</option>
-                                        <option value="5">Apartment</option>
+                                    <label>Property type For</label>
+                                    <select name="type_propriete_id" class="form-select form-control">
+                                        <option value="" selected>Property status</option>
+                                        @foreach ($typeProprieteForSale as $item)
+                                        <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
                                     <label>Location</label>
-                                    <select class="form-select form-control">
-                                        <option selected>All cities</option>
-                                        <option value="1">Liverpool</option>
-                                        <option value="2">Bristol</option>
-                                        <option value="3">Nottingham</option>
-                                        <option value="4">Leicester</option>
-                                        <option value="5">Coventry</option>
+                                    <select name="ville" class="form-select form-control">
+                                        <option value="" selected>All cities</option>
+                                        @foreach ($uniqueCities as $item)
+
+                                        <option value="{{ $item->ville}}">{{ $item->ville}}</option>
+
+                                        @endforeach
+
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
                                     <label>Your Price</label>
-                                    <input type="text" class="form-control" placeholder="Max price">
+                                    <input type="number" name="prix" class="form-control" placeholder="Max price">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Min Lot size</label>
-                                    <input type="text" class="form-control" placeholder="Property lot size">
+                                    <label>Bedrooms</label>
+                                    <input type="number" name="nbChambre" class="form-control" placeholder="Number of bedrooms">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Status</label>
-                                    <select class="form-select form-control">
-                                        <option selected>Property status</option>
-                                        <option value="1">Active (55)</option>
-                                        <option value="2">Open House (65)</option>
-                                        <option value="3">Hot Offer (45)</option>
-                                        <option value="4">Sold (78)</option>
-                                    </select>
+                                    <label>Rooms</label>
+                                    <input type="number" name="nbPiece" class="form-control" placeholder="Number of rooms">
+
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
@@ -198,7 +190,7 @@ top-header-inner
         <div class="properties-grid-box">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-6">
-                    <p>Showing 1-8 Of 27 Results</p>
+                    <p>Showing {{ $properties->firstItem() }}-{{ $properties->lastItem() }} Of {{ $properties->total() }} Results</p>
                 </div>
                 <div class="col-lg-5 col-md-6">
                     <div class="d-flex align-items-center justify-content-end">
@@ -277,6 +269,7 @@ top-header-inner
                                             {{ $item->titre }}
                                         </a>
                                     </h3>
+
 
                                     <!-- Formulaire caché -->
                                     <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">

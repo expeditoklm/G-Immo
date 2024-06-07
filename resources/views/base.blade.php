@@ -8,17 +8,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Link of CSS Files -->
-        <link rel="stylesheet" href="{{asset('assets/css/animate.min.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/css/scrollCue.min.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/css/remixicon.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
+    <!-- Link of CSS Files -->
+    <link rel="stylesheet" href="{{asset('assets/css/animate.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/scrollCue.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/remixicon.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
 
-        @yield('css')
+    @yield('css')
 
-       
+
 
     <title>@yield('nomPage') </title>
 
@@ -42,12 +42,12 @@
         </div>
     </div>
     <!-- End Preloader Area -->
-    @yield('div_init') 
+    @yield('div_init')
     <!-- Start Top Header Area -->
     <div class="top-header-area">
         <div class="container-fluid">
             <div class="@yield('div_init2')">
-            @yield('div_init3')
+                @yield('div_init3')
                 <div class="col-lg-7 col-md-7">
                     <ul class="top-header-info-with-social">
                         <li>
@@ -86,7 +86,7 @@
                         <a href="tel:00201068710594">+(002) 0106-8710-594</a>
                     </div>
                 </div>
-            @yield('div_finish3')
+                @yield('div_finish3')
             </div>
         </div>
     </div>
@@ -115,7 +115,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}"class=" nav-link {{ request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">
+                        <a href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}" class=" nav-link {{ request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">
                             Home
 
                         </a>
@@ -136,26 +136,26 @@
                 <div class="others-option d-flex align-items-center">
                     <div class="option-item">
                         <div class="user-info">
-                        <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a href="{{ request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="nav-link {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}"> Log In / Register</a>
-                            </li>
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a href="{{ request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="nav-link {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}"> Log In / Register</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     @auth
-    <div class="option-item">
-        <a href="{{ request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
-    </div>
-@endauth
+                    <div class="option-item">
+                        <a href="{{ request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
+                    </div>
+                    @endauth
 
                 </div>
             </div>
         </div>
     </nav>
-    
 
-    @yield('div_finish') 
+
+    @yield('div_finish')
     <!-- End Navbar Area -->
 
     <!-- Start Responsive Navbar Area -->
@@ -179,10 +179,11 @@
                 </div>
 
                 <div class="accordion-item">
-                    <a class="accordion-button without-icon {{ request()->route()->getName() == 'pages.search' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'pages.search' ? 'javascript:void(0)' : route('pages.search') }}">
+                    <a class="accordion-button without-icon {{ request()->route()->getName() == 'pages.search' || request()->route()->getName() == 'pages.search-post' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'pages.search' ? 'javascript:void(0)' : route('pages.search') }}">
                         Property
                     </a>
                 </div>
+
 
                 <div class="accordion-item ">
                     <a class="accordion-button without-icon {{ request()->route()->getName() == 'pages.contact-us' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}">

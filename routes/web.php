@@ -21,6 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
+Route::post('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
 Route::get('/search', [PagesController::class, 'search'])->name('pages.search');
 Route::get('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
 Route::post('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');

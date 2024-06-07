@@ -134,13 +134,44 @@ class PagesController extends Controller
 
     public function search()
     {
-        $properties = Propriete::paginate(2);
-        return view('pages/search',compact('properties'));
+        $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function($query) {
+            $query->where('proprietes.status', 'For Sale');
+        }])
+        ->get();
+
+        $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function($query) {
+            $query->where('proprietes.status', 'Rental');
+        }])
+        ->get();
+
+        $uniqueCities = Propriete::select('ville')->distinct()->get();
+
+        $properties = Propriete::paginate(10);
+        return view('pages/search',compact(
+            'properties',
+            'typeProprieteForSale',
+            'typeProprieteRental',
+            'uniqueCities'
+
+        ));
     }
 
 
     public function searchPost(Request $request)
     {
+        $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function($query) {
+            $query->where('proprietes.status', 'For Sale');
+        }])
+        ->get();
+
+        $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function($query) {
+            $query->where('proprietes.status', 'Rental');
+        }])
+        ->get();
+
+        $uniqueCities = Propriete::select('ville')->distinct()->get();
+
+
         // Retrieve the form inputs
         $status = $request->input('status');
         $type_propriete_id = $request->input('type_propriete_id');
@@ -174,12 +205,17 @@ class PagesController extends Controller
         if (!empty($nbPiece)) {
             $query->where('nbPiece', $nbPiece);
         }
-        $properties = $query->paginate(2);
+        $properties = $query->paginate(10)->appends($request->except('page'));
 
         //dd($properties);
 
         // Return the results to the view
-        return view('pages/search', compact('properties'));
+        return view('pages/search', compact(
+            'properties',
+            'typeProprieteForSale',
+            'typeProprieteRental',
+            'uniqueCities'
+        ));
     }
 
 

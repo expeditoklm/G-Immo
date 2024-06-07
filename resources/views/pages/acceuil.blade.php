@@ -43,7 +43,7 @@ row justify-content-center align-items-center
                         </ul>
                         <div class="tab-content" id="search_tab_content">
                             <div class="tab-pane fade show active" id="sell" role="tabpanel">
-                                <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
+                                <form class="search-form" method="get" action="{{ route('pages.search-post') }}">
                                     @csrf
                                     <input type="hidden" name="status" value="For Sale">
                                     <div class="row justify-content-center align-items-end">
@@ -103,7 +103,7 @@ row justify-content-center align-items-center
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="rent" role="tabpanel">
-                                <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
+                                <form class="search-form" method="get" action="{{ route('pages.search-post') }}">
                                     @csrf
                                     <input type="hidden" name="status" value="Rental">
                                     <div class="row justify-content-center align-items-end">
@@ -377,12 +377,23 @@ row justify-content-center align-items-center
                                 </div>
                                 <div class="properties-content">
                                     <div class="top">
-                                        <div class="title">
-                                            <h3>
-                                                <a href="{{ route('pages.search') }}">{{ $item->titre }}</a>
-                                            </h3>
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                                        </div>
+                                    <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
+
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
+
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                                         <div class="price">{{ $item->prix }} XOF</div>
                                     </div>
                                     <div class="bottom">
@@ -484,12 +495,23 @@ row justify-content-center align-items-center
                                 </div>
                                 <div class="properties-content">
                                     <div class="top">
-                                        <div class="title">
-                                            <h3>
-                                                <a href="{{ route('pages.search') }}">{{ $item->titre }}</a>
-                                            </h3>
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                                        </div>
+                                    <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
+
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
+
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                                         <div class="price">{{ $item->prix }} XOF</div>
                                     </div>
                                     <div class="bottom">
@@ -591,12 +613,23 @@ row justify-content-center align-items-center
                                 </div>
                                 <div class="properties-content">
                                     <div class="top">
-                                        <div class="title">
-                                            <h3>
-                                                <a href="{{ route('pages.search') }}">{{ $item->titre }}</a>
-                                            </h3>
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                                        </div>
+                                    <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
+
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
+
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                                         <div class="price">{{ $item->prix }} XOF</div>
                                     </div>
                                     <div class="bottom">
@@ -699,12 +732,23 @@ row justify-content-center align-items-center
                                 </div>
                                 <div class="properties-content">
                                     <div class="top">
-                                        <div class="title">
-                                            <h3>
-                                                <a href="{{ route('pages.search') }}">{{ $item->titre }}</a>
-                                            </h3>
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                                        </div>
+                                    <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
+
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
+
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                                         <div class="price">{{ $item->prix }} XOF</div>
                                     </div>
                                     <div class="bottom">
@@ -807,12 +851,23 @@ row justify-content-center align-items-center
                                 </div>
                                 <div class="properties-content">
                                     <div class="top">
-                                        <div class="title">
-                                            <h3>
-                                                <a href="{{ route('pages.search') }}">{{ $item->titre }}</a>
-                                            </h3>
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                                        </div>
+                                    <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
+
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
+
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                                         <div class="price">{{ $item->prix }} XOF</div>
                                     </div>
                                     <div class="bottom">
@@ -914,12 +969,23 @@ row justify-content-center align-items-center
                                 </div>
                                 <div class="properties-content">
                                     <div class="top">
-                                        <div class="title">
-                                            <h3>
-                                                <a href="{{ route('pages.search') }}">{{ $item->titre }}</a>
-                                            </h3>
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                                        </div>
+                                    <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
+
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
+
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                                         <div class="price">{{ $item->prix }} XOF</div>
                                     </div>
                                     <div class="bottom">
@@ -1021,12 +1087,23 @@ row justify-content-center align-items-center
                                 </div>
                                 <div class="properties-content">
                                     <div class="top">
-                                        <div class="title">
-                                            <h3>
-                                                <a href="{{ route('pages.search') }}">{{ $item->titre }}</a>
-                                            </h3>
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                                        </div>
+                                    <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
+
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
+
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                                         <div class="price">{{ $item->prix }} XOF</div>
                                     </div>
                                     <div class="bottom">
@@ -1304,12 +1381,23 @@ row justify-content-center align-items-center
                     </div>
                     <div class="properties-content">
                         <div class="top">
-                            <div class="title">
-                                <h3>
-                                    <a href="{{ route('pages.single') }}">{{ $item->titre }}</a>
-                                </h3>
-                                <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                            </div>
+                        <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
+
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
+
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                             <div class="price">{{ $item->prix }} XOF</div>
                         </div>
                         <div class="bottom">
