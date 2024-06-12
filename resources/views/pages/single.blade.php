@@ -5,32 +5,7 @@ Property | Andora
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    
-<style>
-    
-        .review-form .rating {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            gap: 5px;
-        }
 
-        .review-form .rating li {
-            font-size: 2rem;
-            color: #ccc;
-            cursor: pointer;
-        }
-
-        .review-form .rating li:hover,
-        .review-form .rating li:hover ~ li {
-            color: #ffc107;
-        }
-
-        .review-form .rating .selected {
-            color: #ffc107;
-        }
-    </style>
 @endsection
 
 @section('div_init')
@@ -89,31 +64,43 @@ top-header-inner
                                 </div>
                                 <span class="address">{{ $propertiesSingle->pays }}, {{ $propertiesSingle->ville }}, {{ $propertiesSingle->quartier }}</span>
                                 <ul class="info-list">
-                                    <li>
-                                        <div class="icon">
-                                            <img src="{{asset('assets/images/property-details/bed.svg')}}" alt="bed">
-                                        </div>
-                                        <span>{{ $propertiesSingle->nbChambre }} Bedroom</span>
-                                    </li>
-                                    <li>
-                                        <div class="icon">
-                                            <img src="{{asset('assets/images/property-details/bathroom.svg')}}" alt="bathroom">
-                                        </div>
-                                        <span>{{ $propertiesSingle->nbToillete }} Bathroom</span>
-                                    </li>
-                                    <li>
-                                        <div class="icon">
-                                            <img src="{{asset('assets/images/property-details/parking.svg')}}" alt="parking">
-                                        </div>
-                                        <span>{{ $propertiesSingle->nbPiece }} Parking</span>
-                                    </li>
-                                    <li>
-                                        <div class="icon">
-                                            <img src="{{asset('assets/images/property-details/area.svg')}}" alt="area">
-                                        </div>
-                                        <span>{{ $propertiesSingle->surface }} Area</span>
-                                    </li>
-                                </ul>
+    @if(!is_null($propertiesSingle->nbChambre) && $propertiesSingle->nbChambre != 0)
+        <li>
+            <div class="icon">
+                <img src="{{ asset('assets/images/property-details/bed.svg') }}" alt="bed">
+            </div>
+            <span>{{ $propertiesSingle->nbChambre }} Bedroom</span>
+        </li>
+    @endif
+
+    @if(!is_null($propertiesSingle->nbToillete) && $propertiesSingle->nbToillete != 0)
+        <li>
+            <div class="icon">
+                <img src="{{ asset('assets/images/property-details/bathroom.svg') }}" alt="bathroom">
+            </div>
+            <span>{{ $propertiesSingle->nbToillete }} Bathroom</span>
+        </li>
+    @endif
+
+    @if(!is_null($propertiesSingle->nbPiece) && $propertiesSingle->nbPiece != 0)
+        <li>
+            <div class="icon">
+                <img src="{{ asset('assets/images/property-details/parking.svg') }}" alt="parking">
+            </div>
+            <span>{{ $propertiesSingle->nbPiece }} Parking</span>
+        </li>
+    @endif
+
+    @if(!is_null($propertiesSingle->surface) && $propertiesSingle->surface != 0)
+        <li>
+            <div class="icon">
+                <img src="{{ asset('assets/images/property-details/area.svg') }}" alt="area">
+            </div>
+            <span>{{ $propertiesSingle->surface }} Area</span>
+        </li>
+    @endif
+</ul>
+
                                 <ul class="group-info">
                                     <li>
                                         <div class="dropdown">
@@ -150,18 +137,48 @@ top-header-inner
                         </div>
                         <div class="col-lg-5 col-md-12">
                             <div class="right-content">
-                                <ul class="link-list">
-                                    <li>
-                                        <a href="property-grid.html" class="link-btn">{{ $propertiesSingle->typePropriete->libelle }}</a>
-                                    </li>
-                                    <li>
-                                        <a href="property-grid.html" class="link-btn">{{ $propertiesSingle->status }}</a>
-                                    </li>
-                                </ul>
+                                
+
+                                    <!-- Recoriger-->
+                                    <ul class="link-list">
+                                        <li>
+                                            <a href="#" class="link-btn" onclick="document.getElementById('post-{{ $propertiesSingle->id }}').submit(); return false;">
+                                            {{ $propertiesSingle->typePropriete->libelle }}
+                                            </a>
+                                        </li>
+
+                                        <!-- Formulaire caché -->
+                                        <form id="post-{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                            @csrf
+                                           <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
+                                            <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
+                                        </form>
+
+                                        <li>
+                                            <a href="#" class="link-btn" onclick="document.getElementById('post2-{{ $propertiesSingle->id }}').submit(); return false;">
+                                            {{ $propertiesSingle->status }}
+                                            </a>
+                                        </li>
+
+                                        <!-- Formulaire caché -->
+                                        <form id="post2-{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
+                                            <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
+                                            <input type="hidden" name="status" value="{{ $propertiesSingle->status }}">
+                                        </form>
+                                        
+                                    </ul>
                                 <div class="price">{{ $propertiesSingle->prix }} XOF</div>
                                 <div class="user">
                                     <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                                    <a href="{{ route('pages.agent') }}">{{ $propertiesSingle->user->nom_prenom }}</a>
+                                    <a href="#" onclick="document.getElementById('post-form-{{ $propertiesSingle->user->id }}').submit(); return false;">{{ $propertiesSingle->user->nom_prenom }}</a>
+
+                                                    <!-- Formulaire caché -->
+                                                    <form id="post-form-{{ $propertiesSingle->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $propertiesSingle->user->id }}">
+                                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -203,14 +220,14 @@ top-header-inner
                 <div class="property-details-inner-content">
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12">
-                        <div class="description">
-    <h3>Property Description</h3>
-    @isset($propertiesSingle->description)
-        <p>{{ $propertiesSingle->description }}</p>
-    @else
-        <p>Aucune description disponible.</p>
-    @endisset
-</div>
+                            <div class="description">
+                                <h3>Property Description</h3>
+                                @isset($propertiesSingle->description)
+                                    <p>{{ $propertiesSingle->description }}</p>
+                                @else
+                                    <p>Aucune description disponible.</p>
+                                @endisset
+                            </div>
 
 
                             <div class="features">
@@ -260,72 +277,65 @@ top-header-inner
 
                                             <ul class="rating">
                                                 @for ($i = 0; $i < $filledStars; $i++) <li><i class="ri-star-fill"></i>
+                                                </li>
+                                                @endfor
+
+
+                                            </ul>
+                                            <p>{{ $item->comment }}.</p>
+                                        </div>
                                     </li>
-                                    @endfor
-
-
+                                    @endforeach
                                 </ul>
-                                <p>{{ $item->comment }}.</p>
-                            </div>
-                            </li>
-                            @endforeach
-                            </ul>
-                            <form class="review-form">
                                 
-
-
-                                <div class="title">
-                                                <h3>Add A Review</h3>
-                                                <ul class="rating">
-            <li data-value="1"><i class="fa fa-star"></i></li>
-            <li data-value="2"><i class="fa fa-star"></i></li>
-            <li data-value="3"><i class="fa fa-star"></i></li>
-            <li data-value="4"><i class="fa fa-star"></i></li>
-            <li data-value="5"><i class="fa fa-star"></i></li>
-        </ul>
-                                            </div>
-
-
-
-
-
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-6 col-md-12">
-                                        <div class="form-group">
-                                            <label>Your Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter your name">
-                                        </div>
+                                <form class="review-form">
+                                    <div class="title">
+                                        <h3>Add A Review</h3>
+                                        <ul class="rating">
+                                            <li data-value="1"><i class="fa fa-star"></i></li>
+                                            <li data-value="2"><i class="fa fa-star"></i></li>
+                                            <li data-value="3"><i class="fa fa-star"></i></li>
+                                            <li data-value="4"><i class="fa fa-star"></i></li>
+                                            <li data-value="5"><i class="fa fa-star"></i></li>
+                                        </ul>
                                     </div>
-                                    <div class="col-lg-6 col-md-12">
-                                        <div class="form-group">
-                                            <label>Email Address</label>
-                                            <input type="email" class="form-control" placeholder="Enter email address">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group top-css">
-                                            <label>Your Review Here</label>
-                                            <textarea class="form-control" placeholder="Your review..."></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="check1">
-                                                <label class="form-check-label" for="check1">
-                                                    Save my name, email, and website in this browser for the next time I review.
-                                                </label>
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label>Your Name</label>
+                                                <input type="text" class="form-control" placeholder="Enter your name">
                                             </div>
                                         </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label>Email Address</label>
+                                                <input type="email" class="form-control" placeholder="Enter email address">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group top-css">
+                                                <label>Your Review Here</label>
+                                                <textarea class="form-control" placeholder="Your review..."></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="check1">
+                                                    <label class="form-check-label" for="check1">
+                                                        Save my name, email, and website in this browser for the next time I review.
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <button type="submit" class="default-btn">Submit Review</button>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <button type="submit" class="default-btn">Submit Review</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
-
-                    </div>
                     <div class="col-xl-4 col-md-12">
                         <div class="property-details-sidebar">
                             <div class="booking">
@@ -467,408 +477,6 @@ top-header-inner
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="swiper-slide">
-                                            <div class="properties-item">
-                                                <div class="properties-image">
-                                                    <a href="property-details.html">
-                                                        <img src="{{asset('assets/images/properties/properties2.jpg')}}" alt="image">
-                                                    </a>
-                                                    <ul class="action">
-                                                        <li>
-                                                            <div class="media">
-                                                                <span><i class="ri-vidicon-fill"></i></span>
-                                                                <span><i class="ri-image-line"></i>5</span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="link-list">
-                                                        <li>
-                                                            <a href="property-grid.html" class="link-btn">Apartment</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="property-grid.html" class="link-btn">For Sale</a>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="info-list">
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bed.svg')}}" alt="bed">
-                                                            </div>
-                                                            <span>6</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bathroom.svg')}}" alt="bathroom">
-                                                            </div>
-                                                            <span>4</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/parking.svg')}}" alt="parking">
-                                                            </div>
-                                                            <span>1</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/area.svg')}}" alt="area">
-                                                            </div>
-                                                            <span>3250</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="properties-content">
-                                                    <div class="top">
-                                                        <div class="title">
-                                                            <h3>
-                                                                <a href="property-details.html">Industrial Spaces</a>
-                                                            </h3>
-                                                            <span>194 Mercer Street, NY 10012, USA</span>
-                                                        </div>
-                                                        <div class="price">$55,000</div>
-                                                    </div>
-                                                    <div class="bottom">
-                                                        <div class="user">
-                                                            <img src="{{asset('assets/images/user/user2.png')}}" alt="image">
-                                                            <a href="{{ route('pages.agent') }}">Walter White</a>
-                                                        </div>
-                                                        <ul class="group-info">
-                                                            <li>
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <i class="ri-share-line"></i>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li>
-                                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                                <i class="ri-facebook-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://twitter.com/" target="_blank">
-                                                                                <i class="ri-twitter-x-line"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                                <i class="ri-instagram-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                                <i class="ri-linkedin-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="properties-item">
-                                                <div class="properties-image">
-                                                    <a href="property-details.html">
-                                                        <img src="{{asset('assets/images/properties/properties3.jpg')}}" alt="image">
-                                                    </a>
-                                                    <ul class="action">
-
-                                                        <li>
-                                                            <div class="media">
-                                                                <span><i class="ri-vidicon-fill"></i></span>
-                                                                <span><i class="ri-image-line"></i>5</span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="link-list">
-                                                        <li>
-                                                            <a href="property-grid.html" class="link-btn">Apartment</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="property-grid.html" class="link-btn">For Sale</a>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="info-list">
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bed.svg')}}" alt="bed">
-                                                            </div>
-                                                            <span>6</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bathroom.svg')}}" alt="bathroom">
-                                                            </div>
-                                                            <span>4</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/parking.svg')}}" alt="parking">
-                                                            </div>
-                                                            <span>1</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/area.svg')}}" alt="area">
-                                                            </div>
-                                                            <span>3250</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="properties-content">
-                                                    <div class="top">
-                                                        <div class="title">
-                                                            <h3>
-                                                                <a href="property-details.html">Single-Family Homes</a>
-                                                            </h3>
-                                                            <span>194 Mercer Street, NY 10012, USA</span>
-                                                        </div>
-                                                        <div class="price">$77,000</div>
-                                                    </div>
-                                                    <div class="bottom">
-                                                        <div class="user">
-                                                            <img src="{{asset('assets/images/user/user3.png')}}" alt="image">
-                                                            <a href="{{ route('pages.agent') }}">Jane Ronan</a>
-                                                        </div>
-                                                        <ul class="group-info">
-                                                            <li>
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <i class="ri-share-line"></i>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li>
-                                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                                <i class="ri-facebook-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://twitter.com/" target="_blank">
-                                                                                <i class="ri-twitter-x-line"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                                <i class="ri-instagram-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                                <i class="ri-linkedin-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="properties-item">
-                                                <div class="properties-image">
-                                                    <a href="property-details.html">
-                                                        <img src="{{asset('assets/images/properties/properties4.jpg')}}" alt="image">
-                                                    </a>
-                                                    <ul class="action">
-                                                        <li>
-                                                            <div class="media">
-                                                                <span><i class="ri-vidicon-fill"></i></span>
-                                                                <span><i class="ri-image-line"></i>5</span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="link-list">
-                                                        <li>
-                                                            <a href="property-grid.html" class="link-btn">Apartment</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="property-grid.html" class="link-btn">For Sale</a>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="info-list">
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bed.svg')}}" alt="bed">
-                                                            </div>
-                                                            <span>6</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bathroom.svg')}}" alt="bathroom">
-                                                            </div>
-                                                            <span>4</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/parking.svg')}}" alt="parking">
-                                                            </div>
-                                                            <span>1</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/area.svg')}}" alt="area">
-                                                            </div>
-                                                            <span>3250</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="properties-content">
-                                                    <div class="top">
-                                                        <div class="title">
-                                                            <h3>
-                                                                <a href="property-details.html">Newly Built Homes</a>
-                                                            </h3>
-                                                            <span>194 Mercer Street, NY 10012, USA</span>
-                                                        </div>
-                                                        <div class="price">$33,000</div>
-                                                    </div>
-                                                    <div class="bottom">
-                                                        <div class="user">
-                                                            <img src="{{asset('assets/images/user/user4.png')}}" alt="image">
-                                                            <a href="{{ route('pages.agent') }}">Jack Smith</a>
-                                                        </div>
-                                                        <ul class="group-info">
-                                                            <li>
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <i class="ri-share-line"></i>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li>
-                                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                                <i class="ri-facebook-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://twitter.com/" target="_blank">
-                                                                                <i class="ri-twitter-x-line"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                                <i class="ri-instagram-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                                <i class="ri-linkedin-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="properties-item">
-                                                <div class="properties-image">
-                                                    <a href="property-details.html">
-                                                        <img src="{{asset('assets/images/properties/properties5.jpg')}}" alt="image">
-                                                    </a>
-                                                    <ul class="action">
-
-                                                        <li>
-                                                            <div class="media">
-                                                                <span><i class="ri-vidicon-fill"></i></span>
-                                                                <span><i class="ri-image-line"></i>5</span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="link-list">
-                                                        <li>
-                                                            <a href="property-grid.html" class="link-btn">Apartment</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="property-grid.html" class="link-btn">For Sale</a>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="info-list">
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bed.svg')}}" alt="bed">
-                                                            </div>
-                                                            <span>6</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bathroom.svg')}}" alt="bathroom">
-                                                            </div>
-                                                            <span>4</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/parking.svg')}}" alt="parking">
-                                                            </div>
-                                                            <span>1</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/area.svg')}}" alt="area">
-                                                            </div>
-                                                            <span>3250</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="properties-content">
-                                                    <div class="top">
-                                                        <div class="title">
-                                                            <h3>
-                                                                <a href="property-details.html">Senior Apartments</a>
-                                                            </h3>
-                                                            <span>194 Mercer Street, NY 10012, USA</span>
-                                                        </div>
-                                                        <div class="price">$65,000</div>
-                                                    </div>
-                                                    <div class="bottom">
-                                                        <div class="user">
-                                                            <img src="{{asset('assets/images/user/user5.png')}}" alt="image">
-                                                            <a href="{{ route('pages.agent') }}">Jenny Loren</a>
-                                                        </div>
-                                                        <ul class="group-info">
-                                                            <li>
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <i class="ri-share-line"></i>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li>
-                                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                                <i class="ri-facebook-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://twitter.com/" target="_blank">
-                                                                                <i class="ri-twitter-x-line"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                                <i class="ri-instagram-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                                <i class="ri-linkedin-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="properties-pagination"></div>
                                 </div>
@@ -924,44 +532,6 @@ top-header-inner
 
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const stars = document.querySelectorAll('.rating li');
-
-        stars.forEach(star => {
-            star.addEventListener('mouseover', handleMouseOver);
-            star.addEventListener('mouseout', handleMouseOut);
-            star.addEventListener('click', handleClick);
-        });
-
-        function handleMouseOver(e) {
-            const value = e.target.closest('li').dataset.value;
-            highlightStars(value);
-        }
-
-        function handleMouseOut() {
-            highlightStars();
-        }
-
-        function handleClick(e) {
-            const value = e.target.closest('li').dataset.value;
-            selectStars(value);
-        }
-
-        function highlightStars(value = 0) {
-            stars.forEach(star => {
-                star.classList.toggle('selected', star.dataset.value <= value);
-            });
-        }
-
-        function selectStars(value) {
-            stars.forEach(star => {
-                star.classList.toggle('selected', star.dataset.value <= value);
-                star.dataset.selected = star.dataset.value <= value;
-            });
-        }
-    });
-</script>
 
 
 @endsection

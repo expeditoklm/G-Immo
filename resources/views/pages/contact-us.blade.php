@@ -37,6 +37,14 @@ top-header-inner
 <!-- Start Page Banner Area -->
 <div class="page-banner-area">
             <div class="container">
+            @if(session('success'))
+                <div class="alert alert-primary alert-dismissible fade show m-2" role="alert">
+                    <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
+                        <span class="fw-bold d-block mx-auto">{{ session('success') }}</span> <!-- Utilisez mx-auto pour centrer le span -->
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
                 <div class="page-banner-content">
                     <h2>Contact Us</h2>
                     <ul class="list">
@@ -98,38 +106,40 @@ top-header-inner
                     <div class="col-lg-8 col-md-7">
                         <div class="contact-wrap-form">
                             <h3>Get In Touch</h3>
-                            <form>
+                            <form action="{{ route('pages.contact-us') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                 <div class="form-group">
                                     <label>Your Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter your name">
+                                    <input type="text" name="nom_prenom" class="form-control" placeholder="Enter your name">
                                     <div class="icon">
                                         <i class="ri-user-3-line"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Email Address</label>
-                                    <input type="email" class="form-control" placeholder="Enter email address">
+                                    <input type="email" name="email" class="form-control" placeholder="Enter email address">
                                     <div class="icon">
                                         <i class="ri-mail-line"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Your Phone</label>
-                                    <input type="phone" class="form-control" placeholder="Enter your phone">
+                                    <input type="phone" name="telephone" class="form-control" placeholder="Enter your phone">
                                     <div class="icon">
                                         <i class="ri-phone-line"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Your Subject</label>
-                                    <input type="text" class="form-control" placeholder="Enter your subject">
+                                    <input type="text" name="titre_msg" class="form-control" placeholder="Enter your subject">
                                     <div class="icon">
                                         <i class="ri-file-line"></i>
                                     </div>
                                 </div>
                                 <div class="form-group extra-top">
                                     <label>Your Message</label>
-                                    <textarea class="form-control" placeholder="Your message here"></textarea>
+                                    <textarea class="form-control"  name="message" placeholder="Your message here"></textarea>
                                     <div class="icon">
                                         <i class="ri-message-2-line"></i>
                                     </div>

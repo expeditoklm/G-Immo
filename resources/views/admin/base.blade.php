@@ -78,7 +78,10 @@
                                 <li><a href="{{ request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }} "> Edit profile</a></li>
                                 <li><a href="{{ request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Add Property</a></li>
                                 <li><a href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "> Change Password</a></li>
-                                <li><a href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} ">Log Out</a></li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <li> <button type="submit" class="btn btn-danger col-md-12">Log Out</button></li>
+                                    </form>
                             </ul>
                         </div>
                         <!-- Right Side Content / End -->

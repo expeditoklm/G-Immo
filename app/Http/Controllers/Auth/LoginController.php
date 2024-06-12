@@ -37,4 +37,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
+
+
+
+    protected function redirectTo()
+    {
+        // Redirige vers l'URL prévue si elle existe, sinon vers /home
+        return session()->pull('url.intended', $this->redirectTo);
+    }
 }

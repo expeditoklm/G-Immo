@@ -99,8 +99,9 @@
             <a class="navbar-brand" href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">
                 <img src="{{asset('assets/images/logo.png')}}" alt="logo">
             </a>
-            <form class="search-form">
-                <input type="search" class="search-field" placeholder="Search property">
+            <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
+            @csrf
+                <input type="search" name="ttr_cra_dsc_sta_p_v_q_typ_us" class="search-field" placeholder="Search property">
                 <button type="submit">
                     <i class="ri-search-line"></i>
                 </button>
@@ -134,22 +135,38 @@
                     </li>
                 </ul>
                 <div class="others-option d-flex align-items-center">
-                    <div class="option-item">
-                        <div class="user-info">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item">
-                                    <a href="{{ request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="nav-link {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}"> Log In / Register</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                     @auth
-                    <div class="option-item">
-                        <a href="{{ request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
-                    </div>
+                        <div class="option-item">
+                            <div class="user-info">
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" onclick="document.getElementById('deconnection').submit(); return false;">Deconnexion</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <form id="deconnection" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @else
+                        <div class="option-item">
+                            <div class="user-info">
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a href="{{ route('pages.account') }}" class="nav-link {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}">Log In / Register</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     @endauth
-
+                    
+                    @auth
+                        <div class="option-item">
+                            <a href="{{ route('admin.dashbord') }}" class="default-btn {{ request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}">Admin</a>
+                        </div>
+                    @endauth
                 </div>
+
             </div>
         </div>
     </nav>

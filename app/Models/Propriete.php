@@ -38,7 +38,7 @@ class Propriete extends Model
     /**
      * @var array
      */
-    protected $fillable = ['type_propriete_id', 'user_id', 'titre', 'description', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'surface', 'adresse', 'pays', 'ville', 'quartier', 'nomPC', 'prenomPC', 'emailPC', 'telPC', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['type_propriete_id', 'vue', 'user_id', 'titre', 'description', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'surface', 'adresse', 'pays', 'ville', 'quartier', 'nomPC', 'prenomPC', 'emailPC', 'telPC', 'deleted', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

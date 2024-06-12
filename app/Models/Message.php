@@ -22,7 +22,7 @@ class Message extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'nom_prenom', 'email', 'telephone', 'titre_msg', 'message', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id','proprietaire_id', 'nom_prenom', 'email', 'telephone', 'titre_msg', 'message', 'deleted', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

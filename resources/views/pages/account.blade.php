@@ -72,6 +72,8 @@ top-header-inner
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
+
+     
         @if(session('success'))
         <div class="alert alert-primary alert-dismissible fade show m-2" role="alert">
             <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
