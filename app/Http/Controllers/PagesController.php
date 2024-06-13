@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Message;
 use Auth;
-use App\Models\Patient;
 use App\Models\Propriete;
 use App\Models\TypePropriete;
 use App\Models\User;
@@ -288,11 +287,6 @@ class PagesController extends Controller
     }
     
 
-
-
-
-
-
     public function details()
     {
         return view('pages/details');
@@ -379,7 +373,7 @@ class PagesController extends Controller
             $query->where('user_id', $id);
         })->get();
     
-        if ($request->has('user_id')) {
+        if ($request->has('btn_msg')) {
             Message::create([
                 'user_id' => $id,
                 'nom_prenom' => $request->nom_prenom,
@@ -406,25 +400,74 @@ class PagesController extends Controller
 
 
 
-    public function dashbord()
+    public function dashbord(Request $request)
     {
-        $nbProperties = Propriete::where('user_id', 'personne connecte id ')->count();
-        $nbReviews = Comment::where('user_id', 'personne connecte id ')->count();
-        $nbMessages = Message::where('user_id', 'personne connecte id ')->count();
-        /*
-        $Messages = Message::where('user_id', 'personne connecte id ')
+
+        
+
+
+
+
+        $nbProperties = Propriete::where('user_id', FacadesAuth::id())->count();
+
+        // Nombre de commentaires pour les propriétés de l'utilisateur connecté
+        $nbReviews = Comment::whereHas('propriete', function($query) {
+            $query->where('user_id', FacadesAuth::id());
+        })->count();
+
+
+        $nbMessages = Message::where('proprietaire_id', FacadesAuth::id())->count();
+
+        $messages = Message::where('proprietaire_id', FacadesAuth::id())
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+
+        // Les 3 derniers commentaires pour les propriétés de l'utilisateur connecté
+        $reviews = Comment::whereHas('propriete', function($query) {
+            $query->where('user_id', FacadesAuth::id());
+        })->orderBy('created_at', 'desc')
         ->limit(3)
-        ->order_by('created_at','desc')
         ->get();
 
 
-        $Reviews = Comment::where('user_id', 'personne connecte id ')
-        ->limit(3)
-        ->order_by('created_at','desc')
-        ->get();
-*/
-        return view('admin/dashbord');
+        if ($request->has('btn_modif')) {
+            $nom_prenom = $request->nom_prenom;
+            $sexe = $request->sexe;
+            $pays = $request->pays;
+            $ville = $request->ville;
+            $website = $request->website;
+            $description = $request->description;
+
+            $user = User::where('id', FacadesAuth::user()->id)->first();
+
+            $user->nom_prenom = $nom_prenom;
+            $user->sexe = $sexe;
+            $user->pays = $pays;
+            $user->ville = $ville;
+            $user->website = $website;
+            $user->description = $description;
+        
+            $user->save();
+         // Stocker un message de succès dans la session
+         session(['message' => 'Profile updated successfully.', 'message_type' => 'success']);
+        } /*else {
+            // Stocker un message d'erreur dans la session
+            session(['message' => 'User not found.', 'message_type' => 'error']);
+        }*/
+
+        return view('admin/dashbord',compact(
+            'nbProperties',
+            'nbReviews', 
+            'nbMessages',
+            'messages',
+            'reviews'
+        ));
     }
+    
+
+   
+
 
     public function userProfile()
     {

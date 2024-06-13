@@ -276,8 +276,14 @@ top-header-inner
                                             @endphp
 
                                             <ul class="rating">
-                                                @for ($i = 0; $i < $filledStars; $i++) <li><i class="ri-star-fill"></i>
+                                                @for ($i = 0; $i < $filledStars; $i++) 
+                                                <li>
+                                                    <i class="ri-star-fill"></i>
                                                 </li>
+                                                @endfor
+
+                                                @for ($i = 0; $i < $grayStars; $i++) 
+                                                <li><i class="ri-star-line"></i>
                                                 @endfor
 
 

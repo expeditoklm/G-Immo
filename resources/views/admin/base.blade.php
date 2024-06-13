@@ -70,10 +70,18 @@
                         </div>
                         <!-- Left Side Content / End -->
                         <!-- Right Side Content / -->
+                            @php
+                                $user = \App\Helpers\BaseHelper::getUser();
+                            @endphp
+                            
                         <div class="header-user-menu user-menu">
                             <div class="header-user-name">
-                                <span><img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt=""></span>Hi, Mary!
+                            @if($user)
+                                <span><img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt=""></span>Hi, {{ $user->nom_prenom }}!
                             </div>
+                            @else
+                                <p>User not found.</p>
+                            @endif
                             <ul>
                                 <li><a href="{{ request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }} "> Edit profile</a></li>
                                 <li><a href="{{ request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Add Property</a></li>
@@ -100,12 +108,18 @@
                     <div class="col-lg-3 col-md-12 col-xs-12 pl-0 pr-0 user-dash">
                         <div class="user-profile-box mb-0">
                             <div class="text-center mt-2"><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"> </div>
+                           
+                            @if($user)
                             <div class="header clearfix">
                                 <img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt="avatar" class="img-fluid profile-img">
                             </div>
+                            
                             <div class="active-user">
-                                <h2>Mary Smith</h2>
+                                <h2>{{ $user->nom_prenom }}</h2>
                             </div>
+                            @else
+                                <p>User not found.</p>
+                            @endif
                             <div class="detail clearfix">
                                 <ul class="mb-0">
                                     <li>

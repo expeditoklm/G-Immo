@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $updated_at
  * @property string $remember_token
  * @property string $email_verified_at
+ * @property Comment[] $comments
+ * @property Message[] $messages
  * @property Message[] $messages
  * @property Propriete[] $proprietes
  */
@@ -35,12 +37,28 @@ class User extends Model implements AuthenticatableContract
     /**
      * @var array
      */
-    protected $fillable = ['nom_prenom', 'telephone', 'email', 'password', 'pays', 'website', 'description', 'ville', 'role', 'profile_img', 'deleted', 'created_at', 'updated_at', 'remember_token', 'email_verified_at'];
+    protected $fillable = ['nom_prenom', 'sexe', 'telephone', 'email', 'password', 'pays', 'website', 'description', 'ville', 'role', 'profile_img', 'deleted', 'created_at', 'updated_at', 'remember_token', 'email_verified_at'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function messages()
+    {
+        return $this->hasMany('App\Models\Message', 'proprietaire_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function message()
     {
         return $this->hasMany('App\Models\Message');
     }
@@ -51,10 +69,5 @@ class User extends Model implements AuthenticatableContract
     public function proprietes()
     {
         return $this->hasMany('App\Models\Propriete');
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
     }
 }

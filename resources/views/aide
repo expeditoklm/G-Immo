@@ -32,6 +32,9 @@ composer require krlove/eloquent-model-generator --dev
 
 action="{{ route('admin.post-type-propriete') }}"
 
+php artisan config:cache
+php artisan config:clear
+php artisan cache:clear
 
 
 php artisan krlove:generate:model User --table-name=users
@@ -168,3 +171,59 @@ href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' :
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="review">
+                <div class="thumb">
+                    <img class="img-fluid" src="{{asset('assets/admin/images/testimonials/ts-4.jpg')}}" alt="">
+                </div>
+                <div class="body">
+                    <h5>{{ $item->propriete->titre}}</h5>
+                    <h6>{{ $item->nom_prenom}}</h6>
+                    <p class="post-time">{{ $item->created_at}}</p>
+                    <p class="content mb-0 mt-2">{{ $item->comment}}</p>
+                    @php
+                        $totalStars = 5;
+                        $filledStars = $item->note;
+                        $grayStars = $totalStars - $filledStars;
+                    @endphp
+                    <ul class="starts mb-0">
+                        @for ($i = 0; $i < $filledStars; $i++) 
+                        <li>
+                            <i class="fa fa-star"></i>
+                        </li>
+                        @endfor
+                    </ul>
+                    <div class="controller">
+                        <ul>
+                            
+                            <li><a href="#"><i class="far fa-trash-alt"></i></a>
+                        </ul>
+                    </div>
+                </div>
+            </div>

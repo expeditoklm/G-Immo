@@ -308,6 +308,10 @@ top-header-inner
                                                 </li>
                                                 @endfor
 
+                                                @for ($i = 0; $i < $grayStars; $i++) 
+                                                <li><i class="ri-star-line"></i>
+                                                @endfor
+
 
                                             </ul>
                                             <p>{{ $item->comment }}.</p>
@@ -342,7 +346,7 @@ top-header-inner
                 <div class="form-group">
                     <textarea class="form-control" name="message" placeholder="Your message"></textarea>
                 </div>
-                <button type="submit" class="default-btn">
+                <button type="submit" name="btn_msg" class="default-btn">
                     Submit Request
                 </button>
             </form>
