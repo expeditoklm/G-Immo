@@ -539,27 +539,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                <i class="ri-facebook-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://twitter.com/" target="_blank">
-                                                                <i class="ri-twitter-x-line"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                <i class="ri-instagram-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                <i class="ri-linkedin-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                                 </div>
                                             </li>
 
@@ -696,27 +696,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                <i class="ri-facebook-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://twitter.com/" target="_blank">
-                                                                <i class="ri-twitter-x-line"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                <i class="ri-instagram-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                <i class="ri-linkedin-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                                 </div>
                                             </li>
 
@@ -853,27 +853,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                <i class="ri-facebook-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://twitter.com/" target="_blank">
-                                                                <i class="ri-twitter-x-line"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                <i class="ri-instagram-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                <i class="ri-linkedin-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                                 </div>
                                             </li>
 
@@ -1011,27 +1011,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                <i class="ri-facebook-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://twitter.com/" target="_blank">
-                                                                <i class="ri-twitter-x-line"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                <i class="ri-instagram-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                <i class="ri-linkedin-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                                 </div>
                                             </li>
 
@@ -1169,27 +1169,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                <i class="ri-facebook-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://twitter.com/" target="_blank">
-                                                                <i class="ri-twitter-x-line"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                <i class="ri-instagram-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                <i class="ri-linkedin-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                                 </div>
                                             </li>
 
@@ -1326,27 +1326,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                <i class="ri-facebook-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://twitter.com/" target="_blank">
-                                                                <i class="ri-twitter-x-line"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                <i class="ri-instagram-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                <i class="ri-linkedin-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                                 </div>
                                             </li>
 
@@ -1483,27 +1483,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                <i class="ri-facebook-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://twitter.com/" target="_blank">
-                                                                <i class="ri-twitter-x-line"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                <i class="ri-instagram-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                <i class="ri-linkedin-fill"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                                 </div>
                                             </li>
 
@@ -1600,27 +1600,27 @@ row justify-content-center align-items-center
                                         <i class="ri-share-line"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://www.facebook.com/" target="_blank">
-                                                <i class="ri-facebook-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://twitter.com/" target="_blank">
-                                                <i class="ri-twitter-x-line"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com/" target="_blank">
-                                                <i class="ri-instagram-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                <i class="ri-linkedin-fill"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                 </div>
                             </li>
 
@@ -1850,7 +1850,7 @@ row justify-content-center align-items-center
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://bd.linkedin.com/" target="_blank">
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
                                                     <i class="ri-linkedin-fill"></i>
                                                 </a>
                                             </li>

@@ -108,27 +108,27 @@ top-header-inner
                                                 <i class="ri-share-line"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="https://www.facebook.com/" target="_blank">
-                                                        <i class="ri-facebook-fill"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://twitter.com/" target="_blank">
-                                                        <i class="ri-twitter-x-line"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://www.instagram.com/" target="_blank">
-                                                        <i class="ri-instagram-fill"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://bd.linkedin.com/" target="_blank">
-                                                        <i class="ri-linkedin-fill"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-twitter-x-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/" target="_blank">
+                                                    <i class="ri-instagram-fill"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                         </div>
                                     </li>
 
@@ -375,10 +375,11 @@ top-header-inner
                                 <h3>Featured Properties</h3>
                                 <div class="swiper featured-properties-slider">
                                     <div class="swiper-wrapper">
+                                    @foreach ($similarProperties as $item)
                                         <div class="swiper-slide">
                                             <div class="properties-item">
                                                 <div class="properties-image">
-                                                    <a href="property-details.html">
+                                                    <a href="{{ route('pages.single') }}">
                                                         <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
                                                     </a>
                                                     <ul class="action">
@@ -386,59 +387,110 @@ top-header-inner
                                                         <li>
                                                             <div class="media">
                                                                 <span><i class="ri-vidicon-fill"></i></span>
-                                                                <span><i class="ri-image-line"></i>5</span>
+                                                                <span><i class="ri-image-line"></i>{{ $item->proprieteImages->count() }}</span>
                                                             </div>
                                                         </li>
                                                     </ul>
+                                                    <!-- Recoriger-->
                                                     <ul class="link-list">
                                                         <li>
-                                                            <a href="property-grid.html" class="link-btn">Apartment</a>
+                                                            <a href="#" class="link-btn" onclick="document.getElementById('post-{{ $item->id }}').submit(); return false;">
+                                                            {{ $item->typePropriete->libelle }}
+                                                            </a>
                                                         </li>
+
+                                                        <!-- Formulaire caché -->
+                                                        <form id="post-{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                        <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                                        </form>
+
                                                         <li>
-                                                            <a href="property-grid.html" class="link-btn">For Sale</a>
+                                                            <a href="#" class="link-btn" onclick="document.getElementById('post2-{{ $item->id }}').submit(); return false;">
+                                                            {{ $item->status }}
+                                                            </a>
                                                         </li>
+
+                                                        <!-- Formulaire caché -->
+                                                        <form id="post2-{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                                            <input type="hidden" name="status" value="{{ $item->status }}">
+                                                        </form>
+                                                        
                                                     </ul>
                                                     <ul class="info-list">
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bed.svg')}}" alt="bed">
-                                                            </div>
-                                                            <span>6</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/bathroom.svg')}}" alt="bathroom">
-                                                            </div>
-                                                            <span>4</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/parking.svg')}}" alt="parking">
-                                                            </div>
-                                                            <span>1</span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="icon">
-                                                                <img src="{{asset('assets/images/properties/area.svg')}}" alt="area">
-                                                            </div>
-                                                            <span>3250</span>
-                                                        </li>
+                                                        @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
+                                                            <li>
+                                                                <div class="icon">
+                                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                                                </div>
+                                                                <span>{{ $item->nbChambre }}</span>
+                                                            </li>
+                                                        @endif
+
+                                                        @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
+                                                            <li>
+                                                                <div class="icon">
+                                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                                                </div>
+                                                                <span>{{ $item->nbToillete }}</span>
+                                                            </li>
+                                                        @endif
+
+                                                        @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
+                                                            <li>
+                                                                <div class="icon">
+                                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                                                </div>
+                                                                <span>{{ $item->nbPiece }}</span>
+                                                            </li>
+                                                        @endif
+
+                                                        @if(!is_null($item->surface) && $item->surface != 0)
+                                                            <li>
+                                                                <div class="icon">
+                                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                                                </div>
+                                                                <span>{{ $item->surface }}</span>
+                                                            </li>
+                                                        @endif
                                                     </ul>
+
                                                 </div>
                                                 <div class="properties-content">
                                                     <div class="top">
                                                         <div class="title">
+                                                            <!-- Lien cliquable -->
                                                             <h3>
-                                                                <a href="property-details.html">Vacation Homes</a>
+                                                                <a href="#" onclick="document.getElementById('post{{ $item->id }}').submit(); return false;">
+                                                                    {{ $item->titre }}
+                                                                </a>
                                                             </h3>
-                                                            <span>194 Mercer Street, NY 10012, USA</span>
+
+
+                                                            <!-- Formulaire caché -->
+                                                            <form id="post{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                                            </form>
+
+                                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                                         </div>
-                                                        <div class="price">$95,000</div>
+                                                        <div class="price">{{ $item->prix }} XOF</div>
                                                     </div>
                                                     <div class="bottom">
                                                         <div class="user">
                                                             <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                                                            <a href="{{ route('pages.agent') }}">Thomas Klarck</a>
+                                                            <a href="#" onclick="document.getElementById('post-form-{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
+
+                                                            <!-- Formulaire caché -->
+                                                            <form id="post-form-{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $item->user->id }}">
+                                                            </form>
                                                         </div>
                                                         <ul class="group-info">
                                                             <li>
@@ -447,36 +499,36 @@ top-header-inner
                                                                         <i class="ri-share-line"></i>
                                                                     </button>
                                                                     <ul class="dropdown-menu">
-                                                                        <li>
-                                                                            <a href="https://www.facebook.com/" target="_blank">
-                                                                                <i class="ri-facebook-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://twitter.com/" target="_blank">
-                                                                                <i class="ri-twitter-x-line"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://www.instagram.com/" target="_blank">
-                                                                                <i class="ri-instagram-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                                                <i class="ri-linkedin-fill"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
+                                                            <li>
+                                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                    <i class="ri-facebook-fill"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                    <i class="ri-twitter-x-line"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="https://www.instagram.com/" target="_blank">
+                                                                    <i class="ri-instagram-fill"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                    <i class="ri-linkedin-fill"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
                                                                 </div>
                                                             </li>
-
 
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    @endforeach
                                     </div>
                                     <div class="properties-pagination"></div>
                                 </div>

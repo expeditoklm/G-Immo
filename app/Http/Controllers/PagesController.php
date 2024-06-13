@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
@@ -304,17 +305,43 @@ class PagesController extends Controller
         $propertiesSingle = Propriete::where('id', $id)->first();
         $propertiesSingle->vue = $propertiesSingle->vue + 1;
         $propertiesSingle->save();
-        //dd($propertiesSingle);
-        return view('pages/single', compact('propertiesSingle'));
+        
+
+
+        $type_propriete_id = $propertiesSingle->type_propriete_id;
+        $ville = $propertiesSingle->ville;
+        $status = $propertiesSingle->status;
+        $quartier = $propertiesSingle->quartier;
+        $nbPiece = $propertiesSingle->nbPiece;
+        $prix = $propertiesSingle->prix;
+
+
+
+
+      $similarProperties = Propriete::where('type_propriete_id', $type_propriete_id)
+                                    ->where('ville', $ville)
+                                    ->where('quartier', $quartier)
+                                    ->where('status', $status)
+                                    ->where('nbPiece',$nbPiece )
+                                    ->where('prix', '>=', $propertiesSingle->prix - 10000)
+                                    ->where('prix', '<=', $propertiesSingle->prix + 10000)
+                                    ->where('id', '!=', $id)
+                                    ->take(2)
+                                    ->get();
+
+
+                                    
+        //dd($similarProperties);
+
+        return view('pages/single', compact('propertiesSingle','similarProperties'));
     }
 
     public function contactUs(Request $request)
     {
-        $user_id = $request->user_id;
 
-        if ($request->has('user_id')) {
-            Message::create([
-                'user_id' => $user_id,
+        
+            $msg = Message::create([
+                'user_id' => FacadesAuth::user()->id,
                 'nom_prenom' => $request->nom_prenom,
                 'email' => $request->email,
                 'titre_msg' => $request->titre_msg,
@@ -323,7 +350,7 @@ class PagesController extends Controller
                 'deleted' => 0,
                 'proprietaire_id' =>1
             ]);
-    
+        if ($msg) {
             return redirect()->route('pages.contact-us')->with('success', 'Message sent successfully.');
         }
         return view('pages/contact-us');

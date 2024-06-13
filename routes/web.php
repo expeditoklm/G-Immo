@@ -26,9 +26,6 @@ Route::get('/search', [PagesController::class, 'search'])->name('pages.search');
 Route::get('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
 Route::post('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
 Route::get('/details', [PagesController::class, 'details'])->name('pages.details');
-
-
-Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
 Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
 
 
@@ -44,7 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
     Route::get('/add-property', [PagesController::class, 'addProperty'])->name('admin.add-property');
-    Route::post('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
+    Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
+    Route::post('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contacts-us');
 
     Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');
     Route::get('/messages', [PagesController::class, 'messages'])->name('admin.messages');

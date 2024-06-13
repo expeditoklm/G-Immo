@@ -45,6 +45,15 @@ top-header-inner
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
+
+                @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show m-2" role="alert">
+                    <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
+                        <span class="fw-bold d-block mx-auto">{{ session('error') }}</span> <!-- Utilisez mx-auto pour centrer le span -->
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
                 <div class="page-banner-content">
                     <h2>Contact Us</h2>
                     <ul class="list">
@@ -106,9 +115,8 @@ top-header-inner
                     <div class="col-lg-8 col-md-7">
                         <div class="contact-wrap-form">
                             <h3>Get In Touch</h3>
-                            <form action="{{ route('pages.contact-us') }}" method="POST">
+                            <form action="{{ route('pages.contacts-us') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                 <div class="form-group">
                                     <label>Your Name</label>
                                     <input type="text" name="nom_prenom" class="form-control" placeholder="Enter your name">
