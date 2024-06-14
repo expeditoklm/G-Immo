@@ -39,10 +39,26 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 @include('admin.success_error')
 
 <div class="single-add-property">
+    <h3>Property Media</h3>
+    <div class="property-form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="{{ route('add-property-post') }}" class="dropzone" id="my-dropzone">
+                    @csrf
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="{{ route('add-property-post') }}" id="form1" method="POST">
+@csrf
+
+<div class="single-add-property">
     <h3>Property description and price</h3>
     <div class="property-form-group">
-        <form action="{{ route('add-property-post') }}" id="form1" method="POST">
-            @csrf
+        
             <div class="row">
                 <div class="col-md-12">
                     <p>
@@ -59,7 +75,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                     </p>
                 </div>
             </div>
-            <div class="row">
+            <div class="row">  
             <div class="col-lg-6 col-md-12 dropdown faq-drop">
                 <div class="form-group categories">
                     <select name="status" class="form-control wide">
@@ -97,26 +113,11 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                     </p>
                 </div>
             </div>
-        </form>
     </div>
 </div>
 
-<div class="single-add-property">
-    <h3>Property Media</h3>
-    <div class="property-form-group">
-        <div class="row">
-            <div class="col-md-12">
-                <form action="{{ route('add-property-post') }}" class="dropzone" id="my-dropzone">
-                    @csrf
-                </form>
 
-            </div>
-        </div>
-    </div>
-</div>
 
-<form action="{{ route('add-property-post') }}" method="POST">
-@csrf
 <div class="single-add-property">
     <h3>Property Location</h3>
     <div class="property-form-group">
@@ -264,21 +265,24 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             </div>
         </div>
     </div>
+
     <div class="add-property-button pt-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="prperty-submit-button">
-                    <button type="submit" onclick="document.getElementById('form1').submit(); return false;">Submit Property</button>
+                    <button type="submit" name="btn_submit" >Submit Property</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 </form>
+
 @endsection
 
 
 @section('js')
+
 <script src="{{ asset('assets/admin/js/dropzone.js') }}"></script>
 <script>
     Dropzone.options.myDropzone = {

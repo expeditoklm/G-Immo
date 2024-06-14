@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
+    Route::post('/add-property-post2', [PagesController::class, 'addPropertyPost2'])->name('add-property-post2');
     Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
 

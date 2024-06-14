@@ -185,8 +185,8 @@ class PagesController extends Controller
         $uniqueCities = Propriete::select('ville')->distinct()->get();
 
         $popularProperties = Propriete::orderBy('vue', 'desc')
-        ->take(10)
-        ->get();
+            ->take(10)
+            ->get();
 
 
         $properties = Propriete::paginate(10);
@@ -200,21 +200,20 @@ class PagesController extends Controller
         ));
     }
 
-
     public function searchPost(Request $request)
     {
         // Obtenir le nombre de propriétés par type et statut
         $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
             $query->where('proprietes.status', 'For Sale');
         }])->get();
-    
+
         $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
             $query->where('proprietes.status', 'Rental');
         }])->get();
-    
+
         // Obtenir les villes uniques
         $uniqueCities = Propriete::select('ville')->distinct()->get();
-    
+
         // Récupérer les entrées du formulaire
         $status = $request->input('status');
         $type_propriete_id = $request->input('type_propriete_id');
@@ -224,10 +223,10 @@ class PagesController extends Controller
         $nbPiece = $request->input('nbPiece');
         $user_id = $request->input('user_id');
         $searchTerm = $request->input('ttr_cra_dsc_sta_p_v_q_typ_us');
-    
+
         // Construire la requête de base
         $query = Propriete::query();
-    
+
         // Ajouter les filtres de recherche
         if (!empty($status)) {
             $query->where('status', $status);
@@ -236,27 +235,27 @@ class PagesController extends Controller
         if (!empty($user_id)) {
             $query->where('user_id', $user_id);
         }
-    
+
         if (!empty($type_propriete_id)) {
             $query->where('type_propriete_id', $type_propriete_id);
         }
-    
+
         if (!empty($ville)) {
             $query->where('ville', $ville);
         }
-    
+
         if (!empty($prix)) {
             $query->where('prix', '<=', $prix);  // Assumant que l'utilisateur veut des propriétés jusqu'à ce prix
         }
-    
+
         if (!empty($nbChambre)) {
             $query->where('nbChambre', $nbChambre);
         }
-    
+
         if (!empty($nbPiece)) {
             $query->where('nbPiece', $nbPiece);
         }
-    
+
         // Ajouter la recherche par mot-clé
         if (!empty($searchTerm)) {
             $query->where(function ($q) use ($searchTerm) {
@@ -274,12 +273,12 @@ class PagesController extends Controller
             });
         }
         $popularProperties = Propriete::orderBy('vue', 'desc')
-        ->take(10)
-        ->get();
-    
+            ->take(10)
+            ->get();
+
         // Paginer les résultats
         $properties = $query->paginate(10)->appends($request->except('page'));
-    
+
         // Retourner la vue avec les résultats
         return view('pages.search', compact(
             'properties',
@@ -289,7 +288,7 @@ class PagesController extends Controller
             'popularProperties'
         ));
     }
-    
+
 
     public function details()
     {
@@ -303,7 +302,7 @@ class PagesController extends Controller
         $propertiesSingle = Propriete::where('id', $id)->first();
         $propertiesSingle->vue = $propertiesSingle->vue + 1;
         $propertiesSingle->save();
-        
+
 
 
         $type_propriete_id = $propertiesSingle->type_propriete_id;
@@ -316,38 +315,38 @@ class PagesController extends Controller
 
 
 
-      $similarProperties = Propriete::where('type_propriete_id', $type_propriete_id)
-                                    ->where('ville', $ville)
-                                    ->where('quartier', $quartier)
-                                    ->where('status', $status)
-                                    ->where('nbPiece',$nbPiece )
-                                    ->where('prix', '>=', $propertiesSingle->prix - 10000)
-                                    ->where('prix', '<=', $propertiesSingle->prix + 10000)
-                                    ->where('id', '!=', $id)
-                                    ->take(2)
-                                    ->get();
+        $similarProperties = Propriete::where('type_propriete_id', $type_propriete_id)
+            ->where('ville', $ville)
+            ->where('quartier', $quartier)
+            ->where('status', $status)
+            ->where('nbPiece', $nbPiece)
+            ->where('prix', '>=', $propertiesSingle->prix - 10000)
+            ->where('prix', '<=', $propertiesSingle->prix + 10000)
+            ->where('id', '!=', $id)
+            ->take(2)
+            ->get();
 
 
-                                    
+
         //dd($similarProperties);
 
-        return view('pages/single', compact('propertiesSingle','similarProperties'));
+        return view('pages/single', compact('propertiesSingle', 'similarProperties'));
     }
 
     public function contactUs(Request $request)
     {
 
-        
-            $msg = Message::create([
-                'user_id' => FacadesAuth::user()->id,
-                'nom_prenom' => $request->nom_prenom,
-                'email' => $request->email,
-                'titre_msg' => $request->titre_msg,
-                'telephone' => $request->telephone,
-                'message' => $request->message,
-                'deleted' => 0,
-                'proprietaire_id' =>1
-            ]);
+
+        $msg = Message::create([
+            'user_id' => FacadesAuth::user()->id,
+            'nom_prenom' => $request->nom_prenom,
+            'email' => $request->email,
+            'titre_msg' => $request->titre_msg,
+            'telephone' => $request->telephone,
+            'message' => $request->message,
+            'deleted' => 0,
+            'proprietaire_id' => 1
+        ]);
         if ($msg) {
             return redirect()->route('pages.contact-us')->with('success', 'Message sent successfully.');
         }
@@ -368,15 +367,15 @@ class PagesController extends Controller
         if (!$agent) {
             return redirect()->route('pages.acceuil')->with('error', 'Agent not found');
         }
-    
+
         $properties = Propriete::where('user_id', $id)
             ->limit(6)
             ->get();
-    
+
         $commentaires = Comment::whereHas('propriete', function ($query) use ($id) {
             $query->where('user_id', $id);
         })->get();
-    
+
         if ($request->has('btn_msg')) {
             Message::create([
                 'user_id' => $id,
@@ -385,9 +384,9 @@ class PagesController extends Controller
                 'telephone' => $request->telephone,
                 'message' => $request->message,
                 'deleted' => 0,
-                'proprietaire_id' =>$user_id
+                'proprietaire_id' => $user_id
             ]);
-    
+
             return redirect()->route('pages.agent', [
                 'id' => $id,
                 'agent' => $agent,
@@ -395,39 +394,29 @@ class PagesController extends Controller
                 'commentaires' => $commentaires
             ])->with('success', 'Message sent successfully.');
         }
-    
-    
+
+
         return view('pages.agent', compact('agent', 'properties', 'commentaires'));
     }
-    
-
-
-
 
     public function dashbord(Request $request)
     {
         $nbProperties = Propriete::where('user_id', FacadesAuth::id())->count();
-
         // Nombre de commentaires pour les propriétés de l'utilisateur connecté
-        $nbReviews = Comment::whereHas('propriete', function($query) {
+        $nbReviews = Comment::whereHas('propriete', function ($query) {
             $query->where('user_id', FacadesAuth::id());
         })->count();
-
-
         $nbMessages = Message::where('proprietaire_id', FacadesAuth::id())->count();
-
         $messages = Message::where('proprietaire_id', FacadesAuth::id())
             ->orderBy('created_at', 'desc')
             ->limit(3)
             ->get();
-
         // Les 3 derniers commentaires pour les propriétés de l'utilisateur connecté
-        $reviews = Comment::whereHas('propriete', function($query) {
+        $reviews = Comment::whereHas('propriete', function ($query) {
             $query->where('user_id', FacadesAuth::id());
         })->orderBy('created_at', 'desc')
-        ->limit(3)
-        ->get();
-
+            ->limit(3)
+            ->get();
 
         if ($request->has('btn_modif')) {
             $nom_prenom = $request->nom_prenom;
@@ -445,78 +434,72 @@ class PagesController extends Controller
             $user->ville = $ville;
             $user->website = $website;
             $user->description = $description;
-        
             $user->save();
-         // Stocker un message de succès dans la session
-         session(['message' => 'Profile updated successfully.', 'message_type' => 'success']);
-        } /*else {
-            // Stocker un message d'erreur dans la session
-            session(['message' => 'User not found.', 'message_type' => 'error']);
-        }*/
 
-        return view('admin/dashbord',compact(
+            session(['message' => 'Profile updated successfully.', 'message_type' => 'success']);
+        }
+
+        return view('admin/dashbord', compact(
             'nbProperties',
-            'nbReviews', 
+            'nbReviews',
             'nbMessages',
             'messages',
             'reviews'
         ));
     }
-    
-
-   
-
 
     public function userProfile()
     {
         $user = User::where('id', FacadesAuth::user()->id)->first();
-        return view('admin/profile',compact('user'));
+        return view('admin/profile', compact('user'));
     }
-
-
 
     public function myProperties()
     {
         $properties = Propriete::where('user_id', FacadesAuth::id())
-        ->orderBy('vue', 'desc')
-        ->paginate(10);
+            ->orderBy('vue', 'desc')
+            ->paginate(10);
 
-        return view('admin/my-properties',compact('properties'));
+        return view('admin/my-properties', compact('properties'));
     }
 
     public function addProperty()
     {
         $typeProprietes = TypePropriete::get();
         $caracteristiques = Caracteristique::get();
-        return view('admin/add-property',compact(
+        return view('admin/add-property', compact(
             'typeProprietes',
             'caracteristiques'
         ));
     }
 
-    
+   
+
+
+
 
     public function addPropertyPost(Request $request)
     {
-        $request->validate([
-            'file' => 'required|file|mimes:jpeg,jpg,png,gif|max:2048',
-        ]);
-    
-        $file = $request->file('file');
+        if (!session('propriete_id') && session('propriete_id') == null) {
+            $property = Propriete::create([
+                'user_id' => FacadesAuth::user()->id,
+                'type_propriete_id' => 1,
+                'deleted' => 0,
+            ]);
+            session()->put('propriete_id', $property->id,);
+        }
 
-        if($file){
+        $file = $request->file('file');
+        if ($file) {
+            $request->validate([
+                'file' => 'nullable|file|mimes:jpeg,jpg,png,gif|max:2048',
+            ]);
             $fileName = time() . '_' . $file->getClientOriginalName();
             $filePath = $file->storeAs('uploads', $fileName, 'public');
-            if(!session('propriete_id')){
-                $property = Propriete::create([
-    
-                    'user_id' => FacadesAuth::user()->id,
-                    'type_propriete_id' => 1,
-                    'deleted' => 0,
-                ]);
-                session()->put('propriete_id',$property->id,);
-            }
+
             $propriete_id = session('propriete_id');
+            //dd("jeneregistre img");
+
             ProprieteImage::create([
                 'url' => $filePath,
                 'propriete_id' => $propriete_id,
@@ -525,88 +508,112 @@ class PagesController extends Controller
         }
 
 
-        if ($request->has('btn_modif')) {
+        if ($request->has('btn_submit')) {
+            $propriete_id = session('propriete_id');
+            //dd(session('propriete_id'));
+            //dd($propriete_id);
+            $propriete = Propriete::where('id', $propriete_id)->first();
+
+            $defaultTitre = $propriete->titre;
+            $defaultDescription = $propriete->description;
+            $defaultStatus = $propriete->status;
+            $defaultTypeProprieteId = $propriete->type_propriete_id;
+            $defaultPrix = $propriete->prix;
+            $defaultSurface = $propriete->surface;
+            $defaultPays = $propriete->pays;
+            $defaultVille = $propriete->ville;
+            $defaultQuartier = $propriete->quartier;
+            $defaultNbPiece = $propriete->nbPiece;
+            $defaultNbChambre = $propriete->nbChambre;
+            $defaultNbToillete = $propriete->nbToillete;
+            $defaultNomContact = $propriete->nomContact;
+            $defaultPrenomContact = $propriete->prenomContact;
+            $defaultEmailContact = $propriete->emailContact;
+            $defaultPrenomContact = $propriete->type_propriete_id;
+            $defaultTelContact = $propriete->telContact;
+
+            // Ajouter la valeur par défaut au request si le champ n'est pas présent
+            $request->merge([
+
+                'titre' => $request->input('titre', $defaultTitre),
+                'description' => $request->input('description', $defaultDescription),
+                'status' => $request->input('status', $defaultStatus),
+                'type_propriete_id' => $request->input('type_propriete_id', $defaultTypeProprieteId),
+                'prix' => $request->input('prix', $defaultPrix),
+                'surface' => $request->input('surface', $defaultSurface),
+                'pays' => $request->input('pays', $defaultPays),
+                'ville' => $request->input('ville', $defaultVille),
+                'quartier' => $request->input('quartier', $defaultQuartier),
+                'nbPiece' => $request->input('nbPiece', $defaultNbPiece),
+                'nbChambre' => $request->input('nbChambre', $defaultNbChambre),
+                'nbToillete' => $request->input('nbToillete', $defaultNbToillete),
+                'nomContact' => $request->input('nomContact', $defaultNomContact),
+                'prenomContact' => $request->input('prenomContact', $defaultNbPiece),
+                'prenomContact' => $request->input('prenomContact', $defaultPrenomContact),
+                'emailContact' => $request->input('emailContact', $defaultEmailContact),
+                'telContact' => $request->input('telContact', $defaultTelContact),
+            ]);
 
             $validated = $request->validate([
-                'titre' => 'required|string|max:255',
-                'description' => 'required|string',
-                'status' => 'required|string',
-                'type_propriete_id' => 'required|integer',
-                'prix' => 'required|numeric',
-                'surface' => 'required|numeric',
-                'pays' => 'required|string',
-                'ville' => 'required|string',
-                'quartier' => 'required|string',
-                'nbPiece' => 'required|integer',
-                'nbChambre' => 'required|integer',
-                'nbToillete' => 'required|integer',
-                'nomContact' => 'required|string',
-                'prenomContact' => 'required|string',
-                'emailContact' => 'required|email',
-                'telContact' => 'required|string',
+
+                'titre' => 'nullable|string|max:255',
+                'description' => 'nullable|string',
+                'status' => 'nullable|string',
+                'type_propriete_id' => 'nullable|integer',
+                'prix' => 'nullable|numeric',
+                'surface' => 'nullable|numeric',
+                'pays' => 'nullable|string',
+                'ville' => 'nullable|string',
+                'quartier' => 'nullable|string',
+                'nbPiece' => 'nullable|integer',
+                'nbChambre' => 'nullable|integer',
+                'nbToillete' => 'nullable|integer',
+                'nomContact' => 'nullable|string',
+                'prenomContact' => 'nullable|string',
+                'emailContact' => 'nullable|email',
+                'telContact' => 'nullable|string',
                 'caracteristique' => 'array',
             ]);
-            $propriete = Propriete::where('id', $propriete_id)->first();
-          
-                $propriete->user_id = auth()->id();// Utilisateur connecté
-                $propriete->type_propriete_id = $validated['type_propriete_id'];
-                $propriete->titre = $validated['titre'];
-                $propriete->description = $validated['description'];
-                $propriete->status = $validated['status'];
-                $propriete->prix = $validated['prix'];
-                $propriete->surface = $validated['surface'];
-                $propriete->pays = $validated['pays'];
-                $propriete->ville = $validated['ville'];
-                $propriete->quartier = $validated['quartier'];
-                $propriete->nbPiece = $validated['nbPiece'];
-                $propriete->nbChambre = $validated['nbChambre'];
-                $propriete->nbToillete = $validated['nbToillete'];
-                $propriete->nomContact = $validated['nomContact'];
-                $propriete->prenomContact = $validated['prenomContact'];
-                $propriete->emailContact = $validated['emailContact'];
-                $propriete->telContact = $validated['telContact'];
-                $propriete->save();
-    
-            // Gestion des caractéristiques
-            if ($request->has('caracteristique')) {
-                $property->proprieteCaracteristiques()->sync($validated['caracteristique']);
-            }
-            // Stocker un message de succès dans la session
+
+
+            $propriete->user_id = auth()->id(); // Utilisateur connecté
+            $propriete->type_propriete_id = $validated['type_propriete_id'];
+            $propriete->titre = $validated['titre'];
+            $propriete->description = $validated['description'];
+            $propriete->status = $validated['status'];
+            $propriete->prix = $validated['prix'];
+            $propriete->surface = $validated['surface'];
+            $propriete->pays = $validated['pays'];
+            $propriete->ville = $validated['ville'];
+            $propriete->quartier = $validated['quartier'];
+            $propriete->nbPiece = $validated['nbPiece'];
+            $propriete->nbChambre = $validated['nbChambre'];
+            $propriete->nbToillete = $validated['nbToillete'];
+            $propriete->nomContact = $validated['nomContact'];
+            $propriete->prenomContact = $validated['prenomContact'];
+            $propriete->emailContact = $validated['emailContact'];
+            $propriete->telContact = $validated['telContact'];
+            $propriete->save();
+            
+            // Supprimer la variable de session propriete_id
+            session()->forget('propriete_id');
+
             session(['message' => 'Property add successfully.', 'message_type' => 'success']);
-        } /*else {
-                // Stocker un message d'erreur dans la session
-                session(['message' => 'User not found.', 'message_type' => 'error']);
-            }*/
-            // Redirection avec un message de succès
-            return redirect()->route('properties.index')->with('success', 'Property added successfully');
+            return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
+        }
+        return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
+    }
 
-
-
-       // return response()->json(['file_path' => $filePath, 'success' => true]);
-    } 
-
-    
-    
-
-   
-        public function deleteFile(Request $request)
+    public function deleteFile(Request $request)
     {
         $file = ProprieteImage::find($request->input('file_id'));
-
         if ($file) {
-            // Supprimer le fichier du stockage
             Storage::delete($file->path);
-
-            // Supprimer l'entrée de la base de données
             $file->delete();
-
             return response()->json(['success' => true]);
         }
-
         return response()->json(['success' => false], 404);
     }
-      
-
 
     public function messages()
     {
