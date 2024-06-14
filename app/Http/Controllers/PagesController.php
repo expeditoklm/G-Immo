@@ -261,14 +261,31 @@ class PagesController extends Controller
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('titre', 'like', "%{$searchTerm}%")
                     ->orWhere('description', 'like', "%{$searchTerm}%")
+                    ->orWhere('prix', 'like', "%{$searchTerm}%")
                     ->orWhere('status', 'like', "%{$searchTerm}%")
-                    ->orWhereHas('proprieteCaracteristiques', function ($query) use ($searchTerm) {
-                        $query->whereHas('caracteristique', function ($query) use ($searchTerm) {
-                            $query->where('caracteristiques.libelle', 'like', "%{$searchTerm}%");
-                        });
+                    ->orWhere('pays', 'like', "%{$searchTerm}%")
+                    ->orWhere('created_at', 'like', "%{$searchTerm}%")
+                    ->orWhere('ville', 'like', "%{$searchTerm}%")
+                    ->orWhere('quartier', 'like', "%{$searchTerm}%")
+                    ->orWhere('adresse', 'like', "%{$searchTerm}%")
+                    ->orWhere('emailContact', 'like', "%{$searchTerm}%")
+                    ->orWhere('nomContact', 'like', "%{$searchTerm}%")
+                    ->orWhere('prenomContact', 'like', "%{$searchTerm}%")
+                    ->orWhere('telContact', 'like', "%{$searchTerm}%")
+                    ->orWhereHas('caracteristiques', function ($q) use ($searchTerm) {
+                        $q->where('libelle', 'like', "%{$searchTerm}%");
                     })
-                    ->orWhereHas('typePropriete', function ($query) use ($searchTerm) {
-                        $query->where('libelle', 'like', "%{$searchTerm}%");
+                    ->orWhereHas('user', function ($q) use ($searchTerm) {
+                        $q->where('nom_prenom', 'like', "%{$searchTerm}%");
+                    })
+                    ->orWhereHas('user', function ($q) use ($searchTerm) {
+                        $q->where('telephone', 'like', "%{$searchTerm}%");
+                    })
+                    ->orWhereHas('user', function ($q) use ($searchTerm) {
+                        $q->where('email', 'like', "%{$searchTerm}%");
+                    })
+                    ->orWhereHas('typePropriete', function ($q) use ($searchTerm) {
+                        $q->where('libelle', 'like', "%{$searchTerm}%");
                     });
             });
         }
@@ -554,17 +571,30 @@ class PagesController extends Controller
                 'telContact' => $request->input('telContact', $defaultTelContact),
             ]);
 
+            $messages = [
+                'titre.required' => 'Le titre est obligatoire.',
+                'titre.max' => 'Le titre ne doit pas dépasser 255 caractères.',
+                'status.required' => 'Le statut est obligatoire.',
+                'type_propriete_id.required' => 'Le type de propriété est obligatoire.',
+                'type_propriete_id.integer' => 'Le type de propriété doit être un entier.',
+                'prix.required' => 'Le prix est obligatoire.',
+                'prix.numeric' => 'Le prix doit être un nombre.',
+                'pays.required' => 'Le pays est obligatoire.',
+                'ville.required' => 'La ville est obligatoire.',
+                'quartier.required' => 'Le quartier est obligatoire.',
+                'emailContact.email' => 'L\'adresse email doit être valide.',
+            ];
+        
             $validated = $request->validate([
-
-                'titre' => 'nullable|string|max:255',
+                'titre' => 'required|string|max:255',
                 'description' => 'nullable|string',
-                'status' => 'nullable|string',
-                'type_propriete_id' => 'nullable|integer',
-                'prix' => 'nullable|numeric',
+                'status' => 'required|string',
+                'type_propriete_id' => 'required|integer',
+                'prix' => 'required|numeric',
                 'surface' => 'nullable|numeric',
-                'pays' => 'nullable|string',
-                'ville' => 'nullable|string',
-                'quartier' => 'nullable|string',
+                'pays' => 'required|string',
+                'ville' => 'required|string',
+                'quartier' => 'required|string',
                 'nbPiece' => 'nullable|integer',
                 'nbChambre' => 'nullable|integer',
                 'nbToillete' => 'nullable|integer',
@@ -572,34 +602,44 @@ class PagesController extends Controller
                 'prenomContact' => 'nullable|string',
                 'emailContact' => 'nullable|email',
                 'telContact' => 'nullable|string',
-                'caracteristique' => 'array',
-            ]);
-
-
-            $propriete->user_id = auth()->id(); // Utilisateur connecté
-            $propriete->type_propriete_id = $validated['type_propriete_id'];
-            $propriete->titre = $validated['titre'];
-            $propriete->description = $validated['description'];
-            $propriete->status = $validated['status'];
-            $propriete->prix = $validated['prix'];
-            $propriete->surface = $validated['surface'];
-            $propriete->pays = $validated['pays'];
-            $propriete->ville = $validated['ville'];
-            $propriete->quartier = $validated['quartier'];
-            $propriete->nbPiece = $validated['nbPiece'];
-            $propriete->nbChambre = $validated['nbChambre'];
-            $propriete->nbToillete = $validated['nbToillete'];
-            $propriete->nomContact = $validated['nomContact'];
-            $propriete->prenomContact = $validated['prenomContact'];
-            $propriete->emailContact = $validated['emailContact'];
-            $propriete->telContact = $validated['telContact'];
-            $propriete->save();
+                'caracteristiques' => 'array',
+            ], $messages);
             
-            // Supprimer la variable de session propriete_id
-            session()->forget('propriete_id');
+            if($validated){
+                       
+                $propriete->user_id = auth()->id(); // Utilisateur connecté
+                $propriete->type_propriete_id = $validated['type_propriete_id'];
+                $propriete->titre = $validated['titre'];
+                $propriete->description = $validated['description'];
+                $propriete->status = $validated['status'];
+                $propriete->prix = $validated['prix'];
+                $propriete->surface = $validated['surface'];
+                $propriete->pays = $validated['pays'];
+                $propriete->ville = $validated['ville'];
+                $propriete->quartier = $validated['quartier'];
+                $propriete->nbPiece = $validated['nbPiece'];
+                $propriete->nbChambre = $validated['nbChambre'];
+                $propriete->nbToillete = $validated['nbToillete'];
+                $propriete->nomContact = $validated['nomContact'];
+                $propriete->prenomContact = $validated['prenomContact'];
+                $propriete->emailContact = $validated['emailContact'];
+                $propriete->telContact = $validated['telContact'];
+                $propriete->save();
 
-            session(['message' => 'Property add successfully.', 'message_type' => 'success']);
-            return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
+                // Gestion des caractéristiques
+                if (isset($validated['caracteristiques'])) {
+                    $propriete->caracteristiques()->sync($validated['caracteristiques']);
+                }
+                
+                // Supprimer la variable de session propriete_id
+                session()->forget('propriete_id');
+    
+                return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
+            }else{
+                
+                return redirect()->back()->with('error', 'Veillez Remplir les champs obligatoires');
+
+            }
         }
         return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
     }

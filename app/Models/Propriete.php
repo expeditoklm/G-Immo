@@ -20,10 +20,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $pays
  * @property string $ville
  * @property string $quartier
- * @property string $nomPC
- * @property string $prenomPC
- * @property string $emailPC
- * @property integer $telPC
+ * @property string $emailContact
+ * @property string $nomContact
+ * @property string $prenomContact
+ * @property integer $telContact
+ * @property integer $vue
  * @property boolean $deleted
  * @property string $created_at
  * @property string $updated_at
@@ -35,10 +36,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Propriete extends Model
 {
+    
     /**
      * @var array
      */
-    protected $fillable = ['type_propriete_id', 'emailContact','nomContact','prenomContact','telContact','vue', 'user_id', 'titre', 'description', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'surface', 'adresse', 'pays', 'ville', 'quartier', 'nomPC', 'prenomPC', 'emailPC', 'telPC', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['type_propriete_id', 'user_id', 'titre', 'description', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'surface', 'adresse', 'pays', 'ville', 'quartier', 'emailContact', 'nomContact', 'prenomContact', 'telContact', 'vue', 'deleted', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -51,9 +53,9 @@ class Propriete extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function proprieteCaracteristiques()
+    public function caracteristiques()
     {
-        return $this->hasMany('App\Models\ProprieteCaracteristique');
+        return $this->belongsToMany(Caracteristique::class, 'propriete_caracteristiques', 'propriete_id', 'caracteristique_id');
     }
 
     /**

@@ -22,8 +22,8 @@ class Caracteristique extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function proprieteCaracteristiques()
+    public function proprietes()
     {
-        return $this->hasMany('App\Models\ProprieteCaracteristique');
+        return $this->belongsToMany(Propriete::class, 'propriete_caracteristiques', 'caracteristique_id', 'propriete_id');
     }
 }

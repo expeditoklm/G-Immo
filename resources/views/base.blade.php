@@ -217,8 +217,9 @@
                     @endauth
                 </div>
                 <div class="option-item">
-                    <form class="search-form">
-                        <input type="search" class="search-field" placeholder="Search property">
+                    <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
+                        @csrf
+                        <input type="search" name="ttr_cra_dsc_sta_p_v_q_typ_us" class="search-field" placeholder="Search property">
                         <button type="submit">
                             <i class="ri-search-line"></i>
                         </button>

@@ -234,18 +234,18 @@ top-header-inner
                                 <h3>Facts And Features</h3>
                                 <div class="row justify-content-center">
 
-                                    @if ($propertiesSingle->proprieteCaracteristiques->isEmpty())
+                                    @if ($propertiesSingle->caracteristiques->isEmpty())
 
                                     <p class="mt-3">Aucune caractéristique disponible.</p>
 
                                     @else
-                                    @foreach ($propertiesSingle->proprieteCaracteristiques->chunk(5) as $chunk)
+                                    @foreach ($propertiesSingle->caracteristiques->chunk(5) as $chunk)
                                     <div class="col-lg-4 col-md-4">
                                         <ul class="list">
                                             @foreach ($chunk as $item)
                                             <li>
                                                 <i class="ri-check-double-fill"></i>
-                                                {{ $item->caracteristique->libelle }}
+                                                {{ $item->libelle }}
                                             </li>
                                             @endforeach
                                         </ul>

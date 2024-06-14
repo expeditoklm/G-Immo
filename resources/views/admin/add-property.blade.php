@@ -221,7 +221,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                     <li class="fl-wrap filter-tags clearfix">
                         <div class="checkboxes float-left">
                             <div class="filter-tags-wrap">
-                                <input id="{{ $item->id }}" type="checkbox" name="caracteristique">
+                                <input id="{{ $item->id }}" type="checkbox" name="caracteristiques[]" value="{{ $item->id }}">
                                 <label for="{{ $item->id }}">{{ $item->libelle }}</label>
                             </div>
                         </div>
