@@ -50,7 +50,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reviews', [PagesController::class, 'reviews'])->name('admin.reviews');
 
 
-    Route::post('/personnelInfo-modify', [PagesController::class, 'personnelInfoModify'])->name('personnel-info-modify');
+    Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
+    Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
+    Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
 
 
 

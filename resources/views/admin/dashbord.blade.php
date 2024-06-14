@@ -186,7 +186,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="form-group">
 
                         <select class="form-select" name="pays" id="abcd" aria-label="Default select example">
-                            <option selected="">Selectionner le pays</option>
+                            <option >Selectionner le pays</option>
                             <option value="Benin">Benin</option>
                             <option value="Cote d'ivoire ">Cote d'ivoire</option>
                             <option value="Togo">Togo</option>
@@ -199,7 +199,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="form-group">
 
                         <select class="form-select" name="ville" id="abcd" aria-label="Default select example">
-                            <option selected="">Selectionner la ville</option>
+                            <option >Selectionner la ville</option>
                             <option value="Porto">Porto</option>
                             <option value="Ctn">Ctn</option>
                             <option value="S○vi">S○vi</option>

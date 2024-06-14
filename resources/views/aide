@@ -21,7 +21,7 @@ $table->enum('status', ['active', 'inactive', 'pending']);
 
 
 
-
+8D62aW428G34
 composer require krlove/eloquent-model-generator --dev
 
 
@@ -173,6 +173,21 @@ href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' :
 
 
 
+                        
+
+<form id="post-Warehouse" action="{{ route('pages.search-post') }}" method="POST">
+    @csrf
+    <input type="hidden" name="type_propriete_id" value="8">
+</form>
+
+<!-- Formulaire visible pour l'utilisateur -->
+<form action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+    @csrf
+    <input type="hidden" name="type_propriete_id" value="8">
+    <button type="submit" onclick="document.getElementById('post-Warehouse').submit(); return false;">
+        Warehouse
+    </button>
+</form>
 
 
 
@@ -180,50 +195,13 @@ href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' :
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="review">
-                <div class="thumb">
-                    <img class="img-fluid" src="{{asset('assets/admin/images/testimonials/ts-4.jpg')}}" alt="">
-                </div>
-                <div class="body">
-                    <h5>{{ $item->propriete->titre}}</h5>
-                    <h6>{{ $item->nom_prenom}}</h6>
-                    <p class="post-time">{{ $item->created_at}}</p>
-                    <p class="content mb-0 mt-2">{{ $item->comment}}</p>
-                    @php
-                        $totalStars = 5;
-                        $filledStars = $item->note;
-                        $grayStars = $totalStars - $filledStars;
-                    @endphp
-                    <ul class="starts mb-0">
-                        @for ($i = 0; $i < $filledStars; $i++) 
-                        <li>
-                            <i class="fa fa-star"></i>
-                        </li>
-                        @endfor
-                    </ul>
-                    <div class="controller">
-                        <ul>
-                            
-                            <li><a href="#"><i class="far fa-trash-alt"></i></a>
-                        </ul>
-                    </div>
+<div class="col-lg-6 col-md-12 dropdown faq-drop">
+                <div class="form-group categories">
+                    <select name="pays" class="form-control wide">
+                        <option value="" disabled selected>Select Country</option>
+                        <option value="Benin">Benin</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Algerie">Algerie</option>
+                    </select>
                 </div>
             </div>

@@ -47,6 +47,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             </tr>
         </thead>
         <tbody>
+        @foreach ($properties as $item)
             <tr>
                 <td class="image myelist">
                     <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}" class="img-fluid"></a>
@@ -54,204 +55,81 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 <td>
                     <div class="inner">
                         <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
+                            <h2>{{ $item->titre }}</h2>
                         </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
+                        <figure><i class="lni-map-marker"></i> {{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</figure>
+                        
+                        @php
+                        $totalStars = 5;
+                        $filledStars =  intval($item->comments->avg('note')) ;
+                        $grayStars = $totalStars - $filledStars;
+                        @endphp
                         <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
+                            @for ($i = 0; $i < $filledStars; $i++)
+                            <li class="mb-0">
+                                <i class="fa fa-star"></i>
                             </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
+                            @endfor
+
+                            @for ($i = 0; $i < $grayStars; $i++) 
+                            <li class="mb-0">
+                                <i class="fa fa-star-o"></i>
                             </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
+                            @endfor
+                            <li class="ml-3">({{ $item->comments->count() }} Reviews)</li>
                         </ul>
-                    </div>
+
+
+                    </div> 
                 </td>
-                <td>08.14.2020</td>
-                <td>163</td>
+                <td>{{ $item->created_at }}</td>
+                <td>{{ $item->vue }}</td>
                 <td class="actions">
                     <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
                     <a href="#"><i class="far fa-trash-alt"></i></a>
                 </td>
             </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-2.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star-o"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>202</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-3.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>412</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-4.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star-o"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>675</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-5.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>325</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="image">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-6.jpg')}}" class="img-fluid"></a>
-                </td>
-                <td>
-                    <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
-                        </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star-o"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
-                        </ul>
-                    </div>
-                </td>
-                <td>08.14.2020</td>
-                <td>247</td>
-                <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
+        @endforeach
         </tbody>
     </table>
     <div class="pagination-container">
         <nav>
-            <ul class="pagination">
-                <li class="page-item"><a class="btn btn-common" href="#"><i class="lni-chevron-left"></i> Previous </a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="btn btn-common" href="#">Next <i class="lni-chevron-right"></i></a></li>
+            <ul class="pagination justify-content-center">
+
+                {{-- Bouton Previous --}}
+                @if ($properties->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $properties->previousPageUrl() }}">Previous</a>
+                    </li>
+                @endif
+
+                {{-- Affichage des pages --}}
+                @foreach ($properties->getUrlRange(1, $properties->lastPage()) as $page => $url)
+                    <li class="page-item {{ $page == $properties->currentPage() ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                {{-- Bouton Next --}}
+                @if ($properties->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $properties->nextPageUrl() }}">Next</a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link">Next</span>
+                    </li>
+                @endif
+
             </ul>
         </nav>
     </div>
+
+
 </div>
 
 @endsection

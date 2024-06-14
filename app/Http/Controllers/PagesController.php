@@ -6,13 +6,17 @@ use App\Models\Comment;
 use App\Models\Message;
 use Auth;
 use App\Models\Propriete;
+use App\Models\Caracteristique;
+use App\Models\ProprieteImage;
 use App\Models\TypePropriete;
 use App\Models\User;
+use Faker\Core\File;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PagesController extends Controller
 {
@@ -402,12 +406,6 @@ class PagesController extends Controller
 
     public function dashbord(Request $request)
     {
-
-        
-
-
-
-
         $nbProperties = Propriete::where('user_id', FacadesAuth::id())->count();
 
         // Nombre de commentaires pour les propriétés de l'utilisateur connecté
@@ -471,21 +469,144 @@ class PagesController extends Controller
 
     public function userProfile()
     {
-        return view('admin/profile');
+        $user = User::where('id', FacadesAuth::user()->id)->first();
+        return view('admin/profile',compact('user'));
     }
 
 
 
     public function myProperties()
     {
-        $Reviews = Comment::where('user_id', 'personne connecte id ')->get();
-        return view('admin/my-properties');
+        $properties = Propriete::where('user_id', FacadesAuth::id())
+        ->orderBy('vue', 'desc')
+        ->paginate(10);
+
+        return view('admin/my-properties',compact('properties'));
     }
 
     public function addProperty()
     {
-        return view('admin/add-property');
+        $typeProprietes = TypePropriete::get();
+        $caracteristiques = Caracteristique::get();
+        return view('admin/add-property',compact(
+            'typeProprietes',
+            'caracteristiques'
+        ));
     }
+
+    
+
+    public function addPropertyPost(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:jpeg,jpg,png,gif|max:2048',
+        ]);
+    
+        $file = $request->file('file');
+
+        if($file){
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads', $fileName, 'public');
+            if(!session('propriete_id')){
+                $property = Propriete::create([
+    
+                    'user_id' => FacadesAuth::user()->id,
+                    'type_propriete_id' => 1,
+                    'deleted' => 0,
+                ]);
+                session()->put('propriete_id',$property->id,);
+            }
+            $propriete_id = session('propriete_id');
+            ProprieteImage::create([
+                'url' => $filePath,
+                'propriete_id' => $propriete_id,
+                'deleted' => 0,
+            ]);
+        }
+
+
+        if ($request->has('btn_modif')) {
+
+            $validated = $request->validate([
+                'titre' => 'required|string|max:255',
+                'description' => 'required|string',
+                'status' => 'required|string',
+                'type_propriete_id' => 'required|integer',
+                'prix' => 'required|numeric',
+                'surface' => 'required|numeric',
+                'pays' => 'required|string',
+                'ville' => 'required|string',
+                'quartier' => 'required|string',
+                'nbPiece' => 'required|integer',
+                'nbChambre' => 'required|integer',
+                'nbToillete' => 'required|integer',
+                'nomContact' => 'required|string',
+                'prenomContact' => 'required|string',
+                'emailContact' => 'required|email',
+                'telContact' => 'required|string',
+                'caracteristique' => 'array',
+            ]);
+            $propriete = Propriete::where('id', $propriete_id)->first();
+          
+                $propriete->user_id = auth()->id();// Utilisateur connecté
+                $propriete->type_propriete_id = $validated['type_propriete_id'];
+                $propriete->titre = $validated['titre'];
+                $propriete->description = $validated['description'];
+                $propriete->status = $validated['status'];
+                $propriete->prix = $validated['prix'];
+                $propriete->surface = $validated['surface'];
+                $propriete->pays = $validated['pays'];
+                $propriete->ville = $validated['ville'];
+                $propriete->quartier = $validated['quartier'];
+                $propriete->nbPiece = $validated['nbPiece'];
+                $propriete->nbChambre = $validated['nbChambre'];
+                $propriete->nbToillete = $validated['nbToillete'];
+                $propriete->nomContact = $validated['nomContact'];
+                $propriete->prenomContact = $validated['prenomContact'];
+                $propriete->emailContact = $validated['emailContact'];
+                $propriete->telContact = $validated['telContact'];
+                $propriete->save();
+    
+            // Gestion des caractéristiques
+            if ($request->has('caracteristique')) {
+                $property->proprieteCaracteristiques()->sync($validated['caracteristique']);
+            }
+            // Stocker un message de succès dans la session
+            session(['message' => 'Property add successfully.', 'message_type' => 'success']);
+        } /*else {
+                // Stocker un message d'erreur dans la session
+                session(['message' => 'User not found.', 'message_type' => 'error']);
+            }*/
+            // Redirection avec un message de succès
+            return redirect()->route('properties.index')->with('success', 'Property added successfully');
+
+
+
+       // return response()->json(['file_path' => $filePath, 'success' => true]);
+    } 
+
+    
+    
+
+   
+        public function deleteFile(Request $request)
+    {
+        $file = ProprieteImage::find($request->input('file_id'));
+
+        if ($file) {
+            // Supprimer le fichier du stockage
+            Storage::delete($file->path);
+
+            // Supprimer l'entrée de la base de données
+            $file->delete();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 404);
+    }
+      
+
 
     public function messages()
     {
