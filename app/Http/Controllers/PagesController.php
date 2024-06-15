@@ -201,7 +201,7 @@ class PagesController extends Controller
     }
 
     public function searchPost(Request $request)
-    {
+    { 
         // Obtenir le nombre de propriétés par type et statut
         $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
             $query->where('proprietes.status', 'For Sale');

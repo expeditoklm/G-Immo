@@ -38,19 +38,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
 @include('admin.success_error')
 
-<div class="single-add-property">
-    <h3>Property Media</h3>
-    <div class="property-form-group">
-        <div class="row">
-            <div class="col-md-12">
-                <form action="{{ route('add-property-post') }}" class="dropzone" id="my-dropzone">
-                    @csrf
-                </form>
 
-            </div>
-        </div>
-    </div>
-</div>
 
 <form action="{{ route('add-property-post') }}" id="form1" method="POST">
 @csrf
@@ -277,6 +265,21 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     </div>
 </div>
 </form>
+
+
+<div class="single-add-property">
+    <h3>Property Media</h3>
+    <div class="property-form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="{{ route('add-property-post') }}" class="dropzone" id="my-dropzone">
+                    @csrf
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 

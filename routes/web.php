@@ -59,4 +59,24 @@ Route::middleware(['auth'])->group(function () {
 
     // Ajoutez d'autres routes nécessitant une authentification ici
 });
- 
+Route::middleware(['auth','check.session.variable'])->group(function () {
+
+
+
+    Route::post('/agent', [PagesController::class, 'agent'])->name('pages.agent');
+    Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
+    Route::post('/single', [PagesController::class, 'single'])->name('pages.single');
+    Route::get('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
+    Route::post('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
+    Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
+    Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
+    Route::post('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contacts-us');
+
+    Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');
+    Route::get('/messages', [PagesController::class, 'messages'])->name('admin.messages');
+    Route::get('/reviews', [PagesController::class, 'reviews'])->name('admin.reviews');
+
+
+    Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
+    Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
+});
