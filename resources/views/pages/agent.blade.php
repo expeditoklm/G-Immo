@@ -37,14 +37,7 @@ top-header-inner
 <!-- Start Page Banner Area -->
 <div class="page-banner-area">
     <div class="container">
-    @if(session('success'))
-                <div class="alert alert-primary alert-dismissible fade show m-2" role="alert">
-                    <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
-                        <span class="fw-bold d-block mx-auto">{{ session('success') }}</span> <!-- Utilisez mx-auto pour centrer le span -->
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
+    @include('admin.success_error')
         <div class="page-banner-content">
             <h2>Agent Profile</h2>
             <ul class="list">
@@ -364,9 +357,11 @@ top-header-inner
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
                 <h2>Subscribe To Our Newsletter</h2>
-                <form class="subscribe-form">
-                    <input type="search" class="form-control" placeholder="Enter your email">
-                    <button type="submit" class="default-btn">Subscribe</button>
+                <form class="subscribe-form"action="{{ route('pages.agent') }}" method="POST">
+                @csrf
+                    <input type="hidden" name="id" value="{{ $agent->id}}">
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
+                    <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
                 </form>
             </div>
         </div>
@@ -381,3 +376,5 @@ top-header-inner
 
 
 @endsection
+
+

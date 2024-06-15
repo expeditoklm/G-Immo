@@ -36,6 +36,7 @@ top-header-inner
 <!-- Start Page Banner Area -->
 <div class="page-banner-area">
     <div class="container">
+        @include('admin.success_error')
         <div class="page-banner-content">
             <h2>Property Top Filter</h2>
             <ul class="list">
@@ -559,14 +560,16 @@ top-header-inner
 <!-- End Properties Slide Area -->
 
 <!-- Start Subscribe Area -->
+<!-- Start Subscribe Area -->
 <div class="subscribe-wrap-area">
     <div class="container" data-cues="slideInUp">
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
                 <h2>Subscribe To Our Newsletter</h2>
-                <form class="subscribe-form">
-                    <input type="search" class="form-control" placeholder="Enter your email">
-                    <button type="submit" class="default-btn">Subscribe</button>
+                <form class="subscribe-form"action="{{ route('pages.search') }}" method="POST">
+                @csrf
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
+                    <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
                 </form>
             </div>
         </div>

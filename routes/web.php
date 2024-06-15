@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Http\Middleware\CheckAndClearSession;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,27 +24,28 @@ Route::get('/', function () {
 Route::get('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
 Route::post('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
 Route::get('/search', [PagesController::class, 'search'])->name('pages.search');
+Route::post('/search', [PagesController::class, 'search'])->name('pages.search');
 Route::get('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
 Route::post('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
 Route::get('/details', [PagesController::class, 'details'])->name('pages.details');
 Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
-
+Route::get('/not-found', [PagesController::class, 'notFound'])->name('pages.not-found');
+Route::post('/news-later', [PagesController::class, 'newsLater'])->name('pages.news-later');
 
 FacadesAuth::routes();
 
-Route::get('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
-
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('/agent', [PagesController::class, 'agent'])->name('pages.agent');
+    Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
+    Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
     Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
+    Route::post('/agent', [PagesController::class, 'agent'])->name('pages.agent');
     Route::post('/single', [PagesController::class, 'single'])->name('pages.single');
     Route::get('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::post('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
-    Route::get('/add-property', [PagesController::class, 'addProperty'])->name('admin.add-property');
-    Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
-    Route::post('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contacts-us');
+
+
 
     Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');
     Route::get('/messages', [PagesController::class, 'messages'])->name('admin.messages');
@@ -51,7 +53,6 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
-    Route::post('/add-property-post2', [PagesController::class, 'addPropertyPost2'])->name('add-property-post2');
     Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
 
@@ -59,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Ajoutez d'autres routes nécessitant une authentification ici
 });
-Route::middleware(['auth','check.session.variable'])->group(function () {
+Route::middleware(['auth', 'check.session.variable'])->group(function () {
 
 
 
@@ -70,7 +71,7 @@ Route::middleware(['auth','check.session.variable'])->group(function () {
     Route::post('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
     Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
-    Route::post('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contacts-us');
+    Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
 
     Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');
     Route::get('/messages', [PagesController::class, 'messages'])->name('admin.messages');
@@ -79,4 +80,8 @@ Route::middleware(['auth','check.session.variable'])->group(function () {
 
     Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
+});
+
+Route::middleware(['auth', 'check.and.clear.session'])->group(function () {
+    Route::get('/add-property', [PagesController::class, 'addProperty'])->name('admin.add-property');
 });

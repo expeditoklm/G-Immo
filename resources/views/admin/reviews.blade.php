@@ -48,11 +48,12 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             </tr>
         </thead>
         <tbody>
+        @foreach ($reviews as $item)
             <tr>
                 <td>
                     <textarea name="" id="" cols="30" class="form-control border-0 " rows="5">
 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, numquam.
+                    {{ $item->comment }}
                    
                 </textarea>
                 </td>
@@ -63,29 +64,31 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 <td>
                     <div class="inner">
                         <a href="single-property-1.html">
-                            <h2>Luxury Villa House</h2>
+                            <h2>{{ $item->propriete->titre}}</h2>
                         </a>
-                        <figure><i class="lni-map-marker"></i> Est St, 77 - Central Park South, NYC</figure>
-                        <ul class="starts text-left mb-0">
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="mb-0"><i class="fa fa-star"></i>
-                            </li>
-                            <li class="ml-3">(6 Reviews)</li>
+                        <figure><i class="lni-map-marker"></i> {{ $item->propriete->pays}}, {{ $item->propriete->ville}}, {{ $item->propriete->quartier}}</figure>
+                        @php
+                        $totalStars = 5;
+                        $filledStars = $item->note;
+                        $grayStars = $totalStars - $filledStars;
+                        @endphp
+                        <ul class="starts mb-0">
+                            @for ($i = 0; $i < $filledStars; $i++) <li>
+                                <i class="fa fa-star"></i>
+                                </li>
+                                @endfor
+
+                                @for ($i = 0; $i < $grayStars; $i++) <li><i class="fa fa-star-o"></i>
+                                    @endfor
+
                         </ul>
                     </div>
                 </td>
                 <td>
                     <div class="inner">
-                        <h2>Nom et Prenom</h2>
-                        <figure><i class="lni-map-marker"></i> Email / Telephone</figure>
-                        <h6>Date et Heure</h2>
+                        <h2>{{ $item->nom_prenom}}</h2>
+                        <figure><i class="lni-map-marker"></i> {{ $item->email}} </figure>
+                        <h6>{{ $item->created_at}}</h2>
                     </div>
                 </td>
                 
@@ -94,17 +97,42 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <a href="#"><i class="far fa-trash-alt"></i></a>
                 </td>
             </tr>
-
+        @endforeach
         </tbody>
     </table>
     <div class="pagination-container">
         <nav>
-            <ul class="pagination">
-                <li class="page-item"><a class="btn btn-common" href="#"><i class="lni-chevron-left"></i> Previous </a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="btn btn-common" href="#">Next <i class="lni-chevron-right"></i></a></li>
+            <ul class="pagination justify-content-center">
+
+                {{-- Bouton Previous --}}
+                @if ($reviews->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $reviews->previousPageUrl() }}">Previous</a>
+                    </li>
+                @endif
+
+                {{-- Affichage des pages --}}
+                @foreach ($reviews->getUrlRange(1, $reviews->lastPage()) as $page => $url)
+                    <li class="page-item {{ $page == $reviews->currentPage() ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                {{-- Bouton Next --}}
+                @if ($reviews->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $reviews->nextPageUrl() }}">Next</a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link">Next</span>
+                    </li>
+                @endif
+
             </ul>
         </nav>
     </div>

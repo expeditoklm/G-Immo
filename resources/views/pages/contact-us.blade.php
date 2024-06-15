@@ -115,7 +115,7 @@ top-header-inner
                     <div class="col-lg-8 col-md-7">
                         <div class="contact-wrap-form">
                             <h3>Get In Touch</h3>
-                            <form action="{{ route('pages.contacts-us') }}" method="POST">
+                            <form action="{{ route('pages.contacts-us-post') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label>Your Name</label>
@@ -153,7 +153,7 @@ top-header-inner
                                     </div>
                                 </div>
                                 <div class="contact-btn">
-                                    <button type="submit" class="default-btn">Send Message</button>
+                                    <button type="submit" name="btn_msg2" class="default-btn">Send Message</button>
                                 </div>
                             </form>
                         </div>

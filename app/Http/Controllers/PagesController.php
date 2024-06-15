@@ -7,6 +7,7 @@ use App\Models\Message;
 use Auth;
 use App\Models\Propriete;
 use App\Models\Caracteristique;
+use App\Models\Newslater;
 use App\Models\ProprieteImage;
 use App\Models\TypePropriete;
 use App\Models\User;
@@ -170,7 +171,7 @@ class PagesController extends Controller
     }
 
 
-    public function search()
+    public function search(Request $request)
     {
         $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
             $query->where('proprietes.status', 'For Sale');
@@ -190,6 +191,26 @@ class PagesController extends Controller
 
 
         $properties = Propriete::paginate(10);
+
+
+        if ($request->has('btn_newslater')) {
+
+            Newslater::create([
+                'email' => $request->email,
+                'deleted' => 0,
+            ]);
+            return view('pages/search', compact(
+                'properties',
+                'typeProprieteForSale',
+                'typeProprieteRental',
+                'uniqueCities',
+                'popularProperties'
+    
+            ))->with('success', 'E-mail sent successfully.');
+        
+        }
+
+
         return view('pages/search', compact(
             'properties',
             'typeProprieteForSale',
@@ -201,7 +222,7 @@ class PagesController extends Controller
     }
 
     public function searchPost(Request $request)
-    { 
+    {
         // Obtenir le nombre de propriétés par type et statut
         $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
             $query->where('proprietes.status', 'For Sale');
@@ -353,19 +374,21 @@ class PagesController extends Controller
     public function contactUs(Request $request)
     {
 
+        if ($request->has('btn_msg2')) {
 
-        $msg = Message::create([
-            'user_id' => FacadesAuth::user()->id,
-            'nom_prenom' => $request->nom_prenom,
-            'email' => $request->email,
-            'titre_msg' => $request->titre_msg,
-            'telephone' => $request->telephone,
-            'message' => $request->message,
-            'deleted' => 0,
-            'proprietaire_id' => 1
-        ]);
-        if ($msg) {
-            return redirect()->route('pages.contact-us')->with('success', 'Message sent successfully.');
+            $msg = Message::create([
+                'user_id' => FacadesAuth::user()->id,
+                'nom_prenom' => $request->nom_prenom,
+                'email' => $request->email,
+                'titre_msg' => $request->titre_msg,
+                'telephone' => $request->telephone,
+                'message' => $request->message,
+                'deleted' => 0,
+                'proprietaire_id' => 1
+            ]);
+            if ($msg) {
+                return redirect()->route('pages.contact-us')->with('success', 'Message sent successfully.');
+            }
         }
         return view('pages/contact-us');
     }
@@ -412,6 +435,19 @@ class PagesController extends Controller
             ])->with('success', 'Message sent successfully.');
         }
 
+        if ($request->has('btn_newslater')) {
+
+            Newslater::create([
+                'email' => $request->email,
+                'deleted' => 0,
+            ]);
+            return redirect()->route('pages.agent', [
+                'id' => $id,
+                'agent' => $agent,
+                'properties' => $properties,
+                'commentaires' => $commentaires
+            ])->with('success', 'E-mail sent successfully.');
+        }
 
         return view('pages.agent', compact('agent', 'properties', 'commentaires'));
     }
@@ -482,6 +518,18 @@ class PagesController extends Controller
 
     public function addProperty()
     {
+        if (session()->has('errors')) {
+            $proprieteId = session('propriete_id');
+            $propriete = Propriete::where('id', $proprieteId)->first();
+            $propriete->delete();
+            $proprieteImages = ProprieteImage::where('propriete_id', $proprieteId)->get();
+            if ($proprieteImages->isNotEmpty()) {
+                foreach ($proprieteImages as $image) {
+                    $image->delete();
+                }
+            }
+            session()->forget('propriete_id');
+        }
         $typeProprietes = TypePropriete::get();
         $caracteristiques = Caracteristique::get();
         return view('admin/add-property', compact(
@@ -489,11 +537,6 @@ class PagesController extends Controller
             'caracteristiques'
         ));
     }
-
-   
-
-
-
 
     public function addPropertyPost(Request $request)
     {
@@ -584,7 +627,7 @@ class PagesController extends Controller
                 'quartier.required' => 'Le quartier est obligatoire.',
                 'emailContact.email' => 'L\'adresse email doit être valide.',
             ];
-        
+
             $validated = $request->validate([
                 'titre' => 'required|string|max:255',
                 'description' => 'nullable|string',
@@ -604,9 +647,9 @@ class PagesController extends Controller
                 'telContact' => 'nullable|string',
                 'caracteristiques' => 'array',
             ], $messages);
-            
-            if($validated){
-                       
+
+            if ($validated) {
+
                 $propriete->user_id = auth()->id(); // Utilisateur connecté
                 $propriete->type_propriete_id = $validated['type_propriete_id'];
                 $propriete->titre = $validated['titre'];
@@ -630,15 +673,14 @@ class PagesController extends Controller
                 if (isset($validated['caracteristiques'])) {
                     $propriete->caracteristiques()->sync($validated['caracteristiques']);
                 }
-                
+
                 // Supprimer la variable de session propriete_id
                 session()->forget('propriete_id');
-    
-                return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
-            }else{
-                
-                return redirect()->back()->with('error', 'Veillez Remplir les champs obligatoires');
 
+                return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
+            } else {
+
+                return redirect()->back()->with('error', 'Veillez Remplir les champs obligatoires');
             }
         }
         return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
@@ -657,11 +699,40 @@ class PagesController extends Controller
 
     public function messages()
     {
-        return view('admin/messages');
+        $messages = Message::where('proprietaire_id', FacadesAuth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('admin/messages', compact('messages'));
     }
 
     public function reviews()
     {
-        return view('admin/reviews');
+        $reviews = Comment::whereHas('propriete', function ($query) {
+            $query->where('user_id', FacadesAuth::id());
+        })->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('admin/reviews', compact('reviews'));
     }
+
+    public function notFound()
+    {
+        return view('pages/errors');
+    }
+
+    public function newsLater(Request $request)
+    {
+        if ($request->has('btn_newslater')) {
+
+            Newslater::create([
+                'email' => $request->email,
+                'deleted' => 0,
+            ]);
+            return redirect()->back()->with('success', 'Merci bien !');
+        }
+    }
+
+
+
 }
