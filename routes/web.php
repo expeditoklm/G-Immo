@@ -17,25 +17,28 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 |
 */
 use App\Http\Middleware\CheckAndClearSession;
-
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['check.max.execution.time'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    Route::get('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
+    Route::post('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
+    Route::get('/search', [PagesController::class, 'search'])->name('pages.search');
+    Route::post('/search', [PagesController::class, 'search'])->name('pages.search');
+    Route::get('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
+    Route::post('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
+    Route::get('/details', [PagesController::class, 'details'])->name('pages.details');
+    Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
+    Route::get('/not-found', [PagesController::class, 'notFound'])->name('pages.not-found');
+    
+    FacadesAuth::routes();
+    
 });
-Route::get('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
-Route::post('/acceuil', [PagesController::class, 'acceuil'])->name('pages.acceuil');
-Route::get('/search', [PagesController::class, 'search'])->name('pages.search');
-Route::post('/search', [PagesController::class, 'search'])->name('pages.search');
-Route::get('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
-Route::post('/searchP', [PagesController::class, 'searchPost'])->name('pages.search-post');
-Route::get('/details', [PagesController::class, 'details'])->name('pages.details');
-Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
-Route::get('/not-found', [PagesController::class, 'notFound'])->name('pages.not-found');
-Route::post('/news-later', [PagesController::class, 'newsLater'])->name('pages.news-later');
-
-FacadesAuth::routes();
 
 
-Route::middleware(['auth'])->group(function () {
+
+
+Route::middleware(['auth','check.max.execution.time'])->group(function () {
     Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
     Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
     Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
@@ -62,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Ajoutez d'autres routes nécessitant une authentification ici
 });
-Route::middleware(['auth', 'check.session.variable'])->group(function () {
+Route::middleware(['auth', 'check.session.variable','check.max.execution.time'])->group(function () {
 
 
 
@@ -84,6 +87,6 @@ Route::middleware(['auth', 'check.session.variable'])->group(function () {
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
 });
 
-Route::middleware(['auth', 'check.and.clear.session'])->group(function () {
+Route::middleware(['auth', 'check.and.clear.session','check.max.execution.time'])->group(function () {
     Route::get('/add-property', [PagesController::class, 'addProperty'])->name('admin.add-property');
 });

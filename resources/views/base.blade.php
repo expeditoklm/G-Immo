@@ -96,7 +96,7 @@
     <!-- Start Navbar Area -->
     <nav class="navbar navbar-expand-xl" id="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">
+            <a class="navbar-brand" href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">
                 <img src="{{asset('assets/images/logo.png')}}" alt="logo">
             </a>
             <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
@@ -116,7 +116,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}" class=" nav-link {{ request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">
+                        <a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}" class=" nav-link {{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">
                             Home
 
                         </a>
@@ -124,14 +124,14 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ request()->route()->getName() == 'pages.search' ? 'javascript:void(0)' : route('pages.search') }}" class=" nav-link {{ request()->route()->getName() == 'pages.search' ? 'active' : '' }}">
+                        <a href="{{ request()->route() && request()->route()->getName() == 'pages.search' ? 'javascript:void(0)' : route('pages.search') }}" class=" nav-link {{ request()->route() && request()->route()->getName() == 'pages.search' ? 'active' : '' }}">
                             Property
                         </a>
 
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}" class="nav-link {{ request()->route()->getName() == 'pages.contact-us' ? 'active' : '' }}">Contact Us</a>
+                        <a href="{{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}" class="nav-link {{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'active' : '' }}">Contact Us</a>
                     </li>
                 </ul>
                 <div class="others-option d-flex align-items-center">
@@ -153,7 +153,7 @@
                             <div class="user-info">
                                 <ul class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="{{ route('pages.account') }}" class="nav-link {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}">Log In / Register</a>
+                                        <a href="{{ route('pages.account') }}" class="nav-link {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}">Log In / Register</a>
                                     </li>
                                 </ul>
                             </div>
@@ -162,7 +162,7 @@
                     
                     @auth
                         <div class="option-item">
-                            <a href="{{ route('admin.dashbord') }}" class="default-btn {{ request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}">Admin</a>
+                            <a href="{{ route('admin.dashbord') }}" class="default-btn {{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}">Admin</a>
                         </div>
                     @endauth
                 </div>
@@ -178,7 +178,7 @@
     <!-- Start Responsive Navbar Area -->
     <div class="responsive-navbar offcanvas offcanvas-end" tabindex="-1" id="navbarOffcanvas">
         <div class="offcanvas-header">
-            <a href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} " class="logo d-inline-block">
+            <a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} " class="logo d-inline-block">
                 <img src="{{asset('assets/images/logo.png')}}" alt="logo">
             </a>
             <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" class="close-btn">
@@ -190,20 +190,20 @@
 
 
                 <div class="accordion-item">
-                    <a class="accordion-button without-icon {{ request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}">
+                    <a class="accordion-button without-icon {{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}">
                         Home
                     </a>
                 </div>
 
                 <div class="accordion-item">
-                    <a class="accordion-button without-icon {{ request()->route()->getName() == 'pages.search' || request()->route()->getName() == 'pages.search-post' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'pages.search' ? 'javascript:void(0)' : route('pages.search') }}">
+                    <a class="accordion-button without-icon {{ request()->route() && request()->route()->getName() == 'pages.search' || request()->route() && request()->route()->getName() == 'pages.search-post' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'pages.search' ? 'javascript:void(0)' : route('pages.search') }}">
                         Property
                     </a>
                 </div>
 
 
                 <div class="accordion-item ">
-                    <a class="accordion-button without-icon {{ request()->route()->getName() == 'pages.contact-us' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}">
+                    <a class="accordion-button without-icon {{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}">
                         Contact Us
                     </a>
                 </div>
@@ -211,9 +211,9 @@
             <div class="others-option">
 
                 <div class="option-item nav-item">
-                    <a href="{{ request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="default-btn {{ request()->route()->getName() == 'pages.account' ? 'active' : '' }}" style="margin-right: 70px; margin-bottom: 10px;">Log In / Register</a>
+                    <a href="{{ request()->route() && request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="default-btn {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}" style="margin-right: 70px; margin-bottom: 10px;">Log In / Register</a>
                     @auth
-                    <a href="{{ request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
+                    <a href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
                     @endauth
                 </div>
                 <div class="option-item">
@@ -249,7 +249,7 @@
                 <div class="col-xl-3 col-md-12">
                     <div class="single-footer-widget pe-3">
                         <div class="widget-logo">
-                            <a href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">
+                            <a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">
                                 <img src="{{asset('assets/images/logo2.png')}}" alt="logo2">
                             </a>
                         </div>

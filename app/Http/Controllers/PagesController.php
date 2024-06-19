@@ -18,161 +18,170 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Exception;
 
 class PagesController extends Controller
 {
 
+   
+
     public function acceuil()
     {
-        $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
-            $query->where('proprietes.status', 'For Sale');
-        }])
-            ->get();
+        try {
+            $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
+                $query->where('proprietes.status', 'For Sale');
+            }])
+                ->get();
 
-        $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
-            $query->where('proprietes.status', 'Rental');
-        }])
-            ->get();
+            $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
+                $query->where('proprietes.status', 'Rental');
+            }])
+                ->get();
 
-        $uniqueCities = Propriete::select('ville')->distinct()->get();
+            $uniqueCities = Propriete::select('ville')->distinct()->get();
 
-        $nbResidential = Propriete::where('type_propriete_id', 1)->count();
-        $nbCommercial = Propriete::where('type_propriete_id', 2)->count();
-        $nbFarm = Propriete::where('type_propriete_id', 3)->count();
-        $nbLand = Propriete::where('type_propriete_id', 4)->count();
-        $nbDuplex = Propriete::where('type_propriete_id', 5)->count();
-        $nbOffice = Propriete::where('type_propriete_id', 6)->count();
-        $nbApartment = Propriete::where('type_propriete_id', 7)->count();
-        $nbWarehouse = Propriete::where('type_propriete_id', 8)->count();
-
-
-        $propertiesForSalle = Propriete::where('status', 'For Sale')
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
+            $nbResidential = Propriete::where('type_propriete_id', 1)->count();
+            $nbCommercial = Propriete::where('type_propriete_id', 2)->count();
+            $nbFarm = Propriete::where('type_propriete_id', 3)->count();
+            $nbLand = Propriete::where('type_propriete_id', 4)->count();
+            $nbDuplex = Propriete::where('type_propriete_id', 5)->count();
+            $nbOffice = Propriete::where('type_propriete_id', 6)->count();
+            $nbApartment = Propriete::where('type_propriete_id', 7)->count();
+            $nbWarehouse = Propriete::where('type_propriete_id', 8)->count();
 
 
-        $propertiesHouse = Propriete::where('type_propriete_id', 1)
-            ->orWhere('type_propriete_id', 5)
-            ->orWhere('type_propriete_id', 7)
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
+            $propertiesForSalle = Propriete::where('status', 'For Sale')
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
 
 
-        $propertiesVilla = Propriete::where('type_propriete_id', 1)
-            ->orWhere('prix', DB::raw('(SELECT MAX(prix) FROM proprietes)'))
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
+            $propertiesHouse = Propriete::where('type_propriete_id', 1)
+                ->orWhere('type_propriete_id', 5)
+                ->orWhere('type_propriete_id', 7)
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
 
 
-        $propertiesRental = Propriete::where('status', 'Rental')
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
+            $propertiesVilla = Propriete::where('type_propriete_id', 1)
+                ->orWhere('prix', DB::raw('(SELECT MAX(prix) FROM proprietes)'))
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
 
 
-        $propertiesApartment = Propriete::where('type_propriete_id', 7)
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
+            $propertiesRental = Propriete::where('status', 'Rental')
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
 
 
-        $propertiesParcel = Propriete::where('type_propriete_id', 3)
-            ->orWhere('type_propriete_id', 4)
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
-
-        $propertiesCommercial = Propriete::where('type_propriete_id', 8)
-            ->orWhere('type_propriete_id', 2)
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
+            $propertiesApartment = Propriete::where('type_propriete_id', 7)
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
 
 
+            $propertiesParcel = Propriete::where('type_propriete_id', 3)
+                ->orWhere('type_propriete_id', 4)
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
 
-        $propertiesHigh = Propriete::orderBy('prix', 'desc')
-            ->limit(4)
-            ->get();
-
-        $propertiesForSale = Propriete::where('status', 'For Sale')
-            ->orderBy('prix', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->limit(3)
-            ->get();
-
-        $comments = Comment::where('note', '>', 3)
-            ->whereHas('user')
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
+            $propertiesCommercial = Propriete::where('type_propriete_id', 8)
+                ->orWhere('type_propriete_id', 2)
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
 
 
-        // Nombre total de clients
-        $nbCustomer = Comment::count();
+
+            $propertiesHigh = Propriete::orderBy('prix', 'desc')
+                ->limit(4)
+                ->get();
+
+            $propertiesForSale = Propriete::where('status', 'For Sale')
+                ->orderBy('prix', 'asc')
+                ->orderBy('created_at', 'desc')
+                ->limit(3)
+                ->get();
+
+            $comments = Comment::where('note', '>', 3)
+                ->whereHas('user')
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
 
 
-        // Nombre de commentaires avec une note supérieure à 2
-        $nbClientNoteSatisfaction = Comment::where('note', '>', 2)->count();
-
-        // Nombre total de commentaires
-        $nbClientNote = Comment::count();
-
-        // Pourcentage de satisfaction des clients
-        $percentClientSatisfaction = ($nbClientNoteSatisfaction * 100) / $nbClientNote;
+            // Nombre total de clients
+            $nbCustomer = Comment::count();
 
 
-        // Nombre de propriétés à vendre
-        $nbPropertyForSale = Propriete::where('status', 'For Sale')->count();
-        if ($nbPropertyForSale > 1000) {
-            $nbPropertyForSale = $nbPropertyForSale / 1000;
-            $nbPropertyForSale = $nbPropertyForSale . "K";
+            // Nombre de commentaires avec une note supérieure à 2
+            $nbClientNoteSatisfaction = Comment::where('note', '>', 2)->count();
+
+            // Nombre total de commentaires
+            $nbClientNote = Comment::count();
+
+            // Pourcentage de satisfaction des clients
+            $percentClientSatisfaction = ($nbClientNoteSatisfaction * 100) / $nbClientNote;
+
+
+            // Nombre de propriétés à vendre
+            $nbPropertyForSale = Propriete::where('status', 'For Sale')->count();
+            if ($nbPropertyForSale > 1000) {
+                $nbPropertyForSale = $nbPropertyForSale / 1000;
+                $nbPropertyForSale = $nbPropertyForSale . "K";
+            }
+
+            // Nombre de propriétés à louer
+            $nbPropertyRental = Propriete::where('status', 'Rental')->count();
+            if ($nbPropertyRental > 1000) {
+                $nbPropertyRental = $nbPropertyRental / 1000;
+                $nbPropertyRental = $nbPropertyRental . "K";
+            }
+
+            return view('pages/acceuil', compact(
+                'nbCustomer',
+                'percentClientSatisfaction',
+                'nbPropertyForSale',
+                'nbPropertyRental',
+                'typeProprieteForSale',
+                'typeProprieteRental',
+                'uniqueCities',
+                'nbResidential',
+                'nbCommercial',
+                'nbFarm',
+                'nbLand',
+                'nbDuplex',
+                'nbOffice',
+                'nbApartment',
+                'nbWarehouse',
+                'propertiesForSalle',
+                'propertiesHouse',
+                'propertiesVilla',
+                'propertiesRental',
+                'propertiesApartment',
+                'propertiesParcel',
+                'propertiesCommercial',
+                'propertiesHigh',
+                'propertiesForSale',
+                'comments'
+            ));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors.custom', ['message' => $e->getMessage()]);
         }
-
-        // Nombre de propriétés à louer
-        $nbPropertyRental = Propriete::where('status', 'Rental')->count();
-        if ($nbPropertyRental > 1000) {
-            $nbPropertyRental = $nbPropertyRental / 1000;
-            $nbPropertyRental = $nbPropertyRental . "K";
-        }
-
-
-        //dd($comments);
-        return view('pages/acceuil', compact(
-            'nbCustomer',
-            'percentClientSatisfaction',
-            'nbPropertyForSale',
-            'nbPropertyRental',
-            'typeProprieteForSale',
-            'typeProprieteRental',
-            'uniqueCities',
-            'nbResidential',
-            'nbCommercial',
-            'nbFarm',
-            'nbLand',
-            'nbDuplex',
-            'nbOffice',
-            'nbApartment',
-            'nbWarehouse',
-            'propertiesForSalle',
-            'propertiesHouse',
-            'propertiesVilla',
-            'propertiesRental',
-            'propertiesApartment',
-            'propertiesParcel',
-            'propertiesCommercial',
-            'propertiesHigh',
-            'propertiesForSale',
-            'comments'
-
-        ));
     }
 
 
     public function search(Request $request)
     {
+        try {
         $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
             $query->where('proprietes.status', 'For Sale');
         }])
@@ -222,10 +231,18 @@ class PagesController extends Controller
             'popularProperties'
 
         ));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
 
     public function searchPost(Request $request)
     {
+        try {
         // Obtenir le nombre de propriétés par type et statut
         $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
             $query->where('proprietes.status', 'For Sale');
@@ -328,24 +345,41 @@ class PagesController extends Controller
             'uniqueCities',
             'popularProperties'
         ));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
 
 
     public function details()
     {
+        try {
         return view('pages/details');
-    }
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
 
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
+    }
+}
     public function single(Request $request)
     {
+    try {
         $id = $request->id;
-//dd($id);
+
         $propertiesSingle = Propriete::where('id', $id)->first();
+         if (!$propertiesSingle) {
+             throw new \Exception('Property not found');
+         }
+
         $proprietaire = $propertiesSingle->user;
         $propertiesSingle->vue = $propertiesSingle->vue + 1;
         $propertiesSingle->save();
-            
-
 
         $type_propriete_id = $propertiesSingle->type_propriete_id;
         $ville = $propertiesSingle->ville;
@@ -353,9 +387,6 @@ class PagesController extends Controller
         $quartier = $propertiesSingle->quartier;
         $nbPiece = $propertiesSingle->nbPiece;
         $prix = $propertiesSingle->prix;
-
-
-
 
         $similarProperties = Propriete::where('type_propriete_id', $type_propriete_id)
             ->where('ville', $ville)
@@ -368,51 +399,54 @@ class PagesController extends Controller
             ->take(2)
             ->get();
 
+        if ($request->has('btn_msg3')) {
+            Message::create([
+                'user_id' => FacadesAuth::user()->id,
+                'nom_prenom' => $request->nom_prenom,
+                'email' => $request->email,
+                'titre_msg' => $request->titre_msg,
+                'telephone' => $request->telephone,
+                'message' => $request->message,
+                'deleted' => 0,
+                'proprietaire_id' => $propertiesSingle->user->id
+            ]);
+            $request->request->remove('btn_msg3');
 
-            if ($request->has('btn_msg3')) {
-                Message::create([
-                    'user_id' => FacadesAuth::user()->id,
-                    'nom_prenom' => $request->nom_prenom,
-                    'email' => $request->email,
-                    'titre_msg' => $request->titre_msg,
-                    'telephone' => $request->telephone,
-                    'message' => $request->message,
-                    'deleted' => 0,
-                    'proprietaire_id' => $propertiesSingle->user->id
-                ]);
-                $request->request->remove('btn_msg3');
-            
-                return redirect()->route('pages.single', [
-                    'id' => $id,
-                    'propertiesSingle' => $propertiesSingle,
-                    'similarProperties' => $similarProperties,
-                    'proprietaire' => $proprietaire,
-                    
-                ])->with('success', 'Message sent successfully.');
-                
-            }
-            if ($request->has('btn_newslater')) {
+            return redirect()->route('pages.single', [
+                'id' => $id,
+                'propertiesSingle' => $propertiesSingle,
+                'similarProperties' => $similarProperties,
+                'proprietaire' => $proprietaire,
+            ])->with('success', 'Message sent successfully.');
+        }
 
-                Newslater::create([
-                    'email' => $request->email,
-                    'deleted' => 0,
-                ]);
-                return redirect()->route('pages.single', [
-                    'id' => $id,
-                    'propertiesSingle' => $propertiesSingle,
-                    'similarProperties' => $similarProperties,
-                    'proprietaire' => $proprietaire,
-                    
-                ])->with('success', 'E-mail sent successfully.');
-            }
-        //dd($similarProperties);
+        if ($request->has('btn_newslater')) {
+            Newslater::create([
+                'email' => $request->email,
+                'deleted' => 0,
+            ]);
 
-        return view('pages/single', compact('id','proprietaire','propertiesSingle', 'similarProperties'));
+            return redirect()->route('pages.single', [
+                'id' => $id,
+                'propertiesSingle' => $propertiesSingle,
+                'similarProperties' => $similarProperties,
+                'proprietaire' => $proprietaire,
+            ])->with('success', 'E-mail sent successfully.');
+        }
+
+        return view('pages/single', compact('id', 'proprietaire', 'propertiesSingle', 'similarProperties'));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
 
     public function contactUs(Request $request)
     {
-
+        try {
         if ($request->has('btn_msg2')) {
 
             Message::create([
@@ -431,15 +465,30 @@ class PagesController extends Controller
             
         }
         return view('pages/contact-us');
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
 
     public function account()
     {
+        try {
         return view('pages/account');
-    }
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
 
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
+    }
+}
     public function agent(Request $request)
     {
+        try {
         $id = $request->id;
         $agent = User::find($id);
 
@@ -489,10 +538,17 @@ class PagesController extends Controller
         }
 
         return view('pages.agent', compact('agent', 'properties', 'commentaires'));
-    }
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
 
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
+    }
+}
     public function dashbord(Request $request)
     {
+        try {
         $nbProperties = Propriete::where('user_id', FacadesAuth::id())->count();
         // Nombre de commentaires pour les propriétés de l'utilisateur connecté
         $nbReviews = Comment::whereHas('propriete', function ($query) {
@@ -538,25 +594,50 @@ class PagesController extends Controller
             'messages',
             'reviews'
         ));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
 
     public function userProfile()
     {
+        try {
         $user = User::where('id', FacadesAuth::user()->id)->first();
         return view('admin/profile', compact('user'));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
 
     public function myProperties()
     {
+        try {
         $properties = Propriete::where('user_id', FacadesAuth::id())
             ->orderBy('vue', 'desc')
             ->paginate(10);
 
         return view('admin/my-properties', compact('properties'));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
+
 
     public function addProperty()
     {
+        try {
         if (session()->has('errors')) {
             $proprieteId = session('propriete_id');
             $propriete = Propriete::where('id', $proprieteId)->first();
@@ -575,10 +656,19 @@ class PagesController extends Controller
             'typeProprietes',
             'caracteristiques'
         ));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
+
 
     public function addPropertyPost(Request $request)
     {
+        try {
         if (!session('propriete_id') && session('propriete_id') == null) {
             $property = Propriete::create([
                 'user_id' => FacadesAuth::user()->id,
@@ -723,10 +813,17 @@ class PagesController extends Controller
             }
         }
         return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
-    }
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
 
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
+    }
+}
     public function deleteFile(Request $request)
     {
+        try {
         $file_id=$request->file_id;
         $file = ProprieteImage::where('proprietaire_id', $file_id);
         if ($file) {
@@ -736,54 +833,84 @@ class PagesController extends Controller
         }
         //dd("ok");
         return response()->json(['success' => false], 404);
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
 
     public function messages()
     {
+        try {
         $messages = Message::where('proprietaire_id', FacadesAuth::id())
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('admin/messages', compact('messages'));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
+
 
     public function reviews()
     {
+        try {
         $reviews = Comment::whereHas('propriete', function ($query) {
             $query->where('user_id', FacadesAuth::id());
         })->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('admin/reviews', compact('reviews'));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
 
     public function notFound()
     {
+        try {
         return view('pages/errors');
-    }
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
 
-    public function newsLater(Request $request)
-    {
-        if ($request->has('btn_newslater')) {
-
-            Newslater::create([
-                'email' => $request->email,
-                'deleted' => 0,
-            ]);
-            dd("ok");
-            return redirect()->route('pages.search-get')->with('success', 'Merci bien !');
-        }
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
+
+
 
     public function modifProperty()
     {
+        try {
         $typeProprietes = TypePropriete::get();
         $caracteristiques = Caracteristique::get();
         return view('admin/modif-property', compact(
             'typeProprietes',
             'caracteristiques'
         ));
+    } catch (Exception $e) {
+        // Log the exception if needed
+        Log::error($e->getMessage());
+
+        // Return a custom error view
+        return view('errors.custom', ['message' => $e->getMessage()]);
     }
+}
+
 
 
     

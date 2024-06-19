@@ -40,7 +40,7 @@ top-header-inner
                     <h2>Server Error</h2>
                     <ul class="list">
                         <li>
-                            <a href="javascript:history.back()">Go Back</a>
+                            <a href="{{ url()->previous() }}">Go Back</a>
                         </li>
                         <li>{{ $message }}</li>
                     </ul>
@@ -55,7 +55,7 @@ top-header-inner
                 <div class="not-found-content text-center">
                     <img src="assets/images/error.png" alt="error-image">
                     <h3>Oops! That page can't be found</h3>
-                    <a href="javascript:history.back()" class="default-btn">
+                    <a href="index.html" class="default-btn">
                         Back to Home
                     </a>
                 </div>

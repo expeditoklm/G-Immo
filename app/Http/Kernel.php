@@ -21,6 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\CheckMaxExecutionTime::class,
     ];
 
     /**
@@ -37,6 +38,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CheckAndClearSession::class,
+            \App\Http\Middleware\CheckMaxExecutionTime::class,
 
         ],
 
@@ -68,6 +70,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.session.variable' => \App\Http\Middleware\CheckAndDeleteSessionVariable::class,
         'check.and.clear.session' => \App\Http\Middleware\CheckAndClearSession::class,
+        'check.max.execution.time' => \App\Http\Middleware\CheckMaxExecutionTime::class,
 
     ];
 }

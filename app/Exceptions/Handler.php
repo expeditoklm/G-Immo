@@ -21,10 +21,12 @@ class Handler extends ExceptionHandler
     /**
      * Register the exception handling callbacks for the application.
      */
-    public function register(): void
+    public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            return response()->view('pages/errors', [
+                'message' => 'The page you are looking for could not be found. Please check the URL and try again.'
+            ], 404);
         });
     }
 }

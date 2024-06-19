@@ -132,18 +132,19 @@ git clone -b master https://github.com/expeditoklm/G-Immo.git
 @section('content')
 
 
+gere moi le try catch de cette fonction en utilisant lexception generique :
 
-<link rel="stylesheet" href="{{ asset('assets/css/main.min.css') }}" />
- <!-- Required jQuery first, then Bootstrap Bundle JS -->
- <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+try {
 
 
 
-        @if($similarProperties->isNotEmpty())
-        <h3>Featured Properties</h3>
-    @endif
+} catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
 
+            // Return a custom error view
+            return view('errors.custom', ['message' => $e->getMessage()]);
+        }
 
 
 

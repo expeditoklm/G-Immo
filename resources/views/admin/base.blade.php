@@ -31,6 +31,20 @@
     <link rel="stylesheet" href="{{asset('assets/admin/css/styles.css')}}">
     <link rel="stylesheet" id="color" href="{{asset('assets/admin/css/default.css')}}">
 
+    <style>
+        .left-aligned-btn {
+            text-align: left;
+            padding-left: 15px; /* Ajustez cette valeur selon vos besoins */
+            border: none; /* Supprimer le contour */
+            background: none; /* Supprimer le remplissage */
+            color: inherit; /* Inhérer la couleur du texte */
+        }
+        .left-aligned-btn:focus {
+            outline: none; /* Supprimer le contour lors du focus */
+            box-shadow: none; /* Supprimer l'ombre lors du focus */
+        }
+    </style>
+
     @yield('css')
 
 </head>
@@ -49,7 +63,7 @@
                         <div class="left-side">
                             <!-- Logo -->
                             <div id="logo">
-                                <a href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} " ><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"></a>
+                                <a href="{{ request()->route() && request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} " ><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"></a>
                             </div>
                             <!-- Mobile Navigation -->
                             <div class="mmenu-trigger">
@@ -62,7 +76,7 @@
                             <!-- Main Navigation -->
                             <nav id="navigation" class="style-1">
                                 <ul id="responsive">
-                                    <li><a href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} "  class="{{ request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">Home</a></li>
+                                    <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} "  class="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">Home</a></li>
                                 </ul>
                             </nav>
                             <div class="clearfix"></div>
@@ -83,12 +97,12 @@
                                 <p>User not found.</p>
                             @endif
                             <ul>
-                                <li><a href="{{ request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }} "> Edit profile</a></li>
-                                <li><a href="{{ request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Add Property</a></li>
-                                <li><a href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "> Change Password</a></li>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }} "> Edit profile</a></li>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Add Property</a></li>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "> Change Password</a></li>
                                 <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <li> <button type="submit" class="btn btn-danger col-md-12">Log Out</button></li>
+                                        <li> <button type="submit" class="btn left-aligned-btn w-100 text-left  col-md-12"><i class="fas fa-sign-out-alt mr-3"></i>Log Out</button></li>
                                     </form>
                             </ul>
                         </div>
@@ -123,34 +137,34 @@
                             <div class="detail clearfix">
                                 <ul class="mb-0">
                                     <li>
-                                        <a class="{{ request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}">
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}">
                                             <i class="fa fa-map-marker"></i> Dashboard
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
                                             <i class="fa fa-list" aria-hidden="true"></i>My Properties
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ request()->route()->getName() == 'admin.user-profile' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }}">
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }}">
                                             <i class="fa fa-user"></i>Profile
                                         </a>
                                     </li>
                                     
                                     
                                     <li>
-                                        <a class="{{ request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
                                             <i class="fa fa-list" aria-hidden="true"></i>Add Property
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ request()->route()->getName() == 'admin.messages' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'admin.messages' ? 'javascript:void(0)' : route('admin.messages') }}">
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'javascript:void(0)' : route('admin.messages') }}">
                                             <i class="fas fa-credit-card"></i>Messages
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
                                             <i class="fas fa-paste"></i>Reviews
                                         </a>
                                     </li>
@@ -167,43 +181,45 @@
                                     <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars pr10 mr-2"></i> Dashboard Navigation</button>
                                     <ul id="myDropdown" class="dropdown-content">
                                         <li>
-                                            <a class="{{ request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}" href="{{ request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}">
                                                 <i class="fa fa-map-marker mr-3"></i> Dashboard
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="{{ request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}"   href="{{ request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
                                                 <i class="fa fa-list mr-3" aria-hidden="true"></i>My Properties
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="{{ request()->route()->getName() == 'admin.user-profile' ? 'active' : '' }}"   href="{{ request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }}">
                                                 <i class="fa fa-user mr-3"></i>Profile
                                             </a>
                                         </li>
                                         
                                         
                                         <li>
-                                            <a class="{{ request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}"   href="{{ request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
                                                 <i class="fa fa-list mr-3" aria-hidden="true"></i>Add Property
                                             </a>
                                         </li>
                                         
                                         <li>
-                                            <a class="{{ request()->route()->getName() == 'admin.messages' ? 'active' : '' }}"   href="{{ request()->route()->getName() == 'admin.messages' ? 'javascript:void(0)' : route('admin.messages') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'javascript:void(0)' : route('admin.messages') }}">
                                                 <i class="fas fa-paste mr-3"></i>Messages
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="{{ request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}"   href="{{ request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
                                                 <i class="fa fa-lock mr-3"></i>Reviews
                                             </a>
                                         </li>
-                                        <li>
-                                            <a class="{{ request()->route()->getName() == 'pages.agent' ? 'active' : '' }}"   href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }}">
+                                        
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn left-aligned-btn w-100 text-left">
                                                 <i class="fas fa-sign-out-alt mr-3"></i>Log Out
-                                            </a>
-                                        </li>
+                                            </button>
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
