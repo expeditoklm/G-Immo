@@ -5,7 +5,32 @@ Property | Andora
 @endsection
 
 @section('css')
+<style>
+.rating {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
+.rating li {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.rating li i {
+    color: #ccc;
+}
+
+.rating li.selected i,
+.rating li.hover i,
+.rating li.hover ~ li i {
+    color: #ffcc00;
+}
+
+
+
+</style>
 @endsection
 
 @section('div_init')
@@ -36,6 +61,7 @@ top-header-inner
 <!-- Start Page Banner Area -->
 <div class="page-banner-area">
     <div class="container">
+    @include('admin.success_error')
         <div class="page-banner-content">
             <h2>Property Details</h2>
             <ul class="list">
@@ -52,6 +78,7 @@ top-header-inner
 <!-- Start Property Details Area -->
 <div class="property-details-area ptb-120">
     <div class="container">
+    
         <div class="row justify-content-center">
             <div class="property-details-desc">
                 <div class="property-details-content">
@@ -142,26 +169,26 @@ top-header-inner
                                     <!-- Recoriger-->
                                     <ul class="link-list">
                                         <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post-{{ $propertiesSingle->id }}').submit(); return false;">
+                                            <a href="#" class="link-btn" onclick="document.getElementById('post1{{ $propertiesSingle->id }}').submit(); return false;">
                                             {{ $propertiesSingle->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
-                                        <form id="post-{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        <form id="post1{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
                                            <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
                                         </form>
 
                                         <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post2-{{ $propertiesSingle->id }}').submit(); return false;">
+                                            <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $propertiesSingle->id }}').submit(); return false;">
                                             {{ $propertiesSingle->status }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
-                                        <form id="post2-{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        <form id="post2{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
                                             <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
@@ -172,10 +199,10 @@ top-header-inner
                                 <div class="price">{{ $propertiesSingle->prix }} XOF</div>
                                 <div class="user">
                                     <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                                    <a href="#" onclick="document.getElementById('post-form-{{ $propertiesSingle->user->id }}').submit(); return false;">{{ $propertiesSingle->user->nom_prenom }}</a>
+                                    <a href="#" onclick="document.getElementById('post3{{ $propertiesSingle->user->id }}').submit(); return false;">{{ $propertiesSingle->user->nom_prenom }}</a>
 
                                                     <!-- Formulaire caché -->
-                                                    <form id="post-form-{{ $propertiesSingle->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                                    <form id="post3{{ $propertiesSingle->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $propertiesSingle->user->id }}">
                                                     </form>
@@ -236,7 +263,7 @@ top-header-inner
 
                                     @if ($propertiesSingle->caracteristiques->isEmpty())
 
-                                    <p class="mt-3">Aucune caractéristique disponible.</p>
+                                    <p class="mt-3">Aucune caractéristique n'a été renseignée</p>
 
                                     @else
                                     @foreach ($propertiesSingle->caracteristiques->chunk(5) as $chunk)
@@ -259,7 +286,9 @@ top-header-inner
 
 
                             <div class="comments-area">
+                            @if($propertiesSingle->comments->isNotEmpty())
                                 <h2>{{ $propertiesSingle->comments->count() }} Comments</h2>
+                            @endif
                                 <ul class="comments-list">
                                     @foreach ($propertiesSingle->comments as $item)
                                     <li>
@@ -294,91 +323,97 @@ top-header-inner
                                     @endforeach
                                 </ul>
                                 
+                                
                                 <form class="review-form">
                                     <div class="title">
                                         <h3>Add A Review</h3>
                                         <ul class="rating">
-                                            <li data-value="1"><i class="fa fa-star"></i></li>
-                                            <li data-value="2"><i class="fa fa-star"></i></li>
-                                            <li data-value="3"><i class="fa fa-star"></i></li>
-                                            <li data-value="4"><i class="fa fa-star"></i></li>
-                                            <li data-value="5"><i class="fa fa-star"></i></li>
+                                        <li data-value="1"><i class="ri-star-line"></i></li>
+                                            <li data-value="2"><i class="ri-star-line"></i></li>
+                                            <li data-value="3"><i class="ri-star-line"></i></li>
+                                            <li data-value="4"><i class="ri-star-line"></i></li>
+                                            <li data-value="5"><i class="ri-star-line"></i></li>
                                         </ul>
                                     </div>
-
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label>Your Name</label>
-                                                <input type="text" class="form-control" placeholder="Enter your name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label>Email Address</label>
-                                                <input type="email" class="form-control" placeholder="Enter email address">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="form-group top-css">
-                                                <label>Your Review Here</label>
-                                                <textarea class="form-control" placeholder="Your review..."></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="form-group">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="check1">
-                                                    <label class="form-check-label" for="check1">
-                                                        Save my name, email, and website in this browser for the next time I review.
-                                                    </label>
+                                    <input type="hidden" name="rating" id="rating" value="0">
+                                            <div class="row justify-content-center">
+                                                <div class="col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Your Name</label>
+                                                        <input type="text" class="form-control" placeholder="Enter your name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Email Address</label>
+                                                        <input type="email" class="form-control" placeholder="Enter email address">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="form-group top-css">
+                                                        <label>Your Review Here</label>
+                                                        <textarea class="form-control" placeholder="Your review..."></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="check1">
+                                                            <label class="form-check-label" for="check1">
+                                                                Save my name, email, and website in this browser for the next time I review.
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <button type="submit" class="default-btn">Submit Review</button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <button type="submit" class="default-btn">Submit Review</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                        </form>
                             </div>
                         </div>
                     <div class="col-xl-4 col-md-12">
                         <div class="property-details-sidebar">
                             <div class="booking">
-                                <form>
+                                <form action="{{ route('pages.single') }}" method="POST">
+                                @csrf
+
+                                    <input type="hidden" name="id" value="{{ $propertiesSingle->id}}">
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input type="text" placeholder="Your name" class="form-control">
+                                        <input type="text" name="nom_prenom" placeholder="Your name" class="form-control">
                                         <div class="icon">
                                             <i class="ri-user-3-line"></i>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="text" placeholder="Your email" class="form-control">
+                                        <input type="text" name="email" placeholder="Your email" class="form-control">
                                         <div class="icon">
                                             <i class="ri-mail-send-line"></i>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Phone No.</label>
-                                        <input type="text" placeholder="+12345678" class="form-control">
+                                        <input type="text" name="telephone" placeholder="+12345678" class="form-control">
                                         <div class="icon">
                                             <i class="ri-phone-line"></i>
                                         </div>
                                     </div>
                                     <div class="form-group extra-top">
                                         <label>Description</label>
-                                        <textarea class="form-control" placeholder="I'm interested in this property......." rows="5"></textarea>
+                                        <textarea class="form-control" name="message" placeholder="I'm interested in this property......." rows="5"></textarea>
                                         <div class="icon">
                                             <i class="ri-pencil-line"></i>
                                         </div>
                                     </div>
-                                    <button type="submit" class="default-btn">Submit Request</button>
+                                    <button type="submit" name="btn_msg3" class="default-btn">Submit Request</button>
                                 </form>
                             </div>
                             <div class="featured-properties">
+                            @if($similarProperties->isNotEmpty())
                                 <h3>Featured Properties</h3>
+                            @endif
                                 <div class="swiper featured-properties-slider">
                                     <div class="swiper-wrapper">
                                     @foreach ($similarProperties as $item)
@@ -400,26 +435,26 @@ top-header-inner
                                                     <!-- Recoriger-->
                                                     <ul class="link-list">
                                                         <li>
-                                                            <a href="#" class="link-btn" onclick="document.getElementById('post-{{ $item->id }}').submit(); return false;">
+                                                            <a href="#" class="link-btn" onclick="document.getElementById('post4{{ $item->id }}').submit(); return false;">
                                                             {{ $item->typePropriete->libelle }}
                                                             </a>
                                                         </li>
 
                                                         <!-- Formulaire caché -->
-                                                        <form id="post-{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                                        <form id="post4{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                                             @csrf
                                                         <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                                         </form>
 
                                                         <li>
-                                                            <a href="#" class="link-btn" onclick="document.getElementById('post2-{{ $item->id }}').submit(); return false;">
+                                                            <a href="#" class="link-btn" onclick="document.getElementById('post5{{ $item->id }}').submit(); return false;">
                                                             {{ $item->status }}
                                                             </a>
                                                         </li>
 
                                                         <!-- Formulaire caché -->
-                                                        <form id="post2-{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                                        <form id="post5{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                                             @csrf
                                                             <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
@@ -471,14 +506,14 @@ top-header-inner
                                                         <div class="title">
                                                             <!-- Lien cliquable -->
                                                             <h3>
-                                                                <a href="#" onclick="document.getElementById('post{{ $item->id }}').submit(); return false;">
+                                                                <a href="#" onclick="document.getElementById('post6{{ $item->id }}').submit(); return false;">
                                                                     {{ $item->titre }}
                                                                 </a>
                                                             </h3>
 
 
                                                             <!-- Formulaire caché -->
-                                                            <form id="post{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                                            <form id="post6{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
                                                                 @csrf
                                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                                             </form>
@@ -490,10 +525,10 @@ top-header-inner
                                                     <div class="bottom">
                                                         <div class="user">
                                                             <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                                                            <a href="#" onclick="document.getElementById('post-form-{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
+                                                            <a href="#" onclick="document.getElementById('post7{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                                             <!-- Formulaire caché -->
-                                                            <form id="post-form-{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                                            <form id="post7{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
                                                                 @csrf
                                                                 <input type="hidden" name="id" value="{{ $item->user->id }}">
                                                             </form>
@@ -544,17 +579,18 @@ top-header-inner
                                 <ul class="list">
                                     <li>
                                         <span>Email:</span>
-                                        <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#7c1f1312081d1f083c1419101013521f1311"><span class="__cf_email__" data-cfemail="54373b3a20353720143c3138383b7a373b39">[email&#160;protected]</span></a>
+                                        <a href="mailto:{{$proprietaire->email}}">{{$proprietaire->email}}</a>
                                     </li>
                                     <li>
                                         <span>Phone:</span>
-                                        <a href="tel:01234567890">0123 456 7890</a>
+                                        <a href="tel:{{$proprietaire->telephone}}">{{$proprietaire->telephone}}</a>
                                     </li>
                                     <li>
                                         <span>Location:</span>
-                                        New York, USA
+                                        {{ $proprietaire->pays}} , {{ $proprietaire->ville}} 
                                     </li>
                                 </ul>
+
                             </div>
                         </div>
                     </div>
@@ -572,9 +608,11 @@ top-header-inner
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
                 <h2>Subscribe To Our Newsletter</h2>
-                <form class="subscribe-form">
-                    <input type="search" class="form-control" placeholder="Enter your email">
-                    <button type="submit" class="default-btn">Subscribe</button>
+                <form class="subscribe-form"action="{{ route('pages.single') }}" method="POST">
+                @csrf
+                    <input type="hidden" name="id" value="{{$id}}">
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
+                    <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
                 </form>
             </div>
         </div>
@@ -589,7 +627,51 @@ top-header-inner
 @section('script')
 
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.rating li');
+    const ratingInput = document.getElementById('rating');
 
+    stars.forEach(star => {
+        star.addEventListener('mouseover', function() {
+            resetStars();
+            highlightStars(this.dataset.value);
+        });
+
+        star.addEventListener('click', function() {
+            ratingInput.value = this.dataset.value;
+            resetStars();
+            highlightStars(this.dataset.value, true);
+        });
+
+        star.addEventListener('mouseout', function() {
+            resetStars();
+            if (ratingInput.value) {
+                highlightStars(ratingInput.value, true);
+            }
+        });
+    });
+
+    function resetStars() {
+        stars.forEach(star => {
+            star.classList.remove('hover');
+            star.querySelector('i').classList.remove('ri-star-fill');
+            star.querySelector('i').classList.add('ri-star-line');
+        });
+    }
+
+    function highlightStars(rating, isPermanent = false) {
+        stars.forEach(star => {
+            if (star.dataset.value <= rating) {
+                if (isPermanent) {
+                    star.classList.add('selected');
+                }
+                star.querySelector('i').classList.remove('ri-star-line');
+                star.querySelector('i').classList.add('ri-star-fill');
+            }
+        });
+    }
+});
 
 
 @endsection

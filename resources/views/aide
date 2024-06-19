@@ -121,6 +121,7 @@ href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' :
 
 
 
+git clone -b master https://github.com/expeditoklm/G-Immo.git
 
 
 <!-- resources/views/admin/property-list.blade.php -->
@@ -132,11 +133,16 @@ href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' :
 
 
 
+<link rel="stylesheet" href="{{ asset('assets/css/main.min.css') }}" />
+ <!-- Required jQuery first, then Bootstrap Bundle JS -->
+ <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
 
 
-
-
+        @if($similarProperties->isNotEmpty())
+        <h3>Featured Properties</h3>
+    @endif
 
 
 

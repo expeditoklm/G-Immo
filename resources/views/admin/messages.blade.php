@@ -48,9 +48,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         @foreach ($messages as $item)
             <tr>
                 <td>
-                    <textarea name="" id="" cols="30" class="form-control border-0 " rows="5" style="padding: 0px;">
-                    {{ $item->message }}
-                    </textarea>
+                <textarea hidden  cols="30" class="form-control border-0"></textarea>
+                {{ $item->message }}
                 </td>
                 <td>
                     <div class="inner">

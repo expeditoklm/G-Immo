@@ -144,26 +144,26 @@ top-header-inner
                                             <!-- Recoriger-->
                                     <ul class="link-list">
                                         <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post-{{ $item->id }}').submit(); return false;">
+                                            <a href="#" class="link-btn" onclick="document.getElementById('post1{{ $item->id }}').submit(); return false;">
                                             {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
-                                        <form id="post-{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        <form id="post1{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post2-{{ $item->id }}').submit(); return false;">
+                                            <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;">
                                             {{ $item->status }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
-                                        <form id="post2-{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        <form id="post2{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
                                             <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
@@ -213,14 +213,14 @@ top-header-inner
                                             <div class="top">
                                                 <div class="title">
                                                     <h3>
-                                                        <a href="#" onclick="document.getElementById('post-form-{{ $item->id }}').submit(); return false;">
+                                                        <a href="#" onclick="document.getElementById('post3{{ $item->id }}').submit(); return false;">
                                                             {{ $item->titre }}
                                                         </a>
                                                     </h3>
 
 
                                                     <!-- Formulaire caché -->
-                                                    <form id="post-form-{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                                    <form id="post3{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $item->id }}">
                                                     </form>
@@ -231,10 +231,10 @@ top-header-inner
                                             <div class="bottom">
                                                 <div class="user">
                                                     <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                                                    <a href="#" onclick="document.getElementById('post-form-{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
+                                                    <a href="#" onclick="document.getElementById('post4{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                                     <!-- Formulaire caché -->
-                                                    <form id="post-form-{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                                    <form id="post4{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $item->user->id }}">
                                                     </form>
@@ -324,7 +324,6 @@ top-header-inner
             <form class="contact-me-form" action="{{ route('pages.agent') }}" method="POST">
             @csrf
 
-                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                 <input type="hidden" name="id" value="{{ $agent->id}}">
                 <h3>Contact Me</h3>
                 <div class="form-group">

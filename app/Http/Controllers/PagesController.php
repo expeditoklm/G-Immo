@@ -199,15 +199,18 @@ class PagesController extends Controller
                 'email' => $request->email,
                 'deleted' => 0,
             ]);
-            return view('pages/search', compact(
-                'properties',
-                'typeProprieteForSale',
-                'typeProprieteRental',
-                'uniqueCities',
-                'popularProperties'
-    
-            ))->with('success', 'E-mail sent successfully.');
-        
+           
+            return redirect()->route('pages.search', [
+                'properties' => $properties,
+                'typeProprieteForSale' => $typeProprieteForSale,
+                'typeProprieteRental' => $typeProprieteRental,
+                'uniqueCities' => $uniqueCities,
+                'popularProperties' => $popularProperties,
+                
+            ])->with('success', 'E-mail sent successfully.');
+            
+
+
         }
 
 
@@ -336,11 +339,12 @@ class PagesController extends Controller
     public function single(Request $request)
     {
         $id = $request->id;
-
+//dd($id);
         $propertiesSingle = Propriete::where('id', $id)->first();
+        $proprietaire = $propertiesSingle->user;
         $propertiesSingle->vue = $propertiesSingle->vue + 1;
         $propertiesSingle->save();
-
+            
 
 
         $type_propriete_id = $propertiesSingle->type_propriete_id;
@@ -365,10 +369,45 @@ class PagesController extends Controller
             ->get();
 
 
+            if ($request->has('btn_msg3')) {
+                Message::create([
+                    'user_id' => FacadesAuth::user()->id,
+                    'nom_prenom' => $request->nom_prenom,
+                    'email' => $request->email,
+                    'titre_msg' => $request->titre_msg,
+                    'telephone' => $request->telephone,
+                    'message' => $request->message,
+                    'deleted' => 0,
+                    'proprietaire_id' => $propertiesSingle->user->id
+                ]);
+                $request->request->remove('btn_msg3');
+            
+                return redirect()->route('pages.single', [
+                    'id' => $id,
+                    'propertiesSingle' => $propertiesSingle,
+                    'similarProperties' => $similarProperties,
+                    'proprietaire' => $proprietaire,
+                    
+                ])->with('success', 'Message sent successfully.');
+                
+            }
+            if ($request->has('btn_newslater')) {
 
+                Newslater::create([
+                    'email' => $request->email,
+                    'deleted' => 0,
+                ]);
+                return redirect()->route('pages.single', [
+                    'id' => $id,
+                    'propertiesSingle' => $propertiesSingle,
+                    'similarProperties' => $similarProperties,
+                    'proprietaire' => $proprietaire,
+                    
+                ])->with('success', 'E-mail sent successfully.');
+            }
         //dd($similarProperties);
 
-        return view('pages/single', compact('propertiesSingle', 'similarProperties'));
+        return view('pages/single', compact('id','proprietaire','propertiesSingle', 'similarProperties'));
     }
 
     public function contactUs(Request $request)
@@ -376,7 +415,7 @@ class PagesController extends Controller
 
         if ($request->has('btn_msg2')) {
 
-            $msg = Message::create([
+            Message::create([
                 'user_id' => FacadesAuth::user()->id,
                 'nom_prenom' => $request->nom_prenom,
                 'email' => $request->email,
@@ -386,9 +425,10 @@ class PagesController extends Controller
                 'deleted' => 0,
                 'proprietaire_id' => 1
             ]);
-            if ($msg) {
-                return redirect()->route('pages.contact-us')->with('success', 'Message sent successfully.');
-            }
+            return redirect()->route('pages.contact-us')->with('success', 'Message sent successfully.');
+            
+
+            
         }
         return view('pages/contact-us');
     }
@@ -401,7 +441,6 @@ class PagesController extends Controller
     public function agent(Request $request)
     {
         $id = $request->id;
-        $user_id = $request->user_id;
         $agent = User::find($id);
 
         if (!$agent) {
@@ -418,13 +457,13 @@ class PagesController extends Controller
 
         if ($request->has('btn_msg')) {
             Message::create([
-                'user_id' => $id,
+                'user_id' => FacadesAuth::user()->id,
                 'nom_prenom' => $request->nom_prenom,
                 'email' => $request->email,
                 'telephone' => $request->telephone,
                 'message' => $request->message,
                 'deleted' => 0,
-                'proprietaire_id' => $user_id
+                'proprietaire_id' => $id
             ]);
 
             return redirect()->route('pages.agent', [
@@ -688,12 +727,14 @@ class PagesController extends Controller
 
     public function deleteFile(Request $request)
     {
-        $file = ProprieteImage::find($request->input('file_id'));
+        $file_id=$request->file_id;
+        $file = ProprieteImage::where('proprietaire_id', $file_id);
         if ($file) {
             Storage::delete($file->path);
             $file->delete();
             return response()->json(['success' => true]);
         }
+        //dd("ok");
         return response()->json(['success' => false], 404);
     }
 
@@ -729,10 +770,23 @@ class PagesController extends Controller
                 'email' => $request->email,
                 'deleted' => 0,
             ]);
-            return redirect()->back()->with('success', 'Merci bien !');
+            dd("ok");
+            return redirect()->route('pages.search-get')->with('success', 'Merci bien !');
         }
     }
 
+    public function modifProperty()
+    {
+        $typeProprietes = TypePropriete::get();
+        $caracteristiques = Caracteristique::get();
+        return view('admin/modif-property', compact(
+            'typeProprietes',
+            'caracteristiques'
+        ));
+    }
+
+
+    
 
 
 }

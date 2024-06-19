@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
     Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
     Route::post('/agent', [PagesController::class, 'agent'])->name('pages.agent');
+    Route::get('/single', [PagesController::class, 'single'])->name('pages.single');
     Route::post('/single', [PagesController::class, 'single'])->name('pages.single');
     Route::get('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::post('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
@@ -53,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
+    Route::get('/modif-property', [PagesController::class, 'modifProperty'])->name('modif-property');
     Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
 

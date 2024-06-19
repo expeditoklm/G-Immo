@@ -49,14 +49,28 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         <tbody>
         @foreach ($properties as $item)
             <tr>
-                <td class="image myelist">
-                    <a href="single-property-1.html"><img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}" class="img-fluid"></a>
+            <td class="image myelist">
+                    <a href="#" onclick="document.getElementById('proper{{ $item->id }}').submit(); return false;">
+                        <img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}" class="img-fluid">
+                    </a>
                 </td>
+
+                <!-- Formulaire caché -->
+                <form id="proper{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $item->id }}">
+                </form>   
                 <td>
                     <div class="inner">
-                        <a href="single-property-1.html">
-                            <h2>{{ $item->titre }}</h2>
-                        </a>
+                    <a href="#" onclick="document.getElementById('property{{ $item->id }}').submit(); return false;">
+                    <h2>{{ $item->titre}}</h2>
+                    </a>
+                       
+                        <!-- Formulaire caché -->
+                <form id="property{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $item->id }}">
+                </form>   
                         <figure><i class="lni-map-marker"></i> {{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</figure>
                         
                         @php
