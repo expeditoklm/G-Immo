@@ -31,14 +31,14 @@ row justify-content-center align-items-center
 <!-- Start Main Banner Area -->
 <div class="main-banner-area">
     <div class="container-fluid">
-    @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show m-2" role="alert">
-                    <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
-                        <span class="fw-bold d-block mx-auto">{{ session('error') }}</span> <!-- Utilisez mx-auto pour centrer le span -->
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show m-2" role="alert">
+            <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
+                <span class="fw-bold d-block mx-auto">{{ session('error') }}</span> <!-- Utilisez mx-auto pour centrer le span -->
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
         <div class="row justify-content-center align-items-center">
             <div class="col-xl-6 col-md-12" data-cues="slideInLeft">
                 <div class="main-banner-content">
@@ -435,20 +435,20 @@ row justify-content-center align-items-center
                                     <ul class="link-list">
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post6{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
+                                                {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
                                         <form id="post6{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post7{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
+                                                {{ $item->status }}
                                             </a>
                                         </li>
 
@@ -459,43 +459,43 @@ row justify-content-center align-items-center
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                         </form>
-                                        
+
                                     </ul>
                                     <ul class="info-list">
                                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                            </div>
+                                            <span>{{ $item->nbChambre }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                            </div>
+                                            <span>{{ $item->nbToillete }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                            </div>
+                                            <span>{{ $item->nbPiece }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                            </div>
+                                            <span>{{ $item->surface }}</span>
+                                        </li>
                                         @endif
                                     </ul>
 
@@ -539,27 +539,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                        <li>
+                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-facebook-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-twitter-x-line"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                <i class="ri-instagram-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-linkedin-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
 
@@ -593,20 +593,20 @@ row justify-content-center align-items-center
                                     <ul class="link-list">
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post10{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
+                                                {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
                                         <form id="post10{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post100{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
+                                                {{ $item->status }}
                                             </a>
                                         </li>
 
@@ -617,43 +617,43 @@ row justify-content-center align-items-center
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                         </form>
-                                        
+
                                     </ul>
                                     <ul class="info-list">
                                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                            </div>
+                                            <span>{{ $item->nbChambre }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                            </div>
+                                            <span>{{ $item->nbToillete }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                            </div>
+                                            <span>{{ $item->nbPiece }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                            </div>
+                                            <span>{{ $item->surface }}</span>
+                                        </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -696,27 +696,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                        <li>
+                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-facebook-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-twitter-x-line"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                <i class="ri-instagram-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-linkedin-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
 
@@ -750,20 +750,20 @@ row justify-content-center align-items-center
                                     <ul class="link-list">
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post13{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
+                                                {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
                                         <form id="post13{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post14{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
+                                                {{ $item->status }}
                                             </a>
                                         </li>
 
@@ -774,43 +774,43 @@ row justify-content-center align-items-center
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                         </form>
-                                        
+
                                     </ul>
                                     <ul class="info-list">
                                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                            </div>
+                                            <span>{{ $item->nbChambre }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                            </div>
+                                            <span>{{ $item->nbToillete }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                            </div>
+                                            <span>{{ $item->nbPiece }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                            </div>
+                                            <span>{{ $item->surface }}</span>
+                                        </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -853,27 +853,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                        <li>
+                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-facebook-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-twitter-x-line"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                <i class="ri-instagram-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-linkedin-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
 
@@ -908,20 +908,20 @@ row justify-content-center align-items-center
                                     <ul class="link-list">
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post16{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
+                                                {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
                                         <form id="post16{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post17{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
+                                                {{ $item->status }}
                                             </a>
                                         </li>
 
@@ -932,43 +932,43 @@ row justify-content-center align-items-center
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                         </form>
-                                        
+
                                     </ul>
                                     <ul class="info-list">
                                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                            </div>
+                                            <span>{{ $item->nbChambre }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                            </div>
+                                            <span>{{ $item->nbToillete }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                            </div>
+                                            <span>{{ $item->nbPiece }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                            </div>
+                                            <span>{{ $item->surface }}</span>
+                                        </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -1011,27 +1011,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                        <li>
+                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-facebook-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-twitter-x-line"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                <i class="ri-instagram-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-linkedin-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
 
@@ -1066,20 +1066,20 @@ row justify-content-center align-items-center
                                     <ul class="link-list">
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post20{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
+                                                {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
                                         <form id="post20{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post21{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
+                                                {{ $item->status }}
                                             </a>
                                         </li>
 
@@ -1090,43 +1090,43 @@ row justify-content-center align-items-center
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                         </form>
-                                        
+
                                     </ul>
                                     <ul class="info-list">
                                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                            </div>
+                                            <span>{{ $item->nbChambre }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                            </div>
+                                            <span>{{ $item->nbToillete }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                            </div>
+                                            <span>{{ $item->nbPiece }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                            </div>
+                                            <span>{{ $item->surface }}</span>
+                                        </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -1169,27 +1169,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                        <li>
+                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-facebook-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-twitter-x-line"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                <i class="ri-instagram-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-linkedin-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
 
@@ -1223,20 +1223,20 @@ row justify-content-center align-items-center
                                     <ul class="link-list">
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post24{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
+                                                {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
                                         <form id="post24{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post25{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
+                                                {{ $item->status }}
                                             </a>
                                         </li>
 
@@ -1247,43 +1247,43 @@ row justify-content-center align-items-center
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                         </form>
-                                        
+
                                     </ul>
                                     <ul class="info-list">
                                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                            </div>
+                                            <span>{{ $item->nbChambre }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                            </div>
+                                            <span>{{ $item->nbToillete }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                            </div>
+                                            <span>{{ $item->nbPiece }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                            </div>
+                                            <span>{{ $item->surface }}</span>
+                                        </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -1326,27 +1326,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                        <li>
+                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-facebook-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-twitter-x-line"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                <i class="ri-instagram-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-linkedin-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
 
@@ -1380,20 +1380,20 @@ row justify-content-center align-items-center
                                     <ul class="link-list">
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post28{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
+                                                {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
                                         <form id="post28{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post29{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
+                                                {{ $item->status }}
                                             </a>
                                         </li>
 
@@ -1404,43 +1404,43 @@ row justify-content-center align-items-center
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                         </form>
-                                        
+
                                     </ul>
                                     <ul class="info-list">
                                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                            </div>
+                                            <span>{{ $item->nbChambre }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                            </div>
+                                            <span>{{ $item->nbToillete }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                            </div>
+                                            <span>{{ $item->nbPiece }}</span>
+                                        </li>
                                         @endif
 
                                         @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
+                                        <li>
+                                            <div class="icon">
+                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                            </div>
+                                            <span>{{ $item->surface }}</span>
+                                        </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -1483,27 +1483,27 @@ row justify-content-center align-items-center
                                                         <i class="ri-share-line"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                        <li>
+                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-facebook-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-twitter-x-line"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                <i class="ri-instagram-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                <i class="ri-linkedin-fill"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
 
@@ -1567,7 +1567,7 @@ row justify-content-center align-items-center
     </div>
 </div>
 <!-- End Fun Facts Area -->
-
+@if($propertiesHigh->isNotEmpty())
 <!-- Start Featured Properties Area -->
 <div class="featured-properties-area ptb-120">
     <div class="container">
@@ -1600,86 +1600,86 @@ row justify-content-center align-items-center
                                         <i class="ri-share-line"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <li>
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                <i class="ri-facebook-fill"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                <i class="ri-twitter-x-line"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.instagram.com/" target="_blank">
+                                                <i class="ri-instagram-fill"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                <i class="ri-linkedin-fill"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </li>
 
                         </ul>
                     </div>
                     <div class="content">
-                    <h3>
-                                                <a href="#" onclick="document.getElementById('post0{{ $item->id }}').submit(); return false;">
-                                                    {{ $item->titre }}
-                                                </a>
-                                            </h3>
+                        <h3>
+                            <a href="#" onclick="document.getElementById('post0{{ $item->id }}').submit(); return false;">
+                                {{ $item->titre }}
+                            </a>
+                        </h3>
 
 
-                                            <!-- Formulaire caché -->
-                                            <form id="post0{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $item->id }}">
-                                            </form>
+                        <!-- Formulaire caché -->
+                        <form id="post0{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $item->id }}">
+                        </form>
 
 
                         <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                     </div>
                     <ul class="info-list">
-                                        @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
-                                        @endif
+                        @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
+                        <li>
+                            <div class="icon">
+                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                            </div>
+                            <span>{{ $item->nbChambre }}</span>
+                        </li>
+                        @endif
 
-                                        @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
-                                        @endif
+                        @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
+                        <li>
+                            <div class="icon">
+                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                            </div>
+                            <span>{{ $item->nbToillete }}</span>
+                        </li>
+                        @endif
 
-                                        @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
-                                        @endif
+                        @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
+                        <li>
+                            <div class="icon">
+                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                            </div>
+                            <span>{{ $item->nbPiece }}</span>
+                        </li>
+                        @endif
 
-                                        @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
-                                        @endif
-                                    </ul>
+                        @if(!is_null($item->surface) && $item->surface != 0)
+                        <li>
+                            <div class="icon">
+                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                            </div>
+                            <span>{{ $item->surface }}</span>
+                        </li>
+                        @endif
+                    </ul>
                     <div class="price-and-user">
                         <div class="price">{{ $item->prix }} XOF</div>
                         <div class="user">
@@ -1700,8 +1700,9 @@ row justify-content-center align-items-center
         </div>
     </div>
 </div>
+@endif
 <!-- End Featured Properties Area -->
-
+@if($propertiesForSale->isNotEmpty())
 <!-- Start Properties Area -->
 <div class="properties-area pt-120 pb-95">
     <div class="container">
@@ -1726,73 +1727,73 @@ row justify-content-center align-items-center
                                 </div>
                             </li>
                         </ul>
-                                    <!-- Recoriger-->
-                                    <ul class="link-list">
-                                        <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
-                                            </a>
-                                        </li>
+                        <!-- Recoriger-->
+                        <ul class="link-list">
+                            <li>
+                                <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;">
+                                    {{ $item->typePropriete->libelle }}
+                                </a>
+                            </li>
 
-                                        <!-- Formulaire caché -->
-                                        <form id="post2{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
-                                            @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
-                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
-                                        </form>
+                            <!-- Formulaire caché -->
+                            <form id="post2{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                            </form>
 
-                                        <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post3{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
-                                            </a>
-                                        </li>
+                            <li>
+                                <a href="#" class="link-btn" onclick="document.getElementById('post3{{ $item->id }}').submit(); return false;">
+                                    {{ $item->status }}
+                                </a>
+                            </li>
 
-                                        <!-- Formulaire caché -->
-                                        <form id="post3{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
-                                            @csrf
-                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
-                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
-                                            <input type="hidden" name="status" value="{{ $item->status }}">
-                                        </form>
-                                        
-                                    </ul>
-                                    <ul class="info-list">
-                                        @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
-                                        @endif
+                            <!-- Formulaire caché -->
+                            <form id="post3{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                <input type="hidden" name="status" value="{{ $item->status }}">
+                            </form>
 
-                                        @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
-                                        @endif
+                        </ul>
+                        <ul class="info-list">
+                            @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
+                            <li>
+                                <div class="icon">
+                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                </div>
+                                <span>{{ $item->nbChambre }}</span>
+                            </li>
+                            @endif
 
-                                        @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
-                                        @endif
+                            @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
+                            <li>
+                                <div class="icon">
+                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                </div>
+                                <span>{{ $item->nbToillete }}</span>
+                            </li>
+                            @endif
 
-                                        @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
-                                        @endif
-                                    </ul>
+                            @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
+                            <li>
+                                <div class="icon">
+                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                </div>
+                                <span>{{ $item->nbPiece }}</span>
+                            </li>
+                            @endif
+
+                            @if(!is_null($item->surface) && $item->surface != 0)
+                            <li>
+                                <div class="icon">
+                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                </div>
+                                <span>{{ $item->surface }}</span>
+                            </li>
+                            @endif
+                        </ul>
                     </div>
                     <div class="properties-content">
                         <div class="top">
@@ -1868,9 +1869,10 @@ row justify-content-center align-items-center
     </div>
 </div>
 <!-- End Properties Area -->
+@endif
 
 
-
+@if($comments->isNotEmpty())
 <!-- Start Testimonial Area -->
 <div class="testimonial-area pb-120">
     <div class="container-fluid" data-cues="slideInUp">
@@ -1885,10 +1887,10 @@ row justify-content-center align-items-center
                         <div class="info">
                             <div class="image">
                                 <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                            </div>
+                            </div> 
                             <div class="title">
                                 <h3>{{ $item->nom_prenom }}</h3>
-                                <span>{{ $item->propriete->titre }} / {{ $item->propriete->user->nom_prenom }}</span>
+                                <span>{{ $item->propriete->user->nom_prenom }} / {{ $item->propriete->titre }}  </span>
                             </div>
                         </div>
                         <p>“{{ $item->comment }}”</p>
@@ -1916,6 +1918,7 @@ row justify-content-center align-items-center
         </div>
     </div>
 </div>
+@endif
 <!-- End Testimonial Area -->
 
 

@@ -1,7 +1,146 @@
 
 
 
+@foreach ($messages as $item)
+            <div class="message">
+                <div class="thumb">
+                    <img class="img-fluid" src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt="">
+                </div>
 
+                <div class="body">
+                    <h6>{{ $item->user->nom_prenom}}</h6>
+                    <p class="post-time">{{ $item->created_at}}</p>
+                    <p class="content mb-0 mt-2">{{ $item->message}}</p>
+                    <div class="controller">
+                        <ul>
+
+                            <li>
+                                <a href="#" class="delete-icon" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Voulez-vous vraiment supprimer {{ $item->message }} ?</p>
+                    <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
+                    <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
+                </div>
+            </div>
+            @endforeach
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <script>
+                // Get the modal
+                document.addEventListener("DOMContentLoaded", function() {
+                    var modal = document.getElementById("myModal");
+                    var span = document.getElementsByClassName("close")[0];
+                    var cancelBtn = document.getElementById("cancel-delete");
+                    var deleteIcons = document.querySelectorAll(".delete-icon");
+    
+                    deleteIcons.forEach(function(icon) {
+                        icon.addEventListener("click", function(event) {
+                            event.preventDefault();
+                            modal.style.display = "block";
+                        });
+                    });
+    
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+    
+                    cancelBtn.onclick = function() {
+                        modal.style.display = "none";
+                    }
+    
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                });
+            </script>
 
 
 
@@ -880,3 +1019,110 @@ PAGE EXPIRED
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@if($popularProperties->isNotEmpty())
+<h2>{{ $propertiesSingle->comments->count() }} Comments</h2>
+@endif
+
+
+
+
+
+
+
+<div class="description">
+    <h3>Property Description</h3>
+    @isset($propertiesSingle->description)
+        <p>{{ $propertiesSingle->description }}</p>
+    @else
+        <p>Aucune description disponible.</p>
+    @endisset
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

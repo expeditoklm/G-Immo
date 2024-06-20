@@ -73,7 +73,7 @@ top-header-inner
         </div>
         @endif
 
-     
+
         @if(session('success'))
         <div class="alert alert-primary alert-dismissible fade show m-2" role="alert">
             <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
@@ -155,7 +155,7 @@ top-header-inner
 
                             <div class="form-group">
                                 <label>Email Address</label>
-                                <input type="email" name="email"  class="form-control" value="{{ old('email') }}" placeholder="Enter email address">
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter email address">
                                 <div class="icon">
                                     <i class="ri-mail-line"></i>
                                 </div>
@@ -163,14 +163,14 @@ top-header-inner
 
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input type="number" name="telephone"  class="form-control" value="{{ old('telephone') }}" placeholder="Enter phone">
+                                <input type="number" name="telephone" class="form-control" value="{{ old('telephone') }}" placeholder="Enter phone">
                                 <div class="icon">
                                     <i class="ri-mail-line"></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Country</label>
-                                <select  class="form-control" value="{{ old('pays') }}" name="pays" id="abcd" aria-label="Default select example">
+                                <select class="form-control" value="{{ old('pays') }}" name="pays" id="abcd" aria-label="Default select example">
                                     <option selected="">Select your country</option>
                                     <option value="Cotonou">Cotonou</option>
                                     <option value="Abuja">Abuja</option>
@@ -184,7 +184,7 @@ top-header-inner
 
                             <div class="form-group">
                                 <label>City</label>
-                                <select  class="form-control" value="{{ old('ville') }}" name="ville" id="abcd" aria-label="Default select example">
+                                <select class="form-control" value="{{ old('ville') }}" name="ville" id="abcd" aria-label="Default select example">
                                     <option selected="">Select your city</option>
                                     <option value="Cotonou">Cotonou</option>
                                     <option value="Abuja">Abuja</option>

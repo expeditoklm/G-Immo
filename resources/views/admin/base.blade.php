@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 <!-- Mirrored from code-theme.com/html/findhouses/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 May 2024 12:13:23 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,16 +35,92 @@
     <style>
         .left-aligned-btn {
             text-align: left;
-            padding-left: 15px; /* Ajustez cette valeur selon vos besoins */
-            border: none; /* Supprimer le contour */
-            background: none; /* Supprimer le remplissage */
-            color: inherit; /* Inhérer la couleur du texte */
+            padding-left: 15px;
+            /* Ajustez cette valeur selon vos besoins */
+            border: none;
+            /* Supprimer le contour */
+            background: none;
+            /* Supprimer le remplissage */
+            color: inherit;
+            /* Inhérer la couleur du texte */
         }
+
         .left-aligned-btn:focus {
-            outline: none; /* Supprimer le contour lors du focus */
-            box-shadow: none; /* Supprimer l'ombre lors du focus */
+            outline: none;
+            /* Supprimer le contour lors du focus */
+            box-shadow: none;
+            /* Supprimer l'ombre lors du focus */
+        }
+
+
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            /* Adjust this value to move the modal up or down */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            top: 10%;
+            /* Add this line to move the modal content down */
+        }
+
+        @media (min-width: 768px) {
+            .modal-content {
+                top: 20%;
+                /* Adjust this value for positioning on larger screens */
+                left: 8%;
+                /* Adjust this value for positioning on larger screens */
+            }
+        }
+
+        /* Position for smaller screens */
+        @media (max-width: 767px) {
+            .modal-content {
+                top: 40%;
+                /* Adjust this value for positioning on smaller screens */
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
         }
     </style>
+
+
 
     @yield('css')
 
@@ -63,7 +140,7 @@
                         <div class="left-side">
                             <!-- Logo -->
                             <div id="logo">
-                                <a href="{{ request()->route() && request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} " ><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"></a>
+                                <a href="{{ request()->route() && request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"></a>
                             </div>
                             <!-- Mobile Navigation -->
                             <div class="mmenu-trigger">
@@ -76,7 +153,7 @@
                             <!-- Main Navigation -->
                             <nav id="navigation" class="style-1">
                                 <ul id="responsive">
-                                    <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} "  class="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">Home</a></li>
+                                    <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} " class="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">Home</a></li>
                                 </ul>
                             </nav>
                             <div class="clearfix"></div>
@@ -84,26 +161,26 @@
                         </div>
                         <!-- Left Side Content / End -->
                         <!-- Right Side Content / -->
-                            @php
-                                $user = \App\Helpers\BaseHelper::getUser();
-                            @endphp
-                            
+                        @php
+                        $user = \App\Helpers\BaseHelper::getUser();
+                        @endphp
+
                         <div class="header-user-menu user-menu">
                             <div class="header-user-name">
-                            @if($user)
+                                @if($user)
                                 <span><img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt=""></span>Hi, {{ $user->nom_prenom }}!
                             </div>
                             @else
-                                <p>User not found.</p>
+                            <p>User not found.</p>
                             @endif
                             <ul>
                                 <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }} "> Edit profile</a></li>
                                 <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Add Property</a></li>
                                 <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "> Change Password</a></li>
                                 <form action="{{ route('logout') }}" method="POST">
-                                        @csrf
-                                        <li> <button type="submit" class="btn left-aligned-btn w-100 text-left  col-md-12"><i class="fas fa-sign-out-alt mr-3"></i>Log Out</button></li>
-                                    </form>
+                                    @csrf
+                                    <li> <button type="submit" class="btn left-aligned-btn w-100 text-left  col-md-12"><i class="fas fa-sign-out-alt mr-3"></i>Log Out</button></li>
+                                </form>
                             </ul>
                         </div>
                         <!-- Right Side Content / End -->
@@ -122,17 +199,17 @@
                     <div class="col-lg-3 col-md-12 col-xs-12 pl-0 pr-0 user-dash">
                         <div class="user-profile-box mb-0">
                             <div class="text-center mt-2"><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"> </div>
-                           
+
                             @if($user)
                             <div class="header clearfix">
                                 <img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt="avatar" class="img-fluid profile-img">
                             </div>
-                            
+
                             <div class="active-user">
                                 <h2>{{ $user->nom_prenom }}</h2>
                             </div>
                             @else
-                                <p>User not found.</p>
+                            <p>User not found.</p>
                             @endif
                             <div class="detail clearfix">
                                 <ul class="mb-0">
@@ -151,8 +228,8 @@
                                             <i class="fa fa-user"></i>Profile
                                         </a>
                                     </li>
-                                    
-                                    
+
+
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
                                             <i class="fa fa-list" aria-hidden="true"></i>Add Property
@@ -168,8 +245,8 @@
                                             <i class="fas fa-paste"></i>Reviews
                                         </a>
                                     </li>
-                                   
-                                    
+
+
                                 </ul>
                             </div>
                         </div>
@@ -186,34 +263,34 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
                                                 <i class="fa fa-list mr-3" aria-hidden="true"></i>My Properties
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }}">
                                                 <i class="fa fa-user mr-3"></i>Profile
                                             </a>
                                         </li>
-                                        
-                                        
+
+
                                         <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
                                                 <i class="fa fa-list mr-3" aria-hidden="true"></i>Add Property
                                             </a>
                                         </li>
-                                        
+
                                         <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'javascript:void(0)' : route('admin.messages') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'javascript:void(0)' : route('admin.messages') }}">
                                                 <i class="fas fa-paste mr-3"></i>Messages
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}"   href="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
                                                 <i class="fa fa-lock mr-3"></i>Reviews
                                             </a>
                                         </li>
-                                        
+
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn left-aligned-btn w-100 text-left">
@@ -224,7 +301,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        @include('admin.success_error')
                         @yield('content')
                     </div>
                 </div>
@@ -284,10 +361,48 @@
         <!-- MAIN JS -->
         <script src="{{asset('assets/admin/js/script.js')}}"></script>
 
+
+        <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var deleteIcons = document.querySelectorAll(".delete-icon");
+
+        deleteIcons.forEach(function(icon) {
+            icon.addEventListener("click", function(event) {
+                event.preventDefault();
+                var messageId = this.getAttribute('data-id');
+                var modal = document.getElementById("myModal-" + messageId);
+                modal.style.display = "block";
+            });
+        });
+
+        var modals = document.querySelectorAll(".modal");
+        modals.forEach(function(modal) {
+            var span = modal.querySelector(".close");
+            var cancelBtn = modal.querySelector("#cancel-delete");
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            cancelBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
+    });
+</script>
+
+
         @yield('js')
 
     </div>
     <!-- Wrapper / End -->
 </body>
 <!-- Mirrored from code-theme.com/html/findhouses/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 May 2024 12:13:24 GMT -->
+
 </html>

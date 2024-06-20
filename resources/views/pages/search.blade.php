@@ -113,14 +113,14 @@ top-header-inner
                                     <button type="submit" class="search-btn">
                                         <i class="ri-search-2-line"></i>
                                     </button>
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="tab-pane fade" id="rent" role="tabpanel">
-                <form class="search-form" method="get" action="{{ route('pages.search-post') }}">
+                    <form class="search-form" method="get" action="{{ route('pages.search-post') }}">
                         @csrf
                         <input type="hidden" name="status" value="Rental">
                         <div class="row justify-content-center align-items-end">
@@ -194,7 +194,7 @@ top-header-inner
             </div>
         </div>
         <div class="row justify-content-center" data-cues="slideInUp">
-
+        @if($properties->isNotEmpty())
             @foreach ($properties as $item)
             <div class="col-xl-6 col-md-12">
                 <div class="properties-inner-card with-wrap-color">
@@ -214,20 +214,20 @@ top-header-inner
                                     <ul class="link-list">
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post1{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
+                                                {{ $item->typePropriete->libelle }}
                                             </a>
                                         </li>
 
                                         <!-- Formulaire caché -->
                                         <form id="post1{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                             @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                         </form>
 
                                         <li>
                                             <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
+                                                {{ $item->status }}
                                             </a>
                                         </li>
 
@@ -238,7 +238,7 @@ top-header-inner
                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                         </form>
-                                        
+
                                     </ul>
                                     <ul class="group-info">
                                         <li>
@@ -293,39 +293,39 @@ top-header-inner
                                 <!-- a nouveau-->
                                 <ul class="info-list">
                                     @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                        <li>
-                                            <div class="icon">
-                                                <img src="{{ asset('assets/images/properties/bed2.svg') }}" alt="bed2">
-                                            </div>
-                                            <span>{{ $item->nbChambre }}</span>
-                                        </li>
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/properties/bed2.svg') }}" alt="bed2">
+                                        </div>
+                                        <span>{{ $item->nbChambre }}</span>
+                                    </li>
                                     @endif
 
                                     @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                        <li>
-                                            <div class="icon">
-                                                <img src="{{ asset('assets/images/properties/bathroom2.svg') }}" alt="bathroom2">
-                                            </div>
-                                            <span>{{ $item->nbToillete }}</span>
-                                        </li>
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/properties/bathroom2.svg') }}" alt="bathroom2">
+                                        </div>
+                                        <span>{{ $item->nbToillete }}</span>
+                                    </li>
                                     @endif
 
                                     @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                        <li>
-                                            <div class="icon">
-                                                <img src="{{ asset('assets/images/properties/parking2.svg') }}" alt="parking2">
-                                            </div>
-                                            <span>{{ $item->nbPiece }}</span>
-                                        </li>
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/properties/parking2.svg') }}" alt="parking2">
+                                        </div>
+                                        <span>{{ $item->nbPiece }}</span>
+                                    </li>
                                     @endif
 
                                     @if(!is_null($item->surface) && $item->surface != 0)
-                                        <li>
-                                            <div class="icon">
-                                                <img src="{{ asset('assets/images/properties/area2.svg') }}" alt="area2">
-                                            </div>
-                                            <span>{{ $item->surface }}</span>
-                                        </li>
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/properties/area2.svg') }}" alt="area2">
+                                        </div>
+                                        <span>{{ $item->surface }}</span>
+                                    </li>
                                     @endif
                                 </ul>
 
@@ -334,11 +334,11 @@ top-header-inner
                                         <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
                                         <a href="#" onclick="document.getElementById('post4{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
-                                                    <!-- Formulaire caché -->
-                                                    <form id="post4{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                        <input type="hidden" name="id" value="{{ $item->user->id }}">
-                                                    </form>
+                                        <!-- Formulaire caché -->
+                                        <form id="post4{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $item->user->id }}">
+                                        </form>
                                     </div>
                                     <div class="price">{{ $item->prix }} XOF</div>
                                 </div>
@@ -348,7 +348,10 @@ top-header-inner
                 </div>
             </div>
             @endforeach
+        
+        @endif
         </div>
+        @if($properties->isNotEmpty())
         <div class="col-lg-12 col-md-12">
             <div class="pagination-area">
                 <div class="nav-links">
@@ -386,22 +389,27 @@ top-header-inner
                 </div>
             </div>
         </div>
-
+        @else
+        <div class="pagination-area">
+                <span class="">Aucune propriété disponible.</span>
+        </div>
+        @endif
     </div>
 </div>
 </div>
 <!-- End Properties Wrap Area -->
-
+@if($popularProperties->isNotEmpty())
 <!-- Start Properties Slide Area -->
 <div class="properties-slide-area pt-120 pb-120">
     <div class="container-fluid">
         <div class="section-title text-center" data-cues="slideInUp">
+       
             <h2>Popular Properties</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et mauris eget ornare venenatis, in. Pharetra iaculis consectetur.</p>
         </div>
         <div class="swiper properties-slider">
             <div class="swiper-wrapper align-items-center" data-cues="slideInUp">
-            @foreach ($popularProperties as $item)
+                @foreach ($popularProperties as $item)
                 <div class="swiper-slide">
                     <div class="properties-slide-item">
                         <div class="properties-image">
@@ -413,108 +421,108 @@ top-header-inner
                                 <span><i class="ri-vidicon-fill"></i></span>
                                 <span><i class="ri-image-line"></i>{{ $item->proprieteImages->count() }}</span>
                             </div>
-                            
+
                             <!-- Recoriger-->
                             <ul class="link-list">
-                                        <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post7{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
-                                            </a>
-                                        </li>
+                                <li>
+                                    <a href="#" class="link-btn" onclick="document.getElementById('post7{{ $item->id }}').submit(); return false;">
+                                        {{ $item->typePropriete->libelle }}
+                                    </a>
+                                </li>
 
-                                        <!-- Formulaire caché -->
-                                        <form id="post7{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
-                                            @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
-                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
-                                        </form>
+                                <!-- Formulaire caché -->
+                                <form id="post7{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                    <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                </form>
 
-                                        <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post8{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
-                                            </a>
-                                        </li>
+                                <li>
+                                    <a href="#" class="link-btn" onclick="document.getElementById('post8{{ $item->id }}').submit(); return false;">
+                                        {{ $item->status }}
+                                    </a>
+                                </li>
 
-                                        <!-- Formulaire caché -->
-                                        <form id="post8{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
-                                            @csrf
-                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
-                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
-                                            <input type="hidden" name="status" value="{{ $item->status }}">
-                                        </form>
-                                        
-                                    </ul>
+                                <!-- Formulaire caché -->
+                                <form id="post8{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                    <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                    <input type="hidden" name="status" value="{{ $item->status }}">
+                                </form>
+
+                            </ul>
                         </div>
                         <div class="properties-content">
                             <div class="top">
-                            <div class="title">
-                                <!-- Lien cliquable -->
-                                <h3>
-                                    <a href="#" onclick="document.getElementById('post9{{ $item->id }}').submit(); return false;">
-                                        {{ $item->titre }}
-                                    </a>
-                                </h3>
+                                <div class="title">
+                                    <!-- Lien cliquable -->
+                                    <h3>
+                                        <a href="#" onclick="document.getElementById('post9{{ $item->id }}').submit(); return false;">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </h3>
 
 
-                                <!-- Formulaire caché -->
-                                <form id="post9{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $item->id }}">
-                                </form>
+                                    <!-- Formulaire caché -->
+                                    <form id="post9{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                    </form>
 
-                                <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
-                            </div>
+                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                </div>
                                 <div class="price">{{ $item->prix }} XOF</div>
                             </div>
                             <ul class="info-list">
-                                        @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
-                                        @endif
+                                @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
+                                <li>
+                                    <div class="icon">
+                                        <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                    </div>
+                                    <span>{{ $item->nbChambre }}</span>
+                                </li>
+                                @endif
 
-                                        @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
-                                        @endif
+                                @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
+                                <li>
+                                    <div class="icon">
+                                        <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                    </div>
+                                    <span>{{ $item->nbToillete }}</span>
+                                </li>
+                                @endif
 
-                                        @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
-                                        @endif
+                                @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
+                                <li>
+                                    <div class="icon">
+                                        <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                    </div>
+                                    <span>{{ $item->nbPiece }}</span>
+                                </li>
+                                @endif
 
-                                        @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
-                                        @endif
-                                    </ul>
+                                @if(!is_null($item->surface) && $item->surface != 0)
+                                <li>
+                                    <div class="icon">
+                                        <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                    </div>
+                                    <span>{{ $item->surface }}</span>
+                                </li>
+                                @endif
+                            </ul>
                             <div class="bottom">
-                            <div class="user">
-                                <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                                <a href="#" onclick="document.getElementById('post5{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
+                                <div class="user">
+                                    <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                    <a href="#" onclick="document.getElementById('post5{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
-                                <!-- Formulaire caché -->
-                                <form id="post5{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $item->user->id }}">
-                                </form>
+                                    <!-- Formulaire caché -->
+                                    <form id="post5{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->user->id }}">
+                                    </form>
 
-                            </div>
+                                </div>
                                 <ul class="group-info">
                                     <li>
                                         <div class="dropdown">
@@ -551,13 +559,14 @@ top-header-inner
                         </div>
                     </div>
                 </div>
-            @endforeach
+                @endforeach
             </div>
             <div class="properties-pagination"></div>
         </div>
     </div>
 </div>
 <!-- End Properties Slide Area -->
+@endif
 
 <!-- Start Subscribe Area -->
 <!-- Start Subscribe Area -->
@@ -566,8 +575,8 @@ top-header-inner
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
                 <h2>Subscribe To Our Newsletterss</h2>
-                <form class="subscribe-form"action="{{ route('pages.search') }}" method="POST">
-                @csrf
+                <form class="subscribe-form" action="{{ route('pages.search') }}" method="POST">
+                    @csrf
                     <input type="email" name="email" class="form-control" placeholder="Enter your email">
                     <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
                 </form>

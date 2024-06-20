@@ -34,7 +34,6 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 @section('content')
 
-
 <div class="my-properties">
     <table class="table-responsive">
         <thead>
@@ -59,10 +58,27 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                 </td>
                 <td class="actions">
-                    <a href="#" class="edit"><i class="lni-pencil"></i>Edit</a>
-                    <a href="#"><i class="far fa-trash-alt"></i></a>
+                    
+                    <a href="#" class="delete-icon" data-id="{{ $item->id }}">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                 
+                    <!-- Formulaire caché -->
+                    <form id="post{{ $item->id }}" action="{{ route('suppression') }}" method="POST" style="display: none;">
+                        @csrf
+                        <input type="hidden" name="message_sup_id" value="{{ $item->id }}">
+                    </form>
                 </td>
             </tr>
+            <!-- The Modal -->
+            <div id="myModal-{{ $item->id }}" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Voulez-vous vraiment supprimer "{{ $item->message }}" ?</p>
+                    <a onclick="document.getElementById('post{{ $item->id }}').submit(); return false;" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
+                    <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
+                </div>
+            </div>
         @endforeach
         </tbody>
     </table>

@@ -57,7 +57,7 @@ class CheckMaxExecutionTime
             }
             else {
                 return response()->view('errors/404', [
-                    'message' => 'An unexpected error occurred. Please try again  again later.'
+                    'message' => 'An unexpected error occurred. Please try again later.'
                 ], 500);
             }
         }

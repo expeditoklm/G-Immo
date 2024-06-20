@@ -40,7 +40,7 @@ top-header-inner
                     <h2>Server Error</h2>
                     <ul class="list">
                         <li>
-                            <a href="{{ url()->previous() }}">Go Back</a>
+                            <a href="javascript:history.back()">Go Back</a>
                         </li>
                         <li>{{ $message }}</li>
                     </ul>
@@ -55,7 +55,7 @@ top-header-inner
                 <div class="not-found-content text-center">
                     <img src="assets/images/error.png" alt="error-image">
                     <h3>Oops! That page can't be found</h3>
-                    <a href="index.html" class="default-btn">
+                    <a href="javascript:history.back()" class="default-btn">
                         Back to Home
                     </a>
                 </div>
@@ -64,20 +64,22 @@ top-header-inner
         <!-- End Not Found Area -->
 
         <!-- Start Subscribe Area -->
-        <div class="subscribe-wrap-area">
-            <div class="container" data-cues="slideInUp">
-                <div class="subscribe-wrap-inner-area">
-                    <div class="subscribe-content">
-                        <h2>Subscribe To Our Newsletter</h2>
-                        <form class="subscribe-form">
-                            <input type="search" class="form-control" placeholder="Enter your email">
-                            <button type="submit" class="default-btn">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
+<div class="subscribe-wrap-area">
+    <div class="container" data-cues="slideInUp">
+        <div class="subscribe-wrap-inner-area">
+            <div class="subscribe-content">
+                <h2>Subscribe To Our Newsletter</h2>
+                <form class="subscribe-form"action="{{ route('pages.news-letterss') }}" method="POST">
+                @csrf
+                    <input type="hidden" name="message" value="{{ $message }}">
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
+                    <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
+                </form>
             </div>
         </div>
-        <!-- End Subscribe Area -->
+    </div>
+</div>
+<!-- End Subscribe Area -->
 
 <!-- End Subscribe Area -->
 

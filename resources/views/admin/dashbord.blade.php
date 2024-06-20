@@ -6,6 +6,8 @@ Dashbord | Find Houses
 
 @section('css')
 
+
+
 @endsection
 
 @section('body')
@@ -86,25 +88,37 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
     <h4 class="title">Message</h4>
     <div class="section-body">
         <div class="messages">
-            @foreach ($messages as $item)
-            <div class="message">
-                <div class="thumb">
-                    <img class="img-fluid" src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt="">
-                </div>
-                
-                <div class="body">
-                    <h6>{{ $item->user->nom_prenom}}</h6>
-                    <p class="post-time">{{ $item->created_at}}</p>
-                    <p class="content mb-0 mt-2">{{ $item->message}}</p>
-                    <div class="controller">
-                        <ul>
+        @foreach ($messages as $item)
+    <div class="message">
+        <div class="thumb">
+            <img class="img-fluid" src="{{ asset('assets/admin/images/testimonials/ts-1.jpg') }}" alt="">
+        </div>
 
-                            <li><a href="#"><i class="far fa-trash-alt"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="body">
+            <h6>{{ $item->user->nom_prenom }}</h6>
+            <p class="post-time">{{ $item->created_at }}</p>
+            <p class="content mb-0 mt-2">{{ $item->message }}</p>
+            <div class="controller">
+                <ul>
+                    <li>
+                        <a href="#" class="delete-icon" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
+                    </li>
+                </ul>
             </div>
-            @endforeach
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal-{{ $item->id }}" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Voulez-vous vraiment supprimer "{{ $item->message }}" ?</p>
+            <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
+            <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
+        </div>
+    </div>
+@endforeach
+
         </div>
     </div>
 </div>
@@ -140,9 +154,20 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="controller">
                         <ul>
 
-                            <li><a href="#"><i class="far fa-trash-alt"></i></a>
+                        <li>
+                            <a href="#" class="delete-icon" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
+                        </li>
                         </ul>
                     </div>
+                </div>
+            </div>
+            <!-- The Modal -->
+            <div id="myModal-{{ $item->id }}" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Voulez-vous vraiment supprimer "{{ $item->comment }}" ?</p>
+                    <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
+                    <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
                 </div>
             </div>
             @endforeach
@@ -186,7 +211,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="form-group">
 
                         <select class="form-select" name="pays" id="abcd" aria-label="Default select example">
-                            <option >Selectionner le pays</option>
+                            <option>Selectionner le pays</option>
                             <option value="Benin">Benin</option>
                             <option value="Cote d'ivoire ">Cote d'ivoire</option>
                             <option value="Togo">Togo</option>
@@ -199,7 +224,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="form-group">
 
                         <select class="form-select" name="ville" id="abcd" aria-label="Default select example">
-                            <option >Selectionner la ville</option>
+                            <option>Selectionner la ville</option>
                             <option value="Porto">Porto</option>
                             <option value="Ctn">Ctn</option>
                             <option value="S○vi">S○vi</option>
@@ -246,7 +271,9 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 @endsection
 
-@section('script')
+@section('js')
+
+
 
 
 @endsection

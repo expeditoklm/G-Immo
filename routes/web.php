@@ -30,6 +30,7 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::get('/details', [PagesController::class, 'details'])->name('pages.details');
     Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
     Route::get('/not-found', [PagesController::class, 'notFound'])->name('pages.not-found');
+    Route::post('/news-letterss', [PagesController::class, 'newsLetterss'])->name('pages.news-letterss');
     
     FacadesAuth::routes();
     
@@ -58,6 +59,7 @@ Route::middleware(['auth','check.max.execution.time'])->group(function () {
 
     Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
     Route::get('/modif-property', [PagesController::class, 'modifProperty'])->name('modif-property');
+    Route::post('/suppression', [PagesController::class, 'suppression'])->name('suppression');
     Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
 

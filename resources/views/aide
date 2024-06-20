@@ -295,3 +295,6 @@ public function addPropertyPost(Request $request)
         }
         return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
 }
+
+
+->where('deleted', 0)
