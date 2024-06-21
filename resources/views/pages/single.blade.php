@@ -6,50 +6,23 @@ Property | Andora
 
 @section('css')
 <style>
-.rating {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.rating li {
-    display: inline-block;
-    cursor: pointer;
-    font-size: 24px;
-}
-
-.rating li i {
-    color: #ccc;
-}
-
-.rating li.selected i,
-.rating li.hover i,
-.rating li.hover ~ li i {
-    color: #ffcc00;
-}
-
-
-
 </style>
 @endsection
 
 @section('div_init')
 <div class="main-header-area main-header-with-relative">
-
     @endsection
-
+ 
     @section('div_finish')
 </div>
 @endsection
 
 @section('div_init2')
 top-header-inner
-
 @endsection
 
 @section('div_init3')
 <div class="row justify-content-center align-items-center">
-
     @endsection
 
     @section('div_finish3')
@@ -57,11 +30,10 @@ top-header-inner
 @endsection
 
 @section('content')
-
 <!-- Start Page Banner Area -->
 <div class="page-banner-area">
     <div class="container">
-    @include('admin.success_error')
+        @include('admin.success_error')
         <div class="page-banner-content">
             <h2>Property Details</h2>
             <ul class="list">
@@ -73,60 +45,60 @@ top-header-inner
         </div>
     </div>
 </div>
+
 <!-- End Page Banner Area -->
 
 <!-- Start Property Details Area -->
 <div class="property-details-area ptb-120">
     <div class="container">
-    
         <div class="row justify-content-center">
             <div class="property-details-desc">
                 <div class="property-details-content">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-lg-7 col-md-12">
+
                             <div class="left-content">
                                 <div class="title">
                                     <h2>{{ $propertiesSingle->titre }}</h2>
-
                                 </div>
                                 <span class="address">{{ $propertiesSingle->pays }}, {{ $propertiesSingle->ville }}, {{ $propertiesSingle->quartier }}</span>
                                 <ul class="info-list">
-    @if(!is_null($propertiesSingle->nbChambre) && $propertiesSingle->nbChambre != 0)
-        <li>
-            <div class="icon">
-                <img src="{{ asset('assets/images/property-details/bed.svg') }}" alt="bed">
-            </div>
-            <span>{{ $propertiesSingle->nbChambre }} Bedroom</span>
-        </li>
-    @endif
+                                    @if(!is_null($propertiesSingle->nbChambre) && $propertiesSingle->nbChambre != 0)
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/property-details/bed.svg') }}" alt="bed">
+                                        </div>
+                                        <span>{{ $propertiesSingle->nbChambre }} Bedroom</span>
+                                    </li>
+                                    @endif
 
-    @if(!is_null($propertiesSingle->nbToillete) && $propertiesSingle->nbToillete != 0)
-        <li>
-            <div class="icon">
-                <img src="{{ asset('assets/images/property-details/bathroom.svg') }}" alt="bathroom">
-            </div>
-            <span>{{ $propertiesSingle->nbToillete }} Bathroom</span>
-        </li>
-    @endif
+                                    @if(!is_null($propertiesSingle->nbToillete) && $propertiesSingle->nbToillete != 0)
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/property-details/bathroom.svg') }}" alt="bathroom">
+                                        </div>
+                                        <span>{{ $propertiesSingle->nbToillete }} Bathroom</span>
+                                    </li>
+                                    @endif
 
-    @if(!is_null($propertiesSingle->nbPiece) && $propertiesSingle->nbPiece != 0)
-        <li>
-            <div class="icon">
-                <img src="{{ asset('assets/images/property-details/parking.svg') }}" alt="parking">
-            </div>
-            <span>{{ $propertiesSingle->nbPiece }} Parking</span>
-        </li>
-    @endif
+                                    @if(!is_null($propertiesSingle->nbPiece) && $propertiesSingle->nbPiece != 0)
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/property-details/parking.svg') }}" alt="parking">
+                                        </div>
+                                        <span>{{ $propertiesSingle->nbPiece }} Parking</span>
+                                    </li>
+                                    @endif
 
-    @if(!is_null($propertiesSingle->surface) && $propertiesSingle->surface != 0)
-        <li>
-            <div class="icon">
-                <img src="{{ asset('assets/images/property-details/area.svg') }}" alt="area">
-            </div>
-            <span>{{ $propertiesSingle->surface }} Area</span>
-        </li>
-    @endif
-</ul>
+                                    @if(!is_null($propertiesSingle->surface) && $propertiesSingle->surface != 0)
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/property-details/area.svg') }}" alt="area">
+                                        </div>
+                                        <span>{{ $propertiesSingle->surface }} Area</span>
+                                    </li>
+                                    @endif
+                                </ul>
 
                                 <ul class="group-info">
                                     <li>
@@ -135,77 +107,83 @@ top-header-inner
                                                 <i class="ri-share-line"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                <li>
+                                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                        <i class="ri-facebook-fill"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                        <i class="ri-twitter-x-line"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://www.instagram.com/" target="_blank">
+                                                        <i class="ri-instagram-fill"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                        <i class="ri-linkedin-fill"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </li>
-
                                 </ul>
                             </div>
+
                         </div>
                         <div class="col-lg-5 col-md-12">
                             <div class="right-content">
-                                
 
-                                    <!-- Recoriger-->
-                                    <ul class="link-list">
-                                        <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post1{{ $propertiesSingle->id }}').submit(); return false;">
+
+                                <!-- Recoriger-->
+                                <ul class="link-list">
+                                    <li>
+                                        <a href="#" class="link-btn" onclick="document.getElementById('post1{{ $propertiesSingle->id }}').submit(); return false;">
                                             {{ $propertiesSingle->typePropriete->libelle }}
-                                            </a>
-                                        </li>
+                                        </a>
+                                    </li>
 
-                                        <!-- Formulaire caché -->
-                                        <form id="post1{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
-                                            @csrf
-                                           <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
-                                            <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
-                                        </form>
+                                    <!-- Formulaire caché -->
+                                    <form id="post1{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
+                                        <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
+                                    </form>
 
-                                        <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $propertiesSingle->id }}').submit(); return false;">
+                                    <li>
+                                        <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $propertiesSingle->id }}').submit(); return false;">
                                             {{ $propertiesSingle->status }}
-                                            </a>
-                                        </li>
+                                        </a>
+                                    </li>
 
-                                        <!-- Formulaire caché -->
-                                        <form id="post2{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
-                                            @csrf
-                                            <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
-                                            <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
-                                            <input type="hidden" name="status" value="{{ $propertiesSingle->status }}">
-                                        </form>
-                                        
-                                    </ul>
-                                <div class="price">{{ $propertiesSingle->prix }} XOF</div>
+                                    <!-- Formulaire caché -->
+                                    <form id="post2{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
+                                        <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
+                                        <input type="hidden" name="status" value="{{ $propertiesSingle->status }}">
+                                    </form>
+
+                                </ul>
+                                
+                                <div class="price">
+                                    @isset($propertiesSingle->prix)
+                                    {{ $propertiesSingle->prix }} XOF   
+                                    @endif
+                                </div>
+                             
                                 <div class="user">
                                     <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
                                     <a href="#" onclick="document.getElementById('post3{{ $propertiesSingle->user->id }}').submit(); return false;">{{ $propertiesSingle->user->nom_prenom }}</a>
 
-                                                    <!-- Formulaire caché -->
-                                                    <form id="post3{{ $propertiesSingle->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                        <input type="hidden" name="id" value="{{ $propertiesSingle->user->id }}">
-                                                    </form>
+                                    <!-- Formulaire caché -->
+                                    <form id="post3{{ $propertiesSingle->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $propertiesSingle->user->id }}">
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -250,9 +228,9 @@ top-header-inner
                             <div class="description">
                                 <h3>Property Description</h3>
                                 @isset($propertiesSingle->description)
-                                    <p>{{ $propertiesSingle->description }}</p>
+                                <p>{{ $propertiesSingle->description }}</p>
                                 @else
-                                    <p>Aucune description disponible.</p>
+                                <p>Aucune description disponible.</p>
                                 @endisset
                             </div>
 
@@ -286,9 +264,9 @@ top-header-inner
 
 
                             <div class="comments-area">
-                            @if($propertiesSingle->comments->isNotEmpty())
+                                @if($propertiesSingle->comments->isNotEmpty())
                                 <h2>{{ $propertiesSingle->comments->count() }} Comments</h2>
-                            @endif
+                                @endif
                                 <ul class="comments-list">
                                     @foreach ($propertiesSingle->comments as $item)
                                     <li>
@@ -305,78 +283,85 @@ top-header-inner
                                             @endphp
 
                                             <ul class="rating">
-                                                @for ($i = 0; $i < $filledStars; $i++) 
-                                                <li>
+                                                @for ($i = 0; $i < $filledStars; $i++) <li>
                                                     <i class="ri-star-fill"></i>
-                                                </li>
-                                                @endfor
-
-                                                @for ($i = 0; $i < $grayStars; $i++) 
-                                                <li><i class="ri-star-line"></i>
-                                                @endfor
-
-
-                                            </ul>
-                                            <p>{{ $item->comment }}.</p>
-                                        </div>
                                     </li>
-                                    @endforeach
+                                    @endfor
+
+                                    @for ($i = 0; $i < $grayStars; $i++) <li><i class="ri-star-line"></i>
+                                        @endfor
+
+
                                 </ul>
-                                
-                                
-                                <form class="review-form">
-                                    <div class="title">
-                                        <h3>Add A Review</h3>
-                                        <ul class="rating">
+                                <p>{{ $item->comment }}.</p>
+                            </div>
+                            </li>
+                            @endforeach
+                            </ul>
+
+
+                            <form class="review-form">
+                                <div class="title">
+                                    <h3>Add A Review</h3>
+                                    <!-- <ul class="rating">
                                         <li data-value="1"><i class="ri-star-line"></i></li>
                                             <li data-value="2"><i class="ri-star-line"></i></li>
                                             <li data-value="3"><i class="ri-star-line"></i></li>
                                             <li data-value="4"><i class="ri-star-line"></i></li>
                                             <li data-value="5"><i class="ri-star-line"></i></li>
-                                        </ul>
+                                        </ul> -->
+                                    <div class="custom-star-rating">
+                                        <i class="ri-star-line" data-value="1"></i>
+                                        <i class="ri-star-line" data-value="2"></i>
+                                        <i class="ri-star-line" data-value="3"></i>
+                                        <i class="ri-star-line" data-value="4"></i>
+                                        <i class="ri-star-line" data-value="5"></i>
                                     </div>
-                                    <input type="hidden" name="rating" id="rating" value="0">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Your Name</label>
-                                                        <input type="text" class="form-control" placeholder="Enter your name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Email Address</label>
-                                                        <input type="email" class="form-control" placeholder="Enter email address">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="form-group top-css">
-                                                        <label>Your Review Here</label>
-                                                        <textarea class="form-control" placeholder="Your review..."></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="check1">
-                                                            <label class="form-check-label" for="check1">
-                                                                Save my name, email, and website in this browser for the next time I review.
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12">
-                                                    <button type="submit" class="default-btn">Submit Review</button>
-                                                </div>
+                                    <div id="rating-value">Votre note : 0 étoile(s)</div>
+
+                                </div>
+                                <input type="hidden" name="rating" id="rating" value="0">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>Your Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter your name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>Email Address</label>
+                                            <input type="email" class="form-control" placeholder="Enter email address">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group top-css">
+                                            <label>Your Review Here</label>
+                                            <textarea class="form-control" placeholder="Your review..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="check1">
+                                                <label class="form-check-label" for="check1">
+                                                    Save my name, email, and website in this browser for the next time I review.
+                                                </label>
                                             </div>
-                                        </form>
-                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <button type="submit" class="default-btn">Submit Review</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
+                    </div>
                     <div class="col-xl-4 col-md-12">
                         <div class="property-details-sidebar">
                             <div class="booking">
                                 <form action="{{ route('pages.single') }}" method="POST">
-                                @csrf
+                                    @csrf
 
                                     <input type="hidden" name="id" value="{{ $propertiesSingle->id}}">
                                     <div class="form-group">
@@ -411,12 +396,12 @@ top-header-inner
                                 </form>
                             </div>
                             <div class="featured-properties">
-                            @if($similarProperties->isNotEmpty())
+                                @if($similarProperties->isNotEmpty())
                                 <h3>Featured Properties</h3>
-                            @endif
+                                @endif
                                 <div class="swiper featured-properties-slider">
                                     <div class="swiper-wrapper">
-                                    @foreach ($similarProperties as $item)
+                                        @foreach ($similarProperties as $item)
                                         <div class="swiper-slide">
                                             <div class="properties-item">
                                                 <div class="properties-image">
@@ -436,20 +421,20 @@ top-header-inner
                                                     <ul class="link-list">
                                                         <li>
                                                             <a href="#" class="link-btn" onclick="document.getElementById('post4{{ $item->id }}').submit(); return false;">
-                                                            {{ $item->typePropriete->libelle }}
+                                                                {{ $item->typePropriete->libelle }}
                                                             </a>
                                                         </li>
 
                                                         <!-- Formulaire caché -->
                                                         <form id="post4{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
                                                             @csrf
-                                                        <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                                         </form>
 
                                                         <li>
                                                             <a href="#" class="link-btn" onclick="document.getElementById('post5{{ $item->id }}').submit(); return false;">
-                                                            {{ $item->status }}
+                                                                {{ $item->status }}
                                                             </a>
                                                         </li>
 
@@ -460,43 +445,43 @@ top-header-inner
                                                             <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
                                                             <input type="hidden" name="status" value="{{ $item->status }}">
                                                         </form>
-                                                        
+
                                                     </ul>
                                                     <ul class="info-list">
                                                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                                            <li>
-                                                                <div class="icon">
-                                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                                </div>
-                                                                <span>{{ $item->nbChambre }}</span>
-                                                            </li>
+                                                        <li>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                                            </div>
+                                                            <span>{{ $item->nbChambre }}</span>
+                                                        </li>
                                                         @endif
 
                                                         @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                                            <li>
-                                                                <div class="icon">
-                                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                                </div>
-                                                                <span>{{ $item->nbToillete }}</span>
-                                                            </li>
+                                                        <li>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                                            </div>
+                                                            <span>{{ $item->nbToillete }}</span>
+                                                        </li>
                                                         @endif
 
                                                         @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                                            <li>
-                                                                <div class="icon">
-                                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                                </div>
-                                                                <span>{{ $item->nbPiece }}</span>
-                                                            </li>
+                                                        <li>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                                            </div>
+                                                            <span>{{ $item->nbPiece }}</span>
+                                                        </li>
                                                         @endif
 
                                                         @if(!is_null($item->surface) && $item->surface != 0)
-                                                            <li>
-                                                                <div class="icon">
-                                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                                </div>
-                                                                <span>{{ $item->surface }}</span>
-                                                            </li>
+                                                        <li>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                                            </div>
+                                                            <span>{{ $item->surface }}</span>
+                                                        </li>
                                                         @endif
                                                     </ul>
 
@@ -540,27 +525,27 @@ top-header-inner
                                                                         <i class="ri-share-line"></i>
                                                                     </button>
                                                                     <ul class="dropdown-menu">
-                                                            <li>
-                                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                                    <i class="ri-facebook-fill"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                                    <i class="ri-twitter-x-line"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="https://www.instagram.com/" target="_blank">
-                                                                    <i class="ri-instagram-fill"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                                    <i class="ri-linkedin-fill"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
+                                                                        <li>
+                                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                                <i class="ri-facebook-fill"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                                <i class="ri-twitter-x-line"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                                <i class="ri-instagram-fill"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                                <i class="ri-linkedin-fill"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
                                                             </li>
 
@@ -569,7 +554,7 @@ top-header-inner
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
+                                        @endforeach
                                     </div>
                                     <div class="properties-pagination"></div>
                                 </div>
@@ -587,7 +572,7 @@ top-header-inner
                                     </li>
                                     <li>
                                         <span>Location:</span>
-                                        {{ $proprietaire->pays}} , {{ $proprietaire->ville}} 
+                                        {{ $proprietaire->pays}} , {{ $proprietaire->ville}}
                                     </li>
                                 </ul>
 
@@ -599,7 +584,6 @@ top-header-inner
         </div>
     </div>
 </div>
-</div>
 <!-- End Property Details Area -->
 
 <!-- Start Subscribe Area -->
@@ -608,8 +592,8 @@ top-header-inner
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
                 <h2>Subscribe To Our Newsletter</h2>
-                <form class="subscribe-form"action="{{ route('pages.single') }}" method="POST">
-                @csrf
+                <form class="subscribe-form" action="{{ route('pages.single') }}" method="POST">
+                    @csrf
                     <input type="hidden" name="id" value="{{$id}}">
                     <input type="email" name="email" class="form-control" placeholder="Enter your email">
                     <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
@@ -624,54 +608,130 @@ top-header-inner
 
 
 
-@section('script')
+@section('js')
+
+
+
+
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const stars = document.querySelectorAll('.rating li');
-    const ratingInput = document.getElementById('rating');
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const stars = document.querySelectorAll('.star-rating .ri');
+        const ratingValueDisplay = document.getElementById('rating-value');
+        let currentRating = 0;
 
-    stars.forEach(star => {
-        star.addEventListener('mouseover', function() {
-            resetStars();
-            highlightStars(this.dataset.value);
+        stars.forEach(star => {
+            star.addEventListener('mouseover', (e) => {
+                resetStars();
+                highlightStars(e.target);
+            });
+
+            star.addEventListener('mouseout', resetStars);
+
+            star.addEventListener('click', (e) => {
+                currentRating = e.target.getAttribute('data-value');
+                ratingValueDisplay.textContent = `Votre note : ${currentRating} étoile(s)`;
+                persistRating(currentRating);
+            });
         });
 
-        star.addEventListener('click', function() {
-            ratingInput.value = this.dataset.value;
-            resetStars();
-            highlightStars(this.dataset.value, true);
-        });
-
-        star.addEventListener('mouseout', function() {
-            resetStars();
-            if (ratingInput.value) {
-                highlightStars(ratingInput.value, true);
+        function resetStars() {
+            stars.forEach(star => {
+                star.classList.remove('ri-star-fill');
+                star.classList.add('ri-star-line');
+            });
+            if (currentRating) {
+                for (let i = 0; i < currentRating; i++) {
+                    stars[i].classList.remove('ri-star-line');
+                    stars[i].classList.add('ri-star-fill');
+                }
             }
-        });
+        }
+
+        function highlightStars(star) {
+            const rating = star.getAttribute('data-value');
+            for (let i = 0; i < rating; i++) {
+                stars[i].classList.remove('ri-star-line');
+                stars[i].classList.add('ri-star-fill');
+            }
+        }
+
+        function persistRating(rating) {
+            // Vous pouvez ajouter une requête AJAX ici pour envoyer la note au serveur en PHP
+            console.log(`Rating submitted: ${rating}`);
+        }
     });
 
-    function resetStars() {
-        stars.forEach(star => {
-            star.classList.remove('hover');
-            star.querySelector('i').classList.remove('ri-star-fill');
-            star.querySelector('i').classList.add('ri-star-line');
-        });
-    }
 
-    function highlightStars(rating, isPermanent = false) {
-        stars.forEach(star => {
-            if (star.dataset.value <= rating) {
-                if (isPermanent) {
-                    star.classList.add('selected');
-                }
-                star.querySelector('i').classList.remove('ri-star-line');
-                star.querySelector('i').classList.add('ri-star-fill');
+
+
+
+    function persistRating(rating) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'submit_rating.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                console.log('Rating saved successfully');
             }
-        });
+        };
+        xhr.send(`rating=${rating}`);
     }
-});
+</script>
 
 
-@endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.addEventListener('DOMContentLoaded', function() {
+// const stars = document.querySelectorAll('.rating li');
+// const ratingInput = document.getElementById('rating');
+
+// stars.forEach(star => {
+// star.addEventListener('mouseover', function() {
+// resetStars();
+// highlightStars(this.dataset.value);
+// });
+
+// star.addEventListener('click', function() {
+// ratingInput.value = this.dataset.value;
+// resetStars();
+// highlightStars(this.dataset.value, true);
+// });
+
+// star.addEventListener('mouseout', function() {
+// resetStars();
+// if (ratingInput.value) {
+// highlightStars(ratingInput.value, true);
+// }
+// });
+// });
+
+// function resetStars() {
+// stars.forEach(star => {
+// star.classList.remove('hover');
+// star.querySelector('i').classList.remove('ri-star-fill');
+// star.querySelector('i').classList.add('ri-star-line');
+// });
+// }
+
+// function highlightStars(rating, isPermanent = false) {
+// stars.forEach(star => {
+// if (star.dataset.value <= rating) { // if (isPermanent) { // star.classList.add('selected'); // } // star.querySelector('i').classList.remove('ri-star-line'); // star.querySelector('i').classList.add('ri-star-fill'); // } // }); // } // }); @endsection

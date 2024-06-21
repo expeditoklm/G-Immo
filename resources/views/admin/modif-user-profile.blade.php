@@ -46,14 +46,14 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
             <div class="d-flex" style="justify-content: space-between;">
 
                 <select class="form-select col-md-4  " name="pays" id="abcd" aria-label="Default select example">
-                                <option disabled selected>Selectionner le pays</option>
+                                <option value="{{ Auth::user()->pays }}" selected>{{ Auth::user()->pays }}</option>
                                 <option value="Benin">Benin</option>
                                 <option value="Cote d'ivoire ">Cote d'ivoire</option>
                                 <option value="Togo">Togo</option>
                             </select>
     
                             <select class="form-select col-md-4 " name="ville" id="abcd" aria-label="Default select example">
-                                <option disabled selected>Selectionner la ville</option>
+                                <option value="{{ Auth::user()->ville }}" selected>{{ Auth::user()->ville }}</option>
                                 <option value="Porto">Porto</option>
                                 <option value="Ctn">Ctn</option>
                                 <option value="S○vi">S○vi</option>

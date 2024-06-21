@@ -16,6 +16,28 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
 
+    <style>
+        .custom-star-rating {
+            display: flex;
+            direction: column;
+        }
+
+        .custom-star-rating .ri {
+            font-size: 2rem;
+            cursor: pointer;
+            color: gray;
+        }
+
+        .custom-star-rating .ri:hover,
+        .custom-star-rating .ri:hover~.ri {
+            color: gold;
+        }
+
+        .custom-star-rating .ri.ri-star-fill {
+            color: gold;
+        }
+    </style>
+
     @yield('css')
 
 
@@ -102,7 +124,7 @@
                 <img src="{{asset('assets/images/logo.png')}}" alt="logo">
             </a>
             <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
-            @csrf
+                @csrf
                 <input type="search" name="ttr_cra_dsc_sta_p_v_q_typ_us" class="search-field" placeholder="Search property">
                 <button type="submit">
                     <i class="ri-search-line"></i>
@@ -138,34 +160,34 @@
                 </ul>
                 <div class="others-option d-flex align-items-center">
                     @auth
-                        <div class="option-item">
-                            <div class="user-info">
-                                <ul class="navbar-nav ms-auto">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link" onclick="document.getElementById('deconnection').submit(); return false;">Deconnexion</a>
-                                    </li>
-                                </ul>
-                            </div>
+                    <div class="option-item">
+                        <div class="user-info">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link" onclick="document.getElementById('deconnection').submit(); return false;">Deconnexion</a>
+                                </li>
+                            </ul>
                         </div>
-                        <form id="deconnection" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                    </div>
+                    <form id="deconnection" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                     @else
-                        <div class="option-item">
-                            <div class="user-info">
-                                <ul class="navbar-nav ms-auto">
-                                    <li class="nav-item">
-                                        <a href="{{ route('pages.account') }}" class="nav-link {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}">Log In / Register</a>
-                                    </li>
-                                </ul>
-                            </div>
+                    <div class="option-item">
+                        <div class="user-info">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a href="{{ route('pages.account') }}" class="nav-link {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}">Log In / Register</a>
+                                </li>
+                            </ul>
                         </div>
+                    </div>
                     @endauth
-                    
+
                     @auth
-                        <div class="option-item">
-                            <a href="{{ route('admin.dashbord') }}" class="default-btn {{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}">Admin</a>
-                        </div>
+                    <div class="option-item">
+                        <a href="{{ route('admin.dashbord') }}" class="default-btn {{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}">Admin</a>
+                    </div>
                     @endauth
                 </div>
 

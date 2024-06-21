@@ -82,6 +82,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         @endforeach
         </tbody>
     </table>
+    @if($messages->isNotEmpty())
     <div class="pagination-container">
         <nav>
             <ul class="pagination justify-content-center">
@@ -118,6 +119,18 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             </ul>
         </nav>
     </div>
+    @else
+    <div class="pagination-container">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link " href="{{ $messages->previousPageUrl() }}">Pas de message pour le moment</a>
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+    @endif
 
 </div>
 

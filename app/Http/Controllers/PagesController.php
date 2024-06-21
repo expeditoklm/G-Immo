@@ -755,6 +755,58 @@ class PagesController extends Controller
         }
     }
 
+    public function modifPropertyPost(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $property = Propriete::where('id', $id );
+
+            // Création d'une nouvelle propriété
+            $property->titre = $request->titre;
+            $property->description = $request->description;
+            $property->status = $request->status;
+            $property->type_propriete_id = $request->type_propriete_id;
+            $property->prix = $request->prix;
+            $property->surface = $request->surface;
+            $property->pays = $request->pays;
+            $property->ville = $request->ville;
+            $property->quartier = $request->quartier;
+            $property->adresse = $request->adresse;
+            $property->nbPiece = $request->nbPiece;
+            $property->nbChambre = $request->nbChambre;
+            $property->nbToillete = $request->nbToillete;
+            $property->nomContact = $request->nomContact;
+            $property->prenomContact = $request->prenomContact;
+            $property->emailContact = $request->emailContact;
+            $property->telContact = $request->telContact;
+            $property->updated_at = \now();
+            $property->user_id = $request->user()->id;
+
+            $property->save();
+
+            // Sauvegarde des caractéristiques
+            if ($request->has('caracteristiques')) {
+                $property->caracteristiques()->sync($request->caracteristiques);
+            }
+            // Sauvegarde des images
+            $uploadedImageUrls = json_decode($request->uploadedImageUrls, true);
+            foreach ($uploadedImageUrls as $imageUrl) {
+                ProprieteImage::create([
+                    'url' => $imageUrl,
+                    'propriete_id' => $property->id,
+                    'deleted' => 0,
+                ]);
+            }
+
+            return response()->json(['success' => true, 'property_id' => $request]);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
     public function uploadImage(Request $request)
     {
         try {
@@ -859,12 +911,23 @@ class PagesController extends Controller
         }
     }
 
-    public function modifProperty()
+    public function modifProperty(Request $request)
     {
         try {
+            $id = $request->property_modif_id;
+
+            $properties = Propriete::where('id', $id)->first();
+            $caracteristiques = Caracteristique::get();
+
+            if (!$properties) {
+                throw new \Exception('Property not found');
+            }
+            //dd($proper    ties);
             $typeProprietes = TypePropriete::get();
             $caracteristiques = Caracteristique::get();
             return view('admin/modif-property', compact(
+                'caracteristiques',
+                'properties',
                 'typeProprietes',
                 'caracteristiques'
             ));

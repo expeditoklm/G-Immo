@@ -76,56 +76,56 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
 </div>
-
+@if($messages->isNotEmpty())
 <div class="dashborad-box">
     <h4 class="title">Message</h4>
     <div class="section-body">
         <div class="messages">
-        @foreach ($messages as $item)
-    <div class="message">
-        <div class="thumb">
-            <img class="img-fluid" src="{{ asset('assets/admin/images/testimonials/ts-1.jpg') }}" alt="">
-        </div>
+        
+            @foreach ($messages as $item)
+            <div class="message">
+                <div class="thumb">
+                    <img class="img-fluid" src="{{ asset('assets/admin/images/testimonials/ts-1.jpg') }}" alt="">
+                </div>
 
-        <div class="body">
-            <h6>{{ $item->user->nom_prenom }}</h6>
-            <p class="post-time">{{ $item->created_at }}</p>
-            <p class="content mb-0 mt-2">{{ $item->message }}</p>
-            <div class="controller">
-                <ul>
-                    <li>
-                        <a href="#" class="delete-icon" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
-                    </li>
-                </ul>
+                <div class="body">
+                    <h6>{{ $item->user->nom_prenom }}</h6>
+                    <p class="post-time">{{ $item->created_at }}</p>
+                    <p class="content mb-0 mt-2">{{ $item->message }}</p>
+                    <div class="controller">
+                        <ul>
+                            <li>
+                                <a href="#" class="delete-icon" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- The Modal -->
-    <div id="myModal-{{ $item->id }}" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Voulez-vous vraiment supprimer "{{ $item->message }}" ?</p>
-            <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
-            <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
-        </div>
-    </div>
-@endforeach
-
+        
+            <!-- The Modal -->
+            <div id="myModal-{{ $item->id }}" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Voulez-vous vraiment supprimer "{{ $item->message }}" ?</p>
+                    <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
+                    <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
+                </div>
+            </div>
+            @endforeach
+       
         </div>
     </div>
 </div>
+@endif
+@if($reviews->isNotEmpty())
 <div class="dashborad-box">
     <h4 class="title">Review</h4>
     <div class="section-body">
         <div class="messages">
+     
             @foreach ($reviews as $item)
             <div class="message">
                 <div class="thumb">
@@ -154,9 +154,9 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="controller">
                         <ul>
 
-                        <li>
-                            <a href="#" class="delete-icon" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
-                        </li>
+                            <li>
+                                <a href="#" class="delete-icon" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -171,9 +171,11 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 </div>
             </div>
             @endforeach
+            
         </div>
     </div>
 </div>
+@endif
 <div class="dashborad-box mb-0">
     <h4 class="heading pt-0">Personal Information</h4>
     <div class="section-inforamation">
@@ -183,36 +185,36 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" name="nom_prenom" class="form-control"  value="{{ Auth::user()->nom_prenom }}" required>
+                        <input type="text" name="nom_prenom" class="form-control" value="{{ Auth::user()->nom_prenom }}" required>
                     </div>
                 </div>
-            <div class="d-flex" style="justify-content: space-between;">
-                <div class="col-sm-6 ">
-                    <label>Pays</label>
-                    <div class="form-group">
+                <div class="d-flex" style="justify-content: space-between;">
+                    <div class="col-sm-6 ">
+                        <label>Pays</label>
+                        <div class="form-group">
 
-                        <select class="form-select " name="pays" aria-label="Default select example" required>
-                            <option value="" selected>Selectionner le pays</option>
-                            <option value="Benin">Benin</option>
-                            <option value="Cote d'ivoire ">Cote d'ivoire</option>
-                            <option value="Togo">Togo</option>
-                        </select>
+                            <select class="form-select " name="pays" aria-label="Default select example" required>
+                                <option value="{{ Auth::user()->pays }}" selected>{{ Auth::user()->pays }}</option>
+                                <option value="Benin">Benin</option>
+                                <option value="Cote d'ivoire ">Cote d'ivoire</option>
+                                <option value="Togo">Togo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 ml-4">
+                        <label>Ville</label>
+                        <div class="form-group">
+
+                            <select class="form-select " name="ville" aria-label="Default select example" required>
+                                <option value="{{ Auth::user()->ville }}" selected>{{ Auth::user()->ville }}</option>
+                                <option value="Porto">Porto</option>
+                                <option value="Ctn">Ctn</option>
+                                <option value="S○vi">S○vi</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-sm-6 ml-4">
-                    <label>Ville</label>
-                    <div class="form-group">
-
-                        <select class="form-select " name="ville" aria-label="Default select example" required>
-                            <option value="" selected>Selectionner la ville</option>
-                            <option value="Porto">Porto</option>
-                            <option value="Ctn">Ctn</option>
-                            <option value="S○vi">S○vi</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
 
 
                 <div class="col-lg-12">
@@ -240,12 +242,12 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Repeat Password</label>
-                            <input type="password" name="new_password_confirmation" class="form-control" placeholder="Write same password again" >
+                            <input type="password" name="new_password_confirmation" class="form-control" placeholder="Write same password again">
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" name="btn_modif"  class="btn btn-primary btn-lg mt-2">Submit</button>
+            <button type="submit" name="btn_modif" class="btn btn-primary btn-lg mt-2">Submit</button>
         </form>
     </div>
 </div>

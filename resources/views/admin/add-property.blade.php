@@ -63,7 +63,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <label for="title">Property Title</label>
+                        <label for="title">Property Title<span class="text-danger">*</span></label>
                         <input type="text" name="titre" id="title" placeholder="Enter your property title" required>
                     </p>
                 </div>
@@ -79,6 +79,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
+                        <label for="status">Status <span class="text-danger">*</span></label>
                         <select name="status" class="form-control wide" required>
                             <option value="" disabled selected>Select status</option>
                             <option value="Rental">Rent</option>
@@ -89,8 +90,9 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
+                        <label for="propriete">Propriété <span class="text-danger">*</span></label>
                         <select name="type_propriete_id" class="form-control wide" required>
-                            <option value="" disabled selected>Select type propriete</option>
+                            <option value="" disabled selected>Select type propriété</option>
                             @foreach ($typeProprietes as $item)
                             <option value="{{ $item->id }}">{{ $item->libelle }}</option>
                             @endforeach
@@ -126,22 +128,23 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="address">Pays</label>
+                        <label for="address">Pays <span class="text-danger">*</span></label>
 
-                        <select name="pays" class="form-control wide">
+                        <select name="pays" class="form-control wide" required>
                             <option value="" disabled selected>Select Country</option>
                             <option value="Benin">Benin</option>
                             <option value="Nigeria">Nigeria</option>
                             <option value="Algerie">Algerie</option>
                         </select>
+
                     </div>
                 </div>
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="address">Ville</label>
+                        <label for="address">Ville <span class="text-danger">*</span></label>
 
-                        <select name="ville" class="form-control wide">
+                        <select name="ville" class="form-control wide" required>
                             <option value="" disabled selected>Select City</option>
                             <option value="Cotonou">Cotonou</option>
                             <option value="Ibadan">Ibadan</option>
@@ -155,8 +158,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p>
-                        <label for="country">Quartier</label>
-                        <input type="text" name="quartier" placeholder="Enter Your qut" id="country">
+                        <label for="country">Quartier <span class="text-danger"> *</span></label>
+                        <input type="text" name="quartier" placeholder="Enter Your qut" id="country" required>
                     </p>
                 </div>
 
@@ -176,6 +179,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-lg-4 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
+                        <label for="piece">Pièce</label>
+
                         <select name="nbPiece" class="form-control wide">
                             <option value="" disabled selected>Select Pièce</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
@@ -186,6 +191,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-4 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
+                        <label for="chambre">Chambre</label>
                         <select name="nbChambre" class="form-control wide">
                             <option value="" disabled selected>Select Chambre</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
@@ -197,6 +203,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-4 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
+                        <label for="toillete">Toillete</label>
                         <select name="nbToillete" class="form-control wide">
                             <option value="" disabled selected>Select Toillete</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>

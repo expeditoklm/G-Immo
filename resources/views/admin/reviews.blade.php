@@ -48,6 +48,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             </tr>
         </thead>
         <tbody>
+       
             @foreach ($reviews as $item)
             <tr>
                 <td>
@@ -126,8 +127,10 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 </div>
             </div>
             @endforeach
+        
         </tbody>
     </table>
+    @if($reviews->isNotEmpty())
     <div class="pagination-container">
         <nav>
             <ul class="pagination justify-content-center">
@@ -164,6 +167,18 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             </ul>
         </nav>
     </div>
+    @else
+    <div class="pagination-container">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link " href="{{ $reviews->previousPageUrl() }}">Pas de commentaire pour le moment</a>
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+    @endif
 </div>
 
 @endsection

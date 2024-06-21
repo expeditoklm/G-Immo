@@ -35,7 +35,7 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
     Route::post('/upload-image', [PagesController::class, 'uploadImage'])->name('upload-image');
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
-    Route::post('/link-images-to-property', [PagesController::class, 'linkImagesToProperty'])->name('link-images-to-property');
+    Route::post('/modif-property-post', [PagesController::class, 'modifPropertyPost'])->name('modif-property-post');
 
     FacadesAuth::routes();
 });
@@ -65,7 +65,7 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/reviews', [PagesController::class, 'reviews'])->name('admin.reviews');
 
 
-    Route::get('/modif-property', [PagesController::class, 'modifProperty'])->name('modif-property');
+    Route::post('/modif-property', [PagesController::class, 'modifProperty'])->name('modif-property');
     Route::post('/suppression', [PagesController::class, 'suppression'])->name('suppression');
     Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
 
