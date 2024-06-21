@@ -27,36 +27,42 @@ pt-5
 
 
 @section('class')
-col-lg-6  col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
+col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
 @endsection
 
 @section('content')
 
 <div class="widget-boxed-header">
-                            <h4>Profile Details</h4>
-                        </div>
-                        <div class="sidebar-widget author-widget2">
-                            <div class="author-box clearfix">
-                                <img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt="author-image" class="author__img">
-                                <h4 class="author__title">{{ $user->nom_prenom}}</h4>
-                                <p class="author__meta">Agent of Property</p>
-                            </div>
-                            <ul class="author__contact">
-                                <li><span class="la la-map-marker"><i class="fa fa-map-marker"></i></span>{{ $user->pays}}, {{ $user->ville}} </li>
-                                <li><span class="la la-phone"><i class="fa fa-phone" aria-hidden="true"></i></span><a href="#">{{ $user->telephone}}</a></li>
-                                <li><span class="la la-envelope-o"><i class="fa fa-envelope" aria-hidden="true"></i></span><a href="#">{{ $user->email}}</a></li>
-                            </ul>
-                            <div class="agent-contact-form-sidebar">
-                                <h4>Request Inquiry</h4>
-                                <form name="contact_form" method="post" action="https://code-theme.com/html/findhouses/functions.php">
-                                    <input type="text" id="fname" name="full_name" placeholder="Full Name" required />
-                                    <input type="number" id="pnumber" name="phone_number" placeholder="Phone Number" required />
-                                    <input type="email" id="emailid" name="email_address" placeholder="Email Address" required />
-                                    <textarea placeholder="Message" name="message" required></textarea>
-                                    <input type="submit" name="sendmessage" class="multiple-send-message" value="Submit Request" />
-                                </form>
-                            </div>
-                        </div>
+    <h4>Profile Details</h4>
+</div>
+<div class="sidebar-widget author-widget2">
+    <div class="author-box clearfix">
+        <img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt="author-image" class="author__img">
+        <h4 class="author__title">{{ $user->nom_prenom}}</h4>
+        <!-- <p class="author__meta">{{ $user->description}}</p> -->
+        <div>
+            <textarea class="author__meta"  readonly style="border: none; outline: none; resize: none; overflow: hidden; width: 100%; height: auto; padding: 0; margin: 0; background: none;">{{ $user->description }}</textarea>
+        </div>
+    </div>
+    <ul class="author__contact">
+        <li><span class="la la-map-marker"><i class="fa fa-map-marker"></i></span>{{ $user->pays}}, {{ $user->ville}} </li>
+        <li><span class="la la-phone"><i class="fa fa-phone" aria-hidden="true"></i></span><a href="#">{{ $user->telephone}}</a></li>
+        <li><span class="la la-envelope-o"><i class="fa fa-envelope" aria-hidden="true"></i></span><a href="#">{{ $user->email}}</a></li>
+        <li><span class="la la-envelope-o"><i class="fa fa-globe" aria-hidden="true"></i></span><a href="#">{{ $user->website}}</a></li>
+    </ul>
+
+    <div class="agent-contact-form-sidebar">
+        <h4>Request Inquiry</h4>
+        <form name="contact_form" action="{{ route('pages.contacts-us-post') }}" method="POST">
+            @csrf
+            <input type="text" id="fname" name="nom_prenom" placeholder="Full Name" required />
+            <input type="number" id="pnumber" name="telephone" placeholder="Phone Number" required />
+            <input type="email" id="emailid" name="email" placeholder="Email Address" required />
+            <textarea placeholder="Message" name="message" required></textarea>
+            <input type="submit" name="btn_msg4" class="multiple-send-message" value="Submit Request" />
+        </form>
+    </div>
+</div>
 
 @endsection
 
@@ -64,11 +70,3 @@ col-lg-6  col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
 
 
 @endsection
-
-
-
-
-
-
-
-

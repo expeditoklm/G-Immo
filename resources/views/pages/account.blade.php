@@ -57,31 +57,7 @@ top-header-inner
     <div class="container">
 
 
-        @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show m-2" role="alert">
-            <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
-                <span class="fw-bold d-block mx-auto">
-
-                    <ul>
-                        @foreach(session('error') as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </span> <!-- Utilisez mx-auto pour centrer le span -->
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-
-
-        @if(session('success'))
-        <div class="alert alert-primary alert-dismissible fade show m-2" role="alert">
-            <div class="text-center"> <!-- Ajoutez une classe text-center à la div parente -->
-                <span class="fw-bold d-block mx-auto">{{ session('success') }}</span> <!-- Utilisez mx-auto pour centrer le span -->
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
+    @include('admin.success_error')
 
 
 

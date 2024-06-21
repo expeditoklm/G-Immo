@@ -305,6 +305,7 @@ PAGE EXPIRED
 
 
 
+                                
 
 
 
@@ -320,705 +321,190 @@ PAGE EXPIRED
 
 
 
-<div class="col-xl-6 col-md-12">
-    <div class="properties-inner-card with-wrap-color">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-                <div class="properties-image" style="background-image: url({{asset('assets/images/properties/properties9.jpg')}});">
-                    <div class="media">
-                        <span><i class="ri-vidicon-fill"></i></span>
-                        <span><i class="ri-image-line"></i>5</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-6">
-                <div class="properties-content">
-                    <div class="info">
-                        <ul class="link-list">
-                            <li>
-                                <a href="property-grid.html" class="link-btn">Apartment</a>
-                            </li>
-                            <li>
-                                <a href="property-grid.html" class="link-btn">For Sale</a>
-                            </li>
-                        </ul>
-                        <ul class="group-info">
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-share-line"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://www.facebook.com/" target="_blank">
-                                                <i class="ri-facebook-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://twitter.com/" target="_blank">
-                                                <i class="ri-twitter-x-line"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com/" target="_blank">
-                                                <i class="ri-instagram-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                <i class="ri-linkedin-fill"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                    <div class="title">
-                        <h3>
-                            <a href="property-details.html">Beach Front Property</a>
-                        </h3>
-                        <span>194 Mercer Street, NY 10012, USA</span>
-                    </div>
-                    <ul class="info-list">
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bed2.svg')}}" alt="bed2">
-                            </div>
-                            <span>6</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bathroom2.svg')}}" alt="bathroom2">
-                            </div>
-                            <span>4</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/parking2.svg')}}" alt="parking2">
-                            </div>
-                            <span>1</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/area2.svg')}}" alt="area2">
-                            </div>
-                            <span>3250</span>
-                        </li>
-                    </ul>
-                    <div class="price-and-user">
-                        <div class="user">
-                            <img src="{{asset('assets/images/user/user2.png')}}" alt="image">
-                            <a href="{{ route('pages.agent') }}">Walter White</a>
-                        </div>
-                        <div class="price">$77,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-xl-6 col-md-12">
-    <div class="properties-inner-card with-wrap-color">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-                <div class="properties-image " style="background-image: url({{asset('assets/images/properties/properties8.jpg')}});">
-                    <div class="media">
-                        <span><i class="ri-vidicon-fill"></i></span>
-                        <span><i class="ri-image-line"></i>5</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-6">
-                <div class="properties-content">
-                    <div class="info">
-                        <ul class="link-list">
-                            <li>
-                                <a href="property-grid.html" class="link-btn">Apartment</a>
-                            </li>
-                            <li>
-                                <a href="property-grid.html" class="link-btn">For Sale</a>
-                            </li>
-                        </ul>
-                        <ul class="group-info">
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-share-line"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://www.facebook.com/" target="_blank">
-                                                <i class="ri-facebook-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://twitter.com/" target="_blank">
-                                                <i class="ri-twitter-x-line"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com/" target="_blank">
-                                                <i class="ri-instagram-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                <i class="ri-linkedin-fill"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                    <div class="title">
-                        <h3>
-                            <a href="property-details.html">Vacation Homes</a>
-                        </h3>
-                        <span>194 Mercer Street, NY 10012, USA</span>
-                    </div>
-                    <ul class="info-list">
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bed2.svg')}}" alt="bed2">
-                            </div>
-                            <span>6</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bathroom2.svg')}}" alt="bathroom2">
-                            </div>
-                            <span>4</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/parking2.svg')}}" alt="parking2">
-                            </div>
-                            <span>1</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/area2.svg')}}" alt="area2">
-                            </div>
-                            <span>3250</span>
-                        </li>
-                    </ul>
-                    <div class="price-and-user">
-                        <div class="user">
-                            <img src="{{asset('assets/images/user/user3.png')}}" alt="image">
-                            <a href="{{ route('pages.agent') }}">Jenny Loren</a>
-                        </div>
-                        <div class="price">$99,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-xl-6 col-md-12">
-    <div class="properties-inner-card with-wrap-color">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-                <div class="properties-image " style="background-image: url({{asset('assets/images/properties/properties6.jpg')}});">
-                    
-                    <div class="media">
-                        <span><i class="ri-vidicon-fill"></i></span>
-                        <span><i class="ri-image-line"></i>5</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-6">
-                <div class="properties-content">
-                    <div class="info">
-                        <ul class="link-list">
-                            <li>
-                                <a href="property-grid.html" class="link-btn">Apartment</a>
-                            </li>
-                            <li>
-                                <a href="property-grid.html" class="link-btn">For Sale</a>
-                            </li>
-                        </ul>
-                        <ul class="group-info">
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-share-line"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://www.facebook.com/" target="_blank">
-                                                <i class="ri-facebook-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://twitter.com/" target="_blank">
-                                                <i class="ri-twitter-x-line"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com/" target="_blank">
-                                                <i class="ri-instagram-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                <i class="ri-linkedin-fill"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                    <div class="title">
-                        <h3>
-                            <a href="property-details.html">Middle Town House</a>
-                        </h3>
-                        <span>194 Mercer Street, NY 10012, USA</span>
-                    </div>
-                    <ul class="info-list">
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bed2.svg')}}" alt="bed2">
-                            </div>
-                            <span>6</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bathroom2.svg')}}" alt="bathroom2">
-                            </div>
-                            <span>4</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/parking2.svg')}}" alt="parking2">
-                            </div>
-                            <span>1</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/area2.svg')}}" alt="area2">
-                            </div>
-                            <span>3250</span>
-                        </li>
-                    </ul>
-                    <div class="price-and-user">
-                        <div class="user">
-                            <img src="{{asset('assets/images/user/user4.png')}}" alt="image">
-                            <a href="{{ route('pages.agent') }}">Jack Smith</a>
-                        </div>
-                        <div class="price">$55,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="col-xl-6 col-md-12">
-    <div class="properties-inner-card with-wrap-color">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-                <div class="properties-image" style="background-image: url({{asset('assets/images/properties/properties5.jpg')}});">
-                    
-                    <div class="media">
-                        <span><i class="ri-vidicon-fill"></i></span>
-                        <span><i class="ri-image-line"></i>5</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-6">
-                <div class="properties-content">
-                    <div class="info">
-                        <ul class="link-list">
-                            <li>
-                                <a href="property-grid.html" class="link-btn">Apartment</a>
-                            </li>
-                            <li>
-                                <a href="property-grid.html" class="link-btn">For Sale</a>
-                            </li>
-                        </ul>
-                        <ul class="group-info">
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-share-line"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://www.facebook.com/" target="_blank">
-                                                <i class="ri-facebook-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://twitter.com/" target="_blank">
-                                                <i class="ri-twitter-x-line"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com/" target="_blank">
-                                                <i class="ri-instagram-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                <i class="ri-linkedin-fill"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                    <div class="title">
-                        <h3>
-                            <a href="property-details.html">Luxury Apartments</a>
-                        </h3>
-                        <span>194 Mercer Street, NY 10012, USA</span>
-                    </div>
-                    <ul class="info-list">
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bed2.svg')}}" alt="bed2">
-                            </div>
-                            <span>6</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bathroom2.svg')}}" alt="bathroom2">
-                            </div>
-                            <span>4</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/parking2.svg')}}" alt="parking2">
-                            </div>
-                            <span>1</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/area2.svg')}}" alt="area2">
-                            </div>
-                            <span>3250</span>
-                        </li>
-                    </ul>
-                    <div class="price-and-user">
-                        <div class="user">
-                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                            <a href="{{ route('pages.agent') }}">Thomas Klarck</a>
-                        </div>
-                        <div class="price">$95,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-xl-6 col-md-12">
-    <div class="properties-inner-card with-wrap-color">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-                <div class="properties-image" style="background-image: url({{asset('assets/images/properties/properties4.jpg')}});">
-                    
-                    <div class="media">
-                        <span><i class="ri-vidicon-fill"></i></span>
-                        <span><i class="ri-image-line"></i>5</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-6">
-                <div class="properties-content">
-                    <div class="info">
-                        <ul class="link-list">
-                            <li>
-                                <a href="property-grid.html" class="link-btn">Apartment</a>
-                            </li>
-                            <li>
-                                <a href="property-grid.html" class="link-btn">For Sale</a>
-                            </li>
-                        </ul>
-                        <ul class="group-info">
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-share-line"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://www.facebook.com/" target="_blank">
-                                                <i class="ri-facebook-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://twitter.com/" target="_blank">
-                                                <i class="ri-twitter-x-line"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com/" target="_blank">
-                                                <i class="ri-instagram-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                <i class="ri-linkedin-fill"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                    <div class="title">
-                        <h3>
-                            <a href="property-details.html">Beachfront Properties</a>
-                        </h3>
-                        <span>194 Mercer Street, NY 10012, USA</span>
-                    </div>
-                    <ul class="info-list">
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bed2.svg')}}" alt="bed2">
-                            </div>
-                            <span>6</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bathroom2.svg')}}" alt="bathroom2">
-                            </div>
-                            <span>4</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/parking2.svg')}}" alt="parking2">
-                            </div>
-                            <span>1</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/area2.svg')}}" alt="area2">
-                            </div>
-                            <span>3250</span>
-                        </li>
-                    </ul>
-                    <div class="price-and-user">
-                        <div class="user">
-                            <img src="{{asset('assets/images/user/user2.png')}}" alt="image">
-                            <a href="{{ route('pages.agent') }}">Walter White</a>
-                        </div>
-                        <div class="price">$77,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-xl-6 col-md-12">
-    <div class="properties-inner-card with-wrap-color">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-                <div class="properties-image" style="background-image: url({{asset('assets/images/properties/properties3.jpg')}});">
-                    
-                    <div class="media">
-                        <span><i class="ri-vidicon-fill"></i></span>
-                        <span><i class="ri-image-line"></i>5</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-6">
-                <div class="properties-content">
-                    <div class="info">
-                        <ul class="link-list">
-                            <li>
-                                <a href="property-grid.html" class="link-btn">Apartment</a>
-                            </li>
-                            <li>
-                                <a href="property-grid.html" class="link-btn">For Sale</a>
-                            </li>
-                        </ul>
-                        <ul class="group-info">
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-share-line"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://www.facebook.com/" target="_blank">
-                                                <i class="ri-facebook-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://twitter.com/" target="_blank">
-                                                <i class="ri-twitter-x-line"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com/" target="_blank">
-                                                <i class="ri-instagram-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                <i class="ri-linkedin-fill"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                    <div class="title">
-                        <h3>
-                            <a href="property-details.html">Heritage Buildings</a>
-                        </h3>
-                        <span>194 Mercer Street, NY 10012, USA</span>
-                    </div>
-                    <ul class="info-list">
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bed2.svg')}}" alt="bed2">
-                            </div>
-                            <span>6</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bathroom2.svg')}}" alt="bathroom2">
-                            </div>
-                            <span>4</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/parking2.svg')}}" alt="parking2">
-                            </div>
-                            <span>1</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/area2.svg')}}" alt="area2">
-                            </div>
-                            <span>3250</span>
-                        </li>
-                    </ul>
-                    <div class="price-and-user">
-                        <div class="user">
-                            <img src="{{asset('assets/images/user/user3.png')}}" alt="image">
-                            <a href="{{ route('pages.agent') }}">Jenny Loren</a>
-                        </div>
-                        <div class="price">$99,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-xl-6 col-md-12">
-    <div class="properties-inner-card with-wrap-color">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-                <div class="properties-image" style="background-image: url({{asset('assets/images/properties/properties1.jpg')}});">
-                    
-                    <div class="media">
-                        <span><i class="ri-vidicon-fill"></i></span>
-                        <span><i class="ri-image-line"></i>5</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-6">
-                <div class="properties-content">
-                    <div class="info">
-                        <ul class="link-list">
-                            <li>
-                                <a href="property-grid.html" class="link-btn">Apartment</a>
-                            </li>
-                            <li>
-                                <a href="property-grid.html" class="link-btn">For Sale</a>
-                            </li>
-                        </ul>
-                        <ul class="group-info">
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-share-line"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://www.facebook.com/" target="_blank">
-                                                <i class="ri-facebook-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://twitter.com/" target="_blank">
-                                                <i class="ri-twitter-x-line"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com/" target="_blank">
-                                                <i class="ri-instagram-fill"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://bd.linkedin.com/" target="_blank">
-                                                <i class="ri-linkedin-fill"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                    <div class="title">
-                        <h3>
-                            <a href="property-details.html">Senior Apartments</a>
-                        </h3>
-                        <span>194 Mercer Street, NY 10012, USA</span>
-                    </div>
-                    <ul class="info-list">
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bed2.svg')}}" alt="bed2">
-                            </div>
-                            <span>6</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/bathroom2.svg')}}" alt="bathroom2">
-                            </div>
-                            <span>4</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/parking2.svg')}}" alt="parking2">
-                            </div>
-                            <span>1</span>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <img src="{{asset('assets/images/properties/area2.svg')}}" alt="area2">
-                            </div>
-                            <span>3250</span>
-                        </li>
-                    </ul>
-                    <div class="price-and-user">
-                        <div class="user">
-                            <img src="{{asset('assets/images/user/user4.png')}}" alt="image">
-                            <a href="{{ route('pages.agent') }}">Jack Smith</a>
-                        </div>
-                        <div class="price">$55,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.js"></script>
+<script>
+    // Initialisation de Dropzone
+    Dropzone.options.myDropzone = {
+        url: "{{ route('add-property-post') }}",
+        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i> Click here or drop files to upload",
+        paramName: "file",
+        maxFilesize: 2, 
+        acceptedFiles: '.jpeg,.jpg,.png,.gif', 
+        addRemoveLinks: true,
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        init: function() {
+            this.on("success", function(file, response) {
+                if (response.success) {
+                    file.uploadedFileId = response.file_id; // Assuming the response contains the file ID
+                    console.log('File information saved successfully.');
+                } else {
+                    console.error('Failed to save file information.');
+                }
+            });
+            this.on("error", function(file, errorMessage) {
+                console.error('Error uploading file:', errorMessage);
+            });
+            this.on("removedfile", function(file) {
+                if (file.uploadedFileId) { // Ensure the file has been uploaded
+                    $.ajax({
+                        url: "{{ route('delete-file') }}",
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            file_id: file.uploadedFileId
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                console.log('File deleted successfully.');
+                            } else {
+                                console.error('Failed to delete file.');
+                            }
+                        },
+                        error: function(error) {
+                            console.error('Error deleting file:', error);
+                        }
+                    });
+                }
+            });
+        }
+    };
+
+    // Gestion de la soumission du formulaire
+    $('#form1').submit(function (e) {
+        e.preventDefault(); // Empêcher la soumission par défaut du formulaire
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('add-property-post') }}",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                alert('Propriété ajoutée avec succès.');
+                window.location.href = "{{ route('add-property-form') }}";
+            },
+            error: function (response) {
+                alert('Erreur lors de l\'ajout de la propriété.');
+                console.log(response);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1099,7 +585,7 @@ PAGE EXPIRED
 
 <div class="description">
     <h3>Property Description</h3>
-    @isset($propertiesSingle->description)
+    @isset($propertiesSingle)
         <p>{{ $propertiesSingle->description }}</p>
     @else
         <p>Aucune description disponible.</p>

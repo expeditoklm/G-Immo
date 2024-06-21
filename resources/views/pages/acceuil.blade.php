@@ -1878,16 +1878,13 @@ row justify-content-center align-items-center
     <div class="container-fluid" data-cues="slideInUp">
         <div class="swiper testimonial-slider">
             <div class="swiper-wrapper">
-
-
-
                 @foreach ($comments as $item)
                 <div class="swiper-slide">
                     <div class="testimonial-card">
                         <div class="info">
                             <div class="image">
                                 <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                            </div> 
+                            </div>
                             <div class="title">
                                 <h3>{{ $item->nom_prenom }}</h3>
                                 <span>{{ $item->propriete->user->nom_prenom }} / {{ $item->propriete->titre }}  </span>
@@ -1920,9 +1917,6 @@ row justify-content-center align-items-center
 </div>
 @endif
 <!-- End Testimonial Area -->
-
-
-
 
 
 @endsection

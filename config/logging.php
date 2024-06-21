@@ -126,6 +126,14 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'custom' => [
+            'driver' => 'monolog',
+            'handler' => StreamHandler::class,
+            'with' => [
+                'stream' => storage_path('logs/custom.log'),
+            ],
+        ],
     ],
 
 ];

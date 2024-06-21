@@ -168,133 +168,40 @@ try {
 
 
 
-
-
-public function addPropertyPost(Request $request)
-{
-    if (!session('propriete_id')) {
-        $property = Propriete::create([
-
-            'user_id' => FacadesAuth::user()->id,
-            'type_propriete_id' => 1,
-            'deleted' => 0,
-        ]);
-        session()->put('propriete_id', $property->id,);
-    }
-
-        $file = $request->file('file');
-        if ($file) {
-            $request->validate([
-                'file' => 'nullable|file|mimes:jpeg,jpg,png,gif|max:2048',
-            ]);
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads', $fileName, 'public');
-            
-            $propriete_id = session('propriete_id');
-            //dd("jeneregistre img");
-
-            ProprieteImage::create([
-                'url' => $filePath,
-                'propriete_id' => $propriete_id,
-                'deleted' => 0,
-            ]);
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.js"></script>
+<script>
+    Dropzone.options.myDropzone = {
+        url: "{{ route('upload-property-image') }}",
+        maxFilesize: 2, // Taille maximale du fichier en MB
+        acceptedFiles: 'image/*',
+        addRemoveLinks: true,
+        success: function (file, response) {
+            console.log('File uploaded successfully');
+        },
+        error: function (file, response) {
+            console.log('File upload error: ' + response);
         }
+    };
 
+    $('#form1').submit(function (e) {
+        e.preventDefault(); // Empêcher la soumission par défaut du formulaire
 
-        if ($request->has('btn_submit')) {
-            $propriete_id = session('propriete_id');
-            $propriete = Propriete::where('id', $propriete_id)->first();
+        var formData = new FormData(this);
 
-            $defaultTitre = $propriete->titre;
-            $defaultDescription = $propriete->description;
-            $defaultStatus = $propriete->status;
-            $defaultTypeProprieteId = $propriete->type_propriete_id;
-            $defaultPrix = $propriete->prix;
-            $defaultSurface = $propriete->surface;
-            $defaultPays = $propriete->pays;
-            $defaultVille = $propriete->ville;
-            $defaultQuartier = $propriete->quartier;
-            $defaultNbPiece = $propriete->nbPiece;
-            $defaultNbChambre = $propriete->nbChambre;
-            $defaultNbToillete = $propriete->nbToillete;
-            $defaultNomContact = $propriete->nomContact;
-            $defaultPrenomContact = $propriete->prenomContact;
-            $defaultEmailContact = $propriete->emailContact;
-            $defaultPrenomContact = $propriete->type_propriete_id;
-            $defaultTelContact = $propriete->telContact;
-            
-            // Ajouter la valeur par défaut au request si le champ n'est pas présent
-            $request->merge([
-
-                'titre' => $request->input('titre', $defaultTitre),
-                'description' => $request->input('description', $defaultDescription),
-                'status' => $request->input('status', $defaultStatus),
-                'type_propriete_id' => $request->input('type_propriete_id', $defaultTypeProprieteId),
-                'prix' => $request->input('prix', $defaultPrix),
-                'surface' => $request->input('surface', $defaultSurface),
-                'pays' => $request->input('pays', $defaultPays),
-                'ville' => $request->input('ville', $defaultVille),
-                'quartier' => $request->input('quartier', $defaultQuartier),
-                'nbPiece' => $request->input('nbPiece', $defaultNbPiece),
-                'nbChambre' => $request->input('nbChambre', $defaultNbChambre),
-                'nbToillete' => $request->input('nbToillete', $defaultNbToillete),
-                'nomContact' => $request->input('nomContact', $defaultNomContact),
-                'prenomContact' => $request->input('prenomContact', $defaultNbPiece),
-                'prenomContact' => $request->input('prenomContact', $defaultPrenomContact),
-                'emailContact' => $request->input('emailContact', $defaultEmailContact),
-                'telContact' => $request->input('telContact', $defaultTelContact),
-        ]);
-            
-            $validated = $request->validate([
-                
-                'titre' => 'nullable|string|max:255',
-                'description' => 'nullable|string',
-                'status' => 'nullable|string',
-                'type_propriete_id' => 'nullable|integer',
-                'prix' => 'nullable|numeric',
-                'surface' => 'nullable|numeric',
-                'pays' => 'nullable|string',
-                'ville' => 'nullable|string',
-                'quartier' => 'nullable|string',
-                'nbPiece' => 'nullable|integer',
-                'nbChambre' => 'nullable|integer',
-                'nbToillete' => 'nullable|integer',
-                'nomContact' => 'nullable|string',
-                'prenomContact' => 'nullable|string',
-                'emailContact' => 'nullable|email',
-                'telContact' => 'nullable|string',
-                'caracteristique' => 'array',
-            ]);
-           
-
-            $propriete->user_id = auth()->id(); // Utilisateur connecté
-            $propriete->type_propriete_id = $validated['type_propriete_id'];
-            $propriete->titre = $validated['titre'];
-            $propriete->description = $validated['description'];
-            $propriete->status = $validated['status'];
-            $propriete->prix = $validated['prix'];
-            $propriete->surface = $validated['surface'];
-            $propriete->pays = $validated['pays'];
-            $propriete->ville = $validated['ville'];
-            $propriete->quartier = $validated['quartier'];
-            $propriete->nbPiece = $validated['nbPiece'];
-            $propriete->nbChambre = $validated['nbChambre'];
-            $propriete->nbToillete = $validated['nbToillete'];
-            $propriete->nomContact = $validated['nomContact'];
-            $propriete->prenomContact = $validated['prenomContact'];
-            $propriete->emailContact = $validated['emailContact'];
-            $propriete->telContact = $validated['telContact'];
-            $propriete->save();
-            // Gestion des caractéristiques
-            if ($request->has('caracteristique')) {
-                $property->proprieteCaracteristiques()->sync($validated['caracteristique']);
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('add-property-post') }}",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                alert('Propriété ajoutée avec succès.');
+                window.location.href = "{{ route('add-property-form') }}";
+            },
+            error: function (response) {
+                alert('Erreur lors de l\'ajout de la propriété.');
+                console.log(response);
             }
-            session(['message' => 'Property add successfully.', 'message_type' => 'success']);
-            return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
-            session()->forget('propriete_id');
-        }
-        return redirect()->route('admin.add-property')->with('success', 'Property added successfully');
-}
-
-
-->where('deleted', 0)
+        });
+    });
+</script>

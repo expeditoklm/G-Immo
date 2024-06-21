@@ -48,11 +48,11 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             </tr>
         </thead>
         <tbody>
-        @foreach ($reviews as $item)
+            @foreach ($reviews as $item)
             <tr>
                 <td>
-                <textarea hidden  cols="30" class="form-control border-0"></textarea>
-                {{ $item->comment }}
+                    <textarea hidden cols="30" class="form-control border-0"></textarea>
+                    {{ $item->comment }}
                 </td>
 
                 <td class="image myelist">
@@ -65,18 +65,18 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 <form id="proper{{ $item->propriete->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
                     @csrf
                     <input type="hidden" name="id" value="{{ $item->propriete->id }}">
-                </form>                
+                </form>
                 <td>
                     <div class="inner">
                         <a href="#" onclick="document.getElementById('property{{ $item->propriete->id }}').submit(); return false;">
-                        <h2>{{ $item->propriete->titre}}</h2>
+                            <h2>{{ $item->propriete->titre}}</h2>
                         </a>
-                       
+
                         <!-- Formulaire caché -->
                         <form id="property{{ $item->propriete->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
                             @csrf
                             <input type="hidden" name="id" value="{{ $item->propriete->id }}">
-                        </form>    
+                        </form>
                         <figure><i class="lni-map-marker"></i> {{ $item->propriete->pays}}, {{ $item->propriete->ville}}, {{ $item->propriete->quartier}}</figure>
                         @php
                         $totalStars = 5;
@@ -102,13 +102,13 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <h6>{{ $item->created_at}}</h2>
                     </div>
                 </td>
-                
+
                 <td class="actions">
-                    
+
                     <a href="#" class="delete-icon" data-id="{{ $item->id }}">
                         <i class="far fa-trash-alt"></i>
                     </a>
-                 
+
                     <!-- Formulaire caché -->
                     <form id="post{{ $item->id }}" action="{{ route('suppression') }}" method="POST" style="display: none;">
                         @csrf
@@ -125,7 +125,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
                 </div>
             </div>
-        @endforeach
+            @endforeach
         </tbody>
     </table>
     <div class="pagination-container">
@@ -134,31 +134,31 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
                 {{-- Bouton Previous --}}
                 @if ($reviews->onFirstPage())
-                    <li class="page-item disabled">
-                        <span class="page-link">Previous</span>
-                    </li>
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
                 @else
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $reviews->previousPageUrl() }}">Previous</a>
-                    </li>
+                <li class="page-item">
+                    <a class="page-link" href="{{ $reviews->previousPageUrl() }}">Previous</a>
+                </li>
                 @endif
 
                 {{-- Affichage des pages --}}
                 @foreach ($reviews->getUrlRange(1, $reviews->lastPage()) as $page => $url)
-                    <li class="page-item {{ $page == $reviews->currentPage() ? 'active' : '' }}">
-                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                    </li>
+                <li class="page-item {{ $page == $reviews->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                </li>
                 @endforeach
 
                 {{-- Bouton Next --}}
                 @if ($reviews->hasMorePages())
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $reviews->nextPageUrl() }}">Next</a>
-                    </li>
+                <li class="page-item">
+                    <a class="page-link" href="{{ $reviews->nextPageUrl() }}">Next</a>
+                </li>
                 @else
-                    <li class="page-item disabled">
-                        <span class="page-link">Next</span>
-                    </li>
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
                 @endif
 
             </ul>

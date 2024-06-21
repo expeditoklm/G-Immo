@@ -183,35 +183,16 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" name="nom_prenom" class="form-control" placeholder="Enter your  name">
+                        <input type="text" name="nom_prenom" class="form-control"  value="{{ Auth::user()->nom_prenom }}" required>
                     </div>
                 </div>
-
-
-                <div class="col-sm-6">
-                    <label class="form-label" for="inlineRadio1">Sexe</label>
-                    <div class="form-group">
-
-                        <div class="m-0 d-flex">
-                            <div class="form-check form-check-inline d-flex">
-                                <input class="form-check-input" type="radio" name="sexe" id="typePnne1" value="Masculin" checked>
-                                <label class="form-check-label" for="typePenne1">Masculin</label>
-                            </div>
-                            <div class="form-check form-check-inline d-flex">
-                                <input class="form-check-input" type="radio" name="sexe" id="typePe2" value="Feminin">
-                                <label class="form-check-label" for="typenne2">Féminin</label>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6">
+            <div class="d-flex" style="justify-content: space-between;">
+                <div class="col-sm-6 ">
                     <label>Pays</label>
                     <div class="form-group">
 
-                        <select class="form-select" name="pays" id="abcd" aria-label="Default select example">
-                            <option>Selectionner le pays</option>
+                        <select class="form-select " name="pays" aria-label="Default select example" required>
+                            <option value="" selected>Selectionner le pays</option>
                             <option value="Benin">Benin</option>
                             <option value="Cote d'ivoire ">Cote d'ivoire</option>
                             <option value="Togo">Togo</option>
@@ -219,30 +200,31 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                 </div>
 
-                <div class="col-sm-6">
+                <div class="col-sm-6 ml-4">
                     <label>Ville</label>
                     <div class="form-group">
 
-                        <select class="form-select" name="ville" id="abcd" aria-label="Default select example">
-                            <option>Selectionner la ville</option>
+                        <select class="form-select " name="ville" aria-label="Default select example" required>
+                            <option value="" selected>Selectionner la ville</option>
                             <option value="Porto">Porto</option>
                             <option value="Ctn">Ctn</option>
                             <option value="S○vi">S○vi</option>
                         </select>
                     </div>
                 </div>
+            </div>
 
 
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Website</label>
-                        <textarea name="website" class="form-control" placeholder="Write your address here"></textarea>
+                        <textarea name="website" class="form-control" required>{{ Auth::user()->website }} </textarea>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>About Yourself</label>
-                        <textarea name="description" class="form-control" placeholder="Write about userself"></textarea>
+                        <textarea name="description" class="form-control" required>{{ Auth::user()->description }}</textarea>
                     </div>
                 </div>
             </div>
@@ -252,18 +234,18 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>New Password</label>
-                            <input type="password" class="form-control" placeholder="Write new password">
+                            <input type="password" name="new_password" class="form-control" placeholder="Write new password">
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Repeat Password</label>
-                            <input type="password" class="form-control" placeholder="Write same password again">
+                            <input type="password" name="new_password_confirmation" class="form-control" placeholder="Write same password again" >
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" name="btn_modif" class="btn btn-primary btn-lg mt-2">Submit</button>
+            <button type="submit" name="btn_modif"  class="btn btn-primary btn-lg mt-2">Submit</button>
         </form>
     </div>
 </div>

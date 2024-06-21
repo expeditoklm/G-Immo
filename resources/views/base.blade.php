@@ -31,6 +31,8 @@
     <div class="preloader-area text-center position-fixed top-0 bottom-0 start-0 end-0" id="preloader">
         <div class="loader position-absolute start-0 end-0">
             <img src="{{asset('assets/images/favicon.png')}}" alt="favicon">
+            <!-- <img src="{{asset('assets/images/agents/agents1.jpg')}}" style="height: auto; width: 100px " alt="favicon"> -->
+
             <div class="waviy position-relative">
                 <span class="d-inline-block">A</span>
                 <span class="d-inline-block">N</span>

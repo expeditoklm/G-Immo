@@ -37,7 +37,7 @@ top-header-inner
 <!-- Start Page Banner Area -->
 <div class="page-banner-area">
     <div class="container">
-    @include('admin.success_error')
+        @include('admin.success_error')
         <div class="page-banner-content">
             <h2>Agent Profile</h2>
             <ul class="list">
@@ -46,7 +46,7 @@ top-header-inner
                 </li>
                 <li>Agent Profile</li>
             </ul>
-            
+
         </div>
     </div>
 </div>
@@ -71,42 +71,48 @@ top-header-inner
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-6">
                             <ul class="info-list">
+                            @isset($agent->email)
                                 <li>
                                     <span>Email:</span>
-                                    <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#5d3e352f342e29322d35382f1d3a303c3431733e3230"><span class="__cf_email__" data-cfemail="75161d071c06011a051d1007351218141c195b161a18">[email&#160;protected]</span></a>
+                                    <a href="mailto:{{ $agent->email}}"><span class="__cf_email__" >{{ $agent->email}}</span></a>
                                 </li>
+                            @endisset
+                            @isset($agent->telephone)
                                 <li>
                                     <span>Phone:</span>
-                                    <a href="tel:00201068710594">{{ $agent->telephone}}</a>
+                                    <a href="tel:{{ $agent->telephone}}">{{ $agent->telephone}}</a>
                                 </li>
-
+                            @endisset
                             </ul>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <ul class="info-list">
+                            @isset($agent->website)
                                 <li>
                                     <span>Website:</span>
-                                    <a href="https://envytheme.com/" target="_blank">{{ $agent->website}}</a>
+                                    <a href="https:{{ $agent->website}}" target="_blank">{{ $agent->website}}</a>
                                 </li>
-
+                            @endisset
+                            @isset($agent->pays)
                                 <li>
                                     <span>Address:</span>
                                     {{ $agent->pays}}, {{ $agent->ville}}
                                 </li>
+                            @endisset
                             </ul>
                         </div>
                     </div>
                     <div class="social-info">
-                        <a href="https://www.facebook.com/" target="_blank">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
                             <i class="ri-facebook-fill"></i>
                         </a>
-                        <a href="https://twitter.com/" target="_blank">
+                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
                             <i class="ri-twitter-x-line"></i>
                         </a>
                         <a href="https://www.instagram.com/" target="_blank">
                             <i class="ri-instagram-fill"></i>
                         </a>
-                        <a href="https://bd.linkedin.com/" target="_blank">
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
                             <i class="ri-linkedin-fill"></i>
                         </a>
                     </div>
@@ -119,7 +125,9 @@ top-header-inner
                 <div class="agent-profile-information-tabs">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item"><a class="nav-link active" id="property-tab" data-bs-toggle="tab" href="#property" role="tab" aria-controls="property">Property</a></li>
+                        @if($commentaires->count() != 0)
                         <li class="nav-item"><a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Reviews</a></li>
+                        @endif
                     </ul>
                     <div class="tab-content" id="myTabContent">
 
@@ -142,72 +150,72 @@ top-header-inner
                                                 </li>
                                             </ul>
                                             <!-- Recoriger-->
-                                    <ul class="link-list">
-                                        <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post1{{ $item->id }}').submit(); return false;">
-                                            {{ $item->typePropriete->libelle }}
-                                            </a>
-                                        </li>
+                                            <ul class="link-list">
+                                                <li>
+                                                    <a href="#" class="link-btn" onclick="document.getElementById('post1{{ $item->id }}').submit(); return false;">
+                                                        {{ $item->typePropriete->libelle }}
+                                                    </a>
+                                                </li>
 
-                                        <!-- Formulaire caché -->
-                                        <form id="post1{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
-                                            @csrf
-                                           <input type="hidden" name="user_id" value="{{ $item->user->id }}">
-                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
-                                        </form>
+                                                <!-- Formulaire caché -->
+                                                <form id="post1{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                    <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                                    <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                                </form>
 
-                                        <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;">
-                                            {{ $item->status }}
-                                            </a>
-                                        </li>
+                                                <li>
+                                                    <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;">
+                                                        {{ $item->status }}
+                                                    </a>
+                                                </li>
 
-                                        <!-- Formulaire caché -->
-                                        <form id="post2{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
-                                            @csrf
-                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
-                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
-                                            <input type="hidden" name="status" value="{{ $item->status }}">
-                                        </form>
-                                        
-                                    </ul>
-                                    <ul class="info-list">
-                                        @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
-                                                </div>
-                                                <span>{{ $item->nbChambre }}</span>
-                                            </li>
-                                        @endif
+                                                <!-- Formulaire caché -->
+                                                <form id="post2{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                    <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                                    <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                                    <input type="hidden" name="status" value="{{ $item->status }}">
+                                                </form>
 
-                                        @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
-                                                </div>
-                                                <span>{{ $item->nbToillete }}</span>
-                                            </li>
-                                        @endif
+                                            </ul>
+                                            <ul class="info-list">
+                                                @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
+                                                <li>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                                    </div>
+                                                    <span>{{ $item->nbChambre }}</span>
+                                                </li>
+                                                @endif
 
-                                        @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                                </div>
-                                                <span>{{ $item->nbPiece }}</span>
-                                            </li>
-                                        @endif
+                                                @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
+                                                <li>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                                    </div>
+                                                    <span>{{ $item->nbToillete }}</span>
+                                                </li>
+                                                @endif
 
-                                        @if(!is_null($item->surface) && $item->surface != 0)
-                                            <li>
-                                                <div class="icon">
-                                                    <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
-                                                </div>
-                                                <span>{{ $item->surface }}</span>
-                                            </li>
-                                        @endif
-                                    </ul>
+                                                @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
+                                                <li>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                                    </div>
+                                                    <span>{{ $item->nbPiece }}</span>
+                                                </li>
+                                                @endif
+
+                                                @if(!is_null($item->surface) && $item->surface != 0)
+                                                <li>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                                    </div>
+                                                    <span>{{ $item->surface }}</span>
+                                                </li>
+                                                @endif
+                                            </ul>
                                         </div>
                                         <div class="properties-content">
                                             <div class="top">
@@ -246,27 +254,27 @@ top-header-inner
                                                                 <i class="ri-share-line"></i>
                                                             </button>
                                                             <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-facebook-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-twitter-x-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="ri-instagram-fill"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
-                                                    <i class="ri-linkedin-fill"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                                                <li>
+                                                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                        <i class="ri-facebook-fill"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                        <i class="ri-twitter-x-line"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="https://www.instagram.com/" target="_blank">
+                                                                        <i class="ri-instagram-fill"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                        <i class="ri-linkedin-fill"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                     </li>
 
@@ -280,7 +288,9 @@ top-header-inner
                         </div>
                         <div class="tab-pane fade" id="reviews" role="tabpanel">
                             <div class="comments-content">
-                            <h2>{{ $commentaires->count() }} Comments</h2>
+                            @if($commentaires->count() != 0)
+                                <h2>{{ $commentaires->count() }} Comments</h2>
+                            @endif
                                 <ul class="comments-list">
                                     @foreach ($commentaires as $item)
                                     <li>
@@ -298,23 +308,22 @@ top-header-inner
 
                                             <ul class="rating">
                                                 @for ($i = 0; $i < $filledStars; $i++) <li><i class="ri-star-fill"></i>
-                                                </li>
-                                                @endfor
-
-                                                @for ($i = 0; $i < $grayStars; $i++) 
-                                                <li><i class="ri-star-line"></i>
-                                                @endfor
-
-
-                                            </ul>
-                                            <p>{{ $item->comment }}.</p>
-                                        </div>
                                     </li>
-                                    @endforeach
-                                </ul>
-    
+                                    @endfor
 
-        
+                                    @for ($i = 0; $i < $grayStars; $i++) <li><i class="ri-star-line"></i>
+                                        @endfor
+
+
+                                </ul>
+                                <p>{{ $item->comment }}.</p>
+                            </div>
+                            </li>
+                            @endforeach
+                            </ul>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -322,7 +331,7 @@ top-header-inner
         </div>
         <div class="col-lg-4 col-md-12">
             <form class="contact-me-form" action="{{ route('pages.agent') }}" method="POST">
-            @csrf
+                @csrf
 
                 <input type="hidden" name="id" value="{{ $agent->id}}">
                 <h3>Contact Me</h3>
@@ -356,8 +365,8 @@ top-header-inner
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
                 <h2>Subscribe To Our Newsletter</h2>
-                <form class="subscribe-form"action="{{ route('pages.agent') }}" method="POST">
-                @csrf
+                <form class="subscribe-form" action="{{ route('pages.agent') }}" method="POST">
+                    @csrf
                     <input type="hidden" name="id" value="{{ $agent->id}}">
                     <input type="email" name="email" class="form-control" placeholder="Enter your email">
                     <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
@@ -375,5 +384,3 @@ top-header-inner
 
 
 @endsection
-
-

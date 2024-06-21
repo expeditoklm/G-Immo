@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 |
 */
 use App\Http\Middleware\CheckAndClearSession;
+
 Route::middleware(['check.max.execution.time'])->group(function () {
     Route::get('/', function () {
         return view('welcome');
@@ -31,15 +32,18 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
     Route::get('/not-found', [PagesController::class, 'notFound'])->name('pages.not-found');
     Route::post('/news-letterss', [PagesController::class, 'newsLetterss'])->name('pages.news-letterss');
-    
+    Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
+    Route::post('/upload-image', [PagesController::class, 'uploadImage'])->name('upload-image');
+    Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
+    Route::post('/link-images-to-property', [PagesController::class, 'linkImagesToProperty'])->name('link-images-to-property');
+
     FacadesAuth::routes();
-    
 });
 
 
 
 
-Route::middleware(['auth','check.max.execution.time'])->group(function () {
+Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
     Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
     Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
@@ -53,21 +57,24 @@ Route::middleware(['auth','check.max.execution.time'])->group(function () {
 
 
     Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');
+    Route::get('/modif-profile', [PagesController::class, 'modifUserProfile'])->name('admin.modif-user-profile');
+    Route::post('/modif-profile', [PagesController::class, 'modifUserProfilePost'])->name('admin.modif-user-profile');
+    Route::get('/modif-pswd', [PagesController::class, 'modifPswd'])->name('admin.modif-pswd');
+    Route::post('/modif-pswd', [PagesController::class, 'modifPswdPost'])->name('admin.modif-pswd');
     Route::get('/messages', [PagesController::class, 'messages'])->name('admin.messages');
     Route::get('/reviews', [PagesController::class, 'reviews'])->name('admin.reviews');
 
 
-    Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
     Route::get('/modif-property', [PagesController::class, 'modifProperty'])->name('modif-property');
     Route::post('/suppression', [PagesController::class, 'suppression'])->name('suppression');
     Route::post('/save-file-info', [PagesController::class, 'saveFileinfo'])->name('save-file-info');
-    Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
+
 
 
 
     // Ajoutez d'autres routes nécessitant une authentification ici
 });
-Route::middleware(['auth', 'check.session.variable','check.max.execution.time'])->group(function () {
+Route::middleware(['auth', 'check.session.variable', 'check.max.execution.time'])->group(function () {
 
 
 
@@ -89,6 +96,6 @@ Route::middleware(['auth', 'check.session.variable','check.max.execution.time'])
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
 });
 
-Route::middleware(['auth', 'check.and.clear.session','check.max.execution.time'])->group(function () {
+Route::middleware(['auth', 'check.and.clear.session', 'check.max.execution.time'])->group(function () {
     Route::get('/add-property', [PagesController::class, 'addProperty'])->name('admin.add-property');
 });

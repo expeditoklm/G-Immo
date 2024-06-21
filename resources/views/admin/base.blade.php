@@ -174,12 +174,12 @@
                             <p>User not found.</p>
                             @endif
                             <ul>
-                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }} "> Edit profile</a></li>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-user-profile' ? 'javascript:void(0)' : route('admin.modif-user-profile') }} "> Edit profile</a></li>
                                 <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Add Property</a></li>
-                                <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "> Change Password</a></li>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-pswd' ? 'javascript:void(0)' : route('admin.modif-pswd') }} "> Change Password</a></li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <li> <button type="submit" class="btn left-aligned-btn w-100 text-left  col-md-12"><i class="fas fa-sign-out-alt mr-3"></i>Log Out</button></li>
+                                 <button type="submit" class="btn  btn-danger   text-left "><i class="fas fa-sign-out-alt mr-3"></i>Log Out</button>
                                 </form>
                             </ul>
                         </div>
@@ -258,7 +258,7 @@
                                     <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars pr10 mr-2"></i> Dashboard Navigation</button>
                                     <ul id="myDropdown" class="dropdown-content">
                                         <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}">
+                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}">
                                                 <i class="fa fa-map-marker mr-3"></i> Dashboard
                                             </a>
                                         </li>
