@@ -252,19 +252,23 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
 
 
+
+
+
+
  <!-- Début Formulaire -->
- <form id="form1" method="POST">
+<form id="form1" method="POST">
     @csrf
 
     <div class="single-add-property">
         <h3>Property description and price</h3>
         <div class="property-form-group">
-
+            <input type="hidden" name="id" value="{{$properties->id}}">
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <label for="title">Property Title<span class="text-danger">*</span></label>
-                        <input type="text" name="titre" id="title" placeholder="Enter your property title" required>
+                        <label for="title">Property Title</label>
+                        <input type="text" name="titre" id="title" value="{{$properties->titre}}" required>
                     </p>
                 </div>
             </div>
@@ -272,16 +276,15 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 <div class="col-md-12">
                     <p>
                         <label for="description">Property Description</label>
-                        <textarea id="description" name="description" placeholder="Describe about your property"></textarea>
+                        <textarea id="description" name="description" value="">{{$properties->description}}</textarea>
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="status">Status <span class="text-danger">*</span></label>
                         <select name="status" class="form-control wide" required>
-                            <option value="" disabled selected>Select status</option>
+                            <option value="{{$properties->status}}"  selected>{{$properties->status}}</option>
                             <option value="Rental">Rent</option>
                             <option value="For Sale">Sale</option>
                         </select>
@@ -290,9 +293,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="propriete">Propriété <span class="text-danger">*</span></label>
                         <select name="type_propriete_id" class="form-control wide" required>
-                            <option value="" disabled selected>Select type propriété</option>
+                            <option value="{{$properties->typePropriete->id}}"  selected>{{$properties->typePropriete->libelle}}</option>
                             @foreach ($typeProprietes as $item)
                             <option value="{{ $item->id }}">{{ $item->libelle }}</option>
                             @endforeach
@@ -306,13 +308,13 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb">
                         <label for="price">Price</label>
-                        <input type="text" name="prix" placeholder="USD" id="price">
+                        <input type="text" name="prix" value="{{$properties->prix}}" id="price">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb last">
                         <label for="area">Area</label>
-                        <input type="text" name="surface" placeholder="Sqft" id="area">
+                        <input type="text" name="surface" value="{{$properties->surface}}" id="area">
                     </p>
                 </div>
             </div>
@@ -328,10 +330,10 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="address">Pays <span class="text-danger">*</span></label>
+                        <label for="address">Pays</label>
 
-                        <select name="pays" class="form-control wide" required>
-                            <option value="" disabled selected>Select Country</option>
+                        <select name="pays" class="form-control wide">
+                            <option value="{{$properties->pays}}"  selected>{{$properties->pays}}</option>
                             <option value="Benin">Benin</option>
                             <option value="Nigeria">Nigeria</option>
                             <option value="Algerie">Algerie</option>
@@ -341,10 +343,10 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="address">Ville <span class="text-danger">*</span></label>
+                        <label for="address">Ville</label>
 
-                        <select name="ville" class="form-control wide" required>
-                            <option value="" disabled selected>Select City</option>
+                        <select name="ville" class="form-control wide">
+                            <option value="{{$properties->ville}}" selected>{{$properties->ville}}</option>
                             <option value="Cotonou">Cotonou</option>
                             <option value="Ibadan">Ibadan</option>
                             <option value="Liay">Liay</option>
@@ -357,15 +359,15 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p>
-                        <label for="country">Quartier <span class="text-danger"> *</span></label>
-                        <input type="text" name="quartier" placeholder="Enter Your qut" id="country" required>
+                        <label for="country">Quartier</label>
+                        <input type="text" name="quartier" value="{{$properties->quartier}}" placeholder="Enter Your qut" id="country">
                     </p>
                 </div>
 
                 <div class="col-lg-6 col-md-12">
                     <p>
                         <label for="address">Address</label>
-                        <input type="adresse" name="adresse" placeholder="Enter Your Address" id="adresse">
+                        <input type="adresse" name="adresse" value="{{$properties->adresse}}" placeholder="Enter Your Address" id="adresse">
                     </p>
                 </div>
             </div>
@@ -378,10 +380,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-lg-4 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="piece">Pièce</label>
-
                         <select name="nbPiece" class="form-control wide">
-                            <option value="" disabled selected>Select Pièce</option>
+                            <option value="{{$properties->nbPiece}}"  selected>{{$properties->nbPiece}}</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                         </select>
@@ -390,9 +390,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-4 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="chambre">Chambre</label>
                         <select name="nbChambre" class="form-control wide">
-                            <option value="" disabled selected>Select Chambre</option>
+                            <option value="{{$properties->nbChambre}}"  selected>{{$properties->nbChambre}}</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                         </select>
@@ -402,9 +401,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-4 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="toillete">Toillete</label>
                         <select name="nbToillete" class="form-control wide">
-                            <option value="" disabled selected>Select Toillete</option>
+                            <option value="{{$properties->nbToillete}}"  selected>{{$properties->nbToillete}}</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                         </select>
@@ -416,26 +414,34 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     </div>
 
     <div class="single-add-property">
-        <h3>Property Features</h3>
-        <div class="property-form-group">
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="pro-feature-add pl-0">
-                        @foreach ($caracteristiques as $item)
+    <h3>Property Features</h3>
+    <div class="property-form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pro-feature-add pl-0">
+                    @foreach ($caracteristiques as $item)
                         <li class="fl-wrap filter-tags clearfix">
                             <div class="checkboxes float-left">
                                 <div class="filter-tags-wrap">
-                                    <input id="{{ $item->id }}" type="checkbox" name="caracteristiques[]" value="{{ $item->id }}">
+                                    <input 
+                                        id="{{ $item->id }}" 
+                                        type="checkbox" 
+                                        name="caracteristiques[]" 
+                                        value="{{ $item->id }}"
+                                        @if($properties->caracteristiques->contains('id', $item->id)) 
+                                               checked 
+                                           @endif>
                                     <label for="{{ $item->id }}">{{ $item->libelle }}</label>
                                 </div>
                             </div>
                         </li>
-                        @endforeach
-                    </ul>
-                </div>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>
+</div>
+
 
     <div class="single-add-property">
         <h3>Contact Information</h3>
@@ -444,13 +450,13 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 <div class="col-lg-6 col-md-12">
                     <p>
                         <label for="con-name">Name</label>
-                        <input type="text" placeholder="Enter Your Name" id="con-name" name="nomContact">
+                        <input type="text" placeholder="Enter Your Name" id="con-name" value="{{$properties->nomContact}}" name="nomContact">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p>
                         <label for="con-user">Username</label>
-                        <input type="text" placeholder="Enter Your Username" id="con-user" name="prenomContact">
+                        <input type="text" placeholder="Enter Your Username" value="{{$properties->prenomContact}}" id="con-user" name="prenomContact">
                     </p>
                 </div>
             </div>
@@ -458,17 +464,20 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb first">
                         <label for="con-email">Email</label>
-                        <input type="email" placeholder="Enter Your Email" id="con-email" name="emailContact">
+                        <input type="email" placeholder="Enter Your Email" value="{{$properties->emailContact}}" id="con-email" name="emailContact">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb last">
                         <label for="con-phn">Phone</label>
-                        <input type="text" placeholder="Enter Your Phone Number" id="con-phn" name="telContact">
+                        <input type="text" placeholder="Enter Your Phone Number" id="con-phn" value="{{$properties->telContact}}" name="telContact">
                     </p>
                 </div>
             </div>
         </div>
+
+
+
 
         <div class="add-property-button pt-5">
             <div class="row">
@@ -483,7 +492,6 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 </form>
 
 <!-- Fin Formulaire -->
-
 
 
 
@@ -579,40 +587,36 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
         }
     };
 
-function submitForm() {
-    var form = document.getElementById('form1');
-    var formData = new FormData(form);
+    function submitForm() {
+        var form = document.getElementById('form1');
 
-    // Ajoutez ici les URLs des images téléchargées au formulaire si nécessaire
-    formData.append('uploadedImageUrls', JSON.stringify(uploadedImageUrls));
-    console.log('FormData before fetch:', formData); // Log des données du formulaire avant l'envoi
+        var formData = new FormData(form);
 
-    fetch("{{ route('modif-property-post') }}", {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        }
-    })
-    .then(response => {
-        console.log('Response status:', response.status); // Log du statut de la réponse
-        return response.json();
-    })
-    .then(data => {
-        console.log('Server response:', data); // Log la réponse du serveur
-        if (data.success) {
-            alert('Propriété modifiée avec succès.');
-            window.location.href = "{{ route('admin.my-properties') }}";
-        } else {
-            alert('Remplir le titre, le statut et le type de la propriété.');
-            console.error('Modification error:', data.error); // Log l'erreur de modification de la propriété
-        }
-    })
-    .catch(error => {
-        alert('Erreur lors de la modification de la propriété.');
-        console.error('Fetch error:', error); // Log l'erreur lors de la requête fetch
-    });
-}
+        formData.append('uploadedImageUrls', JSON.stringify(uploadedImageUrls));
+        console.log('stringify:', JSON.stringify(uploadedImageUrls));
 
+        fetch("{{ route('modif-property-post') }}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+                if (data.success) {
+                    window.location.href = "{{ route('admin.my-properties') }}";
+                } else {
+                    alert('Remplir le titre , le status et le type de la propriété.');
+                    console.error(data.error);
+                }
+            })
+            .catch(error => {
+                alert('Remplir le titre , le status et le type de la propriété');
+                console.error('Error adding property:', error);
+            });
+    }
 </script>
+
 @endsection

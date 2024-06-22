@@ -758,10 +758,14 @@ class PagesController extends Controller
     public function modifPropertyPost(Request $request)
     {
         try {
-            $id = $request->id;
-            $property = Propriete::where('id', $id );
 
-            // Création d'une nouvelle propriété
+            $id = $request->id;
+            // Récupération de la propriété existante depuis la base de données
+            $property = Propriete::where('id', $id)->first();
+
+            if (!$property) {
+                return response()->json(['success' => false, 'error' => 'Propriété non trouvée']);
+            }
             $property->titre = $request->titre;
             $property->description = $request->description;
             $property->status = $request->status;
@@ -779,7 +783,7 @@ class PagesController extends Controller
             $property->prenomContact = $request->prenomContact;
             $property->emailContact = $request->emailContact;
             $property->telContact = $request->telContact;
-            $property->updated_at = \now();
+            $property->deleted = 0;
             $property->user_id = $request->user()->id;
 
             $property->save();

@@ -63,7 +63,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <label for="title">Property Title<span class="text-danger">*</span></label>
+                        <label for="title">Property Title  <span class="text-danger"> *</span></label>
                         <input type="text" name="titre" id="title" placeholder="Enter your property title" required>
                     </p>
                 </div>
@@ -130,7 +130,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                     <div class="form-group categories">
                         <label for="address">Pays <span class="text-danger">*</span></label>
 
-                        <select name="pays" class="form-control wide" required>
+                        <select name="pays" class="form-control wide" require required>
                             <option value="" disabled selected>Select Country</option>
                             <option value="Benin">Benin</option>
                             <option value="Nigeria">Nigeria</option>
