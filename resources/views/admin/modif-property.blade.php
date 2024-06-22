@@ -201,39 +201,25 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
 <div class="image-gallery-container" style="position: relative;">
         <div class="image-gallery" id="image-gallery">
+            @foreach ($proprieteImages as $item)
             <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
                 <div class="icons">
                     <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
+                    <a href="#" class="delete-icon ad" title="Supprimer" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
                 </div>
             </div>
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </div>
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </div>
+            
 
-
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
+            <!-- The Modal -->
+            <div id="myModal-{{ $item->id }}" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-id="{{ $item->id }}">&times;</span>
+                    <p>Voulez-vous vraiment supprimer ?</p>
+                    <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0 confirm-delete" data-id="{{ $item->id }}" id="confirm-delete">Oui</a>
+                    <button class="btn btn-info btn-xs ml-5 mr-5 border-0 cancel-delete" data-id="{{ $item->id }}" id="cancel-delete">Non</button>
                 </div>
             </div>
-
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </div>
+            @endforeach
 
 
         </div>
@@ -527,6 +513,47 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     var gallery = document.getElementById('image-gallery');
 </script>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // CSRF Token
+    const csrfToken = '{{ csrf_token() }}';
+
+    // Confirm delete action
+    document.querySelectorAll('.confirm-delete').forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = this.dataset.id;
+            console.log('Confirm delete button clicked, id:', id);
+            let url = '{{ route("delete-image", ":id") }}';
+            url = url.replace(':id', id);
+            console.log('Request URL:', url);
+
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log('Delete successful, response:', response);
+                document.getElementById('myModal-' + id).style.display = 'none';
+                document.querySelectorAll('.image-container').forEach(function(container) {
+                    if (container.querySelector('.delete-icon').dataset.id == id) {
+                        container.remove();
+                    }
+                });
+                //alert(response.success);
+            })
+            .catch(error => {
+                console.error('Delete failed, response:', error);
+                alert('Error: ' + error.message);
+            });
+        });
+    });
+});
+</script>
+<script>
     var uploadedImageUrls = [];
     Dropzone.options.myDropzone = {
         url: "{{ route('upload-image') }}",
@@ -601,7 +628,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }
-            })
+            })  
             .then(response => response.json())
             .then(data => {
                 console.log('Server response:', data);

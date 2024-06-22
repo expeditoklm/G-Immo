@@ -36,6 +36,7 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::post('/upload-image', [PagesController::class, 'uploadImage'])->name('upload-image');
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
     Route::post('/modif-property-post', [PagesController::class, 'modifPropertyPost'])->name('modif-property-post');
+    Route::delete('/delete-image/{id}', [PagesController::class, 'deleteImage'])->name('delete-image');
 
     FacadesAuth::routes();
 });

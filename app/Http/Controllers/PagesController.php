@@ -746,6 +746,7 @@ class PagesController extends Controller
                     'deleted' => 0,
                 ]);
             }
+            session(['message' => 'Propriété ajouté avec succes.', 'message_type' => 'success']);
 
             return response()->json(['success' => true, 'property_id' => $request]);
         } catch (Exception $e) {
@@ -801,6 +802,7 @@ class PagesController extends Controller
                     'deleted' => 0,
                 ]);
             }
+            session(['message' => 'Propriété modifié avec succes.', 'message_type' => 'success']);
 
             return response()->json(['success' => true, 'property_id' => $request]);
         } catch (Exception $e) {
@@ -851,6 +853,7 @@ class PagesController extends Controller
             $filePath = str_replace('/storage/', 'public/', $request->file_url);
             if (Storage::exists($filePath)) {
                 Storage::delete($filePath);
+                session(['message' => 'Fichier modifié avec  success.', 'message_type' => 'success']);
                 return response()->json(['success' => true]);
             }
 
@@ -921,19 +924,18 @@ class PagesController extends Controller
             $id = $request->property_modif_id;
 
             $properties = Propriete::where('id', $id)->first();
-            $caracteristiques = Caracteristique::get();
 
             if (!$properties) {
                 throw new \Exception('Property not found');
             }
-            //dd($proper    ties);
+            $proprieteImages = ProprieteImage::where('propriete_id', $id)->where('deleted', 0)->get();
             $typeProprietes = TypePropriete::get();
             $caracteristiques = Caracteristique::get();
             return view('admin/modif-property', compact(
                 'caracteristiques',
                 'properties',
                 'typeProprietes',
-                'caracteristiques'
+                'proprieteImages'
             ));
         } catch (Exception $e) {
             // Log the exception if needed
@@ -967,6 +969,13 @@ class PagesController extends Controller
                 $propriete->deleted = 1;
                 $propriete->save();
                 return redirect()->route('admin.my-properties')->with('success', 'Deleted successfully.');
+            }elseif ($request->has('imageProperty_sup_id')) {
+                $id = $request->imageProperty_sup_id;
+                //dd($id);
+                $image = ProprieteImage::where('id', $id)->first();
+                $image->deleted = 1;
+                $image->save();
+                return redirect()->route('admin.my-properties')->with('success', 'Deleted successfully.');
             }
         } catch (Exception $e) {
             // Log the exception if needed
@@ -987,6 +996,23 @@ class PagesController extends Controller
             return redirect()->route('pages.not-found', [
                 'message' => $message,
             ])->with('success', 'E-mail sent successfully.');
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+    public function deleteImage($id)
+    {
+        try {
+            $propertyImage = ProprieteImage::findOrFail($id);
+
+    
+            $propertyImage->delete();
+    
+            return response()->json(['success' => 'Item deleted successfully']);
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());

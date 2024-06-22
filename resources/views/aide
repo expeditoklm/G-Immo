@@ -28,7 +28,7 @@ composer require krlove/eloquent-model-generator --dev
 @foreach ($typeProprietes as $item)
 {{ $item->id}}
 @endforeach
-
+var csrfToken = '{{ csrf_token() }}';
 
 action="{{ route('admin.post-type-propriete') }}"
 
