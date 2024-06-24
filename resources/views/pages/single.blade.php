@@ -6,23 +6,47 @@ Property | Andora
 
 @section('css')
 <style>
+    .rating {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .rating li {
+        display: inline-block;
+        cursor: pointer;
+        font-size: 24px;
+    }
+
+    .rating li i {
+        color: #ccc;
+    }
+
+    .rating li.selected i,
+    .rating li.hover i,
+    .rating li.hover~li i {
+        color: #ffcc00;
+    }
 </style>
 @endsection
 
 @section('div_init')
 <div class="main-header-area main-header-with-relative">
+
     @endsection
- 
+
     @section('div_finish')
 </div>
 @endsection
 
 @section('div_init2')
 top-header-inner
+
 @endsection
 
 @section('div_init3')
 <div class="row justify-content-center align-items-center">
+
     @endsection
 
     @section('div_finish3')
@@ -30,6 +54,7 @@ top-header-inner
 @endsection
 
 @section('content')
+
 <!-- Start Page Banner Area -->
 <div class="page-banner-area">
     <div class="container">
@@ -45,21 +70,21 @@ top-header-inner
         </div>
     </div>
 </div>
-
 <!-- End Page Banner Area -->
 
 <!-- Start Property Details Area -->
 <div class="property-details-area ptb-120">
     <div class="container">
+
         <div class="row justify-content-center">
             <div class="property-details-desc">
                 <div class="property-details-content">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-lg-7 col-md-12">
-
                             <div class="left-content">
                                 <div class="title">
                                     <h2>{{ $propertiesSingle->titre }}</h2>
+
                                 </div>
                                 <span class="address">{{ $propertiesSingle->pays }}, {{ $propertiesSingle->ville }}, {{ $propertiesSingle->quartier }}</span>
                                 <ul class="info-list">
@@ -83,10 +108,8 @@ top-header-inner
 
                                     @if(!is_null($propertiesSingle->nbPiece) && $propertiesSingle->nbPiece != 0)
                                     <li>
-                                        <div class="icon">
-                                            <img src="{{ asset('assets/images/property-details/parking.svg') }}" alt="parking">
-                                        </div>
-                                        <span>{{ $propertiesSingle->nbPiece }} Parking</span>
+
+                                        <span>{{ $propertiesSingle->nbPiece }} Pièces</span>
                                     </li>
                                     @endif
 
@@ -130,9 +153,9 @@ top-header-inner
                                             </ul>
                                         </div>
                                     </li>
+
                                 </ul>
                             </div>
-
                         </div>
                         <div class="col-lg-5 col-md-12">
                             <div class="right-content">
@@ -168,15 +191,19 @@ top-header-inner
                                     </form>
 
                                 </ul>
-                                
                                 <div class="price">
                                     @isset($propertiesSingle->prix)
-                                    {{ $propertiesSingle->prix }} XOF   
+                                    {{ $propertiesSingle->prix }} XOF
                                     @endif
                                 </div>
-                             
                                 <div class="user">
-                                    <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                    @if($propertiesSingle->user->sexe == 'Feminin' && !$propertiesSingle->user->profile_img)
+                                    <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                    @elseif($propertiesSingle->user->sexe == 'Masculin' && !$propertiesSingle->user->profile_img)
+                                    <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                    @else
+                                    <img src="{{ asset($propertiesSingle->user->profile_img) }}" alt="image">
+                                    @endif
                                     <a href="#" onclick="document.getElementById('post3{{ $propertiesSingle->user->id }}').submit(); return false;">{{ $propertiesSingle->user->nom_prenom }}</a>
 
                                     <!-- Formulaire caché -->
@@ -193,31 +220,31 @@ top-header-inner
                     <div class="row justify-content-center align-items-center">
                         <div class="col-lg-4 col-md-12">
                             <div class="row justify-content-center">
+                                @php
+                                // Obtenir les cinq dernières images, triées par date de création en ordre décroissant
+                                $images = $propertiesSingle->proprieteImages->sortByDesc('created_at')->take(5);
+
+                                // Séparer les quatre dernières images et la cinquième image
+                                $mainImages = $images->take(4 );
+                                $extraImage = $images->skip(4)->first();
+                                @endphp
+
+
+                                @foreach($mainImages as $image)
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="block-image">
-                                        <img src="{{asset('assets/images/property-details/property-details1.jpg')}}" alt="image">
+                                        <img src="{{ asset($image->url) }}" alt="image">
+
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="block-image">
-                                        <img src="{{asset('assets/images/property-details/property-details2.jpg')}}" alt="image">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="block-image">
-                                        <img src="{{asset('assets/images/property-details/property-details3.jpg')}}" alt="image">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="block-image">
-                                        <img src="{{asset('assets/images/property-details/property-details4.jpg')}}" alt="image">
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="col-lg-8 col-md-12">
                             <div class="block-image">
-                                <img src="{{asset('assets/images/property-details/property-details-large.jpg')}}" alt="image">
+                                @if($extraImage)
+                                <img src="{{ asset($extraImage->url) }}" alt="image">
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -303,22 +330,13 @@ top-header-inner
                             <form class="review-form">
                                 <div class="title">
                                     <h3>Add A Review</h3>
-                                    <!-- <ul class="rating">
+                                    <ul class="rating">
                                         <li data-value="1"><i class="ri-star-line"></i></li>
-                                            <li data-value="2"><i class="ri-star-line"></i></li>
-                                            <li data-value="3"><i class="ri-star-line"></i></li>
-                                            <li data-value="4"><i class="ri-star-line"></i></li>
-                                            <li data-value="5"><i class="ri-star-line"></i></li>
-                                        </ul> -->
-                                    <div class="custom-star-rating">
-                                        <i class="ri-star-line" data-value="1"></i>
-                                        <i class="ri-star-line" data-value="2"></i>
-                                        <i class="ri-star-line" data-value="3"></i>
-                                        <i class="ri-star-line" data-value="4"></i>
-                                        <i class="ri-star-line" data-value="5"></i>
-                                    </div>
-                                    <div id="rating-value">Votre note : 0 étoile(s)</div>
-
+                                        <li data-value="2"><i class="ri-star-line"></i></li>
+                                        <li data-value="3"><i class="ri-star-line"></i></li>
+                                        <li data-value="4"><i class="ri-star-line"></i></li>
+                                        <li data-value="5"><i class="ri-star-line"></i></li>
+                                    </ul>
                                 </div>
                                 <input type="hidden" name="rating" id="rating" value="0">
                                 <div class="row justify-content-center">
@@ -406,7 +424,7 @@ top-header-inner
                                             <div class="properties-item">
                                                 <div class="properties-image">
                                                     <a href="{{ route('pages.single') }}">
-                                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                                     </a>
                                                     <ul class="action">
 
@@ -505,11 +523,21 @@ top-header-inner
 
                                                             <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                                         </div>
-                                                        <div class="price">{{ $item->prix }} XOF</div>
+                                                        <div class="price">
+                                                            @isset($item->prix)
+                                                            {{ $item->prix }} XOF
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                     <div class="bottom">
                                                         <div class="user">
-                                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                                            @else
+                                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                                            @endif
                                                             <a href="#" onclick="document.getElementById('post7{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                                             <!-- Formulaire caché -->
@@ -584,6 +612,7 @@ top-header-inner
         </div>
     </div>
 </div>
+</div>
 <!-- End Property Details Area -->
 
 <!-- Start Subscribe Area -->
@@ -608,130 +637,54 @@ top-header-inner
 
 
 
-@section('js')
-
-
-
-
+@section('script')
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const stars = document.querySelectorAll('.star-rating .ri');
-        const ratingValueDisplay = document.getElementById('rating-value');
-        let currentRating = 0;
+    document.addEventListener('DOMContentLoaded', function() {
+        const stars = document.querySelectorAll('.rating li');
+        const ratingInput = document.getElementById('rating');
 
         stars.forEach(star => {
-            star.addEventListener('mouseover', (e) => {
+            star.addEventListener('mouseover', function() {
                 resetStars();
-                highlightStars(e.target);
+                highlightStars(this.dataset.value);
             });
 
-            star.addEventListener('mouseout', resetStars);
+            star.addEventListener('click', function() {
+                ratingInput.value = this.dataset.value;
+                resetStars();
+                highlightStars(this.dataset.value, true);
+            });
 
-            star.addEventListener('click', (e) => {
-                currentRating = e.target.getAttribute('data-value');
-                ratingValueDisplay.textContent = `Votre note : ${currentRating} étoile(s)`;
-                persistRating(currentRating);
+            star.addEventListener('mouseout', function() {
+                resetStars();
+                if (ratingInput.value) {
+                    highlightStars(ratingInput.value, true);
+                }
             });
         });
 
         function resetStars() {
             stars.forEach(star => {
-                star.classList.remove('ri-star-fill');
-                star.classList.add('ri-star-line');
+                star.classList.remove('hover');
+                star.querySelector('i').classList.remove('ri-star-fill');
+                star.querySelector('i').classList.add('ri-star-line');
             });
-            if (currentRating) {
-                for (let i = 0; i < currentRating; i++) {
-                    stars[i].classList.remove('ri-star-line');
-                    stars[i].classList.add('ri-star-fill');
+        }
+
+        function highlightStars(rating, isPermanent = false) {
+            stars.forEach(star => {
+                if (star.dataset.value <= rating) {
+                    if (isPermanent) {
+                        star.classList.add('selected');
+                    }
+                    star.querySelector('i').classList.remove('ri-star-line');
+                    star.querySelector('i').classList.add('ri-star-fill');
                 }
-            }
-        }
-
-        function highlightStars(star) {
-            const rating = star.getAttribute('data-value');
-            for (let i = 0; i < rating; i++) {
-                stars[i].classList.remove('ri-star-line');
-                stars[i].classList.add('ri-star-fill');
-            }
-        }
-
-        function persistRating(rating) {
-            // Vous pouvez ajouter une requête AJAX ici pour envoyer la note au serveur en PHP
-            console.log(`Rating submitted: ${rating}`);
+            });
         }
     });
 
 
-
-
-
-    function persistRating(rating) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'submit_rating.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                console.log('Rating saved successfully');
-            }
-        };
-        xhr.send(`rating=${rating}`);
-    }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// document.addEventListener('DOMContentLoaded', function() {
-// const stars = document.querySelectorAll('.rating li');
-// const ratingInput = document.getElementById('rating');
-
-// stars.forEach(star => {
-// star.addEventListener('mouseover', function() {
-// resetStars();
-// highlightStars(this.dataset.value);
-// });
-
-// star.addEventListener('click', function() {
-// ratingInput.value = this.dataset.value;
-// resetStars();
-// highlightStars(this.dataset.value, true);
-// });
-
-// star.addEventListener('mouseout', function() {
-// resetStars();
-// if (ratingInput.value) {
-// highlightStars(ratingInput.value, true);
-// }
-// });
-// });
-
-// function resetStars() {
-// stars.forEach(star => {
-// star.classList.remove('hover');
-// star.querySelector('i').classList.remove('ri-star-fill');
-// star.querySelector('i').classList.add('ri-star-line');
-// });
-// }
-
-// function highlightStars(rating, isPermanent = false) {
-// stars.forEach(star => {
-// if (star.dataset.value <= rating) { // if (isPermanent) { // star.classList.add('selected'); // } // star.querySelector('i').classList.remove('ri-star-line'); // star.querySelector('i').classList.add('ri-star-fill'); // } // }); // } // }); @endsection
+    @endsection

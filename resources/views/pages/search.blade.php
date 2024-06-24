@@ -193,14 +193,14 @@ top-header-inner
                 <div class="col-lg-5 col-md-6"></div>
             </div>
         </div>
-        <div class="row justify-content-center" data-cues="slideInUp">
         @if($properties->isNotEmpty())
+        <div class="row justify-content-center" data-cues="slideInUp">
             @foreach ($properties as $item)
             <div class="col-xl-6 col-md-12">
                 <div class="properties-inner-card with-wrap-color">
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
-                            <div class="properties-image">
+                            <div class="properties-image" style="background-image: url('{{ asset($item->proprieteImages->first()->url) }}');">
                                 <div class="media">
                                     <span><i class="ri-vidicon-fill"></i></span>
                                     <span><i class="ri-image-line"></i>{{ $item->proprieteImages->count() }}</span>
@@ -248,12 +248,12 @@ top-header-inner
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a href="https://www.facebook.com/" target="_blank">
+                                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
                                                             <i class="ri-facebook-fill"></i>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="https://twitter.com/" target="_blank">
+                                                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
                                                             <i class="ri-twitter-x-line"></i>
                                                         </a>
                                                     </li>
@@ -263,7 +263,7 @@ top-header-inner
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="https://bd.linkedin.com/" target="_blank">
+                                                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
                                                             <i class="ri-linkedin-fill"></i>
                                                         </a>
                                                     </li>
@@ -312,10 +312,8 @@ top-header-inner
 
                                     @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
                                     <li>
-                                        <div class="icon">
-                                            <img src="{{ asset('assets/images/properties/parking2.svg') }}" alt="parking2">
-                                        </div>
-                                        <span>{{ $item->nbPiece }}</span>
+
+                                        <span>{{ $item->nbPiece }} Pièce</span>
                                     </li>
                                     @endif
 
@@ -331,8 +329,16 @@ top-header-inner
 
                                 <div class="price-and-user">
                                     <div class="user">
-                                        <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
-                                        <a href="#" onclick="document.getElementById('post4{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
+                                        @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                        <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                        @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                        <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                        @else
+                                        <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                        @endif
+                                        <a href="#" onclick="document.getElementById('post4{{ $item->user->id }}').submit(); return false;">
+                                            {{ $item->user->nom_prenom }}
+                                        </a>
 
                                         <!-- Formulaire caché -->
                                         <form id="post4{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
@@ -340,7 +346,11 @@ top-header-inner
                                             <input type="hidden" name="id" value="{{ $item->user->id }}">
                                         </form>
                                     </div>
-                                    <div class="price">{{ $item->prix }} XOF</div>
+                                    <div class="price">
+                                        @isset($item->prix)
+                                        {{ $item->prix }} XOF
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -348,9 +358,9 @@ top-header-inner
                 </div>
             </div>
             @endforeach
-        
-        @endif
         </div>
+        @endif
+
         @if($properties->isNotEmpty())
         <div class="col-lg-12 col-md-12">
             <div class="pagination-area">
@@ -391,7 +401,7 @@ top-header-inner
         </div>
         @else
         <div class="pagination-area">
-                <span class="">Aucune propriété disponible.</span>
+            <span class="">Aucune propriété disponible.</span>
         </div>
         @endif
     </div>
@@ -403,7 +413,7 @@ top-header-inner
 <div class="properties-slide-area pt-120 pb-120">
     <div class="container-fluid">
         <div class="section-title text-center" data-cues="slideInUp">
-       
+
             <h2>Popular Properties</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et mauris eget ornare venenatis, in. Pharetra iaculis consectetur.</p>
         </div>
@@ -495,10 +505,8 @@ top-header-inner
 
                                 @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
                                 <li>
-                                    <div class="icon">
-                                        <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
-                                    </div>
-                                    <span>{{ $item->nbPiece }}</span>
+
+                                    <span>{{ $item->nbPiece }} Pièce</span>
                                 </li>
                                 @endif
 
@@ -513,7 +521,13 @@ top-header-inner
                             </ul>
                             <div class="bottom">
                                 <div class="user">
-                                    <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                    @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                    <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                    @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                    <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                    @else
+                                    <img src="{{ asset('assets/images/user/user1.png') }}" alt="image">
+                                    @endif
                                     <a href="#" onclick="document.getElementById('post5{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                     <!-- Formulaire caché -->

@@ -59,9 +59,6 @@ top-header-inner
 
     @include('admin.success_error')
 
-
-
-
         <div class="profile-authentication-inner">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-12">

@@ -362,692 +362,687 @@ PAGE EXPIRED
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@extends('admin/base')
+                                @extends('base')
 
 @section('nomPage')
-Add Property | Find Houses
+Property | Andora
 @endsection
 
 @section('css')
-
 <style>
-    .image-gallery {
-        display: flex;
-        overflow-x: scroll;
-        scroll-behavior: smooth;
-        width: 100%;
-        gap: 20px;
-        /* Espace entre les images */
-    }
-
-    .image-container {
-        position: relative;
-        min-width: 200px;
-        /* Largeur minimale de la cellule */
-        height: 200px;
-        /* Hauteur de la cellule */
-        background-size: cover;
-        /* Ajuster la taille de l'image */
-        background-position: center;
-        /* Centrer l'image */
-        background-repeat: no-repeat;
-        /* Éviter que l'image se répète */
-        overflow: hidden;
-        /* Pour s'assurer que les éléments enfants ne débordent pas */
-        cursor: pointer;
-        /* Curseur pointer au survol */
-    }
-
-    .image-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        transition: opacity 0.3s;
-        z-index: 1;
-    }
-
-    .image-container:hover::before {
-        opacity: 1;
-    }
-
-    .icons {
-        position: absolute;
-        bottom: 75px;
-        /* Positionner les icônes en bas */
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 2;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        opacity: 0;
-        /* Rendre les icônes invisibles par défaut */
-        transition: opacity 0.3s;
-        /* Transition pour l'apparition des icônes */
-    }
-
-    .image-container:hover .icons {
-        opacity: 1;
-        /* Rendre les icônes visibles au survol */
-    }
-
-    .icons a {
-        color: white;
-        /* Couleur des icônes */
-        background-color: blue;
-        /* Fond bleu des icônes */
-        padding: 8px;
-        border-radius: 15%;
-        /* Contour arrondi */
-        text-decoration: none;
-        /* Pas de soulignement */
-    }
-
-    .icons .ad {
-        color: white;
-        /* Couleur des icônes */
-        background-color: red;
-        /* Fond bleu des icônes */
-        padding: 8px;
-        border-radius: 15%;
-        /* Contour arrondi */
-        text-decoration: none;
-        /* Pas de soulignement */
-    }
-
-    .scroll-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        z-index: 3;
-    }
-
-    .scroll-button.left {
-        left: 10px;
-    }
-
-    .scroll-button.right {
-        right: 10px;
-    }
-
-    .popup {
-        display: none;
-        /* Cacher le pop-up par défaut */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .popup img {
-        max-width: 90%;
-        max-height: 90%;
-    }
-
-    .popup-close {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        color: white;
-        font-size: 30px;
-        cursor: pointer;
-    }
 </style>
-
-
-
 @endsection
 
-@section('body')
-inner-pages
+@section('div_init')
+<div class="main-header-area main-header-with-relative">
+    @endsection
+ 
+    @section('div_finish')
+</div>
 @endsection
 
-@section('header')
-
+@section('div_init2')
+top-header-inner
 @endsection
 
-@section('header2')
+@section('div_init3')
+<div class="row justify-content-center align-items-center">
+    @endsection
 
-@endsection
-
-@section('logo')
-
-@endsection
-
-@section('sectio')
-pt-5
-@endsection
-
-
-@section('class')
-col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
+    @section('div_finish3')
+</div>
 @endsection
 
 @section('content')
-
-@include('admin.success_error')
-
-
-
-<form action="{{ route('add-property-post') }}" id="form1" method="POST">
-    @csrf
-
-    <div class="single-add-property">
-        <h3>Property description and price</h3>
-        <div class="property-form-group">
-
-            <div class="row">
-                <div class="col-md-12">
-                    <p>
-                        <label for="title">Property Title</label>
-                        <input type="text" name="titre" id="title" placeholder="Enter your property title">
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p>
-                        <label for="description">Property Description</label>
-                        <textarea id="description" name="description" placeholder="Describe about your property"></textarea>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12 dropdown faq-drop">
-                    <div class="form-group categories">
-                        <select name="status" class="form-control wide">
-                            <option value="" disabled selected>Select status</option>
-                            <option value="Rental">Rent</option>
-                            <option value="For Sale">Sale</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 col-md-12 dropdown faq-drop">
-                    <div class="form-group categories">
-                        <select name="type_propriete_id" class="form-control wide">
-                            <option value="" disabled selected>Select status</option>
-                            @foreach ($typeProprietes as $item)
-                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <p class="no-mb">
-                        <label for="price">Price</label>
-                        <input type="text" name="prix" placeholder="USD" id="price">
-                    </p>
-                </div>
-                <div class="col-lg-6 col-md-12">
-                    <p class="no-mb last">
-                        <label for="area">Area</label>
-                        <input type="text" name="surface" placeholder="Sqft" id="area">
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="single-add-property">
-        <h3>Property Location</h3>
-        <div class="property-form-group">
-            <div class="row">
-
-                <div class="col-lg-6 col-md-12 dropdown faq-drop">
-                    <div class="form-group categories">
-                        <label for="address">Pays</label>
-
-                        <select name="pays" class="form-control wide">
-                            <option value="" disabled selected>Select Country</option>
-                            <option value="Benin">Benin</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Algerie">Algerie</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 col-md-12 dropdown faq-drop">
-                    <div class="form-group categories">
-                        <label for="address">Ville</label>
-
-                        <select name="ville" class="form-control wide">
-                            <option value="" disabled selected>Select City</option>
-                            <option value="Cotonou">Cotonou</option>
-                            <option value="Ibadan">Ibadan</option>
-                            <option value="Liay">Liay</option>
-                        </select>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <p>
-                        <label for="country">Quartier</label>
-                        <input type="text" name="quartier" placeholder="Enter Your qut" id="country">
-                    </p>
-                </div>
-
-                <div class="col-lg-6 col-md-12">
-                    <p>
-                        <label for="address">Address</label>
-                        <input type="adresse" name="address" placeholder="Enter Your Address" id="address">
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="single-add-property">
-        <h3>Extra Information</h3>
-        <div class="property-form-group">
-            <div class="row">
-                <div class="col-lg-4 col-md-12 dropdown faq-drop">
-                    <div class="form-group categories">
-                        <select name="nbPiece" class="form-control wide">
-                            <option value="" disabled selected>Select Pièce</option>
-                            @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
-                                @endfor
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-12 dropdown faq-drop">
-                    <div class="form-group categories">
-                        <select name="nbChambre" class="form-control wide">
-                            <option value="" disabled selected>Select Chambre</option>
-                            @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
-                                @endfor
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-4 col-md-12 dropdown faq-drop">
-                    <div class="form-group categories">
-                        <select name="nbToillete" class="form-control wide">
-                            <option value="" disabled selected>Select Toillete</option>
-                            @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
-                                @endfor
-                        </select>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="single-add-property">
-        <h3>Property Features</h3>
-        <div class="property-form-group">
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="pro-feature-add pl-0">
-                        @foreach ($caracteristiques as $item)
-                        <li class="fl-wrap filter-tags clearfix">
-                            <div class="checkboxes float-left">
-                                <div class="filter-tags-wrap">
-                                    <input id="{{ $item->id }}" type="checkbox" name="caracteristiques[]" value="{{ $item->id }}">
-                                    <label for="{{ $item->id }}">{{ $item->libelle }}</label>
-                                </div>
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="single-add-property">
-        <h3>Contact Information</h3>
-        <div class="property-form-group">
-            <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <p>
-                        <label for="con-name">Name</label>
-                        <input type="text" placeholder="Enter Your Name" id="con-name" name="nomContact">
-                    </p>
-                </div>
-                <div class="col-lg-6 col-md-12">
-                    <p>
-                        <label for="con-user">Username</label>
-                        <input type="text" placeholder="Enter Your Username" id="con-user" name="prenomContact">
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <p class="no-mb first">
-                        <label for="con-email">Email</label>
-                        <input type="email" placeholder="Enter Your Email" id="con-email" name="emailContact">
-                    </p>
-                </div>
-                <div class="col-lg-6 col-md-12">
-                    <p class="no-mb last">
-                        <label for="con-phn">Phone</label>
-                        <input type="text" placeholder="Enter Your Phone Number" id="con-phn" name="telContact">
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="add-property-button pt-5">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="prperty-submit-button">
-                        <button type="submit" name="btn_submit" id="oklm">Submit Property</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="image-gallery-container" style="position: relative;">
-        <div class="image-gallery" id="image-gallery">
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </div>
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </div>
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </div>
-
-
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </div>
-
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
-                <div class="icons">
-                    <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
-                    <a href="#" class="ad" title="Supprimer"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-    <div class="popup" id="image-popup">
-        <span class="popup-close" id="popup-close">&times;</span>
-        <img src="" alt="Agrandissement de l'image" id="popup-img">
-    </div>
-
-</form>
-
-
-<div class="single-add-property">
-    <h3>Property Media</h3>
-    <div class="property-form-group">
-        <div class="row">
-            <div class="col-md-12">
-                <form action="{{ route('add-property-post') }}" class="dropzone" id="my-dropzone">
-                    @csrf
-                </form>
-
-            </div>
+<!-- Start Page Banner Area -->
+<div class="page-banner-area">
+    <div class="container">
+        @include('admin.success_error')
+        <div class="page-banner-content">
+            <h2>Property Details</h2>
+            <ul class="list">
+                <li>
+                    <a href="{{ route('pages.acceuil') }}">Home</a>
+                </li>
+                <li>Single Property</li>
+            </ul>
         </div>
     </div>
 </div>
 
+<!-- End Page Banner Area -->
+
+<!-- Start Property Details Area -->
+<div class="property-details-area ptb-120">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="property-details-desc">
+                <div class="property-details-content">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-7 col-md-12">
+
+                            <div class="left-content">
+                                <div class="title">
+                                    <h2>{{ $propertiesSingle->titre }}</h2>
+                                </div>
+                                <span class="address">{{ $propertiesSingle->pays }}, {{ $propertiesSingle->ville }}, {{ $propertiesSingle->quartier }}</span>
+                                <ul class="info-list">
+                                    @if(!is_null($propertiesSingle->nbChambre) && $propertiesSingle->nbChambre != 0)
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/property-details/bed.svg') }}" alt="bed">
+                                        </div>
+                                        <span>{{ $propertiesSingle->nbChambre }} Bedroom</span>
+                                    </li>
+                                    @endif
+
+                                    @if(!is_null($propertiesSingle->nbToillete) && $propertiesSingle->nbToillete != 0)
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/property-details/bathroom.svg') }}" alt="bathroom">
+                                        </div>
+                                        <span>{{ $propertiesSingle->nbToillete }} Bathroom</span>
+                                    </li>
+                                    @endif
+
+                                    @if(!is_null($propertiesSingle->nbPiece) && $propertiesSingle->nbPiece != 0)
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/property-details/parking.svg') }}" alt="parking">
+                                        </div>
+                                        <span>{{ $propertiesSingle->nbPiece }} Parking</span>
+                                    </li>
+                                    @endif
+
+                                    @if(!is_null($propertiesSingle->surface) && $propertiesSingle->surface != 0)
+                                    <li>
+                                        <div class="icon">
+                                            <img src="{{ asset('assets/images/property-details/area.svg') }}" alt="area">
+                                        </div>
+                                        <span>{{ $propertiesSingle->surface }} Area</span>
+                                    </li>
+                                    @endif
+                                </ul>
+
+                                <ul class="group-info">
+                                    <li>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="ri-share-line"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                        <i class="ri-facebook-fill"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                        <i class="ri-twitter-x-line"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://www.instagram.com/" target="_blank">
+                                                        <i class="ri-instagram-fill"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                        <i class="ri-linkedin-fill"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-5 col-md-12">
+                            <div class="right-content">
+
+
+                                <!-- Recoriger-->
+                                <ul class="link-list">
+                                    <li>
+                                        <a href="#" class="link-btn" onclick="document.getElementById('post1{{ $propertiesSingle->id }}').submit(); return false;">
+                                            {{ $propertiesSingle->typePropriete->libelle }}
+                                        </a>
+                                    </li>
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post1{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
+                                        <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
+                                    </form>
+
+                                    <li>
+                                        <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $propertiesSingle->id }}').submit(); return false;">
+                                            {{ $propertiesSingle->status }}
+                                        </a>
+                                    </li>
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post2{{ $propertiesSingle->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $propertiesSingle->user->id }}">
+                                        <input type="hidden" name="type_propriete_id" value="{{ $propertiesSingle->typePropriete->id }}">
+                                        <input type="hidden" name="status" value="{{ $propertiesSingle->status }}">
+                                    </form>
+
+                                </ul>
+                                
+                                <div class="price">
+                                    @isset($propertiesSingle->prix)
+                                    {{ $propertiesSingle->prix }} XOF   
+                                    @endif
+                                </div>
+                             
+                                <div class="user">
+                                    <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                    <a href="#" onclick="document.getElementById('post3{{ $propertiesSingle->user->id }}').submit(); return false;">{{ $propertiesSingle->user->nom_prenom }}</a>
+
+                                    <!-- Formulaire caché -->
+                                    <form id="post3{{ $propertiesSingle->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $propertiesSingle->user->id }}">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="property-details-image">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="block-image">
+                                        <img src="{{asset('assets/images/property-details/property-details1.jpg')}}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="block-image">
+                                        <img src="{{asset('assets/images/property-details/property-details2.jpg')}}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="block-image">
+                                        <img src="{{asset('assets/images/property-details/property-details3.jpg')}}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="block-image">
+                                        <img src="{{asset('assets/images/property-details/property-details4.jpg')}}" alt="image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-12">
+                            <div class="block-image">
+                                <img src="{{asset('assets/images/property-details/property-details-large.jpg')}}" alt="image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="property-details-inner-content">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-8 col-md-12">
+                            <div class="description">
+                                <h3>Property Description</h3>
+                                @isset($propertiesSingle->description)
+                                <p>{{ $propertiesSingle->description }}</p>
+                                @else
+                                <p>Aucune description disponible.</p>
+                                @endisset
+                            </div>
+
+
+                            <div class="features">
+                                <h3>Facts And Features</h3>
+                                <div class="row justify-content-center">
+
+                                    @if ($propertiesSingle->caracteristiques->isEmpty())
+
+                                    <p class="mt-3">Aucune caractéristique n'a été renseignée</p>
+
+                                    @else
+                                    @foreach ($propertiesSingle->caracteristiques->chunk(5) as $chunk)
+                                    <div class="col-lg-4 col-md-4">
+                                        <ul class="list">
+                                            @foreach ($chunk as $item)
+                                            <li>
+                                                <i class="ri-check-double-fill"></i>
+                                                {{ $item->libelle }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endforeach
+                                    @endif
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="comments-area">
+                                @if($propertiesSingle->comments->isNotEmpty())
+                                <h2>{{ $propertiesSingle->comments->count() }} Comments</h2>
+                                @endif
+                                <ul class="comments-list">
+                                    @foreach ($propertiesSingle->comments as $item)
+                                    <li>
+                                        <div class="image">
+                                            <img src="{{ asset('assets/images/user/user1.png') }}" alt="image">
+                                        </div>
+                                        <div class="info">
+                                            <h4>{{ $item->nom_prenom }}</h4>
+                                            <span>{{ $item->created_at }}</span>
+                                            @php
+                                            $totalStars = 5;
+                                            $filledStars = $item->note;
+                                            $grayStars = $totalStars - $filledStars;
+                                            @endphp
+
+                                            <ul class="rating">
+                                                @for ($i = 0; $i < $filledStars; $i++) <li>
+                                                    <i class="ri-star-fill"></i>
+                                    </li>
+                                    @endfor
+
+                                    @for ($i = 0; $i < $grayStars; $i++) <li><i class="ri-star-line"></i>
+                                        @endfor
+
+
+                                </ul>
+                                <p>{{ $item->comment }}.</p>
+                            </div>
+                            </li>
+                            @endforeach
+                            </ul>
+
+
+                            <form class="review-form">
+                                <div class="title">
+                                    <h3>Add A Review</h3>
+                                    <!-- <ul class="rating">
+                                        <li data-value="1"><i class="ri-star-line"></i></li>
+                                            <li data-value="2"><i class="ri-star-line"></i></li>
+                                            <li data-value="3"><i class="ri-star-line"></i></li>
+                                            <li data-value="4"><i class="ri-star-line"></i></li>
+                                            <li data-value="5"><i class="ri-star-line"></i></li>
+                                        </ul> -->
+                                    <div class="custom-star-rating">
+                                        <i class="ri-star-line" data-value="1"></i>
+                                        <i class="ri-star-line" data-value="2"></i>
+                                        <i class="ri-star-line" data-value="3"></i>
+                                        <i class="ri-star-line" data-value="4"></i>
+                                        <i class="ri-star-line" data-value="5"></i>
+                                    </div>
+                                    <div id="rating-value">Votre note : 0 étoile(s)</div>
+
+                                </div>
+                                <input type="hidden" name="rating" id="rating" value="0">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>Your Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter your name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>Email Address</label>
+                                            <input type="email" class="form-control" placeholder="Enter email address">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group top-css">
+                                            <label>Your Review Here</label>
+                                            <textarea class="form-control" placeholder="Your review..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="check1">
+                                                <label class="form-check-label" for="check1">
+                                                    Save my name, email, and website in this browser for the next time I review.
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <button type="submit" class="default-btn">Submit Review</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-12">
+                        <div class="property-details-sidebar">
+                            <div class="booking">
+                                <form action="{{ route('pages.single') }}" method="POST">
+                                    @csrf
+
+                                    <input type="hidden" name="id" value="{{ $propertiesSingle->id}}">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" name="nom_prenom" placeholder="Your name" class="form-control">
+                                        <div class="icon">
+                                            <i class="ri-user-3-line"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="text" name="email" placeholder="Your email" class="form-control">
+                                        <div class="icon">
+                                            <i class="ri-mail-send-line"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone No.</label>
+                                        <input type="text" name="telephone" placeholder="+12345678" class="form-control">
+                                        <div class="icon">
+                                            <i class="ri-phone-line"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group extra-top">
+                                        <label>Description</label>
+                                        <textarea class="form-control" name="message" placeholder="I'm interested in this property......." rows="5"></textarea>
+                                        <div class="icon">
+                                            <i class="ri-pencil-line"></i>
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="btn_msg3" class="default-btn">Submit Request</button>
+                                </form>
+                            </div>
+                            <div class="featured-properties">
+                                @if($similarProperties->isNotEmpty())
+                                <h3>Featured Properties</h3>
+                                @endif
+                                <div class="swiper featured-properties-slider">
+                                    <div class="swiper-wrapper">
+                                        @foreach ($similarProperties as $item)
+                                        <div class="swiper-slide">
+                                            <div class="properties-item">
+                                                <div class="properties-image">
+                                                    <a href="{{ route('pages.single') }}">
+                                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                                    </a>
+                                                    <ul class="action">
+
+                                                        <li>
+                                                            <div class="media">
+                                                                <span><i class="ri-vidicon-fill"></i></span>
+                                                                <span><i class="ri-image-line"></i>{{ $item->proprieteImages->count() }}</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- Recoriger-->
+                                                    <ul class="link-list">
+                                                        <li>
+                                                            <a href="#" class="link-btn" onclick="document.getElementById('post4{{ $item->id }}').submit(); return false;">
+                                                                {{ $item->typePropriete->libelle }}
+                                                            </a>
+                                                        </li>
+
+                                                        <!-- Formulaire caché -->
+                                                        <form id="post4{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                                        </form>
+
+                                                        <li>
+                                                            <a href="#" class="link-btn" onclick="document.getElementById('post5{{ $item->id }}').submit(); return false;">
+                                                                {{ $item->status }}
+                                                            </a>
+                                                        </li>
+
+                                                        <!-- Formulaire caché -->
+                                                        <form id="post5{{ $item->id }}" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                            <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                                                            <input type="hidden" name="type_propriete_id" value="{{ $item->typePropriete->id }}">
+                                                            <input type="hidden" name="status" value="{{ $item->status }}">
+                                                        </form>
+
+                                                    </ul>
+                                                    <ul class="info-list">
+                                                        @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
+                                                        <li>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('assets/images/properties/bed.svg') }}" alt="bed">
+                                                            </div>
+                                                            <span>{{ $item->nbChambre }}</span>
+                                                        </li>
+                                                        @endif
+
+                                                        @if(!is_null($item->nbToillete) && $item->nbToillete != 0)
+                                                        <li>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('assets/images/properties/bathroom.svg') }}" alt="bathroom">
+                                                            </div>
+                                                            <span>{{ $item->nbToillete }}</span>
+                                                        </li>
+                                                        @endif
+
+                                                        @if(!is_null($item->nbPiece) && $item->nbPiece != 0)
+                                                        <li>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('assets/images/properties/parking.svg') }}" alt="parking">
+                                                            </div>
+                                                            <span>{{ $item->nbPiece }}</span>
+                                                        </li>
+                                                        @endif
+
+                                                        @if(!is_null($item->surface) && $item->surface != 0)
+                                                        <li>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('assets/images/properties/area.svg') }}" alt="area">
+                                                            </div>
+                                                            <span>{{ $item->surface }}</span>
+                                                        </li>
+                                                        @endif
+                                                    </ul>
+
+                                                </div>
+                                                <div class="properties-content">
+                                                    <div class="top">
+                                                        <div class="title">
+                                                            <!-- Lien cliquable -->
+                                                            <h3>
+                                                                <a href="#" onclick="document.getElementById('post6{{ $item->id }}').submit(); return false;">
+                                                                    {{ $item->titre }}
+                                                                </a>
+                                                            </h3>
+
+
+                                                            <!-- Formulaire caché -->
+                                                            <form id="post6{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                                            </form>
+
+                                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                                        </div>
+                                                        <div class="price">{{ $item->prix }} XOF</div>
+                                                    </div>
+                                                    <div class="bottom">
+                                                        <div class="user">
+                                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                                            <a href="#" onclick="document.getElementById('post7{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
+
+                                                            <!-- Formulaire caché -->
+                                                            <form id="post7{{ $item->user->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $item->user->id }}">
+                                                            </form>
+                                                        </div>
+                                                        <ul class="group-info">
+                                                            <li>
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="ri-share-line"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li>
+                                                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                                <i class="ri-facebook-fill"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                                <i class="ri-twitter-x-line"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="https://www.instagram.com/" target="_blank">
+                                                                                <i class="ri-instagram-fill"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank">
+                                                                                <i class="ri-linkedin-fill"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="properties-pagination"></div>
+                                </div>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Contact Details</h3>
+                                <ul class="list">
+                                    <li>
+                                        <span>Email:</span>
+                                        <a href="mailto:{{$proprietaire->email}}">{{$proprietaire->email}}</a>
+                                    </li>
+                                    <li>
+                                        <span>Phone:</span>
+                                        <a href="tel:{{$proprietaire->telephone}}">{{$proprietaire->telephone}}</a>
+                                    </li>
+                                    <li>
+                                        <span>Location:</span>
+                                        {{ $proprietaire->pays}} , {{ $proprietaire->ville}}
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Property Details Area -->
+
+<!-- Start Subscribe Area -->
+<div class="subscribe-wrap-area">
+    <div class="container" data-cues="slideInUp">
+        <div class="subscribe-wrap-inner-area">
+            <div class="subscribe-content">
+                <h2>Subscribe To Our Newsletter</h2>
+                <form class="subscribe-form" action="{{ route('pages.single') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$id}}">
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
+                    <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Subscribe Area -->
+
 @endsection
+
 
 
 @section('js')
 
-<script src="{{ asset('assets/admin/js/dropzone.js') }}"></script>
+
+
+
 
 
 <script>
-    document.querySelectorAll('.view-icon').forEach(function(element) {
-        element.addEventListener('click', function(event) {
-            event.preventDefault();
-            var imageUrl = element.closest('.image-container').style.backgroundImage.slice(5, -2);
-            var popup = document.getElementById('image-popup');
-            var popupImg = document.getElementById('popup-img');
-            popupImg.src = imageUrl;
-            popup.style.display = 'flex';
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const stars = document.querySelectorAll('.star-rating .ri');
+        const ratingValueDisplay = document.getElementById('rating-value');
+        let currentRating = 0;
+
+        stars.forEach(star => {
+            star.addEventListener('mouseover', (e) => {
+                resetStars();
+                highlightStars(e.target);
+            });
+
+            star.addEventListener('mouseout', resetStars);
+
+            star.addEventListener('click', (e) => {
+                currentRating = e.target.getAttribute('data-value');
+                ratingValueDisplay.textContent = `Votre note : ${currentRating} étoile(s)`;
+                persistRating(currentRating);
+            });
         });
-    });
 
-    document.getElementById('popup-close').addEventListener('click', function() {
-        var popup = document.getElementById('image-popup');
-        popup.style.display = 'none';
-    });
+        function resetStars() {
+            stars.forEach(star => {
+                star.classList.remove('ri-star-fill');
+                star.classList.add('ri-star-line');
+            });
+            if (currentRating) {
+                for (let i = 0; i < currentRating; i++) {
+                    stars[i].classList.remove('ri-star-line');
+                    stars[i].classList.add('ri-star-fill');
+                }
+            }
+        }
 
-    document.getElementById('image-popup').addEventListener('click', function(event) {
-        if (event.target === this) {
-            this.style.display = 'none';
+        function highlightStars(star) {
+            const rating = star.getAttribute('data-value');
+            for (let i = 0; i < rating; i++) {
+                stars[i].classList.remove('ri-star-line');
+                stars[i].classList.add('ri-star-fill');
+            }
+        }
+
+        function persistRating(rating) {
+            // Vous pouvez ajouter une requête AJAX ici pour envoyer la note au serveur en PHP
+            console.log(`Rating submitted: ${rating}`);
         }
     });
 
-    var gallery = document.getElementById('image-gallery');
+
+
+
+
+    function persistRating(rating) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'submit_rating.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                console.log('Rating saved successfully');
+            }
+        };
+        xhr.send(`rating=${rating}`);
+    }
 </script>
-
-
-<script>
-    Dropzone.options.myDropzone = {
-        url: "{{ route('add-property-post') }}",
-        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i> Click here or drop files to upload",
-        paramName: "file",
-        maxFilesize: 2,
-        acceptedFiles: '.jpeg,.jpg,.png,.gif',
-        addRemoveLinks: true,
-        headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
-        init: function() {
-            this.on("success", function(file, response) {
-                if (response.success) {
-                    file.uploadedFileId = response.file_id; // Assuming the response contains the file ID
-                    console.log('File information saved successfully.');
-                } else {
-                    console.error('Failed to save file information.');
-                }
-            });
-            this.on("error", function(file, errorMessage) {
-                console.error('Error uploading file:', errorMessage);
-            });
-            this.on("removedfile", function(file) {
-                if (file.uploadedFileId) { // Ensure the file has been uploaded
-                    $.ajax({
-                        url: "{{ route('delete-file') }}",
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            file_id: file.uploadedFileId
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                console.log('File deleted successfully.');
-                            } else {
-                                console.error('Failed to delete file.');
-                            }
-                        },
-                        error: function(error) {
-                            console.error('Error deleting file:', error);
-                        }
-                    });
-                }
-            });
-        }
-    };
-</script>
-
-
-
-
-
-
-
-
-
-@if($properties->isNotEmpty())
-
-
-
- @else
-
- @endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@endsection
-
-
-@if($popularProperties->isNotEmpty())
-<h2>{{ $propertiesSingle->comments->count() }} Comments</h2>
-@endif
-
-
-
-
-
-
-
-<div class="description">
-    <h3>Property Description</h3>
-    @isset($propertiesSingle)
-        <p>{{ $propertiesSingle->description }}</p>
-    @else
-        <p>Aucune description disponible.</p>
-    @endisset
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

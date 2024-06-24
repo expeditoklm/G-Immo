@@ -420,7 +420,7 @@ row justify-content-center align-items-center
                             <div class="properties-item">
                                 <div class="properties-image">
                                     <a href="{{ route('pages.single') }}">
-                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                     </a>
                                     <ul class="action">
 
@@ -519,11 +519,21 @@ row justify-content-center align-items-center
 
                                             <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                         </div>
-                                        <div class="price">{{ $item->prix }} XOF</div>
+                                        <div class="price">
+                                            @isset($item->prix)
+                                            {{ $item->prix }} XOF
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                            @else
+                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                            @endif
                                             <a href="#" onclick="document.getElementById('post9{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -578,7 +588,7 @@ row justify-content-center align-items-center
                             <div class="properties-item">
                                 <div class="properties-image">
                                     <a href="{{ route('pages.single') }}">
-                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                     </a>
                                     <ul class="action">
 
@@ -676,11 +686,21 @@ row justify-content-center align-items-center
 
                                             <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                         </div>
-                                        <div class="price">{{ $item->prix }} XOF</div>
+                                        <div class="price">
+                                            @isset($item->prix)
+                                            {{ $item->prix }} XOF
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                            @else
+                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                            @endif
                                             <a href="#" onclick="document.getElementById('post12{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -735,7 +755,7 @@ row justify-content-center align-items-center
                             <div class="properties-item">
                                 <div class="properties-image">
                                     <a href="{{ route('pages.single') }}">
-                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                     </a>
                                     <ul class="action">
 
@@ -833,11 +853,21 @@ row justify-content-center align-items-center
 
                                             <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                         </div>
-                                        <div class="price">{{ $item->prix }} XOF</div>
+                                        <div class="price">
+                                            @isset($item->prix)
+                                            {{ $item->prix }} XOF
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                            @else
+                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                            @endif
                                             <a href="#" onclick="document.getElementById('post15{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -883,7 +913,6 @@ row justify-content-center align-items-center
                             </div>
                         </div>
                         @endforeach
-
                     </div>
                 </div>
                 <div class="tab-pane fade" id="rental" role="tabpanel">
@@ -893,7 +922,7 @@ row justify-content-center align-items-center
                             <div class="properties-item">
                                 <div class="properties-image">
                                     <a href="{{ route('pages.single') }}">
-                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                     </a>
                                     <ul class="action">
 
@@ -991,11 +1020,21 @@ row justify-content-center align-items-center
 
                                             <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                         </div>
-                                        <div class="price">{{ $item->prix }} XOF</div>
+                                        <div class="price">
+                                            @isset($item->prix)
+                                            {{ $item->prix }} XOF
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                            @else
+                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                            @endif
                                             <a href="#" onclick="document.getElementById('post19{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -1041,7 +1080,6 @@ row justify-content-center align-items-center
                             </div>
                         </div>
                         @endforeach
-
                     </div>
                 </div>
                 <div class="tab-pane fade" id="apartment" role="tabpanel">
@@ -1051,7 +1089,7 @@ row justify-content-center align-items-center
                             <div class="properties-item">
                                 <div class="properties-image">
                                     <a href="{{ route('pages.single') }}">
-                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                     </a>
                                     <ul class="action">
 
@@ -1149,11 +1187,21 @@ row justify-content-center align-items-center
 
                                             <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                         </div>
-                                        <div class="price">{{ $item->prix }} XOF</div>
+                                        <div class="price">
+                                            @isset($item->prix)
+                                            {{ $item->prix }} XOF
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                            @else
+                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                            @endif
                                             <a href="#" onclick="document.getElementById('post23{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -1208,7 +1256,7 @@ row justify-content-center align-items-center
                             <div class="properties-item">
                                 <div class="properties-image">
                                     <a href="{{ route('pages.single') }}">
-                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                     </a>
                                     <ul class="action">
 
@@ -1306,11 +1354,21 @@ row justify-content-center align-items-center
 
                                             <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                         </div>
-                                        <div class="price">{{ $item->prix }} XOF</div>
+                                        <div class="price">
+                                            @isset($item->prix)
+                                            {{ $item->prix }} XOF
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                            @else
+                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                            @endif
                                             <a href="#" onclick="document.getElementById('post27{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -1365,7 +1423,7 @@ row justify-content-center align-items-center
                             <div class="properties-item">
                                 <div class="properties-image">
                                     <a href="{{ route('pages.single') }}">
-                                        <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                     </a>
                                     <ul class="action">
 
@@ -1463,11 +1521,21 @@ row justify-content-center align-items-center
 
                                             <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                                         </div>
-                                        <div class="price">{{ $item->prix }} XOF</div>
+                                        <div class="price">
+                                            @isset($item->prix)
+                                            {{ $item->prix }} XOF
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                            @else
+                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                            @endif
                                             <a href="#" onclick="document.getElementById('post31{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -1586,7 +1654,7 @@ row justify-content-center align-items-center
             @php
             $count++;
             @endphp
-            <div class="slide {{ $count == 1 ? 'active' : '' }}" style="background-image: url({{asset('assets/images/properties/properties1.jpg') }});">
+            <div class="slide {{ $count == 1 ? 'active' : '' }}" style="background-image: url('{{ asset($item->proprieteImages->first()->url) }}');">
                 <div class="properties-content">
                     <div class="info">
                         <div class="media">
@@ -1681,9 +1749,19 @@ row justify-content-center align-items-center
                         @endif
                     </ul>
                     <div class="price-and-user">
-                        <div class="price">{{ $item->prix }} XOF</div>
+                        <div class="price">
+                            @isset($item->prix)
+                            {{ $item->prix }} XOF
+                            @endif
+                        </div>
                         <div class="user">
-                            <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                            @else
+                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                            @endif
                             <a href="#" onclick="document.getElementById('post1{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                             <!-- Formulaire caché -->
@@ -1716,7 +1794,7 @@ row justify-content-center align-items-center
                 <div class="properties-item">
                     <div class="properties-image">
                         <a href="{{ route('pages.single') }}">
-                            <img src="{{asset('assets/images/properties/properties7.jpg')}}" alt="image">
+                            <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                         </a>
                         <ul class="action">
 
@@ -1814,11 +1892,21 @@ row justify-content-center align-items-center
 
                                 <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
                             </div>
-                            <div class="price">{{ $item->prix }} XOF</div>
+                            <div class="price">
+                                @isset($item->prix)
+                                {{ $item->prix }} XOF
+                                @endif
+                            </div>
                         </div>
                         <div class="bottom">
                             <div class="user">
-                                <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                @else
+                                <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                @endif
                                 <a href="#" onclick="document.getElementById('post5{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                 <!-- Formulaire caché -->
@@ -1883,11 +1971,17 @@ row justify-content-center align-items-center
                     <div class="testimonial-card">
                         <div class="info">
                             <div class="image">
-                                <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                @else
+                                <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                @endif
                             </div>
                             <div class="title">
                                 <h3>{{ $item->nom_prenom }}</h3>
-                                <span>{{ $item->propriete->user->nom_prenom }} / {{ $item->propriete->titre }}  </span>
+                                <span>{{ $item->propriete->user->nom_prenom }} / {{ $item->propriete->titre }} </span>
                             </div>
                         </div>
                         <p>“{{ $item->comment }}”</p>

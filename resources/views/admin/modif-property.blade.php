@@ -198,7 +198,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
 
 
-
+@if($proprieteImages->isNotEmpty())
 <div class="image-gallery-container" style="position: relative;">
         <div class="image-gallery" id="image-gallery">
             @foreach ($proprieteImages as $item)
@@ -208,8 +208,6 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                     <a href="#" class="delete-icon ad" title="Supprimer" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>
                 </div>
             </div>
-            
-
             <!-- The Modal -->
             <div id="myModal-{{ $item->id }}" class="modal">
                 <div class="modal-content">
@@ -220,27 +218,14 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 </div>
             </div>
             @endforeach
-
-
         </div>
-
-
     </div>
 
     <div class="popup" id="image-popup">
         <span class="popup-close" id="popup-close">&times;</span>
         <img src="" alt="Agrandissement de l'image" id="popup-img">
     </div>
-
-
-
-
-
-
-
-
-
-
+@endif
 
  <!-- Début Formulaire -->
 <form id="form1" method="POST">

@@ -107,7 +107,7 @@ class PagesController extends Controller
                 ->limit(3)
                 ->where('deleted', 0)->get();
 
-            $comments = Comment::where('note', '>', 3)
+            $comments = Comment::where('note', '>', 2)
                 ->whereHas('user')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
@@ -969,7 +969,7 @@ class PagesController extends Controller
                 $propriete->deleted = 1;
                 $propriete->save();
                 return redirect()->route('admin.my-properties')->with('success', 'Deleted successfully.');
-            }elseif ($request->has('imageProperty_sup_id')) {
+            } elseif ($request->has('imageProperty_sup_id')) {
                 $id = $request->imageProperty_sup_id;
                 //dd($id);
                 $image = ProprieteImage::where('id', $id)->first();
@@ -1009,9 +1009,9 @@ class PagesController extends Controller
         try {
             $propertyImage = ProprieteImage::findOrFail($id);
 
-    
+
             $propertyImage->delete();
-    
+
             return response()->json(['success' => 'Item deleted successfully']);
         } catch (Exception $e) {
             // Log the exception if needed

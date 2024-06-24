@@ -52,7 +52,7 @@ row justify-content-center align-items-center"
 
 
 
-@yield('nomPage') 
+@yield('nomPage')
 
 
 
@@ -106,7 +106,7 @@ php artisan cache:clear
 
 {{ route('pages.recherche-patient') }}
 
-href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "  class="{{ request()->route()->getName() == 'pages.agent' ? 'active' : '' }}"
+href="{{ request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} " class="{{ request()->route()->getName() == 'pages.agent' ? 'active' : '' }}"
 
 
 
@@ -139,14 +139,12 @@ try {
 
 
 } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
+// Log the exception if needed
+Log::error($e->getMessage());
 
-            // Return a custom error view
-            return view('errors.custom', ['message' => $e->getMessage()]);
-        }
-
-
+// Return a custom error view
+return view('errors.custom', ['message' => $e->getMessage()]);
+}
 
 
 
@@ -167,41 +165,94 @@ try {
 
 
 
+style="background-image: url('{{ asset($item->proprieteImages->first()->url) }}');"
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.js"></script>
-<script>
-    Dropzone.options.myDropzone = {
-        url: "{{ route('upload-property-image') }}",
-        maxFilesize: 2, // Taille maximale du fichier en MB
-        acceptedFiles: 'image/*',
-        addRemoveLinks: true,
-        success: function (file, response) {
-            console.log('File uploaded successfully');
-        },
-        error: function (file, response) {
-            console.log('File upload error: ' + response);
-        }
-    };
 
-    $('#form1').submit(function (e) {
-        e.preventDefault(); // Empêcher la soumission par défaut du formulaire
+@if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+<img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+@elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+<img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+@else
+<img src="{{ asset('assets/images/user/user1.png') }}" alt="image">
+@endif
 
-        var formData = new FormData(this);
 
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('add-property-post') }}",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                alert('Propriété ajoutée avec succès.');
-                window.location.href = "{{ route('add-property-form') }}";
-            },
-            error: function (response) {
-                alert('Erreur lors de l\'ajout de la propriété.');
-                console.log(response);
-            }
-        });
-    });
-</script>
+
+
+
+
+src="{{ asset($item->proprieteImages->first()->url) }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

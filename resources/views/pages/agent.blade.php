@@ -58,7 +58,13 @@ top-header-inner
         <div class="row justify-content-center align-items-center" data-cues="slideInUp">
             <div class="col-lg-5 col-md-12">
                 <div class="agent-profile-image">
-                    <img src="{{asset('assets/images/agents/agents1.jpg')}}" alt="image">
+                    @if($agent->sexe == 'Feminin' && !$agent->profile_img)
+                    <img src="{{ asset('assets/images/user/fe-user.png') }}" alt="image">
+                    @elseif($agent->sexe == 'Masculin' && !$agent->profile_img)
+                    <img src="{{ asset('assets/images/user/ma-user.jpg') }}" alt="image">
+                    @else
+                    <img src="{{ asset($agent->profile_img) }}" alt="image">
+                    @endif
                 </div>
             </div>
             <div class="col-lg-7 col-md-12">
@@ -71,34 +77,34 @@ top-header-inner
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-6">
                             <ul class="info-list">
-                            @isset($agent->email)
+                                @isset($agent->email)
                                 <li>
                                     <span>Email:</span>
-                                    <a href="mailto:{{ $agent->email}}"><span class="__cf_email__" >{{ $agent->email}}</span></a>
+                                    <a href="mailto:{{ $agent->email}}"><span class="__cf_email__">{{ $agent->email}}</span></a>
                                 </li>
-                            @endisset
-                            @isset($agent->telephone)
+                                @endisset
+                                @isset($agent->telephone)
                                 <li>
                                     <span>Phone:</span>
                                     <a href="tel:{{ $agent->telephone}}">{{ $agent->telephone}}</a>
                                 </li>
-                            @endisset
+                                @endisset
                             </ul>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <ul class="info-list">
-                            @isset($agent->website)
+                                @isset($agent->website)
                                 <li>
                                     <span>Website:</span>
                                     <a href="https:{{ $agent->website}}" target="_blank">{{ $agent->website}}</a>
                                 </li>
-                            @endisset
-                            @isset($agent->pays)
+                                @endisset
+                                @isset($agent->pays)
                                 <li>
                                     <span>Address:</span>
                                     {{ $agent->pays}}, {{ $agent->ville}}
                                 </li>
-                            @endisset
+                                @endisset
                             </ul>
                         </div>
                     </div>
@@ -138,7 +144,7 @@ top-header-inner
                                     <div class="properties-item">
                                         <div class="properties-image">
                                             <a href="property-details.html">
-                                                <img src="{{asset('assets/images/properties/properties1.jpg')}}" alt="image">
+                                                <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                                             </a>
                                             <ul class="action">
 
@@ -238,7 +244,13 @@ top-header-inner
                                             </div>
                                             <div class="bottom">
                                                 <div class="user">
-                                                    <img src="{{asset('assets/images/user/user1.png')}}" alt="image">
+                                                    @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                                    <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                                    @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                                    <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                                    @else
+                                                    <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                                    @endif
                                                     <a href="#" onclick="document.getElementById('post4{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                                     <!-- Formulaire caché -->
@@ -288,9 +300,9 @@ top-header-inner
                         </div>
                         <div class="tab-pane fade" id="reviews" role="tabpanel">
                             <div class="comments-content">
-                            @if($commentaires->count() != 0)
+                                @if($commentaires->count() != 0)
                                 <h2>{{ $commentaires->count() }} Comments</h2>
-                            @endif
+                                @endif
                                 <ul class="comments-list">
                                     @foreach ($commentaires as $item)
                                     <li>
