@@ -1050,3 +1050,377 @@ top-header-inner
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    function countrySelectHasChanged(event) {
+        let countrySelect = document.getElementById('country');
+        // let citySelect = document.getElementById('userCity');
+        let citySelectContainer = document.getElementById('citySelectContainer');
+        
+        let countryCode = countrySelect.value;
+
+        
+        // <select class="form-control" value="{{ old('ville') }}" name="ville" id="userCity" aria-label="Default select example" required>
+        //                 <option value="" selected>Select your city</option>
+        //             </select>
+        
+        if (countryCode) {
+            fetch("{{ route('get-cities') }}?country_code=" + countryCode)
+            .then(response => response.json())
+            .then(data => {
+                // citySelect.innerHTML = '<option value="">Select your city</option>';
+
+                let newCitySelect = document.createElement('select')
+                newCitySelect.className = "form-control";
+                newCitySelect.required = true;
+                // newCitySelect.value = "form-control";
+                let option = document.createElement('option');
+                option.value = "";
+                option.textContent = "Select your cito";
+                newCitySelect.appendChild(option);
+                console.log("here -- data", data);
+                
+                    data.forEach((city) => {
+                        let newOption = document.createElement('option');
+                        newOption.value = city.geonameId;
+                        newOption.textContent = city.name;
+                        newCitySelect.appendChild(newOption);
+                    });
+
+                    citySelectContainer.appendChild(newCitySelect)
+                    //citySelectContainer.sty
+                })
+                .catch(error => {
+                    console.error('Error fetching cities:', error);
+                });
+        } else {
+            citySelect.innerHTML = '<option value="">Select your city</option>';
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="form-group">
+                    <label>Country</label>
+                    <select onchange="countrySelectHasChanged()" class="form-control" value="{{ old('pays') }}" name="pays" id="country" required>
+                        <option value="" selected>Select your country</option>
+                        @foreach ($countries as $country)
+                        <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
+                        @endforeach
+                    </select>
+                    <div class="icon">
+                        <i class="ri-earth-line"></i>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="form-group" >
+                    <label>City</label>
+                    <div id="citySelectContainer"></div>
+                    <div class="icon">
+                        <i class="ri-building-line"></i>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function countryHasChanged() {
+
+        var countrySelect = document.getElementById('country');
+        var citySelect = document.getElementById('city');
+        var nsfc = (document.getElementsByClassName('nice-select form-control'))[1];
+
+        // <li data-value="" class="option selected">Select your city</li>
+
+        console.log("nsfc --", nsfc);
+
+        var countryCode = countrySelect.value;
+
+        if (countryCode) {
+            fetch("{{ route('get-cities') }}?country_code=" + countryCode)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("here -- data", data);
+                    data.forEach((city) => {
+                        var option = document.createElement('option');
+                        option.value = city.geonameId;
+                        option.textContent = city.name;
+                        console.log("time -- option", option);
+                        citySelect.appendChild(option);
+
+                        nsfc.style.display = "none"
+                    });
+                    citySelect.style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Error fetching cities:', error);
+                });
+        } else {
+            citySelect.innerHTML = '<option value="">Select your city</option>';
+        }
+
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="d-flex" style="justify-content: space-between;">
+                    <div class="col-sm-6 ">
+                        <label>Pays</label>
+                        <div class="form-group">
+
+                            <select class="form-select" onchange="countryHasChanged()" id="country"  name="pays" aria-label="Default select example" required>
+                                <option value="{{ Auth::user()->pays }}" selected>{{ Auth::user()->pays }}</option>
+                                @foreach ($countries as $country)
+                                <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 ml-4">
+                        <label>Ville</label>
+                        <div class="form-group">
+
+                            <select class="form-select " id="city" name="ville" aria-label="Default  example" required>
+                                <option value="{{ Auth::user()->ville }}" selected>{{ Auth::user()->ville }}</option>
+                                <option value="Porto">Porto</option>
+                                <option value="Ctn">Ctn</option>
+                                <option value="S○vi">S○vi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>

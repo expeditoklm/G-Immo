@@ -202,7 +202,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 <div class="image-gallery-container" style="position: relative;">
         <div class="image-gallery" id="image-gallery">
             @foreach ($proprieteImages as $item)
-            <div class="image-container" style="background-image: url('{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}');">
+            <div class="image-container" style="background-image: url('{{ asset($item->url) }}');">
                 <div class="icons">
                     <a href="#" title="Voir" class="view-icon"><i class="far fa-eye"></i></a>
                     <a href="#" class="delete-icon ad" title="Supprimer" data-id="{{ $item->id }}"><i class="far fa-trash-alt"></i></a>

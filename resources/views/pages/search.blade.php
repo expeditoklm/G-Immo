@@ -424,7 +424,7 @@ top-header-inner
                     <div class="properties-slide-item">
                         <div class="properties-image">
                             <a href="property-details.html">
-                                <img src="{{asset('assets/images/properties/properties11.jpg')}}" alt="image">
+                                <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
                             </a>
 
                             <div class="media">
@@ -526,7 +526,7 @@ top-header-inner
                                     @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
                                     <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
                                     @else
-                                    <img src="{{ asset('assets/images/user/user1.png') }}" alt="image">
+                                    <img src="{{ asset($item->user->profile_img) }}" alt="image">
                                     @endif
                                     <a href="#" onclick="document.getElementById('post5{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\GeoNamesController;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 
@@ -37,7 +38,9 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::post('/delete-file', [PagesController::class, 'deleteFile'])->name('delete-file');
     Route::post('/modif-property-post', [PagesController::class, 'modifPropertyPost'])->name('modif-property-post');
     Route::delete('/delete-image/{id}', [PagesController::class, 'deleteImage'])->name('delete-image');
-
+    Route::get('/get-cities', [PagesController::class, 'getCities'])->name('get-cities');
+    Route::post('/get-cities', [PagesController::class, 'getCities'])->name('get-cities');
+    Route::post('/change-password', [PagesController::class, 'changePassword'])->name('change-password');
     FacadesAuth::routes();
 });
 
@@ -99,4 +102,5 @@ Route::middleware(['auth', 'check.session.variable', 'check.max.execution.time']
 
 Route::middleware(['auth', 'check.and.clear.session', 'check.max.execution.time'])->group(function () {
     Route::get('/add-property', [PagesController::class, 'addProperty'])->name('admin.add-property');
+    Route::post('/add-property', [PagesController::class, 'addProperty'])->name('admin.add-property');
 });

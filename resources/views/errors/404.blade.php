@@ -69,7 +69,7 @@ top-header-inner
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
                 <h2>Subscribe To Our Newsletter</h2>
-                <form class="subscribe-form"action="{{ route('pages.news-letterss') }}" method="POST">
+                <form class="subscribe-form" action="{{ route('pages.news-letterss') }}" method="POST">
                 @csrf
                     <input type="hidden" name="message" value="{{ $message }}">
                     <input type="email" name="email" class="form-control" placeholder="Enter your email">

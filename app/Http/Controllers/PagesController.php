@@ -14,6 +14,7 @@ use App\Models\User;
 use Faker\Core\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\GeoNamesService;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -24,37 +25,59 @@ use Illuminate\Support\Facades\Log;
 
 class PagesController extends Controller
 {
+    protected $geoNamesService;
+
+
+    public function __construct(GeoNamesService $geoNamesService)
+    {
+        $this->geoNamesService = $geoNamesService;
+    }
+
+
     public function acceuil()
     {
         try {
+            // liste des proprietes de status "à vendre"  
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
             }])
                 ->where('deleted', 0)->get();
 
+            // liste des proprietes de status "à louer" 
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'Rental');
             }])
                 ->where('deleted', 0)->get();
 
+            // liste des villes qui ont de propriete  
             $uniqueCities = Propriete::select('ville')->distinct()->get();
 
+            // nombre de propriete de type : 
+            //Residentiel
             $nbResidential = Propriete::where('type_propriete_id', 1)->where('deleted', 0)->count();
+            //Commercial
             $nbCommercial = Propriete::where('type_propriete_id', 2)->where('deleted', 0)->count();
+            //Agricole
             $nbFarm = Propriete::where('type_propriete_id', 3)->where('deleted', 0)->count();
+            //Parcelle
             $nbLand = Propriete::where('type_propriete_id', 4)->where('deleted', 0)->count();
+            //Duplexe
             $nbDuplex = Propriete::where('type_propriete_id', 5)->where('deleted', 0)->count();
+            //Bureau , Entreprise
             $nbOffice = Propriete::where('type_propriete_id', 6)->where('deleted', 0)->count();
+            //Appartement
             $nbApartment = Propriete::where('type_propriete_id', 7)->where('deleted', 0)->count();
+            //Entrepot
             $nbWarehouse = Propriete::where('type_propriete_id', 8)->where('deleted', 0)->count();
 
 
+            // 6 proprietes à vendre recemment ajouté 
             $propertiesForSalle = Propriete::where('status', 'For Sale')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->where('deleted', 0)->get();
 
-
+            // 6 proprietes de type "Residentiel,Du/Tri/Quadriplex,Apartment" recemment ajouté 
             $propertiesHouse = Propriete::where('type_propriete_id', 1)
                 ->where('deleted', 0)
                 ->orWhere('type_propriete_id', 5)
@@ -63,26 +86,26 @@ class PagesController extends Controller
                 ->limit(6)
                 ->where('deleted', 0)->get();
 
-
+            // 6 proprietes de type "Residentiel" dont les prix sont élevé recemment ajouté 
             $propertiesVilla = Propriete::where('type_propriete_id', 1)
                 ->orWhere('prix', DB::raw('(SELECT MAX(prix) FROM proprietes)'))
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->where('deleted', 0)->get();
 
-
+            // 6 proprietes de status "A louer" dont les prix sont élevé recemment ajouté 
             $propertiesRental = Propriete::where('status', 'Rental')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->where('deleted', 0)->get();
 
-
+            // 6 proprietes de type "Appartement" recemment ajouté 
             $propertiesApartment = Propriete::where('type_propriete_id', 7)
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->where('deleted', 0)->get();
 
-
+            // 6 proprietes de type "Parcelle" recemment ajouté 
             $propertiesParcel = Propriete::where('type_propriete_id', 3)
                 ->orWhere('type_propriete_id', 4)
                 ->orderBy('created_at', 'desc')
@@ -95,31 +118,32 @@ class PagesController extends Controller
                 ->limit(6)
                 ->where('deleted', 0)->get();
 
-
-
+            // 4 proprietes les plus cheres
             $propertiesHigh = Propriete::orderBy('prix', 'desc')
                 ->limit(4)
                 ->where('deleted', 0)->get();
 
+            // 3 proprietes de status  "à vendre" recemment ajouté 
             $propertiesForSale = Propriete::where('status', 'For Sale')
                 ->orderBy('prix', 'asc')
                 ->orderBy('created_at', 'desc')
                 ->limit(3)
                 ->where('deleted', 0)->get();
 
+            // 6 commentaire qui possede une "note superieur à 2" recemment ajouté  et 
+            // qui se retrouve parmis les utilisateur qui on de compte 
             $comments = Comment::where('note', '>', 2)
                 ->whereHas('user')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
-                ->where('deleted', 0)->get();
+                ->get();
 
 
-            // Nombre total de clients
+            // Nombre total de clients qui ont commenter
             $nbCustomer = Comment::count();
 
-
             // Nombre de commentaires avec une note supérieure à 2
-            $nbClientNoteSatisfaction = Comment::where('note', '>', 2)->where('deleted', 0)->count();
+            $nbClientNoteSatisfaction = Comment::where('note', '>', 2)->count();
 
             // Nombre total de commentaires
             $nbClientNote = Comment::count();
@@ -130,17 +154,11 @@ class PagesController extends Controller
 
             // Nombre de propriétés à vendre
             $nbPropertyForSale = Propriete::where('status', 'For Sale')->where('deleted', 0)->count();
-            if ($nbPropertyForSale > 1000) {
-                $nbPropertyForSale = $nbPropertyForSale / 1000;
-                $nbPropertyForSale = $nbPropertyForSale . "K";
-            }
+
 
             // Nombre de propriétés à louer
             $nbPropertyRental = Propriete::where('status', 'Rental')->where('deleted', 0)->count();
-            if ($nbPropertyRental > 1000) {
-                $nbPropertyRental = $nbPropertyRental / 1000;
-                $nbPropertyRental = $nbPropertyRental . "K";
-            }
+
 
             return view('pages/acceuil', compact(
                 'nbCustomer',
@@ -181,26 +199,31 @@ class PagesController extends Controller
     public function search(Request $request)
     {
         try {
+            //liste des proprietes à vendre
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
             }])
                 ->where('deleted', 0)->get();
 
+            //liste des proprietes à louer
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'Rental');
             }])
                 ->where('deleted', 0)->get();
 
+            // liste des villes qui ont de propriete  
             $uniqueCities = Propriete::select('ville')->distinct()->get();
 
+            //10  proprietes recemment ajouté et qui ont plus de vue 
             $popularProperties = Propriete::orderBy('vue', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->take(10)
                 ->where('deleted', 0)->get();
 
-
+            // liste des proprietés 
             $properties = Propriete::where('deleted', 0)->paginate(10);
 
-
+            // enregistrement une newsletterss
             if ($request->has('btn_newslater')) {
 
                 Newslater::create([
@@ -360,6 +383,7 @@ class PagesController extends Controller
     public function single(Request $request)
     {
         try {
+            //id de la proprete dont ton veux connaitre les details
             $id = $request->id;
 
             $propertiesSingle = Propriete::where('id', $id)->first();
@@ -389,6 +413,7 @@ class PagesController extends Controller
                 ->take(2)
                 ->where('deleted', 0)->get();
 
+            //enregistrement dun message 
             if ($request->has('btn_msg3')) {
                 Message::create([
                     'user_id' => FacadesAuth::user()->id,
@@ -400,13 +425,12 @@ class PagesController extends Controller
                     'deleted' => 0,
                     'proprietaire_id' => $propertiesSingle->user->id
                 ]);
-                $request->request->remove('btn_msg3');
 
                 return redirect()->route('pages.single', [
                     'id' => $id,
                 ])->with('success', 'Message sent successfully.');
             }
-
+            //enregistrement dune newsletterss
             if ($request->has('btn_newslater')) {
                 Newslater::create([
                     'email' => $request->email,
@@ -471,8 +495,10 @@ class PagesController extends Controller
 
     public function account()
     {
+
         try {
-            return view('pages/account');
+            $countries = $this->geoNamesService->getCountries();
+            return view('pages/account', compact('countries'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -481,6 +507,7 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
+
 
     public function agent(Request $request)
     {
@@ -540,20 +567,40 @@ class PagesController extends Controller
     public function dashbord(Request $request)
     {
         try {
-            $nbProperties = Propriete::where('user_id', FacadesAuth::id())->where('deleted', 0)->count();
-            $nbReviews = Comment::whereHas('propriete', function ($query) {
-                $query->where('user_id', FacadesAuth::id());
+            $user_id = FacadesAuth::id();
+
+            $countries = $this->geoNamesService->getCountries();
+            $user = FacadesAuth::user();
+
+            // Récupérer le nom du pays à partir du code enregistré dans la base de données
+            $userCountryCode = $user->pays;
+            $userCountry = $this->geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+            // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+            $userCityCode = $user->ville;
+            $userCity = $this->geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+
+
+            $nbProperties = Propriete::where('user_id', $user_id)->where('deleted', 0)->count();
+
+            $nbReviews = Comment::whereHas('propriete', function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
             })->where('deleted', 0)->count();
-            $nbMessages = Message::where('proprietaire_id', FacadesAuth::id())->where('deleted', 0)->count();
-            $messages = Message::where('proprietaire_id', FacadesAuth::id())
-                ->orderBy('created_at', 'desc')
+
+            $nbMessages = Message::where('proprietaire_id', $user_id)->where('deleted', 0)->count();
+
+            $messages = Message::where('proprietaire_id', $user_id)
+                ->orderByDesc('created_at')
                 ->limit(3)
-                ->where('deleted', 0)->get();
-            $reviews = Comment::whereHas('propriete', function ($query) {
-                $query->where('user_id', FacadesAuth::id());
-            })->orderBy('created_at', 'desc')
+                ->where('deleted', 0)
+                ->get();
+
+            $reviews = Comment::whereHas('propriete', function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+            })->orderByDesc('created_at')
                 ->limit(3)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->get();
 
             if ($request->has('btn_modif')) {
                 $request->validate([
@@ -566,11 +613,7 @@ class PagesController extends Controller
                 ]);
 
                 $user = FacadesAuth::user();
-                $user->nom_prenom = $request->nom_prenom;
-                $user->pays = $request->pays;
-                $user->ville = $request->ville;
-                $user->website = $request->website;
-                $user->description = $request->description;
+                $user->fill($request->only(['nom_prenom', 'pays', 'ville', 'website', 'description']));
 
                 if ($request->filled('new_password')) {
                     $user->password = bcrypt($request->new_password);
@@ -586,7 +629,12 @@ class PagesController extends Controller
                 'nbReviews',
                 'nbMessages',
                 'messages',
-                'reviews'
+                'reviews',
+                'countries',
+                'userCountryCode',
+                'userCountry',
+                'userCityCode',
+                'userCity'
             ));
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -594,11 +642,52 @@ class PagesController extends Controller
         }
     }
 
+
+    public function changePassword(Request $request)
+    {
+            $request->validate([
+              
+                'new_password' => 'nullable|string|min:8|confirmed',
+            ]);
+
+            $user = FacadesAuth::user();
+           
+            if ($request->filled('new_password')) {
+                $user->password = bcrypt($request->new_password);
+            }
+
+            $user->save();
+            session(['message' => 'Mot de passe modifier avec succes.', 'message_type' => 'success']);
+            return redirect()->route('admin.dashbord');
+        
+    }
+
+    
+    public function getCities(Request $request)
+    {
+        $countryCode = $request->input('country_code');
+        $cities = $this->geoNamesService->getCitiesByCountryCode($countryCode);
+
+        return response()->json($cities);
+    }
+
     public function userProfile()
     {
         try {
+
+            $countries = $this->geoNamesService->getCountries();
+            $user = FacadesAuth::user();
+
+            // Récupérer le nom du pays à partir du code enregistré dans la base de données
+            $userCountryCode = $user->pays;
+            $userCountry = $this->geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+            // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+            $userCityCode = $user->ville;
+            $userCity = $this->geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+
             $user = User::where('id', FacadesAuth::user()->id)->first();
-            return view('admin/profile', compact('user'));
+            return view('admin/profile', compact('user','userCountry','userCity'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -611,8 +700,28 @@ class PagesController extends Controller
     public function modifUserProfile()
     {
         try {
+            $user_id = FacadesAuth::id();
+
+            $countries = $this->geoNamesService->getCountries();
+            $user = FacadesAuth::user();
+
+            // Récupérer le nom du pays à partir du code enregistré dans la base de données
+            $userCountryCode = $user->pays;
+            $userCountry = $this->geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+            // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+            $userCityCode = $user->ville;
+            $userCity = $this->geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+
             //$user = User::where('id', FacadesAuth::user()->id)->first();
-            return view('admin/modif-user-profile');
+            return view('admin.modif-user-profile', compact(
+                
+                'countries',
+                'userCountryCode',
+                'userCountry',
+                'userCityCode',
+                'userCity'
+            ));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -637,6 +746,16 @@ class PagesController extends Controller
             $user->ville = $ville;
             $user->website = $website;
             $user->description = $description;
+            $user->updated_at = \now();
+           
+            if ($request->file('file')) {
+                $image = $request->file('file');
+                $imageName = time() . '.' . $image->extension();
+                $imagePath = $image->storeAs('uploads', $imageName, 'public');
+
+                $user->profile_img = '/storage/'.$imagePath;
+              
+            }
             $user->save();
             session(['message' => 'Profile updated successfully.', 'message_type' => 'success']);
 
@@ -671,7 +790,7 @@ class PagesController extends Controller
         try {
             $properties = Propriete::where('user_id', FacadesAuth::id())
                 ->where('deleted', 0)
-                ->orderBy('vue', 'desc')
+                ->orderBy('updated_at', 'desc')
                 ->paginate(10);
 
             return view('admin/my-properties', compact('properties'));
@@ -746,8 +865,9 @@ class PagesController extends Controller
                     'deleted' => 0,
                 ]);
             }
+            
             session(['message' => 'Propriété ajouté avec succes.', 'message_type' => 'success']);
-
+            dd(\session('message'));
             return response()->json(['success' => true, 'property_id' => $request]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -785,6 +905,8 @@ class PagesController extends Controller
             $property->emailContact = $request->emailContact;
             $property->telContact = $request->telContact;
             $property->deleted = 0;
+            $property->updated_at = \now();
+
             $property->user_id = $request->user()->id;
 
             $property->save();
@@ -816,7 +938,6 @@ class PagesController extends Controller
     public function uploadImage(Request $request)
     {
         try {
-            Log::info('Upload request received', ['request' => $request->all()]);
 
             $request->validate([
                 'file' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -955,18 +1076,22 @@ class PagesController extends Controller
                 $id = $request->message_sup_id;
                 $message = Message::where('id', $id)->first();
                 $message->deleted = 1;
+                $message->updated_at = \now();
+
                 $message->save();
                 return redirect()->route('admin.messages')->with('success', 'Deleted successfully.');
             } elseif ($request->has('review_sup_id')) {
                 $id = $request->review_sup_id;
                 $review = Comment::where('id', $id)->first();
                 $review->deleted = 1;
+                $review->updated_at = \now();
                 $review->save();
                 return redirect()->route('admin.reviews')->with('success', 'Deleted successfully.');
             } elseif ($request->has('property_sup_id')) {
                 $id = $request->property_sup_id;
                 $propriete = Propriete::where('id', $id)->first();
                 $propriete->deleted = 1;
+                $propriete->updated_at = \now();
                 $propriete->save();
                 return redirect()->route('admin.my-properties')->with('success', 'Deleted successfully.');
             } elseif ($request->has('imageProperty_sup_id')) {
@@ -974,6 +1099,7 @@ class PagesController extends Controller
                 //dd($id);
                 $image = ProprieteImage::where('id', $id)->first();
                 $image->deleted = 1;
+                $image->updated_at = \now();
                 $image->save();
                 return redirect()->route('admin.my-properties')->with('success', 'Deleted successfully.');
             }
@@ -988,14 +1114,25 @@ class PagesController extends Controller
     public function newsLetterss(Request $request)
     {
         try {
-            $message = $request->message;
-            Newslater::create([
-                'email' => $request->email,
-                'deleted' => 0,
-            ]);
-            return redirect()->route('pages.not-found', [
-                'message' => $message,
-            ])->with('success', 'E-mail sent successfully.');
+            if ($request->has('btn_mail')) {
+
+                Newslater::create([
+                    'email' => $request->email,
+                    'deleted' => 0,
+                ]);
+                return redirect()->route('pages.account')->with('success', 'E-mail sent successfully.');
+            }
+            if ($request->has('btn_newslater')) {
+
+                $message = $request->message;
+                Newslater::create([
+                    'email' => $request->email,
+                    'deleted' => 0,
+                ]);
+                return redirect()->route('pages.not-found', [
+                    'message' => $message,
+                ])->with('success', 'E-mail sent successfully.');
+            }
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1004,12 +1141,13 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
+
     public function deleteImage($id)
     {
         try {
             $propertyImage = ProprieteImage::findOrFail($id);
 
-
+            $propertyImage->updated_at = \now();
             $propertyImage->delete();
 
             return response()->json(['success' => 'Item deleted successfully']);

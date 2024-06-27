@@ -40,6 +40,7 @@ class RegisterController extends Controller
         $user = User::create([
             'nom_prenom' => $request->nom_prenom,
             'email' => $request->email,
+            'sexe' => $request->sexe,
             'password' => Hash::make($request->password),
             'website' => $request->website,
             'description' => $request->description,

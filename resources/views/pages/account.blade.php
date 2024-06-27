@@ -57,7 +57,7 @@ top-header-inner
     <div class="container">
 
 
-    @include('admin.success_error')
+        @include('admin.success_error')
 
         <div class="profile-authentication-inner">
             <div class="row justify-content-center">
@@ -120,15 +120,38 @@ top-header-inner
                             </div>
                             <div class="form-group">
                                 <label>Your Name</label>
-                                <input type="text" name="nom_prenom" class="form-control" value="{{ old('nom_prenom') }}" placeholder="Enter name">
+                                <input type="text" name="nom_prenom" class="form-control" value="{{ old('nom_prenom') }}" placeholder="Enter name" required>
                                 <div class="icon">
                                     <i class="ri-user-3-line"></i>
                                 </div>
                             </div>
 
+                            <div class="col-xl-3 col-sm-4 col-12">
+                                <div class="mb-3">
+                                    <div>
+                                        <div class="col-sm-6 col-12">
+                                            <div class="form-group mb-3">
+                                                <label >Sexe</label>
+                                                <div class="m-0 d-flex">
+                                                    <div class="form-check form-check-inline d-flex">
+                                                        <input class="form-check-input m-2 mt-1" type="radio" name="sexe" id="typePnne1" value="Masculin" checked>
+                                                        <label class="form-check-label" for="typePenne1">Masculin</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline d-flex">
+                                                        <input class="form-check-input m-2 mt-1" type="radio" name="sexe" id="typePe2" value="Feminin">
+                                                        <label class="form-check-label" for="typenne2">Féminin</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label>Email Address</label>
-                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter email address">
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter email address" required>
                                 <div class="icon">
                                     <i class="ri-mail-line"></i>
                                 </div>
@@ -136,50 +159,46 @@ top-header-inner
 
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input type="number" name="telephone" class="form-control" value="{{ old('telephone') }}" placeholder="Enter phone">
+                                <input type="number" name="telephone" class="form-control" value="{{ old('telephone') }}" placeholder="Enter phone" required>
                                 <div class="icon">
-                                    <i class="ri-mail-line"></i>
+                                    <i class="ri-phone-line"></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Country</label>
-                                <select class="form-control" value="{{ old('pays') }}" name="pays" id="abcd" aria-label="Default select example">
-                                    <option selected="">Select your country</option>
-                                    <option value="Cotonou">Cotonou</option>
-                                    <option value="Abuja">Abuja</option>
-                                    <option value="Lomé">Lomé</option>
+                                <select class="form-control" value="{{ old('pays') }}" name="pays" id="country" required>
+                                    <option value="" selected>Select your country</option>
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="icon">
-                                    <i class="ri-mail-line"></i>
+                                    <i class="ri-earth-line"></i>
                                 </div>
                             </div>
 
 
                             <div class="form-group">
                                 <label>City</label>
-                                <select class="form-control" value="{{ old('ville') }}" name="ville" id="abcd" aria-label="Default select example">
-                                    <option selected="">Select your city</option>
-                                    <option value="Cotonou">Cotonou</option>
-                                    <option value="Abuja">Abuja</option>
-                                    <option value="Lomé">Lomé</option>
+                                <select class="form-control" value="{{ old('ville') }}" name="ville" id="city" aria-label="Default select example" required>
+                                    <option value="" selected>Select your city</option>
                                 </select>
                                 <div class="icon">
-                                    <i class="ri-mail-line"></i>
+                                    <i class="ri-building-line"></i>
                                 </div>
                             </div>
 
 
-
                             <div class="form-group">
                                 <label>Your Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Your password">
+                                <input type="password" name="password" class="form-control" placeholder="Your password" required>
                                 <div class="icon">
                                     <i class="ri-lock-line"></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Confirm Password</label>
-                                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
+                                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password" required>
                                 <div class="icon">
                                     <i class="ri-lock-line"></i>
                                 </div>
@@ -192,7 +211,8 @@ top-header-inner
                                     </label>
                                 </div>
                             </div>
-                            <button type="submit" class="default-btn">Sign Up</button>
+                            <button type="submit" class="default-btn" id="signup-btn" disabled>Sign Up</button>
+
                         </form>
                     </div>
                 </div>
@@ -208,9 +228,10 @@ top-header-inner
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
                 <h2>Subscribe To Our Newsletter</h2>
-                <form class="subscribe-form">
-                    <input type="search" name="nom_prenom" class="form-control" placeholder="Enter your email">
-                    <button type="submit" class="default-btn">Subscribe</button>
+                <form class="subscribe-form" action="{{ route('pages.news-letterss') }}" method="POST">
+                    @csrf
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
+                    <button type="submit" name="btn_mail" class="default-btn">Subscribe</button>
                 </form>
             </div>
         </div>
@@ -228,7 +249,52 @@ top-header-inner
 
 
 
-@section('script')
+@section('js')
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var checkbox = document.getElementById("checkbox1");
+        var signupBtn = document.getElementById("signup-btn");
+
+        checkbox.addEventListener("change", function() {
+            if (checkbox.checked) {
+                signupBtn.disabled = false; // Désactiver le bouton si la case est cochée
+            } else {
+                signupBtn.disabled = true; // Activer le bouton si la case n'est pas cochée
+            }
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var countrySelect = document.getElementById('country');
+        var citySelect = document.getElementById('city');
+
+        countrySelect.addEventListener('change', function() {
+            var countryCode = this.value;
+            if (countryCode) {
+                fetch("{{ route('get-cities') }}?country_code=" + countryCode)
+                    .then(response => response.json())
+                    .then(data => {
+                        citySelect.innerHTML = '<option value="">Select your city</option>';
+                        data.forEach(function(city) {
+                            var option = document.createElement('option');
+                            option.value = city.geonameId;
+                            option.textContent = city.name;
+                            citySelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching cities:', error);
+                    });
+            } else {
+                citySelect.innerHTML = '<option value="">Select your city</option>';
+            }
+        });
+    });
+</script>
 
 
 

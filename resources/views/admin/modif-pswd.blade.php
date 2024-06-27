@@ -38,10 +38,10 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
 <div class="sidebar-widget author-widget2">
     
     <div class="agent-contact-form-sidebar">
-        <form name="contact_form" action="{{ route('admin.modif-pswd') }}" method="POST">
+        <form name="contact_form" action="{{ route('change-password') }}" method="POST">
             @csrf
-            <input type="password" id="fname" name="nom_prenom" placeholder="Full Name" required />
-            <input type="password" id="fname" name="nom_prenom" placeholder="Full Name" required />
+            <input type="password" id="fname" name="new_password" placeholder="Write new password" required />
+            <input type="password" id="fname" name="new_password_confirmation" placeholder="Write same password again" required />
                     
 
             <input type="submit" class="multiple-send-message" value="Submit Request" />

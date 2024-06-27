@@ -6,7 +6,48 @@ Dashbord | Find Houses
 
 @section('css')
 
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+<style>
+    .nice-select {
+        display: none;
+    }
+</style>
+
+<!-- Votre style personnalisé -->
+<style>
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .password-section {
+        margin-top: 2rem;
+        border-top: 1px solid #ddd;
+        padding-top: 1.5rem;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 38px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 6px 12px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #495057;
+        line-height: 26px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 26px;
+    }
+
+    .select2-container {
+        width: 100% !important;
+        /* Ensure Select2 takes full width */
+    }
+</style>
 
 @endsection
 
@@ -84,7 +125,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
     <h4 class="title">Message</h4>
     <div class="section-body">
         <div class="messages">
-        
+
             @foreach ($messages as $item)
             <div class="message">
                 <div class="thumb">
@@ -104,7 +145,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                 </div>
             </div>
-        
+
             <!-- The Modal -->
             <div id="myModal-{{ $item->id }}" class="modal">
                 <div class="modal-content">
@@ -115,7 +156,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 </div>
             </div>
             @endforeach
-       
+
         </div>
     </div>
 </div>
@@ -125,7 +166,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
     <h4 class="title">Review</h4>
     <div class="section-body">
         <div class="messages">
-     
+
             @foreach ($reviews as $item)
             <div class="message">
                 <div class="thumb">
@@ -171,7 +212,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 </div>
             </div>
             @endforeach
-            
+
         </div>
     </div>
 </div>
@@ -179,76 +220,72 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 <div class="dashborad-box mb-0">
     <h4 class="heading pt-0">Personal Information</h4>
     <div class="section-inforamation">
-        <form action="{{ route('admin.dashbord') }}" method="POST">
-            @csrf
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" name="nom_prenom" class="form-control" value="{{ Auth::user()->nom_prenom }}" required>
-                    </div>
-                </div>
-                <div class="d-flex" style="justify-content: space-between;">
-                    <div class="col-sm-6 ">
-                        <label>Pays</label>
-                        <div class="form-group">
-
-                            <select class="form-select " name="pays" aria-label="Default select example" required>
-                                <option value="{{ Auth::user()->pays }}" selected>{{ Auth::user()->pays }}</option>
-                                <option value="Benin">Benin</option>
-                                <option value="Cote d'ivoire ">Cote d'ivoire</option>
-                                <option value="Togo">Togo</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 ml-4">
-                        <label>Ville</label>
-                        <div class="form-group">
-
-                            <select class="form-select " name="ville" aria-label="Default select example" required>
-                                <option value="{{ Auth::user()->ville }}" selected>{{ Auth::user()->ville }}</option>
-                                <option value="Porto">Porto</option>
-                                <option value="Ctn">Ctn</option>
-                                <option value="S○vi">S○vi</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Website</label>
-                        <textarea name="website" class="form-control" required>{{ Auth::user()->website }} </textarea>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>About Yourself</label>
-                        <textarea name="description" class="form-control" required>{{ Auth::user()->description }}</textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="password-section">
-                <h6>Update Password</h6>
+        <div class="container mt-5">
+            <form action="{{ route('admin.dashbord') }}" method="POST">
+                @csrf
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label>New Password</label>
-                            <input type="password" name="new_password" class="form-control" placeholder="Write new password">
+                            <label>Name</label>
+                            <input type="text" name="nom_prenom" class="form-control" value="{{ Auth::user()->nom_prenom }}" required>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label>Repeat Password</label>
-                            <input type="password" name="new_password_confirmation" class="form-control" placeholder="Write same password again">
+                            <label>Pays</label>
+                            <select class="form-select" onchange="countryHasChanged()" id="country" name="pays" aria-label="Default select example" required>
+                                <option value="{{ $userCountryCode }}" selected>{{ $userCountry }}</option>
+                                @foreach ($countries as $country)
+                                <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Ville</label>
+                            <select class="form-select" id="city" name="ville" aria-label="Default select example" required>
+                                <option value="{{ $userCityCode}}" selected>{{$userCity }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Website</label>
+                            <textarea name="website" class="form-control" required>{{ Auth::user()->website }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>About Yourself</label>
+                            <textarea name="description" class="form-control" required>{{ Auth::user()->description }}</textarea>
                         </div>
                     </div>
                 </div>
-            </div>
-            <button type="submit" name="btn_modif" class="btn btn-primary btn-lg mt-2">Submit</button>
-        </form>
+
+                <div class="password-section">
+                    <h6>Update Password</h6>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" name="new_password" class="form-control" placeholder="Write new password">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Repeat Password</label>
+                                <input type="password" name="new_password_confirmation" class="form-control" placeholder="Write same password again">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" name="btn_modif" class="btn btn-primary btn-lg mt-2">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -257,7 +294,48 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 @section('js')
 
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialisation de Select2 sur les champs de sélection
+        $('#country').select2({
+            placeholder: 'Select your country'
+        });
+        $('#city').select2({
+            placeholder: 'Select your city'
+        });
+    });
+
+    function countryHasChanged() {
+        const countrySelect = document.getElementById('country');
+        const citySelect = document.getElementById('city');
+        const countryCode = countrySelect.value;
+
+        if (countryCode) {
+            fetch("{{ route('get-cities') }}?country_code=" + countryCode)
+                .then(response => response.json())
+                .then(data => {
+                    citySelect.innerHTML = ''; // Clear previous options
+                    data.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city.geonameId;
+                        option.textContent = city.name;
+                        citySelect.appendChild(option);
+                    });
+                    $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
+                })
+                .catch(error => {
+                    console.error('Error fetching cities:', error);
+                });
+        } else {
+            citySelect.innerHTML = '<option value="">Select your city</option>';
+            $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
+        }
+    }
+</script>
 
 
 @endsection

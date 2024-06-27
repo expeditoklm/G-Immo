@@ -53,7 +53,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 </div>
 
  <!-- Début Formulaire -->
-<form id="form1" method="POST">
+<form id="form1" method="POST" >
     @csrf
 
     <div class="single-add-property">
@@ -106,13 +106,13 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb">
                         <label for="price">Price</label>
-                        <input type="text" name="prix" placeholder="USD" id="price">
+                        <input type="number" name="prix" placeholder="USD" id="price">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb last">
                         <label for="area">Area</label>
-                        <input type="text" name="surface" placeholder="Sqft" id="area">
+                        <input type="number" name="surface" placeholder="Sqft" id="area">
                     </p>
                 </div>
             </div>
@@ -267,7 +267,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                         <label for="con-phn">Phone</label>
                         <input type="text" placeholder="Enter Your Phone Number" id="con-phn" name="telContact">
                     </p>
-                </div>
+                </div>  
             </div>
         </div>
 
@@ -375,12 +375,12 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 if (data.success) {
                     window.location.href = "{{ route('admin.add-property') }}";
                 } else {
-                    alert('Remplir le titre , le status et le type de la propriété.');
+                    alert('Fin');
                     console.error(data.error);
                 }
             })
             .catch(error => {
-                alert('Remplir le titre , le status et le type de la propriété');
+                alert('Erreur');
                 console.error('Error adding property:', error);
             });
     }

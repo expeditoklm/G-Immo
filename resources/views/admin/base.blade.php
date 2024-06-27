@@ -168,7 +168,16 @@
                         <div class="header-user-menu user-menu">
                             <div class="header-user-name">
                                 @if($user)
-                                <span><img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt=""></span>Hi, {{ $user->nom_prenom }}!
+                                <span>
+                                    @if($user->sexe == 'Feminin' && !$user->profile_img)
+                                    <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+                                    @elseif($user->sexe == 'Masculin' && !$user->profile_img)
+                                    <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
+                                    @else
+                                    <img src="{{ asset($user->profile_img) }}" alt="image">
+                                    @endif
+
+                                </span>Hi, {{ $user->nom_prenom }}!
                             </div>
                             @else
                             <p>User not found.</p>
@@ -179,7 +188,7 @@
                                 <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-pswd' ? 'javascript:void(0)' : route('admin.modif-pswd') }} "> Change Password</a></li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                 <button type="submit" class="btn  btn-danger   text-left "><i class="fas fa-sign-out-alt mr-3"></i>Log Out</button>
+                                    <button type="submit" class="btn  btn-danger   text-left "><i class="fas fa-sign-out-alt mr-3"></i>Log Out</button>
                                 </form>
                             </ul>
                         </div>
@@ -201,13 +210,21 @@
                             <div class="text-center mt-2"><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"> </div>
 
                             @if($user)
-                            <div class="header clearfix">
-                                <img src="{{asset('assets/admin/images/testimonials/ts-1.jpg')}}" alt="avatar" class="img-fluid profile-img">
+                            <div class="user-profile d-block align-items-center ">
+                                <div class="header pb-0">
+                                    @if($user->sexe == 'Feminin' && !$user->profile_img)
+                                    <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image" class="img-fluid rounded-circle m-0 shadow" style="width: 100px; height: 100px; object-fit: cover;">
+                                    @elseif($user->sexe == 'Masculin' && !$user->profile_img)
+                                    <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image" class="img-fluid rounded-circle mb-0 pb-0 shadow" style="width: 100px; height: 100px; object-fit: cover; ">
+                                    @else
+                                    <img src="{{ asset($user->profile_img) }}" alt="image" class="img-fluid rounded-circle shadow" style="width: 100px; height: 100px; object-fit: cover;">
+                                    @endif
+                                </div>
+                                <div class="active-user ml-2">
+                                    <h2 class="mb-0">{{ $user->nom_prenom }}</h2>
+                                </div>
                             </div>
 
-                            <div class="active-user">
-                                <h2>{{ $user->nom_prenom }}</h2>
-                            </div>
                             @else
                             <p>User not found.</p>
                             @endif
@@ -319,6 +336,7 @@
             </div>
         </div>
         <!-- END PRELOADER -->
+         
 
         <!-- ARCHIVES JS -->
         <script src="{{asset('assets/admin/js/jquery-3.5.1.min.js')}}"></script>
@@ -358,45 +376,45 @@
             });
         </script>
 
-        <!-- MAIN JS -->
-        <script src="{{asset('assets/admin/js/script.js')}}"></script>
-
+       
 
         <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var deleteIcons = document.querySelectorAll(".delete-icon");
+            document.addEventListener("DOMContentLoaded", function() {
+                var deleteIcons = document.querySelectorAll(".delete-icon");
 
-        deleteIcons.forEach(function(icon) {
-            icon.addEventListener("click", function(event) {
-                event.preventDefault();
-                var messageId = this.getAttribute('data-id');
-                var modal = document.getElementById("myModal-" + messageId);
-                modal.style.display = "block";
+                deleteIcons.forEach(function(icon) {
+                    icon.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        var messageId = this.getAttribute('data-id');
+                        var modal = document.getElementById("myModal-" + messageId);
+                        modal.style.display = "block";
+                    });
+                });
+
+                var modals = document.querySelectorAll(".modal");
+                modals.forEach(function(modal) {
+                    var span = modal.querySelector(".close");
+                    var cancelBtn = modal.querySelector("#cancel-delete");
+
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+
+                    cancelBtn.onclick = function() {
+                        modal.style.display = "none";
+                    }
+
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                });
             });
-        });
+        </script>
 
-        var modals = document.querySelectorAll(".modal");
-        modals.forEach(function(modal) {
-            var span = modal.querySelector(".close");
-            var cancelBtn = modal.querySelector("#cancel-delete");
-
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            cancelBtn.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        });
-    });
-</script>
-
+ <!-- MAIN JS -->
+ <script src="{{asset('assets/admin/js/script.js')}}"></script>
 
         @yield('js')
 
