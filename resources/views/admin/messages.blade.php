@@ -38,8 +38,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
     <table class="table-responsive">
         <thead>
             <tr>
-                <th>Message</th>
-                <th class="pl-2">Custumer</th>
+                <th>Messages</th>
+                <th class="pl-2">Expéditeur</th>
                 <th>Actions</th>
             </tr>
         </thead>

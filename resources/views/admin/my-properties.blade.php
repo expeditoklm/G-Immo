@@ -39,10 +39,10 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
     <table class="table-responsive">
         <thead>
             <tr>
-                <th class="pl-2">My Properties</th>
+                <th class="pl-2">Mes Propriétés</th>
                 <th class="p-0"></th>
-                <th>Date Added</th>
-                <th>Views</th>
+                <th>Date d'ajout</th>
+                <th>Vues</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -51,7 +51,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             <tr>
                 <td class="image myelist">
                     <a href="#" onclick="document.getElementById('proper{{ $item->id }}').submit(); return false;">
-                        <img alt="my-properties-3" src="{{asset('assets/admin/images/feature-properties/fp-1.jpg')}}" class="img-fluid">
+                        <img alt="my-properties-3" src="{{ asset($item->proprieteImages->first()->url) }}" class="img-fluid">
                     </a>
                 </td>
 

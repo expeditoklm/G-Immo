@@ -42,12 +42,12 @@ row justify-content-center align-items-center
         <div class="row justify-content-center align-items-center">
             <div class="col-xl-6 col-md-12" data-cues="slideInLeft">
                 <div class="main-banner-content">
-                    <span class="sub">Your Pathway to Home Sweet Home.</span>
-                    <h1>More than Property, We Offer Possibilities</h1>
+                    <span class="sub">Votre chemin vers la douceur du foyer.</span>
+                    <h1>Plus qu'une propriété, nous offrons des possibilités.</h1>
                     <div class="search-info-tabs">
                         <ul class="nav nav-tabs" id="search_tab" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" id="sell-tab" data-bs-toggle="tab" href="#sell" role="tab" aria-controls="sell">Sell</a></li>
-                            <li class="nav-item"><a class="nav-link" id="rent-tab" data-bs-toggle="tab" href="#rent" role="tab" aria-controls="rent">Rent</a></li>
+                            <li class="nav-item"><a class="nav-link active" id="sell-tab" data-bs-toggle="tab" href="#sell" role="tab" aria-controls="sell">Vendre</a></li>
+                            <li class="nav-item"><a class="nav-link" id="rent-tab" data-bs-toggle="tab" href="#rent" role="tab" aria-controls="rent">Louer</a></li>
                         </ul>
                         <div class="tab-content" id="search_tab_content">
                             <div class="tab-pane fade show active" id="sell" role="tabpanel">
@@ -57,9 +57,9 @@ row justify-content-center align-items-center
                                     <div class="row justify-content-center align-items-end">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Property type For</label>
+                                                <label>Type de propriété </label>
                                                 <select name="type_propriete_id" class="form-select form-control">
-                                                    <option value="" selected>Property status</option>
+                                                    <option value="" selected>Statut de la propriété</option>
                                                     @foreach ($typeProprieteForSale as $item)
                                                     <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
                                                     @endforeach
@@ -68,9 +68,9 @@ row justify-content-center align-items-center
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Location</label>
+                                                <label>Emplacement</label>
                                                 <select name="ville" class="form-select form-control">
-                                                    <option value="" selected>All cities</option>
+                                                    <option value="" selected>Toutes les villes</option>
                                                     @foreach ($uniqueCities as $item)
 
                                                     <option value="{{ $item->ville}}">{{ $item->ville}}</option>
@@ -82,20 +82,20 @@ row justify-content-center align-items-center
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Your Price</label>
-                                                <input type="number" name="prix" class="form-control" placeholder="Max price">
+                                                <label>Prix</label>
+                                                <input type="number" name="prix" class="form-control" placeholder="Environ combien">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Bedrooms</label>
-                                                <input type="number" name="nbChambre" class="form-control" placeholder="Number of bedrooms">
+                                                <label>Chambres</label>
+                                                <input type="number" name="nbChambre" class="form-control" placeholder="Nombre de chambres">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Rooms</label>
-                                                <input type="number" name="nbPiece" class="form-control" placeholder="Number of rooms">
+                                                <label>Pièces</label>
+                                                <input type="number" name="nbPiece" class="form-control" placeholder="Nombre de pièces">
 
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@ row justify-content-center align-items-center
                                             <div class="form-group">
                                                 <button type="submit" class="default-btn">
                                                     <i class="ri-search-2-line"></i>
-                                                    Search Property
+                                                    Rechercher une propriété
                                                 </button>
                                             </div>
                                         </div>
@@ -117,9 +117,9 @@ row justify-content-center align-items-center
                                     <div class="row justify-content-center align-items-end">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Property type For</label>
+                                                <label>Type de propriété </label>
                                                 <select name="type_propriete_id" class="form-select form-control">
-                                                    <option value="" selected>Property status</option>
+                                                    <option value="" selected>Statut de la propriété</option>
                                                     @foreach ($typeProprieteRental as $item)
                                                     <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
                                                     @endforeach
@@ -128,9 +128,9 @@ row justify-content-center align-items-center
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Location</label>
+                                                <label>Emplacement</label>
                                                 <select name="ville" class="form-select form-control">
-                                                    <option value="" selected>All cities</option>
+                                                    <option value="" selected>Toutes les villes</option>
                                                     @foreach ($uniqueCities as $item)
                                                     <option value="{{ $item->ville}}">{{ $item->ville}}</option>
                                                     @endforeach
@@ -139,20 +139,20 @@ row justify-content-center align-items-center
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Your Price</label>
-                                                <input type="number" name="prix" class="form-control" placeholder="Max price">
+                                                <label>Prix</label>
+                                                <input type="number" name="prix" class="form-control" placeholder="Environ combien">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Bedrooms</label>
-                                                <input type="number" name="nbChambre" class="form-control" placeholder="Number of bedrooms">
+                                                <label>Chambres</label>
+                                                <input type="number" name="nbChambre" class="form-control" placeholder="Nombre de chambres">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
-                                                <label>Rooms</label>
-                                                <input type="number" name="nbPiece" class="form-control" placeholder="Number of rooms">
+                                                <label>Pièces</label>
+                                                <input type="number" name="nbPiece" class="form-control" placeholder="Nombre de pièces">
 
                                             </div>
                                         </div>
@@ -160,7 +160,7 @@ row justify-content-center align-items-center
                                             <div class="form-group">
                                                 <button type="submit" class="default-btn">
                                                     <i class="ri-search-2-line"></i>
-                                                    Search Property
+                                                    Rechercher une propriété
                                                 </button>
                                             </div>
                                         </div>
@@ -211,7 +211,7 @@ row justify-content-center align-items-center
                     <div class="content">
                         <h3>
                             <a href="#" onclick="document.getElementById('post-Residential').submit(); return false;">
-                                Residential
+                            Résidentiel
                             </a>
                         </h3>
 
@@ -222,7 +222,7 @@ row justify-content-center align-items-center
                             <input type="hidden" name="type_propriete_id" value="1">
                         </form>
 
-                        <span>({{ $nbResidential}} Properties)</span>
+                        <span>({{ $nbResidential}} Propriétés)</span>
                     </div>
                 </div>
             </div>
@@ -245,7 +245,7 @@ row justify-content-center align-items-center
                             <input type="hidden" name="type_propriete_id" value="2">
                         </form>
 
-                        <span>({{ $nbCommercial}} Properties)</span>
+                        <span>({{ $nbCommercial}} Propriétés)</span>
                     </div>
                 </div>
             </div>
@@ -257,7 +257,7 @@ row justify-content-center align-items-center
                     <div class="content">
                         <h3>
                             <a href="#" onclick="document.getElementById('post-Farm').submit(); return false;">
-                                Farm/Agricultural estate
+                                Ferme / Domaine agricole
                             </a>
                         </h3>
 
@@ -267,7 +267,7 @@ row justify-content-center align-items-center
                             @csrf
                             <input type="hidden" name="type_propriete_id" value="3">
                         </form>
-                        <span>({{ $nbFarm}} Properties)</span>
+                        <span>({{ $nbFarm}} Propriétés)</span>
                     </div>
                 </div>
             </div>
@@ -279,7 +279,7 @@ row justify-content-center align-items-center
                     <div class="content">
                         <h3>
                             <a href="#" onclick="document.getElementById('post-Land').submit(); return false;">
-                                The Land
+                                Parcelle
                             </a>
                         </h3>
 
@@ -291,7 +291,7 @@ row justify-content-center align-items-center
                         </form>
 
 
-                        <span>({{ $nbLand}} Properties)</span>
+                        <span>({{ $nbLand}} Propriétés)</span>
                     </div>
                 </div>
             </div>
@@ -314,7 +314,7 @@ row justify-content-center align-items-center
                             <input type="hidden" name="type_propriete_id" value="5">
                         </form>
 
-                        <span>({{ $nbDuplex}} Properties)</span>
+                        <span>({{ $nbDuplex}} Propriétés)</span>
                     </div>
                 </div>
             </div>
@@ -326,7 +326,7 @@ row justify-content-center align-items-center
                     <div class="content">
                         <h3>
                             <a href="#" onclick="document.getElementById('post-Office').submit(); return false;">
-                                Office
+                                Bureau / Bâtiment commercial
                             </a>
                         </h3>
 
@@ -339,7 +339,7 @@ row justify-content-center align-items-center
 
 
 
-                        <span>({{ $nbOffice}} Properties)</span>
+                        <span>({{ $nbOffice}} Propriétés)</span>
                     </div>
                 </div>
             </div>
@@ -351,7 +351,7 @@ row justify-content-center align-items-center
                     <div class="content">
                         <h3>
                             <a href="#" onclick="document.getElementById('post-Apartment').submit(); return false;">
-                                Apartment
+                                Appartement
                             </a>
                         </h3>
 
@@ -364,7 +364,7 @@ row justify-content-center align-items-center
 
 
 
-                        <span>({{ $nbApartment}} Properties)</span>
+                        <span>({{ $nbApartment}} Propriétés)</span>
                     </div>
                 </div>
             </div>
@@ -376,7 +376,7 @@ row justify-content-center align-items-center
                     <div class="content">
                         <h3>
                             <a href="#" onclick="document.getElementById('post-Warehouse').submit(); return false;">
-                                Warehouse
+                                Entrepôt
                             </a>
                         </h3>
 
@@ -386,7 +386,7 @@ row justify-content-center align-items-center
                             @csrf
                             <input type="hidden" name="type_propriete_id" value="8">
                         </form>
-                        <span>({{ $nbWarehouse}} Properties)</span>
+                        <span>({{ $nbWarehouse}} Propriétés)</span>
                     </div>
                 </div>
             </div>
@@ -399,16 +399,16 @@ row justify-content-center align-items-center
 <div class="properties-area pb-95">
     <div class="container">
         <div class="section-title text-center" data-cues="slideInUp">
-            <h2>Latest Properties</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et mauris eget ornare venenatis, in. Pharetra iaculis consectetur.</p>
+            <h2>Dernières propriétés</h2>
+            <p>Explorez nos nouvelles arrivées et trouvez votre prochaine propriétés de rêve.</p>
         </div>
         <div class="properties-information-tabs">
             <ul class="nav nav-tabs" id="properties_tab" role="tablist" data-cue="slideInUp">
-                <li class="nav-item"><a class="nav-link active" id="for-sale-tab" data-bs-toggle="tab" href="#for-sale" role="tab" aria-controls="for-sale">For Sale</a></li>
-                <li class="nav-item"><a class="nav-link" id="houses-tab" data-bs-toggle="tab" href="#houses" role="tab" aria-controls="houses">Houses</a></li>
+                <li class="nav-item"><a class="nav-link active" id="for-sale-tab" data-bs-toggle="tab" href="#for-sale" role="tab" aria-controls="for-sale">À vendre</a></li>
+                <li class="nav-item"><a class="nav-link" id="houses-tab" data-bs-toggle="tab" href="#houses" role="tab" aria-controls="houses">Maisons</a></li>
                 <li class="nav-item"><a class="nav-link" id="villas-tab" data-bs-toggle="tab" href="#villas" role="tab" aria-controls="villas">Villas</a></li>
-                <li class="nav-item"><a class="nav-link" id="rental-tab" data-bs-toggle="tab" href="#rental" role="tab" aria-controls="rental">Rental</a></li>
-                <li class="nav-item"><a class="nav-link" id="apartment-tab" data-bs-toggle="tab" href="#apartment" role="tab" aria-controls="apartment">Apartment</a></li>
+                <li class="nav-item"><a class="nav-link" id="rental-tab" data-bs-toggle="tab" href="#rental" role="tab" aria-controls="rental">Location</a></li>
+                <li class="nav-item"><a class="nav-link" id="apartment-tab" data-bs-toggle="tab" href="#apartment" role="tab" aria-controls="apartment">Appartement</a></li>
                 <li class="nav-item"><a class="nav-link" id="condos-tab" data-bs-toggle="tab" href="#condos" role="tab" aria-controls="condos">Parcel</a></li>
                 <li class="nav-item"><a class="nav-link" id="commercial-tab" data-bs-toggle="tab" href="#commercial" role="tab" aria-controls="commercial">Commercial</a></li>
             </ul>
@@ -1603,7 +1603,7 @@ row justify-content-center align-items-center
                         <h3 class="counter">{{ $percentClientSatisfaction}}</h3>
                         <h3 class="text">%</h3>
                     </div>
-                    <p>Our Happy Customers</p>
+                    <p>Taux de satisfaction des clients</p>
                 </div>
             </div>
             <div class="col">
@@ -1611,7 +1611,7 @@ row justify-content-center align-items-center
                     <div class="d-flex align-items-center">
                         <h3 class="counter">{{ $nbCustomer}}</h3>
                     </div>
-                    <p>Clients Satisfaction Rate</p>
+                    <p>Nombre de partenaire</p>
                 </div>
             </div>
 
@@ -1620,7 +1620,7 @@ row justify-content-center align-items-center
                     <div class="d-flex align-items-center">
                         <h3 class="counter">{{ $nbPropertyForSale}}</h3>
                     </div>
-                    <p>Total Property Sale</p>
+                    <p>Total de propriétés à vendre</p>
                 </div>
             </div>
             <div class="col">
@@ -1628,7 +1628,7 @@ row justify-content-center align-items-center
                     <div class="d-flex align-items-center">
                         <h3 class="counter">{{ $nbPropertyRental}}</h3>
                     </div>
-                    <p>Total Property Rental</p>
+                    <p>Total de propriétés à louer</p>
                 </div>
             </div>
         </div>
@@ -1636,12 +1636,12 @@ row justify-content-center align-items-center
 </div>
 <!-- End Fun Facts Area -->
 @if($propertiesHigh->isNotEmpty())
-<!-- Start Featured Properties Area -->
+<!-- Start Propriétés haut de gamme Area -->
 <div class="featured-properties-area ptb-120">
     <div class="container">
         <div class="section-title text-center" data-cues="slideInUp">
-            <h2>Featured Properties</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et mauris eget ornare venenatis, in. Pharetra iaculis consectetur.</p>
+            <h2>Propriétés haut de gamme</h2>
+            <p>Découvrez l'excellence et le raffinement dans chaque détail de nos propriétés haut de gamme.</p>
         </div>
     </div>
     <div class="container-fluid">
@@ -1785,8 +1785,8 @@ row justify-content-center align-items-center
 <div class="properties-area pt-120 pb-95">
     <div class="container">
         <div class="section-title text-center" data-cues="slideInUp">
-            <h2>Properties For Sale</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et mauris eget ornare venenatis, in. Pharetra iaculis consectetur.</p>
+            <h2>Propriétés à vendre</h2>
+            <p>Découvrez nos opportunités immobilières exceptionnelles et trouvez votre prochaine maison.</p>
         </div>
         <div class="row justify-content-center" data-cues="slideInUp">
             @foreach ($propertiesForSale as $item)

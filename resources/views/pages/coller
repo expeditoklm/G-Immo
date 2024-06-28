@@ -1396,31 +1396,33 @@ top-header-inner
 
 
 
+function submitForm() {
+        var form = document.getElementById('form1');
 
-<div class="d-flex" style="justify-content: space-between;">
-                    <div class="col-sm-6 ">
-                        <label>Pays</label>
-                        <div class="form-group">
+        var formData = new FormData(form);
 
-                            <select class="form-select" onchange="countryHasChanged()" id="country"  name="pays" aria-label="Default select example" required>
-                                <option value="{{ Auth::user()->pays }}" selected>{{ Auth::user()->pays }}</option>
-                                @foreach ($countries as $country)
-                                <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+        formData.append('uploadedImageUrls', JSON.stringify(uploadedImageUrls));
+        console.log('stringify:', JSON.stringify(uploadedImageUrls));
 
-                    <div class="col-sm-6 ml-4">
-                        <label>Ville</label>
-                        <div class="form-group">
-
-                            <select class="form-select " id="city" name="ville" aria-label="Default  example" required>
-                                <option value="{{ Auth::user()->ville }}" selected>{{ Auth::user()->ville }}</option>
-                                <option value="Porto">Porto</option>
-                                <option value="Ctn">Ctn</option>
-                                <option value="S○vi">S○vi</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+        fetch("{{ route('modif-property-post') }}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            })  
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+                if (data.success) {
+                    window.location.href = "{{ route('admin.my-properties') }}";
+                } else {
+                    alert('Remplir le titre , le status et le type de la propriété.');
+                    console.error(data.error);
+                }
+            })
+            .catch(error => {
+                alert('Remplir le titre , le status et le type de la propriété');
+                console.error('Error adding property:', error);
+            });
+    }

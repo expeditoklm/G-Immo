@@ -33,7 +33,7 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
 @section('content')
 
 <div class="widget-boxed-header">
-    <h4>Profile Details</h4>
+    <h4>Details de mon profile</h4>
 </div>
 <div class="sidebar-widget author-widget2">
     <div class="author-box clearfix">
@@ -59,14 +59,14 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
     </ul>
 
     <div class="agent-contact-form-sidebar">
-        <h4>Request Inquiry</h4>
+        <h4>Soumettre une Demande</h4>
         <form name="contact_form" action="{{ route('pages.contacts-us-post') }}" method="POST">
             @csrf
-            <input type="text" id="fname" name="nom_prenom" placeholder="Full Name" required />
-            <input type="number" id="pnumber" name="telephone" placeholder="Phone Number" required />
-            <input type="email" id="emailid" name="email" placeholder="Email Address" required />
+            <input type="text" id="fname" name="nom_prenom" placeholder="Nom complet" required />
+            <input type="number" id="pnumber" name="telephone" placeholder="Numéro de téléphone" required />
+            <input type="email" id="emailid" name="email" placeholder="Adresse e-mail" required />
             <textarea placeholder="Message" name="message" required></textarea>
-            <input type="submit" name="btn_msg4" class="multiple-send-message" value="Submit Request" />
+            <input type="submit" name="btn_msg4" class="multiple-send-message" value="Soumettre votre demande" />
         </form>
     </div>
 </div>

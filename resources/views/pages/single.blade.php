@@ -60,12 +60,12 @@ top-header-inner
     <div class="container">
         @include('admin.success_error')
         <div class="page-banner-content">
-            <h2>Property Details</h2>
+            <h2>Détails de la propriété</h2>
             <ul class="list">
                 <li>
-                    <a href="{{ route('pages.acceuil') }}">Home</a>
+                    <a href="{{ route('pages.acceuil') }}">Acceuil</a>
                 </li>
-                <li>Single Property</li>
+                <li>Détails de la propriété</li>
             </ul>
         </div>
     </div>
@@ -93,7 +93,7 @@ top-header-inner
                                         <div class="icon">
                                             <img src="{{ asset('assets/images/property-details/bed.svg') }}" alt="bed">
                                         </div>
-                                        <span>{{ $propertiesSingle->nbChambre }} Bedroom</span>
+                                        <span>{{ $propertiesSingle->nbChambre }} Chambre</span>
                                     </li>
                                     @endif
 
@@ -102,7 +102,7 @@ top-header-inner
                                         <div class="icon">
                                             <img src="{{ asset('assets/images/property-details/bathroom.svg') }}" alt="bathroom">
                                         </div>
-                                        <span>{{ $propertiesSingle->nbToillete }} Bathroom</span>
+                                        <span>{{ $propertiesSingle->nbToillete }} Salle de bains</span>
                                     </li>
                                     @endif
 
@@ -253,7 +253,7 @@ top-header-inner
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12">
                             <div class="description">
-                                <h3>Property Description</h3>
+                                <h3>Description de la Propriété</h3>
                                 @isset($propertiesSingle->description)
                                 <p>{{ $propertiesSingle->description }}</p>
                                 @else
@@ -263,7 +263,7 @@ top-header-inner
 
 
                             <div class="features">
-                                <h3>Facts And Features</h3>
+                                <h3>Les caracteristiques de la Propriété</h3>
                                 <div class="row justify-content-center">
 
                                     @if ($propertiesSingle->caracteristiques->isEmpty())
@@ -383,39 +383,39 @@ top-header-inner
 
                                     <input type="hidden" name="id" value="{{ $propertiesSingle->id}}">
                                     <div class="form-group">
-                                        <label>Name</label>
-                                        <input type="text" name="nom_prenom" placeholder="Your name" class="form-control">
+                                        <label>Nom et Prénom</label>
+                                        <input type="text" name="nom_prenom" placeholder="Votre nom" class="form-control">
                                         <div class="icon">
                                             <i class="ri-user-3-line"></i>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="text" name="email" placeholder="Your email" class="form-control">
+                                        <label>E-mail</label>
+                                        <input type="text" name="email" placeholder="Votre e-mail" class="form-control">
                                         <div class="icon">
                                             <i class="ri-mail-send-line"></i>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Phone No.</label>
-                                        <input type="text" name="telephone" placeholder="+12345678" class="form-control">
+                                        <label>No. Téléphone</label>
+                                        <input type="text" name="telephone" placeholder="+22997456780" class="form-control">
                                         <div class="icon">
                                             <i class="ri-phone-line"></i>
                                         </div>
                                     </div>
                                     <div class="form-group extra-top">
                                         <label>Description</label>
-                                        <textarea class="form-control" name="message" placeholder="I'm interested in this property......." rows="5"></textarea>
+                                        <textarea class="form-control" name="message" placeholder="Je suis intéressé par cette propriété......." rows="5"></textarea>
                                         <div class="icon">
                                             <i class="ri-pencil-line"></i>
                                         </div>
                                     </div>
-                                    <button type="submit" name="btn_msg3" class="default-btn">Submit Request</button>
+                                    <button type="submit" name="btn_msg3" class="default-btn">Soumettre votre demande</button>
                                 </form>
                             </div>
                             <div class="featured-properties">
                                 @if($similarProperties->isNotEmpty())
-                                <h3>Featured Properties</h3>
+                                <h3>Propriétés Similaires</h3>
                                 @endif
                                 <div class="swiper featured-properties-slider">
                                     <div class="swiper-wrapper">
@@ -587,24 +587,39 @@ top-header-inner
                                     <div class="properties-pagination"></div>
                                 </div>
                             </div>
-                            <div class="contact-details">
-                                <h3>Contact Details</h3>
-                                <ul class="list">
-                                    <li>
-                                        <span>Email:</span>
-                                        <a href="mailto:{{$proprietaire->email}}">{{$proprietaire->email}}</a>
-                                    </li>
-                                    <li>
-                                        <span>Phone:</span>
-                                        <a href="tel:{{$proprietaire->telephone}}">{{$proprietaire->telephone}}</a>
-                                    </li>
-                                    <li>
-                                        <span>Location:</span>
-                                        {{ $proprietaire->pays}} , {{ $proprietaire->ville}}
-                                    </li>
-                                </ul>
+                            @isset($propertiesSingle->emailContact, $propertiesSingle->telContact)
+    <div class="contact-details">
+        <h3>Contact supplémentaire</h3>
+        <ul class="list">
+            @php
+                // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                $userCountryCode = $proprietaire->pays;
+                $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
 
-                            </div>
+                // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                $userCityCode = $proprietaire->ville;
+                $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+            @endphp
+            <li>
+                <span>Email:</span>
+                <a href="mailto:{{$proprietaire->email}}">{{$propertiesSingle->emailContact}}</a>
+            </li>
+            <li>
+                <span>Phone:</span>
+                <a href="tel:{{$proprietaire->telephone}}">{{$propertiesSingle->telContact}}</a>
+            </li>
+            <li>
+                <span>Location:</span>
+                {{ $userCountry }} , {{ $userCity }}
+            </li>
+        </ul>
+    </div>
+@else
+    <div class="alert alert-danger text-center">
+        L'email de contact ou le téléphone de contact est manquant.
+    </div>
+@endisset
+
                         </div>
                     </div>
                 </div>
@@ -612,20 +627,19 @@ top-header-inner
         </div>
     </div>
 </div>
-</div>
-<!-- End Property Details Area -->
+<!-- End Détails de la propriété Area -->
 
 <!-- Start Subscribe Area -->
 <div class="subscribe-wrap-area">
     <div class="container" data-cues="slideInUp">
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
-                <h2>Subscribe To Our Newsletter</h2>
+                <h2>Abonnez-vous à notre Newsletter</h2>
                 <form class="subscribe-form" action="{{ route('pages.single') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{$id}}">
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
-                    <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
+                    <input type="email" name="email" class="form-control" placeholder="Entrez votre adresse e-mail">
+                    <button type="submit" name="btn_newslater" class="default-btn">Abonnez-vous</button>
                 </form>
             </div>
         </div>

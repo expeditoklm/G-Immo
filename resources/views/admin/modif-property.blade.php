@@ -232,38 +232,41 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     @csrf
 
     <div class="single-add-property">
-        <h3>Property description and price</h3>
+        <h3>Description de la propriété et prix</h3>
         <div class="property-form-group">
             <input type="hidden" name="id" value="{{$properties->id}}">
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <label for="title">Property Title</label>
-                        <input type="text" name="titre" id="title" value="{{$properties->titre}}" required>
+                        <label for="title">Titre de la propriété</label>
+                        <input type="text" name="titre" placeholder="Entrez le titre de votre propriété" id="title" value="{{$properties->titre}}" required>
                     </p>
                 </div>
             </div>
+            <input type="hidden" id="idProperty" value="{{$properties->id}}">
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <label for="description">Property Description</label>
-                        <textarea id="description" name="description" value="">{{$properties->description}}</textarea>
+                        <label for="description">Description de la propriété</label>
+                        <textarea id="description" name="description"  placeholder="Décrivez votre propriété" value="">{{$properties->description}}</textarea>
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
+                        <label for="status">Status <span class="text-danger">*</span></label>
                         <select name="status" class="form-control wide" required>
                             <option value="{{$properties->status}}"  selected>{{$properties->status}}</option>
-                            <option value="Rental">Rent</option>
-                            <option value="For Sale">Sale</option>
+                            <option value="Rental">Louer</option>
+                            <option value="For Sale">Vendre</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
+                        <label for="propriete">Type de Propriété <span class="text-danger">*</span></label>
                         <select name="type_propriete_id" class="form-control wide" required>
                             <option value="{{$properties->typePropriete->id}}"  selected>{{$properties->typePropriete->libelle}}</option>
                             @foreach ($typeProprietes as $item)
@@ -278,14 +281,14 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb">
-                        <label for="price">Price</label>
-                        <input type="text" name="prix" value="{{$properties->prix}}" id="price">
+                        <label for="price">Prix</label>
+                        <input type="text" name="prix" placeholder="XOF" value="{{$properties->prix}}" id="price">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb last">
-                        <label for="area">Area</label>
-                        <input type="text" name="surface" value="{{$properties->surface}}" id="area">
+                        <label for="area">Surface</label>
+                        <input type="text" placeholder="Surface en m2" name="surface" value="{{$properties->surface}}" id="area">
                     </p>
                 </div>
             </div>
@@ -295,13 +298,13 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
 
     <div class="single-add-property">
-        <h3>Property Location</h3>
+        <h3>Emplacement de la propriété</h3>
         <div class="property-form-group">
             <div class="row">
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="address">Pays</label>
+                        <label for="address">Pays<span class="text-danger">*</span></label>
 
                         <select name="pays" class="form-control wide">
                             <option value="{{$properties->pays}}"  selected>{{$properties->pays}}</option>
@@ -314,7 +317,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="address">Ville</label>
+                        <label for="address">Ville <span class="text-danger">*</span></label>
 
                         <select name="ville" class="form-control wide">
                             <option value="{{$properties->ville}}" selected>{{$properties->ville}}</option>
@@ -330,7 +333,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p>
-                        <label for="country">Quartier</label>
+                        <label for="country">Quartier <span class="text-danger">*</span></label>
                         <input type="text" name="quartier" value="{{$properties->quartier}}" placeholder="Enter Your qut" id="country">
                     </p>
                 </div>
@@ -385,7 +388,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     </div>
 
     <div class="single-add-property">
-    <h3>Property Features</h3>
+    <h3>Caracteristiques de la propriétés</h3>
     <div class="property-form-group">
         <div class="row">
             <div class="col-md-12">
@@ -415,33 +418,33 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
 
     <div class="single-add-property">
-        <h3>Contact Information</h3>
+        <h3>Information sur un Contact</h3>
         <div class="property-form-group">
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p>
-                        <label for="con-name">Name</label>
-                        <input type="text" placeholder="Enter Your Name" id="con-name" value="{{$properties->nomContact}}" name="nomContact">
+                        <label for="con-name">Nom</label>
+                        <input type="text" placeholder="Entrer le Nom du Contact" id="con-name" value="{{$properties->nomContact}}" name="nomContact">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p>
-                        <label for="con-user">Username</label>
-                        <input type="text" placeholder="Enter Your Username" value="{{$properties->prenomContact}}" id="con-user" name="prenomContact">
+                        <label for="con-user">Prénom</label>
+                        <input type="text" placeholder="Entrer le Prénom du Contact" value="{{$properties->prenomContact}}" id="con-user" name="prenomContact">
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb first">
-                        <label for="con-email">Email</label>
-                        <input type="email" placeholder="Enter Your Email" value="{{$properties->emailContact}}" id="con-email" name="emailContact">
+                        <label for="con-email">E-mail</label>
+                        <input type="email" placeholder="Entrer l'E-mail du Contact" value="{{$properties->emailContact}}" id="con-email" name="emailContact">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb last">
-                        <label for="con-phn">Phone</label>
-                        <input type="text" placeholder="Enter Your Phone Number" id="con-phn" value="{{$properties->telContact}}" name="telContact">
+                        <label for="con-phn">Télephone</label>
+                        <input type="text" placeholder="Entrer le Number Télephone du Contact" id="con-phn" value="{{$properties->telContact}}" name="telContact">
                     </p>
                 </div>
             </div>
@@ -454,8 +457,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-md-12">
                     <div class="prperty-submit-button">
-                        <button type="button" onclick="submitForm()" name="btn_submit">Submit Property</button>
-                    </div>
+                    <button type="button" id="btn_submit" onclick="submitForm()" name="btn_submit">Mettre à jour la Propriété</button>
+                </div>
                 </div>
             </div>
         </div>
@@ -599,36 +602,84 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    function submitForm() {
-        var form = document.getElementById('form1');
+    
 
-        var formData = new FormData(form);
 
-        formData.append('uploadedImageUrls', JSON.stringify(uploadedImageUrls));
-        console.log('stringify:', JSON.stringify(uploadedImageUrls));
 
-        fetch("{{ route('modif-property-post') }}", {
+
+
+
+
+
+
+// Liste pour stocker les URL des images téléchargées
+
+
+function submitForm() {
+            event.preventDefault(); // Empêche la soumission du formulaire initiale
+
+            var form = document.getElementById('form1');
+            var idProperty = document.getElementById('idProperty').value;
+            var formData = new FormData(form);
+
+            formData.append('uploadedImageUrls', JSON.stringify(uploadedImageUrls));
+            console.log('stringify:', JSON.stringify(uploadedImageUrls));
+
+            if (uploadedImageUrls.length === 0) {
+                // Requête AJAX pour vérifier les images existantes
+                $.ajax({
+                    url: '/check-image/' + idProperty,
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.hasImage) {
+                            //alert('L\'image existe déjà.');
+                            proceedWithFormSubmission(formData);
+                        } else {
+                            alert('Vous devez soumettre au moins une image obligatoirement.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Échec de la vérification des images.');
+                        console.error('Erreur:', error);
+                    }
+                });
+            } else {
+                // Procéder directement à la soumission du formulaire
+                proceedWithFormSubmission(formData);
+            }
+        }
+
+        function proceedWithFormSubmission(formData) {
+            fetch("{{ route('modif-property-post') }}", {
                 method: 'POST',
                 body: formData,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }
-            })  
-            .then(response => response.json())
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log('Server response:', data);
                 if (data.success) {
                     window.location.href = "{{ route('admin.my-properties') }}";
                 } else {
-                    alert('Remplir le titre , le status et le type de la propriété.');
-                    console.error(data.error);
+                    alert("Les champs dont les labels portent une étoile rouge sont obligatoires.");
+                    console.error('Server error:', data.error);
                 }
             })
             .catch(error => {
-                alert('Remplir le titre , le status et le type de la propriété');
+                alert('Erreur lors de l\'ajout de la propriété.');
                 console.error('Error adding property:', error);
             });
-    }
+        }
+
+
+
 </script>
 
 @endsection

@@ -81,7 +81,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 <div class="dashborad-box stat bg-white">
 
-    <h4 class="title">Manage Dashboard</h4>
+    <h4 class="title">Gérer votre tableau de bord</h4>
     <div class="section-body">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-xs-12 dar pro mr-3">
@@ -91,7 +91,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                     <div class="info">
                         <h6 class="number">{{ $nbProperties}}</h6>
-                        <p class="type ml-1">Published Property</p>
+                        <p class="type ml-1">Propriétés Publiées</p>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                     <div class="info">
                         <h6 class="number">{{ $nbReviews}}</h6>
-                        <p class="type ml-1">Total Reviews</p>
+                        <p class="type ml-1">Total des commentaires</p>
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     </div>
                     <div class="info">
                         <h6 class="number">{{ $nbMessages}}</h6>
-                        <p class="type ml-1">Messages</p>
+                        <p class="type ml-1">Total des messages</p>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 </div>
 @if($messages->isNotEmpty())
 <div class="dashborad-box">
-    <h4 class="title">Message</h4>
+    <h4 class="title">Messages</h4>
     <div class="section-body">
         <div class="messages">
 
@@ -163,7 +163,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 @endif
 @if($reviews->isNotEmpty())
 <div class="dashborad-box">
-    <h4 class="title">Review</h4>
+    <h4 class="title">Commentaires</h4>
     <div class="section-body">
         <div class="messages">
 
@@ -218,7 +218,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 </div>
 @endif
 <div class="dashborad-box mb-0">
-    <h4 class="heading pt-0">Personal Information</h4>
+    <h4 class="heading pt-0">Information Personalle</h4>
     <div class="section-inforamation">
         <div class="container mt-5">
             <form action="{{ route('admin.dashbord') }}" method="POST">
@@ -226,8 +226,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" name="nom_prenom" class="form-control" value="{{ Auth::user()->nom_prenom }}" required>
+                            <label>Nom et Prénom</label>
+                            <input type="text" placeholder="Votre Nom et Prénom" name="nom_prenom" class="form-control" value="{{ Auth::user()->nom_prenom }}" required>
                         </div>
                     </div>
 
@@ -254,36 +254,36 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Website</label>
-                            <textarea name="website" class="form-control" required>{{ Auth::user()->website }}</textarea>
+                            <label>Site Web</label>
+                            <textarea name="website" placeholder="Votre site web" class="form-control" >{{ Auth::user()->website }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>About Yourself</label>
-                            <textarea name="description" class="form-control" required>{{ Auth::user()->description }}</textarea>
+                            <label>À propos de vous</label>
+                            <textarea name="description" placeholder="À propos de vous" class="form-control" >{{ Auth::user()->description }}</textarea>
                         </div>
                     </div>
                 </div>
 
                 <div class="password-section">
-                    <h6>Update Password</h6>
+                    <h6>Mettre à jour le mot de passe</h6>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>New Password</label>
-                                <input type="password" name="new_password" class="form-control" placeholder="Write new password">
+                                <label>Nouveau mot de passe</label>
+                                <input type="password" name="new_password" class="form-control" placeholder="Veuillez écrire le nouveau mot de passe">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Repeat Password</label>
-                                <input type="password" name="new_password_confirmation" class="form-control" placeholder="Write same password again">
+                                <label>Répétez le mot de passe</label>
+                                <input type="password" name="new_password_confirmation" class="form-control" placeholder="Veuillez réécrire le même mot de passe.">
                             </div>
                         </div>
                     </div>
                 </div>
-                <button type="submit" name="btn_modif" class="btn btn-primary btn-lg mt-2">Submit</button>
+                <button type="submit" name="btn_modif" class="btn btn-primary btn-lg mt-2">Soumettre</button>
             </form>
         </div>
     </div>

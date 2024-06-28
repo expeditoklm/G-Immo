@@ -153,7 +153,7 @@
                             <!-- Main Navigation -->
                             <nav id="navigation" class="style-1">
                                 <ul id="responsive">
-                                    <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} " class="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">Home</a></li>
+                                    <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} " class="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">Acceuil</a></li>
                                 </ul>
                             </nav>
                             <div class="clearfix"></div>
@@ -177,18 +177,18 @@
                                     <img src="{{ asset($user->profile_img) }}" alt="image">
                                     @endif
 
-                                </span>Hi, {{ $user->nom_prenom }}!
+                                </span>Salut, {{ $user->nom_prenom }}!
                             </div>
                             @else
-                            <p>User not found.</p>
+                            <p>Utilisateur non trouvé.</p>
                             @endif
                             <ul>
-                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-user-profile' ? 'javascript:void(0)' : route('admin.modif-user-profile') }} "> Edit profile</a></li>
-                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Add Property</a></li>
-                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-pswd' ? 'javascript:void(0)' : route('admin.modif-pswd') }} "> Change Password</a></li>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-user-profile' ? 'javascript:void(0)' : route('admin.modif-user-profile') }} "> Modifier le profil</a></li>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Ajouter une propriété</a></li>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-pswd' ? 'javascript:void(0)' : route('admin.modif-pswd') }} ">Changer votre mot de passe</a></li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn  btn-danger   text-left "><i class="fas fa-sign-out-alt mr-3"></i>Log Out</button>
+                                    <button type="submit" class="btn  btn-danger   text-left "><i class="fas fa-sign-out-alt mr-3"></i>Déconnection</button>
                                 </form>
                             </ul>
                         </div>
@@ -232,12 +232,12 @@
                                 <ul class="mb-0">
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}">
-                                            <i class="fa fa-map-marker"></i> Dashboard
+                                            <i class="fa fa-map-marker"></i> Tableau de Bord
                                         </a>
                                     </li>
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
-                                            <i class="fa fa-list" aria-hidden="true"></i>My Properties
+                                            <i class="fa fa-list" aria-hidden="true"></i>Mes Propriétés
                                         </a>
                                     </li>
                                     <li>
@@ -249,7 +249,7 @@
 
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
-                                            <i class="fa fa-list" aria-hidden="true"></i>Add Property
+                                            <i class="fa fa-list" aria-hidden="true"></i>Ajouter une propriété
                                         </a>
                                     </li>
                                     <li>
@@ -259,7 +259,7 @@
                                     </li>
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
-                                            <i class="fas fa-paste"></i>Reviews
+                                            <i class="fas fa-paste"></i>Commentaires
                                         </a>
                                     </li>
 

@@ -125,7 +125,7 @@
             </a>
             <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
                 @csrf
-                <input type="search" name="ttr_cra_dsc_sta_p_v_q_typ_us" class="search-field" placeholder="Search property">
+                <input type="search" name="ttr_cra_dsc_sta_p_v_q_typ_us" class="search-field" placeholder="Rechercher une propriété">
                 <button type="submit">
                     <i class="ri-search-line"></i>
                 </button>
@@ -141,21 +141,20 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}" class=" nav-link {{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}">
-                            Home
-
+                        Accueil
                         </a>
 
                     </li>
 
                     <li class="nav-item">
                         <a href="{{ request()->route() && request()->route()->getName() == 'pages.search' ? 'javascript:void(0)' : route('pages.search') }}" class=" nav-link {{ request()->route() && request()->route()->getName() == 'pages.search' ? 'active' : '' }}">
-                            Property
+                        Propriétés
                         </a>
 
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}" class="nav-link {{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'active' : '' }}">Contact Us</a>
+                        <a href="{{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}" class="nav-link {{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'active' : '' }}">Contactez-nous</a>
                     </li>
                 </ul>
                 <div class="others-option d-flex align-items-center">
@@ -164,7 +163,7 @@
                         <div class="user-info">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link" onclick="document.getElementById('deconnection').submit(); return false;">Deconnexion</a>
+                                    <a href="#" class="nav-link" onclick="document.getElementById('deconnection').submit(); return false;">Déconnexion</a>
                                 </li>
                             </ul>
                         </div>
@@ -177,7 +176,7 @@
                         <div class="user-info">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a href="{{ route('pages.account') }}" class="nav-link {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}">Log In / Register</a>
+                                    <a href="{{ route('pages.account') }}" class="nav-link {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}">Se connecter / S'inscrire</a>
                                 </li>
                             </ul>
                         </div>
@@ -215,27 +214,27 @@
 
                 <div class="accordion-item">
                     <a class="accordion-button without-icon {{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }}">
-                        Home
+                       Accueil
                     </a>
                 </div>
 
                 <div class="accordion-item">
                     <a class="accordion-button without-icon {{ request()->route() && request()->route()->getName() == 'pages.search' || request()->route() && request()->route()->getName() == 'pages.search-post' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'pages.search' ? 'javascript:void(0)' : route('pages.search') }}">
-                        Property
+                        Propriétés
                     </a>
                 </div>
 
 
                 <div class="accordion-item ">
                     <a class="accordion-button without-icon {{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}">
-                        Contact Us
+                    Contactez-nous
                     </a>
                 </div>
             </div>
             <div class="others-option">
 
                 <div class="option-item nav-item">
-                    <a href="{{ request()->route() && request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="default-btn {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}" style="margin-right: 70px; margin-bottom: 10px;">Log In / Register</a>
+                    <a href="{{ request()->route() && request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="default-btn {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}" style="margin-right: 70px; margin-bottom: 10px;">Se connecter / S'inscrire</a>
                     @auth
                     <a href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
                     @endauth
@@ -243,7 +242,7 @@
                 <div class="option-item">
                     <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
                         @csrf
-                        <input type="search" name="ttr_cra_dsc_sta_p_v_q_typ_us" class="search-field" placeholder="Search property">
+                        <input type="search" name="ttr_cra_dsc_sta_p_v_q_typ_us" class="search-field" placeholder="Rechercher une propriété">
                         <button type="submit">
                             <i class="ri-search-line"></i>
                         </button>

@@ -39,12 +39,12 @@ top-header-inner
     <div class="container">
         @include('admin.success_error')
         <div class="page-banner-content">
-            <h2>Agent Profile</h2>
+            <h2>Profil du Proprietaire / Démarcheur</h2>
             <ul class="list">
                 <li>
-                    <a href="{{ route('pages.acceuil') }}">Home</a>
+                    <a href="{{ route('pages.acceuil') }}">Acceuil</a>
                 </li>
-                <li>Agent Profile</li>
+                <li>Profil du Proprietaire / Démarcheur</li>
             </ul>
 
         </div>
@@ -52,7 +52,7 @@ top-header-inner
 </div>
 <!-- End Page Banner Area -->
 
-<!-- Start Agent Profile Area -->
+<!-- Start Profil du Proprietaire / Démarcheur Area -->
 <div class="agent-profile-area pt-120 pb-120">
     <div class="container">
         <div class="row justify-content-center align-items-center" data-cues="slideInUp">
@@ -79,13 +79,13 @@ top-header-inner
                             <ul class="info-list">
                                 @isset($agent->email)
                                 <li>
-                                    <span>Email:</span>
+                                    <span>E-mail:</span>
                                     <a href="mailto:{{ $agent->email}}"><span class="__cf_email__">{{ $agent->email}}</span></a>
                                 </li>
                                 @endisset
                                 @isset($agent->telephone)
                                 <li>
-                                    <span>Phone:</span>
+                                    <span>Télephone:</span>
                                     <a href="tel:{{ $agent->telephone}}">{{ $agent->telephone}}</a>
                                 </li>
                                 @endisset
@@ -95,13 +95,13 @@ top-header-inner
                             <ul class="info-list">
                                 @isset($agent->website)
                                 <li>
-                                    <span>Website:</span>
+                                    <span>Site Web:</span>
                                     <a href="https:{{ $agent->website}}" target="_blank">{{ $agent->website}}</a>
                                 </li>
                                 @endisset
                                 @isset($agent->pays)
                                 <li>
-                                    <span>Address:</span>
+                                    <span>Addresse:</span>
                                     {{ $agent->pays}}, {{ $agent->ville}}
                                 </li>
                                 @endisset
@@ -130,9 +130,9 @@ top-header-inner
             <div class="col-lg-8 col-md-12">
                 <div class="agent-profile-information-tabs">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" id="property-tab" data-bs-toggle="tab" href="#property" role="tab" aria-controls="property">Property</a></li>
+                        <li class="nav-item"><a class="nav-link active" id="property-tab" data-bs-toggle="tab" href="#property" role="tab" aria-controls="property">Mes Propriétés</a></li>
                         @if($commentaires->count() != 0)
-                        <li class="nav-item"><a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Reviews</a></li>
+                        <li class="nav-item"><a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Commentaires</a></li>
                         @endif
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -301,7 +301,7 @@ top-header-inner
                         <div class="tab-pane fade" id="reviews" role="tabpanel">
                             <div class="comments-content">
                                 @if($commentaires->count() != 0)
-                                <h2>{{ $commentaires->count() }} Comments</h2>
+                                <h2>{{ $commentaires->count() }} Commentaires</h2>
                                 @endif
                                 <ul class="comments-list">
                                     @foreach ($commentaires as $item)
@@ -346,21 +346,21 @@ top-header-inner
                 @csrf
 
                 <input type="hidden" name="id" value="{{ $agent->id}}">
-                <h3>Contact Me</h3>
+                <h3>Contactez-moi</h3>
                 <div class="form-group">
-                    <input type="text" name="nom_prenom" class="form-control" placeholder="Enter your name">
+                    <input type="text" name="nom_prenom" class="form-control" placeholder="Entrer votre nom et prénom">
                 </div>
                 <div class="form-group">
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
+                    <input type="email" name="email" class="form-control" placeholder="Entrer votre e-mail">
                 </div>
                 <div class="form-group">
-                    <input type="number" name="telephone" class="form-control" placeholder="Enter your number">
+                    <input type="number" name="telephone" class="form-control" placeholder="Entrer votre télephone">
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" name="message" placeholder="Your message"></textarea>
+                    <textarea class="form-control" name="message" placeholder="Votre message"></textarea>
                 </div>
                 <button type="submit" name="btn_msg" class="default-btn">
-                    Submit Request
+                    Soumettre la demande
                 </button>
             </form>
         </div>
@@ -376,12 +376,12 @@ top-header-inner
     <div class="container" data-cues="slideInUp">
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
-                <h2>Subscribe To Our Newsletter</h2>
+                <h2>Abonnez-vous à notre Newsletter</h2>
                 <form class="subscribe-form" action="{{ route('pages.agent') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{ $agent->id}}">
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
-                    <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
+                    <input type="email" name="email" class="form-control" placeholder="Entrez votre adresse e-mail">
+                    <button type="submit" name="btn_newslater" class="default-btn">Abonnez-vous</button>
                 </form>
             </div>
         </div>

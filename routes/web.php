@@ -41,6 +41,8 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::get('/get-cities', [PagesController::class, 'getCities'])->name('get-cities');
     Route::post('/get-cities', [PagesController::class, 'getCities'])->name('get-cities');
     Route::post('/change-password', [PagesController::class, 'changePassword'])->name('change-password');
+    Route::get('/check-image/{idProperty}', [PagesController::class, 'checkImage']);
+
     FacadesAuth::routes();
 });
 

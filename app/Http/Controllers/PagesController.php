@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 class PagesController extends Controller
@@ -390,7 +391,7 @@ class PagesController extends Controller
             if (!$propertiesSingle) {
                 throw new \Exception('Property not found');
             }
-
+           
             $proprietaire = $propertiesSingle->user;
             $propertiesSingle->vue = $propertiesSingle->vue + 1;
             $propertiesSingle->save();
@@ -412,7 +413,9 @@ class PagesController extends Controller
                 ->where('id', '!=', $id)
                 ->take(2)
                 ->where('deleted', 0)->get();
-
+                $client = new Client(); // Créez une nouvelle instance de Client
+                $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+            
             //enregistrement dun message 
             if ($request->has('btn_msg3')) {
                 Message::create([
@@ -442,7 +445,7 @@ class PagesController extends Controller
                 ])->with('success', 'E-mail sent successfully.');
             }
 
-            return view('pages/single', compact('id', 'proprietaire', 'propertiesSingle', 'similarProperties'));
+            return view('pages/single', compact('geoNamesService','id', 'proprietaire', 'propertiesSingle', 'similarProperties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -806,6 +809,10 @@ class PagesController extends Controller
     public function addProperty()
     {
         try {
+            // if (session()->has('message')) {
+            //     dd(session('message'));
+            //     //echo '<div class="alert alert-' . session('message_type', 'info') . '">' . session('message') . '</div>';
+            // }
 
             $typeProprietes = TypePropriete::get();
             $caracteristiques = Caracteristique::get();
@@ -865,9 +872,8 @@ class PagesController extends Controller
                     'deleted' => 0,
                 ]);
             }
-            
             session(['message' => 'Propriété ajouté avec succes.', 'message_type' => 'success']);
-            dd(\session('message'));
+
             return response()->json(['success' => true, 'property_id' => $request]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -1065,6 +1071,15 @@ class PagesController extends Controller
             // Return a custom error view
             return view('errors/404', ['message' => $e->getMessage()]);
         }
+    }
+
+    public function checkImage($idProperty)
+    {
+        // Requête pour vérifier la présence d'une image
+        $hasImage = ProprieteImage::where('propriete_id', $idProperty)->exists();
+
+        // Retourner la réponse en JSON
+        return response()->json(['hasImage' => $hasImage]);
     }
 
     public function suppression(Request $request)

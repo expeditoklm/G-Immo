@@ -55,12 +55,12 @@ top-header-inner
                 </div>
                 @endif
                 <div class="page-banner-content">
-                    <h2>Contact Us</h2>
+                    <h2>Contactez-nous</h2>
                     <ul class="list">
                         <li>
-                            <a href="{{ route('pages.acceuil') }}">Home</a>
+                            <a href="{{ route('pages.acceuil') }}">Acceuil</a>
                         </li>
-                        <li>Contact Us</li>
+                        <li>Contactez-nous</li>
                     </ul>
                 </div>
             </div>
@@ -78,7 +78,7 @@ top-header-inner
                                     <i class="ri-map-pin-line"></i>
                                 </div>
                                 <div class="info">
-                                    <h4>Our Location</h4>
+                                    <h4>Notre emplacement</h4>
                                     <span>45/15 New alsala Avenew Booston town, Austria</span>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ top-header-inner
                                     <i class="ri-phone-line"></i>
                                 </div>
                                 <div class="info">
-                                    <h4>Phone Number</h4>
+                                    <h4>Numéro de téléphone</h4>
                                     <span>
                                         <a href="tel:00201068710594">+(002) 0106-8710-594</a>
                                     </span>
@@ -101,7 +101,7 @@ top-header-inner
                                     <i class="ri-mail-send-line"></i>
                                 </div>
                                 <div class="info">
-                                    <h4>Our Email</h4>
+                                    <h4>Notre adresse e-mail</h4>
                                     <span>
                                         <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#3d4e484d4d524f4954535b527d5c5359524f5c135e5250"><span class="__cf_email__" data-cfemail="66151316160914120f080009260708020914074805090b">[email&#160;protected]</span></a>
                                     </span>
@@ -114,46 +114,46 @@ top-header-inner
                     </div>
                     <div class="col-lg-8 col-md-7">
                         <div class="contact-wrap-form">
-                            <h3>Get In Touch</h3>
+                            <h3>Entrez en contact</h3>
                             <form action="{{ route('pages.contacts-us-post') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Your Name</label>
-                                    <input type="text" name="nom_prenom" class="form-control" placeholder="Enter your name">
+                                    <label>Votre Nom et Prénom</label>
+                                    <input type="text" name="nom_prenom" class="form-control" placeholder="Entrer votre nom">
                                     <div class="icon">
                                         <i class="ri-user-3-line"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input type="email" name="email" class="form-control" placeholder="Enter email address">
+                                    <label>Adresse E-mail</label>
+                                    <input type="email" name="email" class="form-control" placeholder="Entrer votre adresse e-mail ">
                                     <div class="icon">
                                         <i class="ri-mail-line"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Your Phone</label>
-                                    <input type="phone" name="telephone" class="form-control" placeholder="Enter your phone">
+                                    <label>Votre Téléphone</label>
+                                    <input type="phone" name="telephone" class="form-control" placeholder="Entrer votre télephone">
                                     <div class="icon">
                                         <i class="ri-phone-line"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Your Subject</label>
-                                    <input type="text" name="titre_msg" class="form-control" placeholder="Enter your subject">
+                                    <label>Votre Sujet</label>
+                                    <input type="text" name="titre_msg" class="form-control" placeholder="Entrer votre le sujet">
                                     <div class="icon">
                                         <i class="ri-file-line"></i>
                                     </div>
                                 </div>
                                 <div class="form-group extra-top">
-                                    <label>Your Message</label>
-                                    <textarea class="form-control"  name="message" placeholder="Your message here"></textarea>
+                                    <label>Votre Message</label>
+                                    <textarea class="form-control"  name="message" placeholder="Votre message ici"></textarea>
                                     <div class="icon">
                                         <i class="ri-message-2-line"></i>
                                     </div>
                                 </div>
                                 <div class="contact-btn">
-                                    <button type="submit" name="btn_msg2" class="default-btn">Send Message</button>
+                                    <button type="submit" name="btn_msg2" class="default-btn">Envoyer le Message</button>
                                 </div>
                             </form>
                         </div>

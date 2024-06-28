@@ -39,7 +39,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 @include('admin.success_error')
 
 <div class="single-add-property">
-    <h3>Property Media</h3>
+    <h3>Ajouter des photos à la propriété <span class="text-danger">*</span></h3> 
     <div class="property-form-group">
         <div class="row">
             <div class="col-md-12">
@@ -57,22 +57,22 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     @csrf
 
     <div class="single-add-property">
-        <h3>Property description and price</h3>
+        <h3>Description de la propriété et prix</h3>
         <div class="property-form-group">
 
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <label for="title">Property Title  <span class="text-danger"> *</span></label>
-                        <input type="text" name="titre" id="title" placeholder="Enter your property title" required>
+                        <label for="title">Titre de la propriété<span class="text-danger"> *</span></label>
+                        <input type="text" name="titre" id="title" placeholder="Entrez le titre de votre propriété" required>
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <label for="description">Property Description</label>
-                        <textarea id="description" name="description" placeholder="Describe about your property"></textarea>
+                        <label for="description">Description de la propriété</label>
+                        <textarea id="description" name="description" placeholder="Décrivez votre propriété"></textarea>
                     </p>
                 </div>
             </div>
@@ -80,19 +80,19 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
                         <label for="status">Status <span class="text-danger">*</span></label>
-                        <select name="status" class="form-control wide" required>
-                            <option value="" disabled selected>Select status</option>
-                            <option value="Rental">Rent</option>
-                            <option value="For Sale">Sale</option>
+                        <select id="status" name="status" class="form-control wide" required>
+                            <option value="" disabled selected>Selectionner un status</option>
+                            <option value="Rental">Louer</option>
+                            <option value="For Sale">Vendre</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="col-lg-6 col-md-12 dropdown faq-drop">
                     <div class="form-group categories">
-                        <label for="propriete">Propriété <span class="text-danger">*</span></label>
+                        <label for="propriete">Type de Propriété <span class="text-danger">*</span></label>
                         <select name="type_propriete_id" class="form-control wide" required>
-                            <option value="" disabled selected>Select type propriété</option>
+                            <option value="" disabled selected>Selectionner le type de propriété</option>
                             @foreach ($typeProprietes as $item)
                             <option value="{{ $item->id }}">{{ $item->libelle }}</option>
                             @endforeach
@@ -105,14 +105,14 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb">
-                        <label for="price">Price</label>
-                        <input type="number" name="prix" placeholder="USD" id="price">
+                        <label for="price">Prix</label>
+                        <input type="number" name="prix" placeholder="XOF" id="price">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb last">
-                        <label for="area">Area</label>
-                        <input type="number" name="surface" placeholder="Sqft" id="area">
+                        <label for="area">Surface</label>
+                        <input type="number" name="surface" placeholder="Surface en m2" id="area">
                     </p>
                 </div>
             </div>
@@ -122,7 +122,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
 
     <div class="single-add-property">
-        <h3>Property Location</h3>
+        <h3>Emplacement de la propriété</h3>
         <div class="property-form-group">
             <div class="row">
 
@@ -131,7 +131,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                         <label for="address">Pays <span class="text-danger">*</span></label>
 
                         <select name="pays" class="form-control wide" require required>
-                            <option value="" disabled selected>Select Country</option>
+                            <option value="" disabled selected>Selectionner le Pays</option>
                             <option value="Benin">Benin</option>
                             <option value="Nigeria">Nigeria</option>
                             <option value="Algerie">Algerie</option>
@@ -145,7 +145,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                         <label for="address">Ville <span class="text-danger">*</span></label>
 
                         <select name="ville" class="form-control wide" required>
-                            <option value="" disabled selected>Select City</option>
+                            <option value="" disabled selected>Selectionner la Ville</option>
                             <option value="Cotonou">Cotonou</option>
                             <option value="Ibadan">Ibadan</option>
                             <option value="Liay">Liay</option>
@@ -165,8 +165,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
 
                 <div class="col-lg-6 col-md-12">
                     <p>
-                        <label for="address">Address</label>
-                        <input type="adresse" name="adresse" placeholder="Enter Your Address" id="adresse">
+                        <label for="address">Addresse</label>
+                        <input type="adresse" name="adresse" placeholder="Entrer votre Addresse" id="adresse">
                     </p>
                 </div>
             </div>
@@ -182,7 +182,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                         <label for="piece">Pièce</label>
 
                         <select name="nbPiece" class="form-control wide">
-                            <option value="" disabled selected>Select Pièce</option>
+                            <option value="" disabled selected>Selectionner le nombre de Pièce</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                         </select>
@@ -193,7 +193,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                     <div class="form-group categories">
                         <label for="chambre">Chambre</label>
                         <select name="nbChambre" class="form-control wide">
-                            <option value="" disabled selected>Select Chambre</option>
+                            <option value="" disabled selected>Selectionner le nombre de Chambre</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                         </select>
@@ -205,7 +205,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                     <div class="form-group categories">
                         <label for="toillete">Toillete</label>
                         <select name="nbToillete" class="form-control wide">
-                            <option value="" disabled selected>Select Toillete</option>
+                            <option value="" disabled selected>Selectionner le nombre de Toillete</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                         </select>
@@ -217,7 +217,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     </div>
 
     <div class="single-add-property">
-        <h3>Property Features</h3>
+        <h3>Caracteristiques de la propriétés</h3>
         <div class="property-form-group">
             <div class="row">
                 <div class="col-md-12">
@@ -239,33 +239,33 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     </div>
 
     <div class="single-add-property">
-        <h3>Contact Information</h3>
+        <h3>Information sur un Contact </h3>
         <div class="property-form-group">
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p>
-                        <label for="con-name">Name</label>
-                        <input type="text" placeholder="Enter Your Name" id="con-name" name="nomContact">
+                        <label for="con-name">Nom</label>
+                        <input type="text" placeholder="Entrer le Nom du Contact" id="con-name" name="nomContact">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p>
-                        <label for="con-user">Username</label>
-                        <input type="text" placeholder="Enter Your Username" id="con-user" name="prenomContact">
+                        <label for="con-user">Prénom</label>
+                        <input type="text" placeholder="Entrer le Prénom du Contact" id="con-user" name="prenomContact">
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb first">
-                        <label for="con-email">Email</label>
-                        <input type="email" placeholder="Enter Your Email" id="con-email" name="emailContact">
+                        <label for="con-email">E-mail</label>
+                        <input type="email" placeholder="Entrer l'E-mail du Contact" id="con-email" name="emailContact">
                     </p>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <p class="no-mb last">
-                        <label for="con-phn">Phone</label>
-                        <input type="text" placeholder="Enter Your Phone Number" id="con-phn" name="telContact">
+                        <label for="con-phn">Télephone</label>
+                        <input type="text" placeholder="Entrer le Number Télephone du Contact" id="con-phn" name="telContact">
                     </p>
                 </div>  
             </div>
@@ -275,7 +275,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
             <div class="row">
                 <div class="col-md-12">
                     <div class="prperty-submit-button">
-                        <button type="submit" onclick="submitForm()" name="btn_submit">Submit Property</button>
+                    <button type="submit" id="btn_submit" name="btn_submit">Enregistrer la Propriété</button>
                     </div>
                 </div>
             </div>
@@ -297,7 +297,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
     var uploadedImageUrls = [];
     Dropzone.options.myDropzone = {
         url: "{{ route('upload-image') }}",
-        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i> Click here or drop files to upload",
+        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i> Cliquez ici ou déposez les fichiers à télécharger",
         paramName: "file",
         maxFilesize: 2,
         acceptedFiles: '.jpeg,.jpg,.png,.gif',
@@ -354,35 +354,74 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
         }
     };
 
-    function submitForm() {
-        var form = document.getElementById('form1');
+        // Fonction pour soumettre le formulaire
+function submitForm(event) {
+    event.preventDefault(); // Empêche le rechargement de la page
 
-        var formData = new FormData(form);
+    var form = document.getElementById('form1');
+    var formData = new FormData(form);
 
-        formData.append('uploadedImageUrls', JSON.stringify(uploadedImageUrls));
-        console.log('stringify:', JSON.stringify(uploadedImageUrls));
+    formData.append('uploadedImageUrls', JSON.stringify(uploadedImageUrls));
+    console.log('stringify:', JSON.stringify(uploadedImageUrls));
 
-        fetch("{{ route('add-property-post') }}", {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Server response:', data);
-                if (data.success) {
-                    window.location.href = "{{ route('admin.add-property') }}";
-                } else {
-                    alert('Fin');
-                    console.error(data.error);
-                }
-            })
-            .catch(error => {
-                alert('Erreur');
-                console.error('Error adding property:', error);
-            });
+    fetch("{{ route('add-property-post') }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Server response:', data);
+            if (data.success) {
+                window.location.href = "{{ route('admin.add-property') }}";
+            } else {
+                alert("Les champs dont les labels portent une étoile rouge sont obligatoires.");
+                console.error('Server error:', data.error);
+            }
+        })
+        .catch(error => {
+            alert('Erreur');
+            console.error('Error adding property:', error);
+        });
+}
+
+// Vérifier la longueur de uploadedImageUrls et désactiver le bouton si nécessaire
+function checkUploadedImages() {
+    var submitButton = document.getElementById('btn_submit');
+    if (uploadedImageUrls.length === 0) {
+        submitButton.disabled = true;
+        alert('Vous devez soumettre au moins une image obligatoirement');
+    } else {
+        submitButton.disabled = false;
     }
+}
+
+// Ajouter un événement au formulaire pour vérifier les images avant de soumettre
+document.getElementById('form1').addEventListener('submit', function(event) {
+    if (uploadedImageUrls.length === 0) {
+        event.preventDefault(); // Empêche la soumission du formulaire si aucune image n'est téléchargée
+        alert('Vous devez soumettre au moins une image obligatoirement');
+    } else {
+        submitForm(event);
+    }
+});
+
+// Ajouter un écouteur d'événements pour vérifier les images chaque fois que l'utilisateur ajoute une image
+document.getElementById('imageUploadField').addEventListener('change', function() {
+    checkUploadedImages();
+});
+
+// Initialiser la vérification des images au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    checkUploadedImages();
+});
+
 </script>
 @endsection

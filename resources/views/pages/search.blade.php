@@ -38,12 +38,12 @@ top-header-inner
     <div class="container">
         @include('admin.success_error')
         <div class="page-banner-content">
-            <h2>Property Top Filter</h2>
+            <h2>Filtre principal de propriété</h2>
             <ul class="list">
                 <li>
-                    <a href="{{ route('pages.acceuil') }}">Home</a>
+                    <a href="{{ route('pages.acceuil') }}">Acceuil</a>
                 </li>
-                <li>Property Top Filter</li>
+                <li>Filtre principal de propriété</li>
             </ul>
         </div>
     </div>
@@ -55,8 +55,8 @@ top-header-inner
     <div class="container">
         <div class="properties-search-info-tabs">
             <ul class="nav nav-tabs" id="search_tab" role="tablist">
-                <li class="nav-item"><a class="nav-link active" id="sell-tab" data-bs-toggle="tab" href="#sell" role="tab" aria-controls="sell">Sell</a></li>
-                <li class="nav-item"><a class="nav-link" id="rent-tab" data-bs-toggle="tab" href="#rent" role="tab" aria-controls="rent">Rent</a></li>
+                <li class="nav-item"><a class="nav-link active" id="sell-tab" data-bs-toggle="tab" href="#sell" role="tab" aria-controls="sell">Vendre</a></li>
+                <li class="nav-item"><a class="nav-link" id="rent-tab" data-bs-toggle="tab" href="#rent" role="tab" aria-controls="rent">Louer</a></li>
             </ul>
             <div class="tab-content" id="search_tab_content">
                 <div class="tab-pane fade show active" id="sell" role="tabpanel">
@@ -66,9 +66,9 @@ top-header-inner
                         <div class="row justify-content-center align-items-end">
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Property type For</label>
+                                    <label>Type de propriété </label>
                                     <select name="type_propriete_id" class="form-select form-control">
-                                        <option value="" selected>Property status</option>
+                                        <option value="" selected>Statut de la propriété</option>
                                         @foreach ($typeProprieteForSale as $item)
                                         <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
                                         @endforeach
@@ -77,9 +77,9 @@ top-header-inner
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Location</label>
+                                    <label>Emplacement</label>
                                     <select name="ville" class="form-select form-control">
-                                        <option value="" selected>All cities</option>
+                                        <option value="" selected>Toutes les villes</option>
                                         @foreach ($uniqueCities as $item)
 
                                         <option value="{{ $item->ville}}">{{ $item->ville}}</option>
@@ -91,20 +91,20 @@ top-header-inner
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Your Price</label>
-                                    <input type="number" name="prix" class="form-control" placeholder="Max price">
+                                    <label>Prix</label>
+                                    <input type="number" name="prix" class="form-control" placeholder="Environ combien">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Bedrooms</label>
-                                    <input type="number" name="nbChambre" class="form-control" placeholder="Number of bedrooms">
+                                    <label>Chambres</label>
+                                    <input type="number" name="nbChambre" class="form-control" placeholder="Nombre de chambres">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Rooms</label>
-                                    <input type="number" name="nbPiece" class="form-control" placeholder="Number of rooms">
+                                    <label>Pièces</label>
+                                    <input type="number" name="nbPiece" class="form-control" placeholder="Nombre de pièces">
 
                                 </div>
                             </div>
@@ -137,9 +137,9 @@ top-header-inner
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Location</label>
+                                    <label>Emplacement</label>
                                     <select name="ville" class="form-select form-control">
-                                        <option value="" selected>All cities</option>
+                                        <option value="" selected>Toutes les villes</option>
                                         @foreach ($uniqueCities as $item)
 
                                         <option value="{{ $item->ville}}">{{ $item->ville}}</option>
@@ -151,20 +151,20 @@ top-header-inner
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Your Price</label>
-                                    <input type="number" name="prix" class="form-control" placeholder="Max price">
+                                    <label>Prix</label>
+                                    <input type="number" name="prix" class="form-control" placeholder="Environ combien">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Bedrooms</label>
-                                    <input type="number" name="nbChambre" class="form-control" placeholder="Number of bedrooms">
+                                    <label>Chambres</label>
+                                    <input type="number" name="nbChambre" class="form-control" placeholder="Nombre de chambres">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-md-6">
                                 <div class="form-group">
-                                    <label>Rooms</label>
-                                    <input type="number" name="nbPiece" class="form-control" placeholder="Number of rooms">
+                                    <label>Pièces</label>
+                                    <input type="number" name="nbPiece" class="form-control" placeholder="Nombre de pièces">
 
                                 </div>
                             </div>
@@ -175,7 +175,7 @@ top-header-inner
                                     </button>
                                     <button type="submit" class="reset-search-btn">
                                         <i class="ri-refresh-line"></i>
-                                        Reset Search
+                                        Rechercher une propriété
                                     </button>
                                 </div>
                             </div>
@@ -188,7 +188,7 @@ top-header-inner
         <div class="properties-grid-box">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-6">
-                    <p>Showing {{ $properties->firstItem() }}-{{ $properties->lastItem() }} Of {{ $properties->total() }} Results</p>
+                    <p>Affichage de {{ $properties->firstItem() }} à {{ $properties->lastItem() }} dans {{ $properties->total() }} Résultats</p>
                 </div>
                 <div class="col-lg-5 col-md-6"></div>
             </div>
@@ -414,8 +414,8 @@ top-header-inner
     <div class="container-fluid">
         <div class="section-title text-center" data-cues="slideInUp">
 
-            <h2>Popular Properties</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et mauris eget ornare venenatis, in. Pharetra iaculis consectetur.</p>
+            <h2>Propriétés populaires</h2>
+            <p>Découvrez nos propriétés les plus recherchées et trouvez celle qui vous convient parfaitement.</p>
         </div>
         <div class="swiper properties-slider">
             <div class="swiper-wrapper align-items-center" data-cues="slideInUp">
@@ -588,11 +588,11 @@ top-header-inner
     <div class="container" data-cues="slideInUp">
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
-                <h2>Subscribe To Our Newsletterss</h2>
+                <h2>Abonnez-vous à notre Newsletter</h2>
                 <form class="subscribe-form" action="{{ route('pages.search') }}" method="POST">
                     @csrf
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
-                    <button type="submit" name="btn_newslater" class="default-btn">Subscribe</button>
+                    <input type="email" name="email" class="form-control" placeholder="Entrez votre adresse e-mail">
+                    <button type="submit" name="btn_newslater" class="default-btn">Abonnez-vous</button>
                 </form>
             </div>
         </div>
