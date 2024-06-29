@@ -120,6 +120,100 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         </div>
     </div>
 </div>
+
+
+
+
+
+<div class="dashborad-box">
+    <h4 class="title">Listing</h4>
+    <div class="section-body listing-table">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#id</th>
+                        <th>Nom Prénom</th>
+                        <th>Sexe</th>
+                        <th>Télephone</th>
+                        <th>E-mail</th>
+                        <th>Pays</th>
+                        <th>Ville</th>
+                        <th>Website</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>23 Jan 2020</td>
+                        <td class="rating"><span>5.0</span></td>
+                        <td class="status"><span class=" active">Active</span></td>
+                        <td class="block"><a href="#"><i class="fa fa-ban"></i></a></td>
+
+                    </tr>
+                    <tr>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>Luxury Restaurant</td>
+                        <td>23 Jan 2020</td>
+                        <td class="rating"><span>5.0</span></td>
+                        <td class="status"><span class=" active">Active</span></td>
+                        <td class="activate"><a href="#"><i class="fa fa-check " style="color: green;"></i></a></td>
+
+                    </tr>
+
+
+                </tbody>
+            </table>
+            <div class="pagination-container">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item"><a class="btn btn-common text-white" href="#">Previous <i class="lni-chevron-right"></i></a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                        <li class="page-item"><a class="btn btn-common text-white" href="#">Next <i class="lni-chevron-right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @if($messages->isNotEmpty())
 <div class="dashborad-box">
     <h4 class="title">Messages</h4>
@@ -161,6 +255,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
     </div>
 </div>
 @endif
+
 @if($reviews->isNotEmpty())
 <div class="dashborad-box">
     <h4 class="title">Commentaires</h4>
@@ -217,6 +312,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
     </div>
 </div>
 @endif
+
 <div class="dashborad-box mb-0">
     <h4 class="heading pt-0">Information Personalle</h4>
     <div class="section-inforamation">
@@ -255,13 +351,13 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Site Web</label>
-                            <textarea name="website" placeholder="Votre site web" class="form-control" >{{ Auth::user()->website }}</textarea>
+                            <textarea name="website" placeholder="Votre site web" class="form-control">{{ Auth::user()->website }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>À propos de vous</label>
-                            <textarea name="description" placeholder="À propos de vous" class="form-control" >{{ Auth::user()->description }}</textarea>
+                            <textarea name="description" placeholder="À propos de vous" class="form-control">{{ Auth::user()->description }}</textarea>
                         </div>
                     </div>
                 </div>

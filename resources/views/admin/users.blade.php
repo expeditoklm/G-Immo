@@ -5,7 +5,6 @@ Dashbord | Find Houses
 @endsection
 
 @section('css')
-
 <style>
     .full-width {
         width: 100%;
@@ -75,14 +74,14 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             <div class="pro-wrapper  m-0 p-0">
                 <div class="detail-wrapper-body">
                     <div class="listing-title-bar m-0 p-0">
-                    
-                        
+
+                        <h3>List View</h3>
                     </div>
                 </div>
             </div>
         </section>
         <div class="row">
-        <aside class="col-lg-4 col-md-12 car full-width">
+            <aside class="col-lg-4 col-md-12 car full-width">
                 <div class="widget">
                     <!-- Search Fields -->
                     <div class="widget-boxed main-search-field">
@@ -235,8 +234,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @for ($i = 0; $i < 25; $i++)
-                                    <tr>
+                                    @for ($i = 0; $i < 25; $i++) <tr>
                                         <td>Luxury Restaurant</td>
                                         <td>Luxury Restaurant</td>
                                         <td>Luxury Restaurant</td>
@@ -249,45 +247,45 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         <td class="status"><span class=" active">Active</span></td>
                                         <td class="block"><a href="#"><i class="fa fa-ban"></i></a></td>
 
-                                    </tr>
-                                @endfor
-                                    <tr>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>23 Jan 2020</td>
-                                        <td class="rating"><span>5.0</span></td>
-                                        <td class="status"><span class=" active">Active</span></td>
-                                        <td class="activate"><a href="#"><i class="fa fa-check " style="color: green;"></i></a></td>
+                                        </tr>
+                                        @endfor
+                                        <tr>
+                                            <td>Luxury Restaurant</td>
+                                            <td>Luxury Restaurant</td>
+                                            <td>Luxury Restaurant</td>
+                                            <td>Luxury Restaurant</td>
+                                            <td>Luxury Restaurant</td>
+                                            <td>Luxury Restaurant</td>
+                                            <td>Luxury Restaurant</td>
+                                            <td>23 Jan 2020</td>
+                                            <td class="rating"><span>5.0</span></td>
+                                            <td class="status"><span class=" active">Active</span></td>
+                                            <td class="activate"><a href="#"><i class="fa fa-check " style="color: green;"></i></a></td>
 
-                                    </tr>
+                                        </tr>
 
 
                                 </tbody>
                             </table>
-                            
+
                         </div>
                         <div class="pagination-container">
-                                <nav>
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="btn btn-common text-white" href="#">Previous <i class="lni-chevron-right"></i></a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <nav>
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="btn btn-common text-white" href="#">Previous <i class="lni-chevron-right"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
 
-                                        <li class="page-item"><a class="btn btn-common text-white" href="#">Next <i class="lni-chevron-right"></i></a></li>
-                                    </ul>
-                                </nav>
-                            </div>
+                                    <li class="page-item"><a class="btn btn-common text-white" href="#">Next <i class="lni-chevron-right"></i></a></li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
 
             </div>
-            
+
 
         </div>
 
@@ -296,162 +294,6 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 
 
-
-<div class="my-properties">
-    <table class="table-responsive">
-        <thead>
-            <tr>
-                <th class="pl-2">Commentaires</th>
-                <th>Propriétés</th>
-                <th class="p-0"></th>
-                <th>Commentateur</th>
-
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-       
-            @foreach ($reviews as $item)
-            <tr>
-                <td>
-                    <textarea hidden cols="30" class="form-control border-0"></textarea>
-                    {{ $item->comment }}
-                </td>
-
-                <td class="image myelist">
-                    <a href="#" onclick="document.getElementById('proper{{ $item->propriete->id }}').submit(); return false;">
-                        <img alt="my-properties-3" src="{{ asset($item->propriete->proprieteImages->first()->url) }}" class="img-fluid">
-                    </a>
-                </td>
-
-                <!-- Formulaire caché -->
-                <form id="proper{{ $item->propriete->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
-                    @csrf
-                    <input type="hidden" name="id" value="{{ $item->propriete->id }}">
-                </form>
-                <td>
-                    <div class="inner">
-                        <a href="#" onclick="document.getElementById('property{{ $item->propriete->id }}').submit(); return false;">
-                            <h2>{{ $item->propriete->titre}}</h2>
-                        </a>
-
-                        <!-- Formulaire caché -->
-                        <form id="property{{ $item->propriete->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $item->propriete->id }}">
-                        </form>
-                        @php
-                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
-                                    $userCountryCode = $item->propriete->pays;
-                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
-
-                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
-                                    $userCityCode = $item->propriete->ville;
-                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
-                                    @endphp
-                        <figure><i class="lni-map-marker"></i> {{ $userCountry}}, {{ $userCity }}, {{ $item->quartier }}</figure>
-
-                        @php
-                        $totalStars = 5;
-                        $filledStars = $item->note;
-                        $grayStars = $totalStars - $filledStars;
-                        @endphp
-                        <ul class="starts mb-0">
-                            @for ($i = 0; $i < $filledStars; $i++) <li>
-                                <i class="fa fa-star"></i>
-                                </li>
-                                @endfor
-
-                                @for ($i = 0; $i < $grayStars; $i++) <li><i class="fa fa-star-o"></i>
-                                    @endfor
-
-                        </ul>
-                    </div>
-                </td>
-                <td>
-                    <div class="inner">
-                        <h2>{{ $item->nom_prenom}}</h2>
-                        <figure><i class="lni-map-marker"></i> {{ $item->email}} </figure>
-                        <h6>{{ $item->created_at}}</h2>
-                    </div>
-                </td>
-
-                <td class="actions">
-
-                    <a href="#" class="delete-icon" data-id="{{ $item->id }}">
-                        <i class="far fa-trash-alt"></i>
-                    </a>
-
-                    <!-- Formulaire caché -->
-                    <form id="post{{ $item->id }}" action="{{ route('suppression') }}" method="POST" style="display: none;">
-                        @csrf
-                        <input type="hidden" name="review_sup_id" value="{{ $item->id }}">
-                    </form>
-                </td>
-            </tr>
-            <!-- The Modal -->
-            <div id="myModal-{{ $item->id }}" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <p>Voulez-vous vraiment supprimer "{{ $item->comment }}" ?</p>
-                    <a onclick="document.getElementById('post{{ $item->id }}').submit(); return false;" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
-                    <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
-                </div>
-            </div>
-            @endforeach
-        
-        </tbody>
-    </table>
-    @if($reviews->isNotEmpty())
-    <div class="pagination-container">
-        <nav>
-            <ul class="pagination justify-content-center">
-
-                {{-- Bouton Previous --}}
-                @if ($reviews->onFirstPage())
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
-                </li>
-                @else
-                <li class="page-item">
-                    <a class="page-link" href="{{ $reviews->previousPageUrl() }}">Previous</a>
-                </li>
-                @endif
-
-                {{-- Affichage des pages --}}
-                @foreach ($reviews->getUrlRange(1, $reviews->lastPage()) as $page => $url)
-                <li class="page-item {{ $page == $reviews->currentPage() ? 'active' : '' }}">
-                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                </li>
-                @endforeach
-
-                {{-- Bouton Next --}}
-                @if ($reviews->hasMorePages())
-                <li class="page-item">
-                    <a class="page-link" href="{{ $reviews->nextPageUrl() }}">Next</a>
-                </li>
-                @else
-                <li class="page-item disabled">
-                    <span class="page-link">Next</span>
-                </li>
-                @endif
-
-            </ul>
-        </nav>
-    </div>
-    @else
-    <div class="pagination-container">
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link " href="{{ $reviews->previousPageUrl() }}">Pas de commentaire pour le moment</a>
-                </li>
-                
-            </ul>
-        </nav>
-    </div>
-    @endif
-</div>
 
 @endsection
 

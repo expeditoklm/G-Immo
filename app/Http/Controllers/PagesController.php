@@ -38,6 +38,9 @@ class PagesController extends Controller
     public function acceuil()
     {
         try {
+                $client = new Client(); // Créez une nouvelle instance de Client
+                $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+            
             // liste des proprietes de status "à vendre"  
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
@@ -186,7 +189,8 @@ class PagesController extends Controller
                 'propertiesCommercial',
                 'propertiesHigh',
                 'propertiesForSale',
-                'comments'
+                'comments',
+                'geoNamesService'
             ));
         } catch (Exception $e) {
             // Log the exception if needed
@@ -200,6 +204,9 @@ class PagesController extends Controller
     public function search(Request $request)
     {
         try {
+                $client = new Client(); // Créez une nouvelle instance de Client
+                $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+            
             //liste des proprietes à vendre
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
@@ -241,7 +248,8 @@ class PagesController extends Controller
                 'typeProprieteForSale',
                 'typeProprieteRental',
                 'uniqueCities',
-                'popularProperties'
+                'popularProperties',
+                'geoNamesService'
 
             ));
         } catch (Exception $e) {
@@ -256,6 +264,9 @@ class PagesController extends Controller
     public function searchPost(Request $request)
     {
         try {
+            $client = new Client(); // Créez une nouvelle instance de Client
+                $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+            
             // Obtenir le nombre de propriétés par type et statut
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
@@ -356,7 +367,8 @@ class PagesController extends Controller
                 'typeProprieteForSale',
                 'typeProprieteRental',
                 'uniqueCities',
-                'popularProperties'
+                'popularProperties',
+                'geoNamesService'
             ));
         } catch (Exception $e) {
             // Log the exception if needed
@@ -392,6 +404,7 @@ class PagesController extends Controller
                 throw new \Exception('Property not found');
             }
            
+            
             $proprietaire = $propertiesSingle->user;
             $propertiesSingle->vue = $propertiesSingle->vue + 1;
             $propertiesSingle->save();
@@ -791,12 +804,15 @@ class PagesController extends Controller
     public function myProperties()
     {
         try {
+            $client = new Client(); // Créez une nouvelle instance de Client
+            $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+        
             $properties = Propriete::where('user_id', FacadesAuth::id())
                 ->where('deleted', 0)
                 ->orderBy('updated_at', 'desc')
                 ->paginate(10);
 
-            return view('admin/my-properties', compact('properties'));
+            return view('admin/my-properties', compact('properties','geoNamesService'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -813,12 +829,14 @@ class PagesController extends Controller
             //     dd(session('message'));
             //     //echo '<div class="alert alert-' . session('message_type', 'info') . '">' . session('message') . '</div>';
             // }
+            $countries = $this->geoNamesService->getCountries();
 
             $typeProprietes = TypePropriete::get();
             $caracteristiques = Caracteristique::get();
             return view('admin/add-property', compact(
                 'typeProprietes',
-                'caracteristiques'
+                'caracteristiques',
+                'countries'
             ));
         } catch (Exception $e) {
             // Log the exception if needed
@@ -1016,13 +1034,16 @@ class PagesController extends Controller
     public function reviews()
     {
         try {
+            $client = new Client(); // Créez une nouvelle instance de Client
+            $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+        
             $reviews = Comment::whereHas('propriete', function ($query) {
                 $query->where('user_id', FacadesAuth::id());
             })->orderBy('created_at', 'desc')
                 ->where('deleted', 0)
                 ->paginate(10);
 
-            return view('admin/reviews', compact('reviews'));
+            return view('admin/reviews', compact('reviews','geoNamesService'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1052,6 +1073,19 @@ class PagesController extends Controller
 
             $properties = Propriete::where('id', $id)->first();
 
+            $countries = $this->geoNamesService->getCountries();
+            //$user = FacadesAuth::user();
+
+            // Récupérer le nom du pays à partir du code enregistré dans la base de données
+            $propertiesCountryCode = $properties->pays;
+            $propertiesCountry = $this->geoNamesService->getCountryNameByCode($propertiesCountryCode); // À adapter selon votre service
+
+            // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+            $propertiesCityCode = $properties->ville;
+            $propertiesCity = $this->geoNamesService->getCityNameByCode($propertiesCityCode); // À adapter selon votre service
+
+
+
             if (!$properties) {
                 throw new \Exception('Property not found');
             }
@@ -1062,7 +1096,12 @@ class PagesController extends Controller
                 'caracteristiques',
                 'properties',
                 'typeProprietes',
-                'proprieteImages'
+                'proprieteImages',
+                'countries',
+                'propertiesCountryCode',
+                'propertiesCountry',
+                'propertiesCityCode',
+                'propertiesCity'
             ));
         } catch (Exception $e) {
             // Log the exception if needed
@@ -1073,14 +1112,7 @@ class PagesController extends Controller
         }
     }
 
-    public function checkImage($idProperty)
-    {
-        // Requête pour vérifier la présence d'une image
-        $hasImage = ProprieteImage::where('propriete_id', $idProperty)->exists();
-
-        // Retourner la réponse en JSON
-        return response()->json(['hasImage' => $hasImage]);
-    }
+   
 
     public function suppression(Request $request)
     {
@@ -1161,11 +1193,17 @@ class PagesController extends Controller
     {
         try {
             $propertyImage = ProprieteImage::findOrFail($id);
+            $imageNombre = ProprieteImage::where('propriete_id', $propertyImage->propriete_id)->count();
 
-            $propertyImage->updated_at = \now();
-            $propertyImage->delete();
+            $propertyImage->updated_at = now();
+            if ($imageNombre == 1) {
+                return response()->json(['error' => 'Enregistrer d\'abord au moins une image avant de supprimer'], 400);
+            } else {
+                $propertyImage->delete();
+                return response()->json(['success' => 'Item deleted successfully']);
+            }
 
-            return response()->json(['success' => 'Item deleted successfully']);
+           
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1174,4 +1212,32 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
+    
+    public function checkImage($idProperty)
+    {
+        // Requête pour vérifier la présence d'une image
+        $hasImage = ProprieteImage::where('propriete_id', $idProperty)->exists();
+
+        // Retourner la réponse en JSON
+        return response()->json(['hasImage' => $hasImage]);
+    }
+
+
+    public function adminUsers()
+    {
+        try {
+
+            return view('admin/users');
+           
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+    
+
+    
 }

@@ -59,7 +59,7 @@ row justify-content-center align-items-center
                                             <div class="form-group">
                                                 <label>Type de propriété </label>
                                                 <select name="type_propriete_id" class="form-select form-control">
-                                                    <option value="" selected>Statut de la propriété</option>
+                                                    <option value="" selected>Type de propriété</option>
                                                     @foreach ($typeProprieteForSale as $item)
                                                     <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
                                                     @endforeach
@@ -67,13 +67,24 @@ row justify-content-center align-items-center
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
+                                       
                                             <div class="form-group">
                                                 <label>Emplacement</label>
                                                 <select name="ville" class="form-select form-control">
                                                     <option value="" selected>Toutes les villes</option>
                                                     @foreach ($uniqueCities as $item)
 
-                                                    <option value="{{ $item->ville}}">{{ $item->ville}}</option>
+                                                    @php
+                                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                                    $userCountryCode = $item->pays;
+                                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                                    $userCityCode = $item->ville;
+                                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                                    @endphp
+
+                                                    <option value="{{ $userCityCode}}">{{ $userCity}}</option>
 
                                                     @endforeach
 
@@ -517,7 +528,16 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                            @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -684,7 +704,16 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                            @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -851,7 +880,16 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                            @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1018,7 +1056,16 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                            @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1185,7 +1232,16 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                            @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1352,7 +1408,16 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                            @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1519,7 +1584,16 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                            @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1709,7 +1783,16 @@ row justify-content-center align-items-center
                         </form>
 
 
-                        <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                        @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                     </div>
                     <ul class="info-list">
                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
@@ -1890,7 +1973,16 @@ row justify-content-center align-items-center
                                     <input type="hidden" name="id" value="{{ $item->id }}">
                                 </form>
 
-                                <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                             </div>
                             <div class="price">
                                 @isset($item->prix)

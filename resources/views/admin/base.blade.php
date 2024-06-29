@@ -262,6 +262,11 @@
                                             <i class="fas fa-paste"></i>Commentaires
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'javascript:void(0)' : route('admin.users') }}">
+                                            <i class="fas fa-paste"></i>Utilisateurs
+                                        </a>
+                                    </li>
 
 
                                 </ul>
@@ -276,12 +281,12 @@
                                     <ul id="myDropdown" class="dropdown-content">
                                         <li>
                                             <a class="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}">
-                                                <i class="fa fa-map-marker mr-3"></i> Dashboard
+                                                <i class="fa fa-map-marker mr-3"></i> Tableau de bord
                                             </a>
                                         </li>
                                         <li>
                                             <a class="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
-                                                <i class="fa fa-list mr-3" aria-hidden="true"></i>My Properties
+                                                <i class="fa fa-list mr-3" aria-hidden="true"></i>Mes Propriétés
                                             </a>
                                         </li>
                                         <li>
@@ -293,7 +298,7 @@
 
                                         <li>
                                             <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
-                                                <i class="fa fa-list mr-3" aria-hidden="true"></i>Add Property
+                                                <i class="fa fa-list mr-3" aria-hidden="true"></i>Ajouté une propriéte
                                             </a>
                                         </li>
 
@@ -304,14 +309,20 @@
                                         </li>
                                         <li>
                                             <a class="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
-                                                <i class="fa fa-lock mr-3"></i>Reviews
+                                                <i class="fa fa-lock mr-3"></i>Commentaires
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'javascript:void(0)' : route('admin.users') }}">
+                                                <i class="fas fa-paste"></i>Utilisateurs
                                             </a>
                                         </li>
 
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn left-aligned-btn w-100 text-left">
-                                                <i class="fas fa-sign-out-alt mr-3"></i>Log Out
+                                                <i class="fas fa-sign-out-alt mr-3"></i>Deconnection
                                             </button>
                                         </form>
                                     </ul>
@@ -363,6 +374,7 @@
         <script src="{{asset('assets/admin/js/ajaxchimp.min.js')}}"></script>
         <script src="{{asset('assets/admin/js/newsletter.js')}}"></script>
         <script src="{{asset('assets/admin/js/jquery.form.js')}}"></script>
+        
         <script src="{{asset('assets/admin/js/jquery.validate.min.js')}}"></script>
         <script src="{{asset('assets/admin/js/searched.js')}}"></script>
         <script src="{{asset('assets/admin/js/dashbord-mobile-menu.js')}}"></script>

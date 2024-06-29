@@ -82,7 +82,17 @@ top-header-inner
                                         <option value="" selected>Toutes les villes</option>
                                         @foreach ($uniqueCities as $item)
 
-                                        <option value="{{ $item->ville}}">{{ $item->ville}}</option>
+                                        @php
+                                        // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                        $userCountryCode = $item->pays;
+                                        $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                        // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                        $userCityCode = $item->ville;
+                                        $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                        @endphp
+
+                                        <option value="{{ $userCityCode}}">{{ $userCity}}</option>
 
                                         @endforeach
 
@@ -288,7 +298,17 @@ top-header-inner
                                         <input type="hidden" name="id" value="{{ $item->id }}">
                                     </form>
 
-                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                    @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+
+                                    <span>{{ $userCountry }}, {{ $userCity  }}, {{ $item->quartier }}</span>
                                 </div>
                                 <!-- a nouveau-->
                                 <ul class="info-list">
@@ -479,8 +499,16 @@ top-header-inner
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $item->id }}">
                                     </form>
+                                    @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $item->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
 
-                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $item->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <span>{{ $userCountry }}, {{ $userCity }}, {{ $item->quartier }}</span>
                                 </div>
                                 <div class="price">{{ $item->prix }} XOF</div>
                             </div>

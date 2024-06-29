@@ -86,7 +86,16 @@ top-header-inner
                                     <h2>{{ $propertiesSingle->titre }}</h2>
 
                                 </div>
-                                <span class="address">{{ $propertiesSingle->pays }}, {{ $propertiesSingle->ville }}, {{ $propertiesSingle->quartier }}</span>
+                                @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $propertiesSingle->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $propertiesSingle->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                <span class="address">{{ $userCountry }}, {{ $userCity }}, {{ $propertiesSingle->quartier }}</span>
                                 <ul class="info-list">
                                     @if(!is_null($propertiesSingle->nbChambre) && $propertiesSingle->nbChambre != 0)
                                     <li>
@@ -588,37 +597,34 @@ top-header-inner
                                 </div>
                             </div>
                             @isset($propertiesSingle->emailContact, $propertiesSingle->telContact)
-    <div class="contact-details">
-        <h3>Contact supplémentaire</h3>
-        <ul class="list">
-            @php
-                // Récupérer le nom du pays à partir du code enregistré dans la base de données
-                $userCountryCode = $proprietaire->pays;
-                $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
+                            <div class="contact-details">
+                                <h3>Contact supplémentaire</h3>
+                                <ul class="list">
+                                    @php
+                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
+                                    $userCountryCode = $proprietaire->pays;
+                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
 
-                // Récupérer le nom de la ville à partir du code enregistré dans la base de données
-                $userCityCode = $proprietaire->ville;
-                $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
-            @endphp
-            <li>
-                <span>Email:</span>
-                <a href="mailto:{{$proprietaire->email}}">{{$propertiesSingle->emailContact}}</a>
-            </li>
-            <li>
-                <span>Phone:</span>
-                <a href="tel:{{$proprietaire->telephone}}">{{$propertiesSingle->telContact}}</a>
-            </li>
-            <li>
-                <span>Location:</span>
-                {{ $userCountry }} , {{ $userCity }}
-            </li>
-        </ul>
-    </div>
-@else
-    <div class="alert alert-danger text-center">
-        L'email de contact ou le téléphone de contact est manquant.
-    </div>
-@endisset
+                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
+                                    $userCityCode = $proprietaire->ville;
+                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
+                                    @endphp
+                                    <li>
+                                        <span>Email:</span>
+                                        <a href="mailto:{{$propertiesSingle->emailContact}}">{{$propertiesSingle->emailContact}}</a>
+                                    </li>
+                                    <li>
+                                        <span>Phone:</span>
+                                        <a href="tel:{{$propertiesSingle->telContact}}">{{$propertiesSingle->telContact}}</a>
+                                    </li>
+                                    <li>
+                                        <span>Location:</span>
+                                        {{ $userCountry }} , {{ $userCity }}
+                                    </li>
+                                </ul>
+                            </div>
+
+                            @endisset
 
                         </div>
                     </div>

@@ -6,6 +6,42 @@ Add Property | Find Houses
 
 @section('css')
 
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<!-- Votre style personnalisé -->
+<style>
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .password-section {
+        margin-top: 2rem;
+        border-top: 1px solid #ddd;
+        padding-top: 1.5rem;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 38px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 6px 12px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #495057;
+        line-height: 26px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 26px;
+    }
+
+    .select2-container {
+        width: 100% !important;
+        /* Ensure Select2 takes full width */
+    }
+</style>
+
 <style>
     .image-gallery {
         display: flex;
@@ -301,32 +337,31 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
         <h3>Emplacement de la propriété</h3>
         <div class="property-form-group">
             <div class="row">
-
-                <div class="col-lg-6 col-md-12 dropdown faq-drop">
+                <div class="col-lg-6 col-md-12 dropdown ">
                     <div class="form-group categories">
                         <label for="address">Pays<span class="text-danger">*</span></label>
-
-                        <select name="pays" class="form-control wide">
-                            <option value="{{$properties->pays}}"  selected>{{$properties->pays}}</option>
-                            <option value="Benin">Benin</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Algerie">Algerie</option>
+                        <select class="form-control wide js-example-basic-single" onchange="countryHasChanged()" id="country" name="pays" required
+                            style="height: 45px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; background-color: #fff; padding: 10px 12px; width: 100%;">
+                            <option value="{{ $propertiesCountryCode }}" selected>{{ $propertiesCountry }}</option>
+                            @foreach ($countries as $country)
+                            <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
-
-                <div class="col-lg-6 col-md-12 dropdown faq-drop">
+            
+                <div class="col-lg-6 col-md-12 dropdown ">
                     <div class="form-group categories">
                         <label for="address">Ville <span class="text-danger">*</span></label>
-
-                        <select name="ville" class="form-control wide">
-                            <option value="{{$properties->ville}}" selected>{{$properties->ville}}</option>
-                            <option value="Cotonou">Cotonou</option>
-                            <option value="Ibadan">Ibadan</option>
-                            <option value="Liay">Liay</option>
+                        <select class="form-control wide js-example-basic-single" id="city" name="ville" required
+                            style="height: 45px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; background-color: #fff; padding: 10px 12px; width: 100%;">
+                            <option value="{{ $propertiesCityCode }}" selected>{{ $propertiesCity }}</option>
                         </select>
                     </div>
                 </div>
+           
+
+
 
 
             </div>
@@ -358,6 +393,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                             <option value="{{$properties->nbPiece}}"  selected>{{$properties->nbPiece}}</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
+                            <option value="6+" >6+</option>
+
                         </select>
                     </div>
                 </div>
@@ -368,6 +405,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                             <option value="{{$properties->nbChambre}}"  selected>{{$properties->nbChambre}}</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
+                            <option value="6+" >6+</option>
+
                         </select>
                     </div>
                 </div>
@@ -379,6 +418,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                             <option value="{{$properties->nbToillete}}"  selected>{{$properties->nbToillete}}</option>
                             @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
+                            <option value="6+" >6+</option>
+
                         </select>
                     </div>
                 </div>
@@ -524,13 +565,19 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(response => {
-                console.log('Delete successful, response:', response);
-                document.getElementById('myModal-' + id).style.display = 'none';
-                document.querySelectorAll('.image-container').forEach(function(container) {
-                    if (container.querySelector('.delete-icon').dataset.id == id) {
-                        container.remove();
-                    }
-                });
+                if (response.success) {
+                    console.log('Suppression réussie, réponse :', response);
+                    document.getElementById('myModal-' + id).style.display = 'none'; // Masquer le modal si nécessaire
+                    document.querySelectorAll('.image-container').forEach(function(container) {
+                        if (container.querySelector('.delete-icon').dataset.id == id) {
+                            container.remove(); // Supprimer l'élément de l'interface utilisateur
+                        }
+                    });
+                    //alert('Image supprimée avec succès');
+                } else if (response.error) {
+                    console.error('Échec de la suppression, réponse :', response);
+                    alert('Erreur : ' + response.error); // Afficher l'erreur dans une alerte
+                }
                 //alert(response.success);
             })
             .catch(error => {
@@ -681,5 +728,62 @@ function submitForm() {
 
 
 </script>
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialisation de Select2 sur les champs de sélection
+        $('#country').select2({
+            placeholder: 'Select your country'
+        });
+        $('#city').select2({
+            placeholder: 'Select your city'
+        });
+    });
+
+    function countryHasChanged() {
+        const countrySelect = document.getElementById('country');
+        const citySelect = document.getElementById('city');
+        const countryCode = countrySelect.value;
+
+        if (countryCode) {
+            fetch("{{ route('get-cities') }}?country_code=" + countryCode)
+                .then(response => response.json())
+                .then(data => {
+                    citySelect.innerHTML = ''; // Clear previous options
+                    data.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city.geonameId;
+                        option.textContent = city.name;
+                        citySelect.appendChild(option);
+                    });
+                    $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
+                })
+                .catch(error => {
+                    console.error('Error fetching cities:', error);
+                });
+        } else {
+            citySelect.innerHTML = '<option value="">Select your city</option>';
+            $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
+        }
+    }
+</script>
+
 
 @endsection
