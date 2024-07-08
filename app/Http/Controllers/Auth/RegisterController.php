@@ -49,6 +49,10 @@ class RegisterController extends Controller
             'pays' => $request->pays,
             'ville' => $request->ville,
             'role' => $request->role ?? 'agent', // Assigner le rôle par défaut si applicable
+            'deleted' => 0,
+            'bloquer' => 0,
+            'activer' => 1,
+
         ]);
 
         // Vérifier si l'utilisateur a été créé avec succès

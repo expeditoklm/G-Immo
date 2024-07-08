@@ -38,9 +38,9 @@ class PagesController extends Controller
     public function acceuil()
     {
         try {
-                $client = new Client(); // Créez une nouvelle instance de Client
-                $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
-            
+            $client = new Client(); // Créez une nouvelle instance de Client
+            $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+
             // liste des proprietes de status "à vendre"  
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
@@ -204,9 +204,9 @@ class PagesController extends Controller
     public function search(Request $request)
     {
         try {
-                $client = new Client(); // Créez une nouvelle instance de Client
-                $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
-            
+            $client = new Client(); // Créez une nouvelle instance de Client
+            $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+
             //liste des proprietes à vendre
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
@@ -265,8 +265,8 @@ class PagesController extends Controller
     {
         try {
             $client = new Client(); // Créez une nouvelle instance de Client
-                $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
-            
+            $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+
             // Obtenir le nombre de propriétés par type et statut
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
@@ -403,8 +403,8 @@ class PagesController extends Controller
             if (!$propertiesSingle) {
                 throw new \Exception('Property not found');
             }
-           
-            
+
+
             $proprietaire = $propertiesSingle->user;
             $propertiesSingle->vue = $propertiesSingle->vue + 1;
             $propertiesSingle->save();
@@ -426,9 +426,9 @@ class PagesController extends Controller
                 ->where('id', '!=', $id)
                 ->take(2)
                 ->where('deleted', 0)->get();
-                $client = new Client(); // Créez une nouvelle instance de Client
-                $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
-            
+            $client = new Client(); // Créez une nouvelle instance de Client
+            $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
+
             //enregistrement dun message 
             if ($request->has('btn_msg3')) {
                 Message::create([
@@ -458,7 +458,7 @@ class PagesController extends Controller
                 ])->with('success', 'E-mail sent successfully.');
             }
 
-            return view('pages/single', compact('geoNamesService','id', 'proprietaire', 'propertiesSingle', 'similarProperties'));
+            return view('pages/single', compact('geoNamesService', 'id', 'proprietaire', 'propertiesSingle', 'similarProperties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -661,24 +661,24 @@ class PagesController extends Controller
 
     public function changePassword(Request $request)
     {
-            $request->validate([
-              
-                'new_password' => 'nullable|string|min:8|confirmed',
-            ]);
+        $request->validate([
 
-            $user = FacadesAuth::user();
-           
-            if ($request->filled('new_password')) {
-                $user->password = bcrypt($request->new_password);
-            }
+            'new_password' => 'nullable|string|min:8|confirmed',
+        ]);
 
-            $user->save();
-            session(['message' => 'Mot de passe modifier avec succes.', 'message_type' => 'success']);
-            return redirect()->route('admin.dashbord');
-        
+        $user = FacadesAuth::user();
+
+        if ($request->filled('new_password')) {
+            $user->password = bcrypt($request->new_password);
+        }
+        $user->updated_at = \now();
+
+        $user->save();
+        session(['message' => 'Mot de passe modifier avec succes.', 'message_type' => 'success']);
+        return redirect()->route('admin.dashbord');
     }
 
-    
+
     public function getCities(Request $request)
     {
         $countryCode = $request->input('country_code');
@@ -703,7 +703,7 @@ class PagesController extends Controller
             $userCity = $this->geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
 
             $user = User::where('id', FacadesAuth::user()->id)->first();
-            return view('admin/profile', compact('user','userCountry','userCity'));
+            return view('admin/profile', compact('user', 'userCountry', 'userCity'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -731,7 +731,7 @@ class PagesController extends Controller
 
             //$user = User::where('id', FacadesAuth::user()->id)->first();
             return view('admin.modif-user-profile', compact(
-                
+
                 'countries',
                 'userCountryCode',
                 'userCountry',
@@ -763,14 +763,13 @@ class PagesController extends Controller
             $user->website = $website;
             $user->description = $description;
             $user->updated_at = \now();
-           
+
             if ($request->file('file')) {
                 $image = $request->file('file');
                 $imageName = time() . '.' . $image->extension();
                 $imagePath = $image->storeAs('uploads', $imageName, 'public');
 
-                $user->profile_img = '/storage/'.$imagePath;
-              
+                $user->profile_img = '/storage/' . $imagePath;
             }
             $user->save();
             session(['message' => 'Profile updated successfully.', 'message_type' => 'success']);
@@ -806,13 +805,22 @@ class PagesController extends Controller
         try {
             $client = new Client(); // Créez une nouvelle instance de Client
             $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
-        
+
             $properties = Propriete::where('user_id', FacadesAuth::id())
                 ->where('deleted', 0)
                 ->orderBy('updated_at', 'desc')
                 ->paginate(10);
 
-            return view('admin/my-properties', compact('properties','geoNamesService'));
+
+            $adminPropertiesView = Propriete::where('deleted', 0)
+                ->orderBy('updated_at', 'desc')
+                ->paginate(15);
+
+            $pagination = true;
+            $restaurer = false;
+            $titre = 'Liste Des Propriétés' ;
+
+            return view('admin/my-properties', compact('pagination','titre','restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -821,6 +829,9 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
+
+
+
 
     public function addProperty()
     {
@@ -1036,14 +1047,14 @@ class PagesController extends Controller
         try {
             $client = new Client(); // Créez une nouvelle instance de Client
             $geoNamesService = new GeoNamesService($client); // Passez l'instance de Client au service
-        
+
             $reviews = Comment::whereHas('propriete', function ($query) {
                 $query->where('user_id', FacadesAuth::id());
             })->orderBy('created_at', 'desc')
                 ->where('deleted', 0)
                 ->paginate(10);
 
-            return view('admin/reviews', compact('reviews','geoNamesService'));
+            return view('admin/reviews', compact('reviews', 'geoNamesService'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1112,7 +1123,7 @@ class PagesController extends Controller
         }
     }
 
-   
+
 
     public function suppression(Request $request)
     {
@@ -1132,6 +1143,8 @@ class PagesController extends Controller
                 $review = Comment::where('id', $id)->first();
                 $review->deleted = 1;
                 $review->updated_at = \now();
+                $propriete = Propriete::where('id', $review->propriete_id)->first();
+                $propriete->updated_at = \now();
                 $review->save();
                 return redirect()->route('admin.reviews')->with('success', 'Deleted successfully.');
             } elseif ($request->has('property_sup_id')) {
@@ -1148,6 +1161,8 @@ class PagesController extends Controller
                 $image->deleted = 1;
                 $image->updated_at = \now();
                 $image->save();
+                $propriete = Propriete::where('id', $image->propriete_id)->first();
+                $propriete->updated_at = \now();
                 return redirect()->route('admin.my-properties')->with('success', 'Deleted successfully.');
             }
         } catch (Exception $e) {
@@ -1202,8 +1217,6 @@ class PagesController extends Controller
                 $propertyImage->delete();
                 return response()->json(['success' => 'Item deleted successfully']);
             }
-
-           
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1212,7 +1225,7 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
-    
+
     public function checkImage($idProperty)
     {
         // Requête pour vérifier la présence d'une image
@@ -1226,9 +1239,14 @@ class PagesController extends Controller
     public function adminUsers()
     {
         try {
+            $users = User::where('deleted', 0)
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
 
-            return view('admin/users');
-           
+        $pagination = true;
+        $restaurer = false;
+        $titre = 'Liste Des Propriétés' ;
+            return view('admin/users', compact('pagination','restaurer','titre','users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1237,7 +1255,597 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
-    
+
+
+    public function adminUsersPost(Request $request)
+    {
+        try {
+            $nom_prenom = $request->input('nom_prenom');
+            $pays = $request->input('pays');
+            $ville = $request->input('ville');
+            $created_at = $request->input('created_at');
+
+
+            // Construire la requête de base
+            $query = User::query();
+
+            // Ajouter les filtres de recherche
+            if (!empty($nom_prenom)) {
+                $query->where('nom_prenom', $nom_prenom);
+            }
+
+            if (!empty($pays)) {
+                $query->where('pays', $pays);
+            }
+
+            if (!empty($ville)) {
+                $query->where('ville', $ville);
+            }
+
+            if (!empty($created_at)) {
+                $query->where('created_at', 'like', "%{$created_at}%");
+            }
+
+
+
+            // Paginer les résultats
+            $users = $query->where('deleted', 0)->paginate(10)->appends($request->except('page'));
+
+            // 6 proprietes à vendre recemment ajouté 
+            //$users = User::where('deleted', 0)->get();
+            return view('admin/users', compact('users'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function usersBloquerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $user = User::where('id', $id)->first();
+
+            $user->bloquer = '1';
+            $user->updateAdmin = now();
+            $user->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function usersDebloquerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $user = User::where('id', $id)->first();
+            $user->bloquer = '0';
+            $user->updateAdmin = now();
+            $user->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function usersActiverAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $user = User::where('id', $id)->first();
+
+            $user->activer = '0';
+            $user->updateAdmin = now();
+            $user->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function usersDesactiverAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $user = User::where('id', $id)->first();
+            $user->activer = '1';
+            $user->updateAdmin = now();
+            $user->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function usersSupprimerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $user = User::where('id', $id)->first();
+
+            $user->deleted = '1';
+            $user->updateAdmin = now();
+            $user->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
 
     
+    public function usersRestaurerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $user = User::where('id', $id)->first();
+
+            $user->deleted = '0';
+            $user->updateAdmin = now();
+            $user->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function propertyMasquerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $property = Propriete::where('id', $id)->first();
+
+            $property->masquer = '1';
+            $property->updateAdmin = now();
+            $property->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function propertyDemasquerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $property = Propriete::where('id', $id)->first();
+
+            $property->masquer = '0';
+            $property->updateAdmin = now();
+            $property->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function propertySupprimerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $property = Propriete::where('id', $id)->first();
+
+            $property->deleted = '1';
+            $property->updateAdmin = now();
+            $property->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+    
+
+    public function propertyRestaurerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $property = Propriete::where('id', $id)->first();
+
+            $property->deleted = '0';
+            $property->updateAdmin = now();
+            $property->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function propertyMettreAvantAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $property = Propriete::where('id', $id)->first();
+
+            $property->mettreAvant = \now();
+            $property->updateAdmin = now();
+            $property->save();
+            return response()->json(['success' => 'mise en avant successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function usersInterraction()
+    {
+
+        try {
+            $proprietes = Propriete::orderBy('updated_at', 'desc')->get();
+
+            return view('admin/users', compact('proprietes'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function usersAjouter()
+    {
+
+        try {
+            $users = User::orderBy('updateAdmin', 'desc')
+                ->where('created_at', 'desc')
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = false;
+            $titre = '10 Derniers Utilisateurs Ajoutés' ;
+
+            return view('admin/users', compact('pagination','titre','restaurer','users'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function usersModifier()
+    {
+
+        try {
+            $users = User::orderBy('updateAdmin', 'desc')
+                ->where('updated_at', 'desc')
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = false;
+            $titre = '10 Derniers Utilisateurs Modifiés' ;
+
+            return view('admin/users', compact('pagination','titre','restaurer','users'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function usersBloquer()
+    {
+
+        try {
+            $users = User::orderBy('updateAdmin', 'desc')
+                ->where('bloquer', 1)
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = false;
+            $titre = '10 Derniers Utilisateurs Bloqués' ;
+
+            return view('admin/users', compact('pagination','titre','restaurer','users'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function usersActiver()
+    {
+
+        try {
+            $users = User::orderBy('updateAdmin', 'desc')
+                ->where('activer', 1)
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = false;
+            $titre = '10 Derniers Utilisateurs Activés' ;
+
+            return view('admin/users', compact('pagination','titre','restaurer','users'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function usersSupprimer()
+    {
+
+        try {
+            $users = User::orderBy('updateAdmin', 'desc')
+                ->where('deleted', 1)
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = true;
+            $titre = '10 Dernières Utilisateurs Supprimées' ;
+
+            return view('admin/users', compact('pagination','titre','restaurer','users'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function myPropertiesPost()
+    {
+
+        try {
+            $countries = $this->geoNamesService->getCountries();
+            return view('pages/account', compact('countries'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function propertyAjouter()
+    {
+
+        try {
+            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+            $restaurer = false;
+            $properties = Propriete::where('id',0)->get();
+            $titre = '10 Dernières Propriétés Ajoutées' ;
+
+
+            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    
+
+    public function proprieteAjouter()
+    {
+
+        try {
+            $adminPropertiesView = Propriete::orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+            $restaurer = false;
+            $properties = Propriete::where('id',0)->get();
+            $titre = '10 Dernières Propriétés Ajoutées' ;
+
+
+            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function propertyModifier()
+    {
+
+        try {
+            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                ->orderBy('updated_at', 'desc')
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = false;
+            $properties = Propriete::where('id',0)->get();
+            $titre = '10 Dernières Propriétés Modifiées' ;
+
+
+            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function propertySupprimer()
+    {
+
+        try {
+            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                ->where('deleted', 1)
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = true;
+            $properties = Propriete::where('id',0)->get();
+            $titre = '10 Dernières Propriétés Supprimées' ;
+
+
+            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function propertyMasquer()
+    {
+
+        try {
+            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                ->where('masquer', 1)
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = false;
+            $properties = Propriete::where('id',0)->get();
+            $titre = '10 Dernières Propriétés Masquées' ;
+
+
+            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function propertyAvancer()
+    {
+
+        try {
+            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                ->orderBy('mettreAvant', 'desc')
+                ->limit(10)
+                ->get();
+                
+
+            $pagination = false;
+
+
+            $restaurer = false;
+            $properties = Propriete::where('id',0)->get();
+            $titre = '10 Dernières Propriétés Mis en avant' ;
+
+
+            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
 }

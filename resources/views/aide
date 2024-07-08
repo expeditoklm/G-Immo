@@ -152,7 +152,9 @@ return view('errors.custom', ['message' => $e->getMessage()]);
 
 
 
+@if($propertiesHigh->isNotEmpty())
 
+@endif
 
 
 
@@ -168,6 +170,20 @@ return view('errors.custom', ['message' => $e->getMessage()]);
 style="background-image: url('{{ asset($item->proprieteImages->first()->url) }}');"
 
 
+@if({{ $item->bloquer}} == 0)
+<img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
+
+@else
+<img src="{{ asset('assets/images/user/user1.png') }}" alt="image">
+@endif
+
+
+@isset($item->prix)
+{{ $item->prix }} XOF
+@endif
+
+
+
 @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
 <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
 @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
@@ -178,81 +194,4 @@ style="background-image: url('{{ asset($item->proprieteImages->first()->url) }}'
 
 
 
-
-
-
 src="{{ asset($item->proprieteImages->first()->url) }}"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

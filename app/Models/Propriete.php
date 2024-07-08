@@ -40,7 +40,7 @@ class Propriete extends Model
     /**
      * @var array
      */
-    protected $fillable = ['type_propriete_id', 'user_id', 'titre', 'description', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'surface', 'adresse', 'pays', 'ville', 'quartier', 'emailContact', 'nomContact', 'prenomContact', 'telContact', 'vue', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['type_propriete_id', 'masquer','mettreAvant','updateAdmin','user_id', 'titre', 'description', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'surface', 'adresse', 'pays', 'ville', 'quartier', 'emailContact', 'nomContact', 'prenomContact', 'telContact', 'vue', 'deleted', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

@@ -1394,35 +1394,11 @@ top-header-inner
 
 
 
-
-
-function submitForm() {
-        var form = document.getElementById('form1');
-
-        var formData = new FormData(form);
-
-        formData.append('uploadedImageUrls', JSON.stringify(uploadedImageUrls));
-        console.log('stringify:', JSON.stringify(uploadedImageUrls));
-
-        fetch("{{ route('modif-property-post') }}", {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            })  
-            .then(response => response.json())
-            .then(data => {
-                console.log('Server response:', data);
-                if (data.success) {
-                    window.location.href = "{{ route('admin.my-properties') }}";
-                } else {
-                    alert('Remplir le titre , le status et le type de la propriété.');
-                    console.error(data.error);
-                }
-            })
-            .catch(error => {
-                alert('Remplir le titre , le status et le type de la propriété');
-                console.error('Error adding property:', error);
-            });
-    }
+<div id="myModal-{{ $item->id }}" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-id="{{ $item->id }}">&times;</span>
+                    <p>Voulez-vous vraiment supprimer ?</p>
+                    <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0 confirm-delete" data-id="{{ $item->id }}" id="confirm-delete">Oui</a>
+                    <button class="btn btn-info btn-xs ml-5 mr-5 border-0 cancel-delete" data-id="{{ $item->id }}" id="cancel-delete">Non</button>
+                </div>
+            </div>                    document.getElementById('myModal-' + id).style.display = 'none';

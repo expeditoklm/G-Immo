@@ -42,7 +42,6 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::post('/get-cities', [PagesController::class, 'getCities'])->name('get-cities');
     Route::post('/change-password', [PagesController::class, 'changePassword'])->name('change-password');
     Route::get('/check-image/{idProperty}', [PagesController::class, 'checkImage']);
-    Route::get('/admin.users', [PagesController::class, 'adminUsers'])->name('admin.users');;
 
     FacadesAuth::routes();
 });
@@ -60,6 +59,39 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::post('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
+    Route::post('/my-properties-post', [PagesController::class, 'myPropertiesPost'])->name('admin.my-properties-post');
+
+    Route::get('/admin.users', [PagesController::class, 'adminUsers'])->name('admin.users');
+    Route::get('/admin.users-post', [PagesController::class, 'adminUsersPost'])->name('admin.users-post');
+
+    Route::get('/admin.users-interraction', [PagesController::class, 'usersInterraction'])->name('admin.users-interraction');
+    Route::get('/admin.users-ajouter', [PagesController::class, 'usersAjouter'])->name('admin.users-ajouter');
+    Route::get('/admin.users-modifier', [PagesController::class, 'usersModifier'])->name('admin.users-modifier');
+    Route::get('/admin.users-bloquer', [PagesController::class, 'usersBloquer'])->name('admin.users-bloquer');
+    Route::get('/admin.users-activer', [PagesController::class, 'usersActiver'])->name('admin.users-activer');
+    Route::get('/admin.users-supprimer', [PagesController::class, 'usersSupprimer'])->name('admin.users-supprimer');
+
+
+    Route::get('/admin.property-ajouter', [PagesController::class, 'propertyAjouter'])->name('admin.property-ajouter');
+    Route::get('/admin.propriete-ajouter', [PagesController::class, 'proprieteAjouter'])->name('admin.propriete-ajouter');
+    Route::get('/admin.property-modifier', [PagesController::class, 'propertyModifier'])->name('admin.property-modifier');
+    Route::get('/admin.property-supprimer', [PagesController::class, 'propertySupprimer'])->name('admin.property-supprimer');
+    Route::get('/admin.property-masquer', [PagesController::class, 'propertyMasquer'])->name('admin.users-masquer');
+    Route::get('/admin.property-avancer', [PagesController::class, 'propertyAvancer'])->name('admin.users-avancer');
+
+    Route::post('/ajax.users-bloquer', [PagesController::class, 'usersBloquerAjax'])->name('ajax.users-bloquer');
+    Route::post('/ajax.users-debloquer', [PagesController::class, 'usersDebloquerAjax'])->name('ajax.users-debloquer');
+    Route::get('/ajax.users-activer', [PagesController::class, 'usersActiverAjax'])->name('ajax.users-activer');
+    Route::get('/ajax.users-desactiver', [PagesController::class, 'usersDesactiverAjax'])->name('ajax.users-desactiver');
+    Route::get('/ajax.users-supprimer', [PagesController::class, 'usersSupprimerAjax'])->name('ajax.users-supprimer');
+    Route::get('/ajax.users-restaurer', [PagesController::class, 'usersRestaurerAjax'])->name('ajax.users-restaurer');
+
+    Route::get('/ajax.property-masquer', [PagesController::class, 'propertyMasquerAjax'])->name('ajax.property-masquer');
+    Route::get('/ajax.property-demasquer', [PagesController::class, 'propertyDemasquerAjax'])->name('ajax.property-demasquer');
+    Route::get('/ajax.property-supprimer', [PagesController::class, 'propertySupprimerAjax'])->name('ajax.property-supprimer');
+    Route::get('/ajax.property-mettreAvant', [PagesController::class, 'propertyMettreAvantAjax'])->name('ajax.property-mettreAvant');
+    Route::get('/ajax.property-restaurer', [PagesController::class, 'propertyRestaurerAjax'])->name('ajax.property-restaurer');
+
 
 
 
