@@ -535,9 +535,6 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
                                     </tr>
                                     @endforeach
-
-
-
                                 </tbody>
                             </table>
                             @endif

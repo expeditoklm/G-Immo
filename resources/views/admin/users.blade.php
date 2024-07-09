@@ -91,7 +91,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <div class="widget-boxed-header">
                             <h4>Filtre principal d'utilisateur</h4>
                         </div>
-                        <form class="form" method="get" action="{{ route('admin.users-post') }}">
+                        <form class="form" method="get" action="{{ route('admin.users') }}">
                             @csrf
                             <!-- Search Form -->
                             <div class="trip-search">
@@ -139,7 +139,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             <!-- More Search Options / End -->
                             <div class="col-lg-12 no-pds">
                                 <div class="at-col-default-mar">
-                                    <button class="btn btn-default hvr-bounce-to-right" type="submit">Search</button>
+                                    <button class="btn btn-default hvr-bounce-to-right" name="btn_user_filter" type="submit">Search</button>
                                 </div>
                             </div>
                         </form>
@@ -151,22 +151,92 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <div class="widget-boxed-body">
                             <div class="recent-post">
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.users-interraction' ? 'javascript:void(0)' : route('admin.users-interraction') }} "  class="btn btn-outline-primary">Utlisateurs interagit avec le système (10)</a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-interraction' ? 'javascript:void(0)' : route('admin.users-interraction') }} "  class="btn btn-outline-primary">
+                                            Utlisateurs interagit avec le système (10)
+                                        </a> -->
+
+                                        <a href="#" onclick="document.getElementById('post1').submit(); return false;" class="btn btn-outline-primary">
+                                        Utlisateurs interagit avec le système (10)
+                                        </a>
+
+                                        <form id="post1" action="{{ route('admin.users') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="users-interraction" value="users-interraction">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.users-ajouter' ? 'javascript:void(0)' : route('admin.users-ajouter') }} "  class="btn btn-outline-primary">10 Derniers utlisateurs ajoutés </a></span>
+                                    <span>
+                                       
+
+                                        <a href="#" onclick="document.getElementById('post2').submit(); return false;" class="btn btn-outline-primary">
+                                        10 Derniers utlisateurs ajoutés 
+                                        </a>
+
+                                        <form id="post2" action="{{ route('admin.users') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="users-ajouter" value="users-ajouter">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.users-modifier' ? 'javascript:void(0)' : route('admin.users-modifier') }} "  class="btn btn-outline-primary">10 Derniers utlisateurs modifiés </a></span>
+                                    <span>
+                                        <a href="#" onclick="document.getElementById('post3').submit(); return false;" class="btn btn-outline-primary">
+                                        10 Derniers utlisateurs modifiés
+                                        </a>
+
+                                        <form id="post3" action="{{ route('admin.users') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="users-modifier" value="users-modifier">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.users-bloquer' ? 'javascript:void(0)' : route('admin.users-bloquer') }} "  class="btn btn-outline-primary">10 Derniers utlisateurs bloqués </a></span>
+                                    <span>
+                                        
+
+                                        <a href="#" onclick="document.getElementById('post4').submit(); return false;" class="btn btn-outline-primary">
+                                        10 Derniers utlisateurs bloqués 
+                                        </a>
+
+                                        <form id="post4" action="{{ route('admin.users') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="users-bloquer" value="users-bloquer">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.users-activer' ? 'javascript:void(0)' : route('admin.users-activer') }} "  class="btn btn-outline-primary">10 Derniers utlisateurs activés </a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-activer' ? 'javascript:void(0)' : route('admin.users-activer') }} "  class="btn btn-outline-primary">
+                                            10 Derniers utlisateurs activés 
+                                        </a> -->
+
+                                        <a href="#" onclick="document.getElementById('post5').submit(); return false;" class="btn btn-outline-primary">
+                                        10 Derniers utlisateurs activés 
+                                        </a>
+
+                                        <form id="post5" action="{{ route('admin.users') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="users-activer" value="users-activer">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.users-supprimer' ? 'javascript:void(0)' : route('admin.users-supprimer') }} "  class="btn btn-outline-primary">10 Derniers utlisateurs supprimés </a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-supprimer' ? 'javascript:void(0)' : route('admin.users-supprimer') }} "  class="btn btn-outline-primary">
+                                            10 Derniers utlisateurs supprimés 
+                                        </a> -->
+
+                                        <a href="#" onclick="document.getElementById('post6').submit(); return false;" class="btn btn-outline-primary">
+                                        10 Derniers utlisateurs supprimés 
+                                        </a>
+
+                                        <form id="post6" action="{{ route('admin.users') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="users-supprimer" value="users-supprimer">
+                                        </form>
+                                    </span>
                                 </div>
 
                             </div>

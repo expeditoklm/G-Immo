@@ -1439,7 +1439,7 @@ class PagesController extends Controller
     }
 
 
-    public function adminUsers()
+    public function adminUsers(Request $request)
     {
         try {
             $users = User::where('deleted', 0)
@@ -1448,55 +1448,140 @@ class PagesController extends Controller
 
             $pagination = true;
             $restaurer = false;
-            $titre = 'Liste Des Propriétés';
+            $titre = 'Liste Des Utilisateurs';
+
+            if ($request->has('btn_user_filter')) {
+
+                $nom_prenom = $request->input('nom_prenom');
+                $pays = $request->input('pays');
+                $ville = $request->input('ville');
+                $created_at = $request->input('created_at');
+
+
+                // Construire la requête de base
+                $query = User::query();
+
+                // Ajouter les filtres de recherche
+                if (!empty($nom_prenom)) {
+                    $query->where('nom_prenom', 'like', '%' . $nom_prenom . '%');
+                }
+
+                if (!empty($pays)) {
+                    $query->where('pays', $pays);
+                }
+
+                if (!empty($ville)) {
+                    $query->where('ville', $ville);
+                }
+
+                if (!empty($created_at)) {
+                    $query->where('created_at', 'like', "%{$created_at}%");
+                }
+
+                $titre = 'Liste Des Utilisateurs';
+
+
+                // Paginer les résultats
+                $users = $query->where('deleted', 0)->paginate(10)->appends($request->except('page'));
+                return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
+            }
+            if ($request->has('users-interraction')) {
+                $users = User::whereHas('proprietes')
+                    ->orderBy('updated_at', 'desc')
+                    ->limit(10)
+                    ->get();
+
+                $pagination = false;
+                $restaurer = false;
+                $titre = 'Liste Des Utilisateurs Recemment Interragir avec le Système';
+
+                return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
+            }
+
+            if ($request->has('users-ajouter')) {
+
+                $users = User::orderBy('updateAdmin', 'desc')
+                    ->where('created_at', 'desc')
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Derniers Utilisateurs Ajoutés';
+
+
+                return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
+            }
+
+            if ($request->has('users-modifier')) {
+
+                $users = User::orderBy('updateAdmin', 'desc')
+                    ->where('updated_at', 'desc')
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Derniers Utilisateurs Modifiés';
+                return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
+            }
+
+            if ($request->has('users-bloquer')) {
+                $users = User::orderBy('updateAdmin', 'desc')
+                    ->where('bloquer', 1)
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Derniers Utilisateurs Bloqués';
+
+                return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
+            }
+
+            if ($request->has('users-activer')) {
+
+                $users = User::orderBy('updateAdmin', 'desc')
+                    ->where('activer', 1)
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Derniers Utilisateurs Activés';
+
+                return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
+            }
+
+            if ($request->has('users-supprimer')) {
+
+                $users = User::orderBy('updateAdmin', 'desc')
+                    ->where('deleted', 1)
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = true;
+                $titre = '10 Dernières Utilisateurs Supprimés';
+
+                return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
+            }
             return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-
-    public function adminUsersPost(Request $request)
-    {
-        try {
-            $nom_prenom = $request->input('nom_prenom');
-            $pays = $request->input('pays');
-            $ville = $request->input('ville');
-            $created_at = $request->input('created_at');
-
-
-            // Construire la requête de base
-            $query = User::query();
-
-            // Ajouter les filtres de recherche
-            if (!empty($nom_prenom)) {
-                $query->where('nom_prenom', $nom_prenom);
-            }
-
-            if (!empty($pays)) {
-                $query->where('pays', $pays);
-            }
-
-            if (!empty($ville)) {
-                $query->where('ville', $ville);
-            }
-
-            if (!empty($created_at)) {
-                $query->where('created_at', 'like', "%{$created_at}%");
-            }
-
-
-
-            // Paginer les résultats
-            $users = $query->where('deleted', 0)->paginate(10)->appends($request->except('page'));
-
-            // 6 proprietes à vendre recemment ajouté 
-            //$users = User::where('deleted', 0)->get();
-            return view('admin/users', compact('users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1713,323 +1798,5 @@ class PagesController extends Controller
     }
 
 
-    public function usersInterraction()
-    {
-
-        try {
-            $users = User::whereHas('proprietes')
-                ->orderBy('updated_at', 'desc')
-                ->limit(10)
-                ->get();
-
-            $pagination = false;
-            $restaurer = false;
-            $titre = 'Liste Des Utilisateurs Recemment Interragir avec le Système';
-            return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-
-    public function usersAjouter()
-    {
-
-        try {
-            $users = User::orderBy('updateAdmin', 'desc')
-                ->where('created_at', 'desc')
-                ->limit(10)
-                ->get();
-
-
-            $pagination = false;
-
-
-            $restaurer = false;
-            $titre = '10 Derniers Utilisateurs Ajoutés';
-
-            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-
-    public function usersModifier()
-    {
-
-        try {
-            $users = User::orderBy('updateAdmin', 'desc')
-                ->where('updated_at', 'desc')
-                ->limit(10)
-                ->get();
-
-
-            $pagination = false;
-
-
-            $restaurer = false;
-            $titre = '10 Derniers Utilisateurs Modifiés';
-
-            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-
-
-    public function usersBloquer()
-    {
-
-        try {
-            $users = User::orderBy('updateAdmin', 'desc')
-                ->where('bloquer', 1)
-                ->limit(10)
-                ->get();
-
-
-            $pagination = false;
-
-
-            $restaurer = false;
-            $titre = '10 Derniers Utilisateurs Bloqués';
-
-            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-    public function usersActiver()
-    {
-
-        try {
-            $users = User::orderBy('updateAdmin', 'desc')
-                ->where('activer', 1)
-                ->limit(10)
-                ->get();
-
-
-            $pagination = false;
-
-
-            $restaurer = false;
-            $titre = '10 Derniers Utilisateurs Activés';
-
-            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-    public function usersSupprimer()
-    {
-
-        try {
-            $users = User::orderBy('updateAdmin', 'desc')
-                ->where('deleted', 1)
-                ->limit(10)
-                ->get();
-
-
-            $pagination = false;
-
-
-            $restaurer = true;
-            $titre = '10 Dernières Utilisateurs Supprimées';
-
-            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-
-    public function myPropertiesPost()
-    {
-
-        try {
-            $countries = $this->geoNamesService->getCountries();
-            return view('pages/account', compact('countries'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-
-
-
-
-
-    // public function proprieteAjouter()
-    // {
-
-    //     try {
-    //         $adminPropertiesView = Propriete::orderBy('created_at', 'desc')
-    //             ->whereHas('user', function ($query) {
-    //                 $query->where('role', '!=', 'admin');
-    //             })
-    //             ->limit(10)
-    //             ->get();
-
-
-    //         $pagination = false;
-
-    //         $restaurer = false;
-    //         $titre = '10 Dernières Propriétés Ajoutées';
-    //         $isAdmin = auth()->user()->role === 'admin';
-
-    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-    //     } catch (Exception $e) {
-    //         // Log the exception if needed
-    //         Log::error($e->getMessage());
-
-    //         // Return a custom error view
-    //         return view('errors/404', ['message' => $e->getMessage()]);
-    //     }
-    // }
-
-
-    // public function propertyModifier()
-    // {
-
-    //     try {
-    //         $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-    //             ->orderBy('updated_at', 'desc')
-    //             ->limit(10)
-    //             ->get();
-
-
-    //         $pagination = false;
-
-
-    //         $restaurer = false;
-    //         $properties = Propriete::where('id', 0)->get();
-    //         $titre = '10 Dernières Propriétés Modifiées';
-    //         $isAdmin = auth()->user()->role === 'admin';
-
-    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-    //     } catch (Exception $e) {
-    //         // Log the exception if needed
-    //         Log::error($e->getMessage());
-
-    //         // Return a custom error view
-    //         return view('errors/404', ['message' => $e->getMessage()]);
-    //     }
-    // }
-
-
-
-    // public function propertySupprimer()
-    // {
-
-    //     try {
-    //         $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-    //             ->where('deleted', 1)
-    //             ->limit(10)
-    //             ->get();
-
-
-    //         $pagination = false;
-
-
-    //         $restaurer = true;
-    //         $titre = '10 Dernières Propriétés Supprimées';
-    //         $isAdmin = auth()->user()->role === 'admin';
-
-
-    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-    //     } catch (Exception $e) {
-    //         // Log the exception if needed
-    //         Log::error($e->getMessage());
-
-    //         // Return a custom error view
-    //         return view('errors/404', ['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // public function propertyMasquer()
-    // {
-
-    //     try {
-    //         $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-    //             ->where('masquer', 1)
-    //             ->limit(10)
-    //             ->get();
-
-
-    //         $pagination = false;
-
-
-    //         $restaurer = false;
-    //         $titre = '10 Dernières Propriétés Masquées';
-    //         $isAdmin = auth()->user()->role === 'admin';
-
-
-    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-    //     } catch (Exception $e) {
-    //         // Log the exception if needed
-    //         Log::error($e->getMessage());
-
-    //         // Return a custom error view
-    //         return view('errors/404', ['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // public function propertyAvancer()
-    // {
-
-    //     try {
-    //         $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-    //             ->orderBy('mettreAvant', 'desc')
-    //             ->limit(10)
-    //             ->get();
-
-
-    //         $pagination = false;
-
-
-    //         $restaurer = false;
-    //         $titre = '10 Dernières Propriétés Mis en avant';
-    //         $isAdmin = auth()->user()->role === 'admin';
-
-
-    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-    //     } catch (Exception $e) {
-    //         // Log the exception if needed
-    //         Log::error($e->getMessage());
-
-    //         // Return a custom error view
-    //         return view('errors/404', ['message' => $e->getMessage()]);
-    //     }
-    // }
+ 
 }
