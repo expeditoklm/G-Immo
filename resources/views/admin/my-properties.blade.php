@@ -74,6 +74,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 @section('content')
 
 
+@if ($isAdmin)
+
 <section class="properties-right list featured portfolio blog pt-5">
     <div class="container">
         <section class="headings-2 pt-0 pb-4">
@@ -99,7 +101,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <div class="widget-boxed-header">
                             <h4>Filtre principal de propriété</h4>
                         </div>
-                        <form class="form" method="get" action="{{ route('admin.my-properties-post') }}">
+                        <form class="form" id="superficie-form" method="get" action="{{ route('admin.my-properties') }}">
                             @csrf
                             <!-- Search Form -->
                             <div class="trip-search">
@@ -125,31 +127,55 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!--/ End Form Location -->
                                 <!-- Form Categories -->
                                 <div class="form-group categories">
-                                    <div class="nice-select form-control wide" name="type_propriete_id" tabindex="0">
+                                <select name="type_propriete_id" class="d-none">
+                                    <option value="">Type de Propriété</option>
+                                    @foreach ($typeProprietes as $item)
+                                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                                            @endforeach
+
+                                    </select>
+                                    <div class="nice-select form-control wide"  tabindex="0">
                                         <span class="current"><i class="fa fa-home" aria-hidden="true"></i>Type de Propriété</span>
                                         <ul class="list">
-                                            <li data-value="1" class="option selected">House</li>
-                                            <li data-value="3" class="option">Single Family</li>
+                                            @foreach ($typeProprietes as $item)
+                                            <li data-value="{{ $item->id }}" class="option selected">{{ $item->libelle }}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                                 <!--/ End Form Categories -->
                                 <!-- Form Property Status -->
                                 <div class="form-group categories">
-                                    <div class="nice-select form-control wide" name="status" tabindex="0">
+                                <select name="status" class="d-none">
+                                    <option value="">Status</option>
+
+                                     
+                                            <option value="For Sale">Vendre</option>
+                                            <option value="Rental">Louer</option>
+                                    </select>
+                                    <div class="nice-select form-control wide"  tabindex="0">
                                         <span class="current"><i class="fa fa-home"></i>Status de la Propriété</span>
                                         <ul class="list">
-                                            <li data-value="1" class="option selected">Vendre</li>
-                                            <li data-value="2" class="option">Louer</li>
+                                            <li data-value="For Sale" class="option selected">Vendre</li>
+                                            <li data-value="Rental" class="option">Louer</li>
                                         </ul>
                                     </div>
                                 </div>
                                 <!--/ End Form Property Status -->
                                 <!-- Form Bathrooms -->
                                 <div class="form-group bath">
-                                    <div class="nice-select form-control wide" name="nbPiece" tabindex="0">
+                                <select name="nbPiece" class="d-none">
+                                    <option value=""></option>
+
+                                        @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                            <option value="6+">6+</option>
+                                    </select>
+                                    <div class="nice-select form-control wide"  tabindex="0">
                                         <span class="current"><i class="fa fa-bath" aria-hidden="true"></i>Pièce</span>
                                         <ul class="list">
+                                        <li data-value="" class="option">Nombre de pièce</li>
+
                                             @for ($i = 1; $i <= 6; $i++) <option data-value="{{ $i }}" class="option">{{ $i }}</option>
                                                 @endfor
                                                 <option data-value="6+" class="option">6+</option>
@@ -158,9 +184,18 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <!-- Form Bedrooms -->
                                 <div class="form-group beds">
-                                    <div class="nice-select form-control wide" name="nbChambre" tabindex="0">
+                                <select name="nbChambre" class="d-none">
+                                    <option value=""></option>
+
+                                        @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                            <option value="6+">6+</option>
+                                    </select>
+                                    <div class="nice-select form-control wide"  tabindex="0">
                                         <span class="current"><i class="fa fa-bed" aria-hidden="true"></i> Chambre</span>
                                         <ul class="list">
+                                        <li data-value="" class="option">Nombre de chambre</li>
+
                                             @for ($i = 1; $i <= 6; $i++) <option data-value="{{ $i }}" class="option">{{ $i }}</option>
                                                 @endfor
                                                 <option data-value="6+" class="option">6+</option>
@@ -170,15 +205,27 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!--/ End Form Bedrooms -->
                                 <!-- Form Bathrooms -->
                                 <div class="form-group bath">
-                                    <div class="nice-select form-control wide" name="nbToillete" tabindex="0">
+                                    <select name="nbToillete" class="d-none">
+                                    <option value=""></option>
+
+                                        @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                            <option value="6+">6+</option>
+                                    </select>
+                                    <div class="nice-select form-control wide" tabindex="0">
                                         <span class="current"><i class="fa fa-bath" aria-hidden="true"></i> Toillete</span>
                                         <ul class="list">
-                                            @for ($i = 1; $i <= 6; $i++) <option data-value="{{ $i }}" class="option">{{ $i }}</option>
+                                        <li data-value="" class="option">Nombre de toillete</li>
+
+                                            @for ($i = 1; $i <= 6; $i++) <li data-value="{{ $i }}" class="option">{{ $i }}</li>
                                                 @endfor
-                                                <option data-value="6+" class="option">6+</option>
+                                                <li data-value="6+" class="option">6+</li>
                                         </ul>
                                     </div>
+                                    <!-- Ajoutez l'attribut name ici pour que le formulaire puisse récupérer la valeur -->
+
                                 </div>
+
 
                                 <div class="form-group looking mt-4">
                                     <div class=" first-select wide">
@@ -192,7 +239,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <div class="form-group looking mt-4">
                                     <div class=" first-select wide">
                                         <div class="main-search-input-item">
-                                            <input type="date" name="datePub" placeholder="Entrer la date de pub ..." value="" />
+                                            <input type="date" name="created_at" placeholder="Entrer la date de pub ..." value="" />
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +248,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <div class="form-group looking mt-4">
                                     <div class=" first-select wide">
                                         <div class="main-search-input-item">
-                                            <input type="text" name="proprietaire_name" placeholder="Nom du propriétaire ..." value="" />
+                                            <input type="text" name="user_name" placeholder="Nom du propriétaire ..." value="" />
                                         </div>
                                     </div>
                                 </div>
@@ -230,33 +277,37 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             <div class="more-search-options relative">
                                 <!-- Checkboxes -->
                                 <div class="checkboxes one-in-row margin-bottom-10">
-                                    <input id="check-2" type="checkbox" name="check">
-                                    <label for="check-15">Outdoor Shower</label>
+                                    @foreach ($caracteristiques as $item)
+                                    <input id="{{ $item->id }}" type="checkbox" name="check">
+                                    <label for="{{ $item->id }}">{{ $item->libelle }}</label>
+                                    @endforeach
                                 </div>
+
+
                                 <!-- Checkboxes / End -->
                             </div>
                             <!-- More Search Options / End -->
                             <div class="col-lg-12 no-pds">
                                 <div class="at-col-default-mar">
-                                    <button class="btn btn-default hvr-bounce-to-right" type="submit">Rechercher</button>
+                                    <button class="btn btn-default hvr-bounce-to-right" name="filtre_btn" type="submit">Rechercher</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="widget-boxed popular mt-5 mb-0">
-                    <div class="widget-boxed-header">
+                        <div class="widget-boxed-header">
                             <h4>Action&nbsp;Récent&nbsp;(Utilisateur)</h4>
                         </div>
                         <div class="widget-boxed-body mb-4 ">
                             <div class="recent-post">
                                 <div class="tags">
-                                    <span><a class="btn btn-outline-primary">10 Dernières propriétés ajoutées </a></span>
+                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.propriete-ajouter' ? 'javascript:void(0)' : route('admin.propriete-ajouter') }} " class="btn btn-outline-primary">10 Dernières propriétés ajoutées </a></span>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="widget-boxed-header">
-                            <h4>Action&nbsp;Récent&nbsp;(Administrateur)</h4>
+                            <h4>Action&nbsp;Récent&nbsp;(Administra...)</h4>
                         </div>
                         <div class="widget-boxed-body">
                             <div class="recent-post">
@@ -288,7 +339,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     @endif
                     <div class="section-body listing-table">
                         <div class="table-responsive table-container">
-                        @if($adminPropertiesView->isNotEmpty())
+                            @if($adminPropertiesView->isNotEmpty())
                             <table class="table table-striped table-fixed-header">
                                 <thead>
                                     <tr>
@@ -415,7 +466,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
                                 </tbody>
                             </table>
-                        @endif
+                            @endif
                         </div>
                         @if($adminPropertiesView->isNotEmpty() && $pagination == true)
                         <div class="pagination-container">
@@ -480,7 +531,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 </section>
 
 
-
+@else
 
 @if($properties->isNotEmpty())
 <div class="my-properties">
@@ -637,6 +688,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 
 </div>
+@endif
 @endif
 @endsection
 
@@ -850,6 +902,5 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         });
     });
 </script>
-
 
 @endsection

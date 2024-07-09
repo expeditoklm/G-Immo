@@ -262,11 +262,13 @@
                                             <i class="fas fa-paste"></i>Commentaires
                                         </a>
                                     </li>
+                                    @if ($user->role == "admin")
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'javascript:void(0)' : route('admin.users') }}">
                                             <i class="fas fa-paste"></i>Utilisateurs
                                         </a>
                                     </li>
+                                    @endif
 
 
                                 </ul>
@@ -312,13 +314,13 @@
                                                 <i class="fa fa-lock mr-3"></i>Commentaires
                                             </a>
                                         </li>
-
+                                        @if ($user->role == "admin")
                                         <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'javascript:void(0)' : route('admin.users') }}">
-                                                <i class="fas fa-paste"></i>Utilisateurs
+                                                <i class="fas fa-paste mr-3"></i>Utilisateurs
                                             </a>
                                         </li>
-
+                                        @endif
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn left-aligned-btn w-100 text-left">

@@ -800,7 +800,7 @@ class PagesController extends Controller
 
 
 
-    public function myProperties()
+    public function myProperties(Request $request)
     {
         try {
             $client = new Client(); // Créez une nouvelle instance de Client
@@ -818,9 +818,93 @@ class PagesController extends Controller
 
             $pagination = true;
             $restaurer = false;
-            $titre = 'Liste Des Propriétés' ;
+            $titre = 'Liste Des Propriétés';
+            $isAdmin = auth()->user()->role === 'admin';
+            $typeProprietes = TypePropriete::get();
+            $caracteristiques = Caracteristique::get();
 
-            return view('admin/my-properties', compact('pagination','titre','restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
+            if ($request->has('superficie_min')) {
+                //dd($request->superficie_min);
+                // Récupérer les données du formulaire
+                $filters = $request->only(['prix_max', 'prix_min', 'superficie_max', 'superficie_min', 'titre', 'ville', 'type_propriete_id', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'created_at', 'user_name', 'caracteristiques']);
+
+                // Construire la requête pour filtrer les propriétés
+                $properties = Propriete::query();
+
+                // Appliquer les filtres sur la requête
+                if (!empty($filters['titre'])) {
+                    $properties->where('titre', 'like', '%' . $filters['titre'] . '%');
+                }
+
+                if (!empty($filters['ville'])) {
+                    $properties->where('ville', $filters['ville']);
+                }
+
+                if (!empty($filters['type_propriete_id'])) {
+                    $properties->where('type_propriete_id', $filters['type_propriete_id']);
+                }
+
+                if (!empty($filters['status'])) {
+                    $properties->where('status', $filters['status']);
+                }
+
+                if (!empty($filters['nbPiece'])) {
+                    $properties->where('nbPiece', $filters['nbPiece']);
+                }
+
+                if (!empty($filters['nbChambre'])) {
+                    $properties->where('nbChambre', $filters['nbChambre']);
+                }
+
+                if (!empty($filters['nbToillete'])) {
+                    $properties->where('nbToillete', $filters['nbToillete']);
+                }
+
+                if (!empty($filters['prix'])) {
+                    $properties->where('prix', '<=', $filters['prix']);
+                }
+
+
+                if (!empty($filters['superficie_max'])) {
+                    $properties->where('surface', '<=', $filters['superficie_max']);
+                }
+                if (!empty($filters['superficie_min'])) {
+                    $properties->where('surface', '>=', $filters['superficie_min']);
+                }
+
+                if (!empty($filters['prix_max'])) {
+                    $properties->where('prix', '<=', $filters['prix_max']);
+                }
+                if (!empty($filters['prix_min'])) {
+                    $properties->where('prix', '>=', $filters['prix_min']);
+                }
+
+
+
+                if (!empty($filters['created_at'])) {
+                    $properties->whereDate('created_at', 'like', '%' . $filters['created_at'] . '%');
+                }
+
+                if (!empty($filters['user_name'])) {
+                    $properties->whereHas('user', function ($query) use ($filters) {
+                        $query->where('nom_prenom', 'like', '%' . $filters['user_name'] . '%');
+                    });
+                }
+
+                // Filtrer par caractéristiques
+                if (!empty($filters['caracteristiques'])) {
+                    $properties->whereHas('caracteristiques', function ($query) use ($filters) {
+                        $query->whereIn('caracteristique_id', $filters['caracteristiques']);
+                    });
+                }
+
+                // Exécuter la requête et récupérer les résultats
+                $adminPropertiesView = $properties->orderBy('created_at', 'desc')->paginate(10);
+
+                // Retourner les résultats à la vue ou faire tout autre traitement nécessaire
+                return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
+            };
+            return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -891,6 +975,10 @@ class PagesController extends Controller
             // Sauvegarde des caractéristiques
             if ($request->has('caracteristiques')) {
                 $property->caracteristiques()->sync($request->caracteristiques);
+            }
+
+            if ($request->has('addByAdmin')) {
+                $property->updateAdmin =  \now();
             }
             // Sauvegarde des images
             $uploadedImageUrls = json_decode($request->uploadedImageUrls, true);
@@ -1240,13 +1328,13 @@ class PagesController extends Controller
     {
         try {
             $users = User::where('deleted', 0)
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
+                ->orderBy('created_at', 'desc')
+                ->paginate(15);
 
-        $pagination = true;
-        $restaurer = false;
-        $titre = 'Liste Des Propriétés' ;
-            return view('admin/users', compact('pagination','restaurer','titre','users'));
+            $pagination = true;
+            $restaurer = false;
+            $titre = 'Liste Des Propriétés';
+            return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1396,7 +1484,7 @@ class PagesController extends Controller
         }
     }
 
-    
+
     public function usersRestaurerAjax(Request $request)
     {
 
@@ -1469,7 +1557,7 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
-    
+
 
     public function propertyRestaurerAjax(Request $request)
     {
@@ -1514,9 +1602,15 @@ class PagesController extends Controller
     {
 
         try {
-            $proprietes = Propriete::orderBy('updated_at', 'desc')->get();
+            $users = User::whereHas('proprietes')
+                ->orderBy('updated_at', 'desc')
+                ->limit(10)
+                ->get();
 
-            return view('admin/users', compact('proprietes'));
+            $pagination = false;
+            $restaurer = false;
+            $titre = 'Liste Des Utilisateurs Recemment Interragir avec le Système';
+            return view('admin/users', compact('pagination', 'restaurer', 'titre', 'users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1535,15 +1629,15 @@ class PagesController extends Controller
                 ->where('created_at', 'desc')
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = false;
-            $titre = '10 Derniers Utilisateurs Ajoutés' ;
+            $titre = '10 Derniers Utilisateurs Ajoutés';
 
-            return view('admin/users', compact('pagination','titre','restaurer','users'));
+            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1562,15 +1656,15 @@ class PagesController extends Controller
                 ->where('updated_at', 'desc')
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = false;
-            $titre = '10 Derniers Utilisateurs Modifiés' ;
+            $titre = '10 Derniers Utilisateurs Modifiés';
 
-            return view('admin/users', compact('pagination','titre','restaurer','users'));
+            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1590,15 +1684,15 @@ class PagesController extends Controller
                 ->where('bloquer', 1)
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = false;
-            $titre = '10 Derniers Utilisateurs Bloqués' ;
+            $titre = '10 Derniers Utilisateurs Bloqués';
 
-            return view('admin/users', compact('pagination','titre','restaurer','users'));
+            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1616,15 +1710,15 @@ class PagesController extends Controller
                 ->where('activer', 1)
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = false;
-            $titre = '10 Derniers Utilisateurs Activés' ;
+            $titre = '10 Derniers Utilisateurs Activés';
 
-            return view('admin/users', compact('pagination','titre','restaurer','users'));
+            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1642,15 +1736,15 @@ class PagesController extends Controller
                 ->where('deleted', 1)
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = true;
-            $titre = '10 Dernières Utilisateurs Supprimées' ;
+            $titre = '10 Dernières Utilisateurs Supprimées';
 
-            return view('admin/users', compact('pagination','titre','restaurer','users'));
+            return view('admin/users', compact('pagination', 'titre', 'restaurer', 'users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1686,16 +1780,17 @@ class PagesController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
             $restaurer = false;
-            $properties = Propriete::where('id',0)->get();
-            $titre = '10 Dernières Propriétés Ajoutées' ;
+            $properties = Propriete::where('id', 0)->get();
+            $titre = '10 Dernières Propriétés Ajoutées';
+            $isAdmin = auth()->user()->role === 'admin';
 
 
-            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1706,25 +1801,28 @@ class PagesController extends Controller
     }
 
 
-    
+
 
     public function proprieteAjouter()
     {
 
         try {
             $adminPropertiesView = Propriete::orderBy('created_at', 'desc')
+                ->whereHas('user', function ($query) {
+                    $query->where('role', '!=', 'admin');
+                })
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
             $restaurer = false;
-            $properties = Propriete::where('id',0)->get();
-            $titre = '10 Dernières Propriétés Ajoutées' ;
+            $properties = Propriete::where('id', 0)->get();
+            $titre = '10 Dernières Propriétés Ajoutées';
+            $isAdmin = auth()->user()->role === 'admin';
 
-
-            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1743,17 +1841,17 @@ class PagesController extends Controller
                 ->orderBy('updated_at', 'desc')
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = false;
-            $properties = Propriete::where('id',0)->get();
-            $titre = '10 Dernières Propriétés Modifiées' ;
+            $properties = Propriete::where('id', 0)->get();
+            $titre = '10 Dernières Propriétés Modifiées';
+            $isAdmin = auth()->user()->role === 'admin';
 
-
-            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1773,17 +1871,18 @@ class PagesController extends Controller
                 ->where('deleted', 1)
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = true;
-            $properties = Propriete::where('id',0)->get();
-            $titre = '10 Dernières Propriétés Supprimées' ;
+            $properties = Propriete::where('id', 0)->get();
+            $titre = '10 Dernières Propriétés Supprimées';
+            $isAdmin = auth()->user()->role === 'admin';
 
 
-            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1801,17 +1900,18 @@ class PagesController extends Controller
                 ->where('masquer', 1)
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = false;
-            $properties = Propriete::where('id',0)->get();
-            $titre = '10 Dernières Propriétés Masquées' ;
+            $properties = Propriete::where('id', 0)->get();
+            $titre = '10 Dernières Propriétés Masquées';
+            $isAdmin = auth()->user()->role === 'admin';
 
 
-            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1829,17 +1929,18 @@ class PagesController extends Controller
                 ->orderBy('mettreAvant', 'desc')
                 ->limit(10)
                 ->get();
-                
+
 
             $pagination = false;
 
 
             $restaurer = false;
-            $properties = Propriete::where('id',0)->get();
-            $titre = '10 Dernières Propriétés Mis en avant' ;
+            $properties = Propriete::where('id', 0)->get();
+            $titre = '10 Dernières Propriétés Mis en avant';
+            $isAdmin = auth()->user()->role === 'admin';
 
 
-            return view('admin/my-properties', compact('pagination','titre','restaurer','adminPropertiesView','properties'));
+            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
