@@ -904,6 +904,121 @@ class PagesController extends Controller
                 // Retourner les résultats à la vue ou faire tout autre traitement nécessaire
                 return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
             };
+
+
+            if ($request->has('property-ajouter')) {
+
+                $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+                $restaurer = false;
+                $titre = '10 Dernières Propriétés Ajoutées';
+                $isAdmin = auth()->user()->role === 'admin';
+                return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
+            }
+
+
+            if ($request->has('properte-ajouter')) {
+                $adminPropertiesView = Propriete::orderBy('created_at', 'desc')
+                    ->whereHas('user', function ($query) {
+                        $query->where('role', '!=', 'admin');
+                    })
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+                $restaurer = false;
+                $titre = '10 Dernières Propriétés Ajoutées';
+                $isAdmin = auth()->user()->role === 'admin';
+                return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
+            }
+
+
+            if ($request->has('property-modifier')) {
+                $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                    ->orderBy('updated_at', 'desc')
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Dernières Propriétés Modifiées';
+                $isAdmin = auth()->user()->role === 'admin';
+                return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
+            }
+
+
+            if ($request->has('property-supprimer')) {
+
+                $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                    ->where('deleted', 1)
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = true;
+                $titre = '10 Dernières Propriétés Supprimées';
+                $isAdmin = auth()->user()->role === 'admin';
+
+                return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
+            }
+
+
+            if ($request->has('property-masquer')) {
+
+                $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                    ->where('masquer', 1)
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Dernières Propriétés Masquées';
+                $isAdmin = auth()->user()->role === 'admin';
+
+
+
+                return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
+            }
+
+
+            if ($request->has('property-avancer')) {
+
+                $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+                    ->orderBy('mettreAvant', 'desc')
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Dernières Propriétés Mis en avant';
+                $isAdmin = auth()->user()->role === 'admin';
+
+
+
+
+                return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
+            }
+
             return view('admin/my-properties', compact('caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties', 'geoNamesService'));
         } catch (Exception $e) {
             // Log the exception if needed
@@ -1772,181 +1887,149 @@ class PagesController extends Controller
 
 
 
-    public function propertyAjouter()
-    {
-
-        try {
-            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-                ->orderBy('created_at', 'desc')
-                ->limit(10)
-                ->get();
-
-
-            $pagination = false;
-
-            $restaurer = false;
-            $properties = Propriete::where('id', 0)->get();
-            $titre = '10 Dernières Propriétés Ajoutées';
-            $isAdmin = auth()->user()->role === 'admin';
-
-
-            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
 
 
 
+    // public function proprieteAjouter()
+    // {
 
-    public function proprieteAjouter()
-    {
-
-        try {
-            $adminPropertiesView = Propriete::orderBy('created_at', 'desc')
-                ->whereHas('user', function ($query) {
-                    $query->where('role', '!=', 'admin');
-                })
-                ->limit(10)
-                ->get();
-
-
-            $pagination = false;
-
-            $restaurer = false;
-            $properties = Propriete::where('id', 0)->get();
-            $titre = '10 Dernières Propriétés Ajoutées';
-            $isAdmin = auth()->user()->role === 'admin';
-
-            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
+    //     try {
+    //         $adminPropertiesView = Propriete::orderBy('created_at', 'desc')
+    //             ->whereHas('user', function ($query) {
+    //                 $query->where('role', '!=', 'admin');
+    //             })
+    //             ->limit(10)
+    //             ->get();
 
 
-    public function propertyModifier()
-    {
+    //         $pagination = false;
 
-        try {
-            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-                ->orderBy('updated_at', 'desc')
-                ->limit(10)
-                ->get();
+    //         $restaurer = false;
+    //         $titre = '10 Dernières Propriétés Ajoutées';
+    //         $isAdmin = auth()->user()->role === 'admin';
+
+    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+    //     } catch (Exception $e) {
+    //         // Log the exception if needed
+    //         Log::error($e->getMessage());
+
+    //         // Return a custom error view
+    //         return view('errors/404', ['message' => $e->getMessage()]);
+    //     }
+    // }
 
 
-            $pagination = false;
+    // public function propertyModifier()
+    // {
+
+    //     try {
+    //         $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+    //             ->orderBy('updated_at', 'desc')
+    //             ->limit(10)
+    //             ->get();
 
 
-            $restaurer = false;
-            $properties = Propriete::where('id', 0)->get();
-            $titre = '10 Dernières Propriétés Modifiées';
-            $isAdmin = auth()->user()->role === 'admin';
+    //         $pagination = false;
 
-            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
 
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
+    //         $restaurer = false;
+    //         $properties = Propriete::where('id', 0)->get();
+    //         $titre = '10 Dernières Propriétés Modifiées';
+    //         $isAdmin = auth()->user()->role === 'admin';
+
+    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+    //     } catch (Exception $e) {
+    //         // Log the exception if needed
+    //         Log::error($e->getMessage());
+
+    //         // Return a custom error view
+    //         return view('errors/404', ['message' => $e->getMessage()]);
+    //     }
+    // }
 
 
 
-    public function propertySupprimer()
-    {
+    // public function propertySupprimer()
+    // {
 
-        try {
-            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-                ->where('deleted', 1)
-                ->limit(10)
-                ->get();
-
-
-            $pagination = false;
+    //     try {
+    //         $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+    //             ->where('deleted', 1)
+    //             ->limit(10)
+    //             ->get();
 
 
-            $restaurer = true;
-            $properties = Propriete::where('id', 0)->get();
-            $titre = '10 Dernières Propriétés Supprimées';
-            $isAdmin = auth()->user()->role === 'admin';
+    //         $pagination = false;
 
 
-            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-    public function propertyMasquer()
-    {
-
-        try {
-            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-                ->where('masquer', 1)
-                ->limit(10)
-                ->get();
+    //         $restaurer = true;
+    //         $titre = '10 Dernières Propriétés Supprimées';
+    //         $isAdmin = auth()->user()->role === 'admin';
 
 
-            $pagination = false;
+    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+    //     } catch (Exception $e) {
+    //         // Log the exception if needed
+    //         Log::error($e->getMessage());
+
+    //         // Return a custom error view
+    //         return view('errors/404', ['message' => $e->getMessage()]);
+    //     }
+    // }
+
+    // public function propertyMasquer()
+    // {
+
+    //     try {
+    //         $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+    //             ->where('masquer', 1)
+    //             ->limit(10)
+    //             ->get();
 
 
-            $restaurer = false;
-            $properties = Propriete::where('id', 0)->get();
-            $titre = '10 Dernières Propriétés Masquées';
-            $isAdmin = auth()->user()->role === 'admin';
+    //         $pagination = false;
 
 
-            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
-
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
-
-    public function propertyAvancer()
-    {
-
-        try {
-            $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
-                ->orderBy('mettreAvant', 'desc')
-                ->limit(10)
-                ->get();
+    //         $restaurer = false;
+    //         $titre = '10 Dernières Propriétés Masquées';
+    //         $isAdmin = auth()->user()->role === 'admin';
 
 
-            $pagination = false;
+    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+    //     } catch (Exception $e) {
+    //         // Log the exception if needed
+    //         Log::error($e->getMessage());
+
+    //         // Return a custom error view
+    //         return view('errors/404', ['message' => $e->getMessage()]);
+    //     }
+    // }
+
+    // public function propertyAvancer()
+    // {
+
+    //     try {
+    //         $adminPropertiesView = Propriete::orderBy('updateAdmin', 'desc')
+    //             ->orderBy('mettreAvant', 'desc')
+    //             ->limit(10)
+    //             ->get();
 
 
-            $restaurer = false;
-            $properties = Propriete::where('id', 0)->get();
-            $titre = '10 Dernières Propriétés Mis en avant';
-            $isAdmin = auth()->user()->role === 'admin';
+    //         $pagination = false;
 
 
-            return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
-        } catch (Exception $e) {
-            // Log the exception if needed
-            Log::error($e->getMessage());
+    //         $restaurer = false;
+    //         $titre = '10 Dernières Propriétés Mis en avant';
+    //         $isAdmin = auth()->user()->role === 'admin';
 
-            // Return a custom error view
-            return view('errors/404', ['message' => $e->getMessage()]);
-        }
-    }
+
+    //         return view('admin/my-properties', compact('isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+    //     } catch (Exception $e) {
+    //         // Log the exception if needed
+    //         Log::error($e->getMessage());
+
+    //         // Return a custom error view
+    //         return view('errors/404', ['message' => $e->getMessage()]);
+    //     }
+    // }
 }

@@ -96,44 +96,46 @@ jQuery(document).on('ready', function ($) {
     });
     
 
-
-    // Price Range
-    $("#price-range").each(function () {
-
-        var dataMin = $(this).attr('data-min');
-        var dataMax = $(this).attr('data-max');
-        var dataUnit = $(this).attr('data-unit');
-
-        $(this).append("<input type='text' class='first-slider-value' disabled/>"+
-            "<input type='text' class='second-slider-value' disabled/>"+
-            "<input type='hidden' class='prix-min' name='prix_min'/>" +
-            "<input type='hidden' class='prix-max' name='prix_max'/>");
-
-
-        $(this).slider({
-
-            range: true,
-            min: dataMin,
-            max: dataMax,
-            values: [dataMin, dataMax],
-
-            slide: function (event, ui) {
-                event = event;
-                $(this).children(".first-slider-value").val(dataUnit + ui.values[0].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
-                $(this).children(".second-slider-value").val(dataUnit + ui.values[1].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
-            // Mettre à jour les valeurs cachées
-                $(this).children(".prix-min").val(ui.values[0]);
-                $(this).children(".prix-max").val(ui.values[1]);
-                
-            
-            }
+    $(document).ready(function() {
+        $("#price-range").each(function() {
+            var dataMin = parseInt($(this).attr('data-min'));
+            var dataMax = parseInt($(this).attr('data-max'));
+            var dataUnit = $(this).attr('data-unit');
+    
+            // Ajouter les champs d'entrée pour les valeurs min et max visibles et cachées
+            $(this).append(
+                "<input type='text' class='first-slider-value' disabled/>" +
+                "<input type='text' class='second-slider-value' disabled/>" +
+                "<input type='hidden' class='prix-min' name='prix_min'/>" +
+                "<input type='hidden' class='prix-max' name='prix_max'/>"
+            );
+    
+            $(this).slider({
+                range: true,
+                min: dataMin,
+                max: dataMax,
+                step: 10,
+                values: [dataMin, dataMax],
+    
+                slide: function(event, ui) {
+                    // Mettre à jour les valeurs visibles
+                    $(this).children(".first-slider-value").val(dataUnit + ui.values[0].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                    $(this).children(".second-slider-value").val(dataUnit + ui.values[1].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+    
+                    // Mettre à jour les valeurs cachées
+                    $(this).children(".prix-min").val(ui.values[0]);
+                    $(this).children(".prix-max").val(ui.values[1]);
+                }
+            });
+    
+            // Initialiser les valeurs des champs visibles et cachés
+            $(this).children(".first-slider-value").val(dataUnit + $(this).slider("values", 0).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            $(this).children(".second-slider-value").val(dataUnit + $(this).slider("values", 1).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            $(this).children(".prix-min").val($(this).slider("values", 0));
+            $(this).children(".prix-max").val($(this).slider("values", 1));
         });
-        $(this).children(".first-slider-value").val(dataUnit + $(this).slider("values", 0).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
-        $(this).children(".second-slider-value").val(dataUnit + $(this).slider("values", 1).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
-        $(this).children(".prix-min").val($(this).slider("values", 0));
-        $(this).children(".prix-max").val($(this).slider("values", 1));
-
     });
+    
     
     /*----------------------------------
     //------ MODAL ------//

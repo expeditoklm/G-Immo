@@ -127,14 +127,14 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!--/ End Form Location -->
                                 <!-- Form Categories -->
                                 <div class="form-group categories">
-                                <select name="type_propriete_id" class="d-none">
-                                    <option value="">Type de Propriété</option>
-                                    @foreach ($typeProprietes as $item)
-                                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
-                                            @endforeach
+                                    <select name="type_propriete_id" class="d-none">
+                                        <option value="">Type de Propriété</option>
+                                        @foreach ($typeProprietes as $item)
+                                        <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                                        @endforeach
 
                                     </select>
-                                    <div class="nice-select form-control wide"  tabindex="0">
+                                    <div class="nice-select form-control wide" tabindex="0">
                                         <span class="current"><i class="fa fa-home" aria-hidden="true"></i>Type de Propriété</span>
                                         <ul class="list">
                                             @foreach ($typeProprietes as $item)
@@ -146,14 +146,14 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!--/ End Form Categories -->
                                 <!-- Form Property Status -->
                                 <div class="form-group categories">
-                                <select name="status" class="d-none">
-                                    <option value="">Status</option>
+                                    <select name="status" class="d-none">
+                                        <option value="">Status</option>
 
-                                     
-                                            <option value="For Sale">Vendre</option>
-                                            <option value="Rental">Louer</option>
+
+                                        <option value="For Sale">Vendre</option>
+                                        <option value="Rental">Louer</option>
                                     </select>
-                                    <div class="nice-select form-control wide"  tabindex="0">
+                                    <div class="nice-select form-control wide" tabindex="0">
                                         <span class="current"><i class="fa fa-home"></i>Status de la Propriété</span>
                                         <ul class="list">
                                             <li data-value="For Sale" class="option selected">Vendre</li>
@@ -164,17 +164,17 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!--/ End Form Property Status -->
                                 <!-- Form Bathrooms -->
                                 <div class="form-group bath">
-                                <select name="nbPiece" class="d-none">
-                                    <option value=""></option>
+                                    <select name="nbPiece" class="d-none">
+                                        <option value=""></option>
 
                                         @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                             @endfor
                                             <option value="6+">6+</option>
                                     </select>
-                                    <div class="nice-select form-control wide"  tabindex="0">
+                                    <div class="nice-select form-control wide" tabindex="0">
                                         <span class="current"><i class="fa fa-bath" aria-hidden="true"></i>Pièce</span>
                                         <ul class="list">
-                                        <li data-value="" class="option">Nombre de pièce</li>
+                                            <li data-value="" class="option">Nombre de pièce</li>
 
                                             @for ($i = 1; $i <= 6; $i++) <option data-value="{{ $i }}" class="option">{{ $i }}</option>
                                                 @endfor
@@ -184,17 +184,17 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <!-- Form Bedrooms -->
                                 <div class="form-group beds">
-                                <select name="nbChambre" class="d-none">
-                                    <option value=""></option>
+                                    <select name="nbChambre" class="d-none">
+                                        <option value=""></option>
 
                                         @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                             @endfor
                                             <option value="6+">6+</option>
                                     </select>
-                                    <div class="nice-select form-control wide"  tabindex="0">
+                                    <div class="nice-select form-control wide" tabindex="0">
                                         <span class="current"><i class="fa fa-bed" aria-hidden="true"></i> Chambre</span>
                                         <ul class="list">
-                                        <li data-value="" class="option">Nombre de chambre</li>
+                                            <li data-value="" class="option">Nombre de chambre</li>
 
                                             @for ($i = 1; $i <= 6; $i++) <option data-value="{{ $i }}" class="option">{{ $i }}</option>
                                                 @endfor
@@ -206,7 +206,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!-- Form Bathrooms -->
                                 <div class="form-group bath">
                                     <select name="nbToillete" class="d-none">
-                                    <option value=""></option>
+                                        <option value=""></option>
 
                                         @for ($i = 1; $i <= 6; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                             @endfor
@@ -215,7 +215,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                     <div class="nice-select form-control wide" tabindex="0">
                                         <span class="current"><i class="fa fa-bath" aria-hidden="true"></i> Toillete</span>
                                         <ul class="list">
-                                        <li data-value="" class="option">Nombre de toillete</li>
+                                            <li data-value="" class="option">Nombre de toillete</li>
 
                                             @for ($i = 1; $i <= 6; $i++) <li data-value="{{ $i }}" class="option">{{ $i }}</li>
                                                 @endfor
@@ -278,10 +278,11 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!-- Checkboxes -->
                                 <div class="checkboxes one-in-row margin-bottom-10">
                                     @foreach ($caracteristiques as $item)
-                                    <input id="{{ $item->id }}" type="checkbox" name="check">
+                                    <input id="{{ $item->id }}" value="{{ $item->id }}" type="checkbox" name="caracteristiques[]">
                                     <label for="{{ $item->id }}">{{ $item->libelle }}</label>
                                     @endforeach
                                 </div>
+
 
 
                                 <!-- Checkboxes / End -->
@@ -301,7 +302,19 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <div class="widget-boxed-body mb-4 ">
                             <div class="recent-post">
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.propriete-ajouter' ? 'javascript:void(0)' : route('admin.propriete-ajouter') }} " class="btn btn-outline-primary">10 Dernières propriétés ajoutées </a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.propriete-ajouter' ? 'javascript:void(0)' : route('admin.propriete-ajouter') }} " class="btn btn-outline-primary">
+                                            10 Dernières propriétés ajoutées 
+                                        </a> -->
+                                        <a href="#" onclick="document.getElementById('post6').submit(); return false;" class="btn btn-outline-primary">
+                                            10 Dernières propriétés ajoutées
+                                        </a>
+
+                                        <form id="post6" action="{{ route('admin.my-properties') }}" method="get" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="properte-ajouter" value="properte-ajouter">
+                                        </form>
+                                    </span>
                                 </div>
 
                             </div>
@@ -311,20 +324,81 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         </div>
                         <div class="widget-boxed-body">
                             <div class="recent-post">
+
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.property-ajouter' ? 'javascript:void(0)' : route('admin.property-ajouter') }} " class="btn btn-outline-primary">10 Dernières propriétés ajoutées </a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.property-ajouter' ? 'javascript:void(0)' : route('admin.property-ajouter') }} " class="btn btn-outline-primary">
+                                            10 Dernières propriétés ajoutées 
+                                        </a> -->
+                                        <a href="#" onclick="document.getElementById('post1').submit(); return false;" class="btn btn-outline-primary">
+                                            10 Dernières propriétés ajoutées
+                                        </a>
+
+                                        <form id="post1" action="{{ route('admin.my-properties') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="property-ajouter" value="property-ajouter">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.property-modifier' ? 'javascript:void(0)' : route('admin.property-modifier') }}" class="btn btn-outline-primary">10 Dernières propriétés modifier </a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.property-modifier' ? 'javascript:void(0)' : route('admin.property-modifier') }}" class="btn btn-outline-primary">
+                                            10 Dernières propriétés modifier
+                                        </a> -->
+                                        <a href="#" onclick="document.getElementById('post2').submit(); return false;" class="btn btn-outline-primary">
+                                            10 Dernières propriétés modifier
+                                        </a>
+
+                                        <form id="post2" action="{{ route('admin.my-properties') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="property-modifier" value="property-modifier">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.property-supprimer' ? 'javascript:void(0)' : route('admin.property-supprimer') }}" class="btn btn-outline-primary">10 Dernières propriétés supprimer </a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.property-supprimer' ? 'javascript:void(0)' : route('admin.property-supprimer') }}" class="btn btn-outline-primary">
+                                            10 Dernières propriétés supprimer 
+                                        </a> -->
+                                        <a href="#" onclick="document.getElementById('post3').submit(); return false;" class="btn btn-outline-primary">
+                                            10 Dernières propriétés supprimer
+                                        </a>
+
+                                        <form id="post3" action="{{ route('admin.my-properties') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="property-supprimer" value="property-supprimer">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags ">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.users-masquer' ? 'javascript:void(0)' : route('admin.users-masquer') }} " class="btn btn-outline-primary">10 Dernières propriétés masqués </a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-masquer' ? 'javascript:void(0)' : route('admin.users-masquer') }} " class="btn btn-outline-primary">
+                                            10 Dernières propriétés masqués 
+                                        </a> -->
+                                        <a href="#" onclick="document.getElementById('post4').submit(); return false;" class="btn btn-outline-primary">
+                                            10 Dernières propriétés masqués
+                                        </a>
+
+                                        <form id="post4" action="{{ route('admin.my-properties') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="property-masquer" value="property-masquer">
+                                        </form>
+                                    </span>
                                 </div>
                                 <div class="tags ">
-                                    <span><a href="{{ request()->route() && request()->route()->getName() == 'admin.users-avancer' ? 'javascript:void(0)' : route('admin.users-avancer') }}" class="btn btn-outline-primary">10 Dernières propriétés mis en avant</a></span>
+                                    <span>
+                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-avancer' ? 'javascript:void(0)' : route('admin.users-avancer') }}" class="btn btn-outline-primary">
+                                            10 Dernières propriétés mise en avant
+                                        </a> -->
+                                        <a href="#" onclick="document.getElementById('post5').submit(); return false;" class="btn btn-outline-primary">
+                                            10 Dernières propriétés mise en avant
+                                        </a>
+
+                                        <form id="post5" action="{{ route('admin.my-properties') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="property-avancer" value="property-avancer">
+                                        </form>
+                                    </span>
                                 </div>
                             </div>
                         </div>
