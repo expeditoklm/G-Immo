@@ -64,20 +64,9 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/admin.users', [PagesController::class, 'adminUsers'])->name('admin.users');
     Route::get('/admin.users-post', [PagesController::class, 'adminUsersPost'])->name('admin.users-post');
 
-    Route::get('/admin.users-interraction', [PagesController::class, 'usersInterraction'])->name('admin.users-interraction');
-    Route::get('/admin.users-ajouter', [PagesController::class, 'usersAjouter'])->name('admin.users-ajouter');
-    Route::get('/admin.users-modifier', [PagesController::class, 'usersModifier'])->name('admin.users-modifier');
-    Route::get('/admin.users-bloquer', [PagesController::class, 'usersBloquer'])->name('admin.users-bloquer');
-    Route::get('/admin.users-activer', [PagesController::class, 'usersActiver'])->name('admin.users-activer');
-    Route::get('/admin.users-supprimer', [PagesController::class, 'usersSupprimer'])->name('admin.users-supprimer');
-
-
-    Route::get('/admin.property-ajouter', [PagesController::class, 'propertyAjouter'])->name('admin.property-ajouter');
-    Route::get('/admin.propriete-ajouter', [PagesController::class, 'proprieteAjouter'])->name('admin.propriete-ajouter');
-    Route::get('/admin.property-modifier', [PagesController::class, 'propertyModifier'])->name('admin.property-modifier');
-    Route::get('/admin.property-supprimer', [PagesController::class, 'propertySupprimer'])->name('admin.property-supprimer');
-    Route::get('/admin.property-masquer', [PagesController::class, 'propertyMasquer'])->name('admin.users-masquer');
-    Route::get('/admin.property-avancer', [PagesController::class, 'propertyAvancer'])->name('admin.users-avancer');
+    Route::get('/admin.add-type-property', [PagesController::class, 'addTypeProperty'])->name('admin.add-type-property');
+    Route::get('/admin.caracteristique-type-property', [PagesController::class, 'caracteristiqueTypeProperty'])->name('admin.caracteristique-type-property');
+  
 
     Route::post('/ajax.users-bloquer', [PagesController::class, 'usersBloquerAjax'])->name('ajax.users-bloquer');
     Route::post('/ajax.users-debloquer', [PagesController::class, 'usersDebloquerAjax'])->name('ajax.users-debloquer');

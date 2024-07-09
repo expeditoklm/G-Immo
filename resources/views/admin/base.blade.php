@@ -183,8 +183,8 @@
                             <p>Utilisateur non trouvé.</p>
                             @endif
                             <ul>
+                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }} "> Profile</a></li>
                                 <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-user-profile' ? 'javascript:void(0)' : route('admin.modif-user-profile') }} "> Modifier le profil</a></li>
-                                <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }} "> Ajouter une propriété</a></li>
                                 <li><a href="{{ request()->route() && request()->route()->getName() == 'admin.modif-pswd' ? 'javascript:void(0)' : route('admin.modif-pswd') }} ">Changer votre mot de passe</a></li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
@@ -232,7 +232,8 @@
                                 <ul class="mb-0">
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}">
-                                            <i class="fa fa-map-marker"></i> Tableau de Bord
+                                            <i class="fa fa-tachometer"></i>
+                                            Tableau de Bord
                                         </a>
                                     </li>
                                     <li>
@@ -240,16 +241,13 @@
                                             <i class="fa fa-list" aria-hidden="true"></i>Mes Propriétés
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }}">
-                                            <i class="fa fa-user"></i>Profile
-                                        </a>
-                                    </li>
+
 
 
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
-                                            <i class="fa fa-list" aria-hidden="true"></i>Ajouter une propriété
+                                            <i class="fa fa-plus-square"></i>
+                                            Ajouter une propriété
                                         </a>
                                     </li>
                                     <li>
@@ -265,7 +263,23 @@
                                     @if ($user->role == "admin")
                                     <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'javascript:void(0)' : route('admin.users') }}">
-                                            <i class="fas fa-paste"></i>Utilisateurs
+                                            <i class="fa fa-users"></i>
+
+                                            Utilisateurs
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-type-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-type-property' ? 'javascript:void(0)' : route('admin.add-type-property') }}">
+                                            <i class="fa fa-building"></i>
+                                            Type de propriétés
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.caracteristique-type-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-caracteristique-property' ? 'javascript:void(0)' : route('admin.caracteristique-type-property') }}">
+                                            <i class="fa fa-th-list"></i>
+                                            Caractéristiques
                                         </a>
                                     </li>
                                     @endif
@@ -281,50 +295,65 @@
                                 <div class="dropdown">
                                     <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars pr10 mr-2"></i> Dashboard Navigation</button>
                                     <ul id="myDropdown" class="dropdown-content">
-                                        <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}">
-                                                <i class="fa fa-map-marker mr-3"></i> Tableau de bord
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
-                                                <i class="fa fa-list mr-3" aria-hidden="true"></i>Mes Propriétés
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.user-profile' ? 'javascript:void(0)' : route('admin.user-profile') }}">
-                                                <i class="fa fa-user mr-3"></i>Profile
-                                            </a>
-                                        </li>
+
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}">
+                                            <i class="fa fa-tachometer mr-2"></i>
+                                            Tableau de Bord
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.my-properties' ? 'javascript:void(0)' : route('admin.my-properties') }}">
+                                            <i class="fa fa-list mr-2"></i>Mes Propriétés
+                                        </a>
+                                    </li>
 
 
-                                        <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
-                                                <i class="fa fa-list mr-3" aria-hidden="true"></i>Ajouté une propriéte
-                                            </a>
-                                        </li>
 
-                                        <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'javascript:void(0)' : route('admin.messages') }}">
-                                                <i class="fas fa-paste mr-3"></i>Messages
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
-                                                <i class="fa fa-lock mr-3"></i>Commentaires
-                                            </a>
-                                        </li>
-                                        @if ($user->role == "admin")
-                                        <li>
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-property' ? 'javascript:void(0)' : route('admin.add-property') }}">
+                                            <i class="fa fa-plus-square mr-2"></i>
+                                            Ajouter une propriété
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.messages' ? 'javascript:void(0)' : route('admin.messages') }}">
+                                            <i class="fas fa-credit-card mr-2"></i>Messages
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.reviews' ? 'javascript:void(0)' : route('admin.reviews') }}">
+                                            <i class="fas fa-paste mr-2"></i>Commentaires
+                                        </a>
+                                    </li>
+                                    @if ($user->role == "admin")
+                                    <li>
                                         <a class="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.users' ? 'javascript:void(0)' : route('admin.users') }}">
-                                                <i class="fas fa-paste mr-3"></i>Utilisateurs
-                                            </a>
-                                        </li>
-                                        @endif
+                                            <i class="fa fa-users mr-2"></i>
+
+                                            Utilisateurs
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.add-type-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-type-property' ? 'javascript:void(0)' : route('admin.add-type-property') }}">
+                                            <i class="fa fa-building mr-2"></i>
+                                            Type de propriétés
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="{{ request()->route() && request()->route()->getName() == 'admin.caracteristique-type-property' ? 'active' : '' }}" href="{{ request()->route() && request()->route()->getName() == 'admin.add-caracteristique-property' ? 'javascript:void(0)' : route('admin.caracteristique-type-property') }}">
+                                            <i class="fa fa-th-list mr-2"></i>
+                                            Caractéristiques
+                                        </a>
+                                    </li>
+                                    @endif
+                                   
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn left-aligned-btn w-100 text-left">
-                                                <i class="fas fa-sign-out-alt mr-3"></i>Deconnection
+                                                <i class="fas fa-sign-out-alt "></i>Déconnection
                                             </button>
                                         </form>
                                     </ul>
@@ -349,7 +378,7 @@
             </div>
         </div>
         <!-- END PRELOADER -->
-         
+
 
         <!-- ARCHIVES JS -->
         <script src="{{asset('assets/admin/js/jquery-3.5.1.min.js')}}"></script>
@@ -376,7 +405,7 @@
         <script src="{{asset('assets/admin/js/ajaxchimp.min.js')}}"></script>
         <script src="{{asset('assets/admin/js/newsletter.js')}}"></script>
         <script src="{{asset('assets/admin/js/jquery.form.js')}}"></script>
-        
+
         <script src="{{asset('assets/admin/js/jquery.validate.min.js')}}"></script>
         <script src="{{asset('assets/admin/js/searched.js')}}"></script>
         <script src="{{asset('assets/admin/js/dashbord-mobile-menu.js')}}"></script>
@@ -390,7 +419,7 @@
             });
         </script>
 
-       
+
 
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -427,8 +456,8 @@
             });
         </script>
 
- <!-- MAIN JS -->
- <script src="{{asset('assets/admin/js/script.js')}}"></script>
+        <!-- MAIN JS -->
+        <script src="{{asset('assets/admin/js/script.js')}}"></script>
 
         @yield('js')
 

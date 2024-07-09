@@ -303,9 +303,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             <div class="recent-post">
                                 <div class="tags">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.propriete-ajouter' ? 'javascript:void(0)' : route('admin.propriete-ajouter') }} " class="btn btn-outline-primary">
-                                            10 Dernières propriétés ajoutées 
-                                        </a> -->
+                                    
                                         <a href="#" onclick="document.getElementById('post6').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés ajoutées
                                         </a>
@@ -327,9 +325,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
                                 <div class="tags">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.property-ajouter' ? 'javascript:void(0)' : route('admin.property-ajouter') }} " class="btn btn-outline-primary">
-                                            10 Dernières propriétés ajoutées 
-                                        </a> -->
+                                       
                                         <a href="#" onclick="document.getElementById('post1').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés ajoutées
                                         </a>
@@ -342,9 +338,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.property-modifier' ? 'javascript:void(0)' : route('admin.property-modifier') }}" class="btn btn-outline-primary">
-                                            10 Dernières propriétés modifier
-                                        </a> -->
+                                        
                                         <a href="#" onclick="document.getElementById('post2').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés modifier
                                         </a>
@@ -357,9 +351,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.property-supprimer' ? 'javascript:void(0)' : route('admin.property-supprimer') }}" class="btn btn-outline-primary">
-                                            10 Dernières propriétés supprimer 
-                                        </a> -->
+                                        
                                         <a href="#" onclick="document.getElementById('post3').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés supprimer
                                         </a>
@@ -372,9 +364,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags ">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-masquer' ? 'javascript:void(0)' : route('admin.users-masquer') }} " class="btn btn-outline-primary">
-                                            10 Dernières propriétés masqués 
-                                        </a> -->
+                                        
                                         <a href="#" onclick="document.getElementById('post4').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés masqués
                                         </a>
@@ -387,9 +377,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags ">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-avancer' ? 'javascript:void(0)' : route('admin.users-avancer') }}" class="btn btn-outline-primary">
-                                            10 Dernières propriétés mise en avant
-                                        </a> -->
+                                        
                                         <a href="#" onclick="document.getElementById('post5').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés mise en avant
                                         </a>
