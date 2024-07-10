@@ -1226,7 +1226,7 @@ class PagesController extends Controller
         }
     }
 
-    public function messages()
+    public function messages(Request $request)
     {
         try {
             $messages = Message::where('proprietaire_id', FacadesAuth::id())
@@ -1234,7 +1234,26 @@ class PagesController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
 
-            return view('admin/messages', compact('messages'));
+                $messagesAdmin = Message::where('deleted', 0)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
+                $pagination = true;
+                $titre = 'Les Messages Envoyés ';
+                $isAdmin = auth()->user()->role === 'admin';
+
+                if ($request->has('message-ajouter')) {
+
+                    $messagesAdmin = Message::orderBy('created_at', 'desc')
+                        ->limit(5)
+                        ->get();
+                    $pagination = false;
+                    $titre = '10 Derniers Messages Ajoutés';
+                    
+    
+                    return view('admin/messages', compact('messagesAdmin','messages', 'pagination',  'titre', 'isAdmin'));
+                }
+                return view('admin/messages', compact('messagesAdmin','messages', 'pagination',  'titre', 'isAdmin'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1245,7 +1264,7 @@ class PagesController extends Controller
     }
 
 
-    public function reviews()
+    public function reviews(Request $request)
     {
         try {
             $client = new Client(); // Créez une nouvelle instance de Client
@@ -1256,8 +1275,141 @@ class PagesController extends Controller
             })->orderBy('created_at', 'desc')
                 ->where('deleted', 0)
                 ->paginate(10);
+                
+                
+            // debut admin
+            $reviewsAdmin = Comment::where('deleted', 0)
+                ->orderBy('created_at', 'desc')
+                ->paginate(15);
 
-            return view('admin/reviews', compact('reviews', 'geoNamesService'));
+            $pagination = true;
+            $restaurer = false;
+            $titre = 'Liste Des Commentaires';
+            $isAdmin = auth()->user()->role === 'admin';
+
+            if ($request->has('btn_comment_filter')) {
+
+                $nom_prenom = $request->input('nom_prenom');
+                $user_name = $request->input('user_name');
+                
+                $created_at = $request->input('created_at');
+
+
+                // Construire la requête de base
+                $query = Comment::query();
+
+                // Ajouter les filtres de recherche
+                if (!empty($nom_prenom)) {
+                    $query->where('nom_prenom', 'like', '%' . $nom_prenom . '%');
+                }
+
+                if (!empty($user_name)) {
+                    $query->whereHas('user', function ($q) use ($user_name) {
+                        $q->where('nom_prenom', 'like', '%' . $user_name . '%');
+                    });
+                }
+                
+
+                
+                if (!empty($created_at)) {
+                    $query->where('created_at', 'like', "%{$created_at}%");
+                }
+
+                $titre = 'Liste Des Utilisateurs';
+
+
+                // Paginer les résultats
+                $reviewsAdmin = $query->where('deleted', 0)->paginate(10)->appends($request->except('page'));
+                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+            }
+           
+
+            if ($request->has('comment-ajouter')) {
+
+                $reviewsAdmin = Comment::orderBy('updateAdmin', 'desc')
+                    ->where('created_at', 'desc')
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Derniers Commentaires Ajoutés';
+
+
+                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+            }
+
+            if ($request->has('comment-modifier')) {
+
+                $reviewsAdmin = Comment::orderBy('updateAdmin', 'desc')
+                    ->where('updated_at', 'desc')
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Derniers Commentaires Modifiés';
+                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+            }
+
+            if ($request->has('comment-approuver')) {
+                $reviewsAdmin = Comment::orderBy('updateAdmin', 'desc')
+                    ->where('approuver', 1)
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Derniers Commentaires approuvés';
+
+                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+            }
+
+            if ($request->has('comment-desapprouver')) {
+
+                $reviewsAdmin = Comment::orderBy('updateAdmin', 'desc')
+                    ->where('approuver', 0)
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = false;
+                $titre = '10 Derniers Commentaires désapprouvés';
+
+                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+            }
+
+            if ($request->has('comment-supprimer')) {
+
+                $reviewsAdmin = Comment::orderBy('updateAdmin', 'desc')
+                    ->where('deleted', 1)
+                    ->limit(10)
+                    ->get();
+
+
+                $pagination = false;
+
+
+                $restaurer = true;
+                $titre = '10 Dernières Commentaires Supprimés';
+
+                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+            }
+
+
+            return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1798,5 +1950,74 @@ class PagesController extends Controller
     }
 
 
- 
+
+    public function commentApprouverAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $comment = Comment::where('id', $id)->first();
+
+            $comment->approuver = '1';
+            $comment->updateAdmin = now();
+            $comment->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function commentDesapprouverAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $comment = Comment::where('id', $id)->first();
+
+            $comment->approuver = '0';
+            $comment->updateAdmin = now();
+            $comment->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function commentSupprimerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $commentaire = Comment::where('id', $id)->first();
+
+            $commentaire->deleted = '1';
+            $commentaire->updateAdmin = now();
+            $commentaire->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function commentRestaurerAjax(Request $request)
+    {
+
+        try {
+            $id =  $request->id;
+            $commentaire = Comment::where('id', $id)->first();
+
+            $commentaire->deleted = '0';
+            $commentaire->updateAdmin = now();
+            $commentaire->save();
+            return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
 }

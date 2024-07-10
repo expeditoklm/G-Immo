@@ -43,7 +43,7 @@ Dashbord | Find Houses
 @endsection
 
 @section('body')
-inner-pages listing homepage-4 agents hd-white
+inner-pages listing agents hd-white
 @endsection
 
 @section('header')
@@ -71,15 +71,18 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 
 
-
+@if ($isAdmin)
 <section class="properties-right list featured portfolio blog pt-5">
     <div class="container">
         <section class="headings-2 pt-0 pb-4">
             <div class="pro-wrapper  m-0 p-0">
                 <div class="detail-wrapper-body">
                     <div class="listing-title-bar m-0 p-0">
+                        <div class="text-heading text-left">
+                            <p class="pb-2"><a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">Acceuil</a> &nbsp;/&nbsp; <span>{{$titre}}</span></p>
+                        </div>
 
-                        <h3>List View</h3>
+                        <h3>{{$titre}}</h3>
                     </div>
                 </div>
             </div>
@@ -90,112 +93,54 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <!-- Search Fields -->
                     <div class="widget-boxed main-search-field">
                         <div class="widget-boxed-header">
-                            <h4>Find Your House</h4>
+                            <h4>Filtre principal de message</h4>
                         </div>
-                        <!-- Search Form -->
-                        <div class="trip-search">
-                            <form class="form">
+                        <form class="form" method="get" action="{{ route('admin.messages') }}">
+                            @csrf
+                            <!-- Search Form -->
+                            <div class="trip-search">
+
                                 <!-- Form Looking for -->
                                 <div class="form-group looking">
                                     <div class="first-select wide">
                                         <div class="main-search-input-item">
-                                            <input type="text" placeholder="Enter Keyword..." value="" />
+                                            <input type="text" name="user_name" placeholder="Nom du Propriétaire..." value="" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group looking">
+                                    <div class="first-select wide">
+                                        <div class="main-search-input-item">
+                                            <input type="text" name="nom_prenom" placeholder="Nom du Commentateur..." value="" />
                                         </div>
                                     </div>
                                 </div>
                                 <!--/ End Form Looking for -->
                                 <!-- Form Location -->
-                                <div class="form-group location">
-                                    <div class="nice-select form-control wide" tabindex="0">
-                                        <span class="current"><i class="fa fa-map-marker"></i>Location</span>
-                                        <ul class="list">
-                                            <li data-value="1" class="option selected">New York</li>
-                                        </ul>
+                                
+                               
+
+                                <div class="form-group looking mt-4">
+                                    <div class=" first-select wide">
+                                        <div class="main-search-input-item">
+                                            <input type="date" name="created_at" placeholder="Entrer la date de pub ..." value="" />
+                                        </div>
                                     </div>
                                 </div>
                                 <!--/ End Form Location -->
-                                <!-- Form Categories -->
-                                <div class="form-group categories">
-                                    <div class="nice-select form-control wide" tabindex="0">
-                                        <span class="current"><i class="fa fa-home" aria-hidden="true"></i>Property Type</span>
-                                        <ul class="list">
-                                            <li data-value="1" class="option selected">House</li>
-                                            <li data-value="3" class="option">Single Family</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!--/ End Form Categories -->
-                                <!-- Form Property Status -->
-                                <div class="form-group categories">
-                                    <div class="nice-select form-control wide" tabindex="0">
-                                        <span class="current"><i class="fa fa-home"></i>Property Status</span>
-                                        <ul class="list">
-                                            <li data-value="1" class="option selected">For Sale</li>
-                                            <li data-value="2" class="option">For Rent</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!--/ End Form Property Status -->
-                                <!-- Form Bedrooms -->
-                                <div class="form-group beds">
-                                    <div class="nice-select form-control wide" tabindex="0">
-                                        <span class="current"><i class="fa fa-bed" aria-hidden="true"></i> Bedrooms</span>
-                                        <ul class="list">
-                                            <li data-value="1" class="option selected">1</li>
-                                            <li data-value="2" class="option">2</li>
-                                            <li data-value="3" class="option">10</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!--/ End Form Bedrooms -->
-                                <!-- Form Bathrooms -->
-                                <div class="form-group bath">
-                                    <div class="nice-select form-control wide" tabindex="0">
-                                        <span class="current"><i class="fa fa-bath" aria-hidden="true"></i> Bathrooms</span>
-                                        <ul class="list">
-                                            <li data-value="1" class="option selected">1</li>
-                                            <li data-value="3" class="option">9</li>
-                                            <li data-value="3" class="option">10</li>
-                                        </ul>
-                                    </div>
-                                </div>
+
                                 <!--/ End Form Bathrooms -->
-                            </form>
-                        </div>
-                        <!--/ End Search Form -->
-                        <!-- Price Fields -->
-                        <div class="main-search-field-2">
-                            <!-- Area Range -->
-                            <div class="range-slider">
-                                <label>Area Size</label>
-                                <div id="area-range" data-min="0" data-max="1300" data-unit="sq ft"></div>
-                                <div class="clearfix"></div>
+
                             </div>
-                            <br>
-                            <!-- Price Range -->
-                            <div class="range-slider">
-                                <label>Price Range</label>
-                                <div id="price-range" data-min="0" data-max="600000" data-unit="$"></div>
-                                <div class="clearfix"></div>
+
+                            <!-- More Search Options / End -->
+                            <div class="col-lg-12 no-pds">
+                                <div class="at-col-default-mar">
+                                    <button class="btn btn-default hvr-bounce-to-right" name="btn_message_filter" type="submit">Search</button>
+                                </div>
                             </div>
-                        </div>
-                        <!-- More Search Options -->
-                        <a href="#" class="more-search-options-trigger margin-bottom-10 margin-top-30" data-open-title="Advanced Features" data-close-title="Advanced Features"></a>
-                        <div class="more-search-options relative">
-                            <!-- Checkboxes -->
-                            <div class="checkboxes one-in-row margin-bottom-10">
-                                <input id="check-2" type="checkbox" name="check">
-                                <input id="check-15" type="checkbox" name="check">
-                                <label for="check-15">Outdoor Shower</label>
-                            </div>
-                            <!-- Checkboxes / End -->
-                        </div>
-                        <!-- More Search Options / End -->
-                        <div class="col-lg-12 no-pds">
-                            <div class="at-col-default-mar">
-                                <button class="btn btn-default hvr-bounce-to-right" type="submit">Search</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="widget-boxed popular mt-5 mb-0">
                         <div class="widget-boxed-header">
@@ -203,14 +148,23 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         </div>
                         <div class="widget-boxed-body">
                             <div class="recent-post">
+                                
                                 <div class="tags">
-                                    <span><a href="#" class="btn btn-outline-primary">Houses</a></span>
-                                    <span><a href="#" class="btn btn-outline-primary">Real Home</a></span>
+                                    <span>
+                                       
+
+                                        <a href="#" onclick="document.getElementById('post2').submit(); return false;" class="btn btn-outline-primary">
+                                        10 Derniers messages ajoutés 
+                                        </a>
+
+                                        <form id="post2" action="{{ route('admin.messages') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="message-ajouter" value="message-ajouter">
+                                        </form>
+                                    </span>
                                 </div>
-                                <div class="tags no-mb">
-                                    <span><a href="#" class="btn btn-outline-primary">Location</a></span>
-                                    <span><a href="#" class="btn btn-outline-primary">Price</a></span>
-                                </div>
+    
+
                             </div>
                         </div>
                     </div>
@@ -218,73 +172,99 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             </aside>
             <div class="col-lg-8 col-md-12 blog-pots" style="display: block;">
                 <div class="dashborad-box">
-                    <h4 class="title">Listing</h4>
+                    @if($messagesAdmin->isNotEmpty() && $pagination == true)
+                    <h4 class="title">Affichage de {{ $messagesAdmin->firstItem() }} à {{ $messagesAdmin->lastItem() }} dans {{ $messagesAdmin->total() }} Résultats</h4>
+                    @endif
                     <div class="section-body listing-table">
                         <div class="table-responsive table-container">
+                            @if($messagesAdmin->isNotEmpty())
                             <table class="table table-striped table-fixed-header">
                                 <thead>
                                     <tr>
                                         <th>#id</th>
-                                        <th>Nom Prénom</th>
-                                        <th>Sexe</th>
-                                        <th>Télephone</th>
-                                        <th>E-mail</th>
-                                        <th>Pays</th>
-                                        <th>Ville</th>
-                                        <th>Website</th>
-                                        <th>Description</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
+                                        <th>Client&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th>E-mail&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th>Télephone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th>Titre&nbsp;du&nbsp;Message&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th>Message&nbsp;&nbsp;</th>
+                                        <th>Propriétaire&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th>Date&nbsp;&nbsp;Publication</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for ($i = 0; $i < 25; $i++) <tr>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>Luxury Restaurant</td>
-                                        <td>23 Jan 2020</td>
-                                        <td class="rating"><span>5.0</span></td>
-                                        <td class="status"><span class=" active">Active</span></td>
-                                        <td class="block"><a href="#"><i class="fa fa-ban"></i></a></td>
+                                    @foreach ($messagesAdmin as $item)
+                                    <tr id="titleSupprimer{{ $item->id}}">
 
-                                        </tr>
-                                        @endfor
-                                        <tr>
-                                            <td>Luxury Restaurant</td>
-                                            <td>Luxury Restaurant</td>
-                                            <td>Luxury Restaurant</td>
-                                            <td>Luxury Restaurant</td>
-                                            <td>Luxury Restaurant</td>
-                                            <td>Luxury Restaurant</td>
-                                            <td>Luxury Restaurant</td>
-                                            <td>23 Jan 2020</td>
-                                            <td class="rating"><span>5.0</span></td>
-                                            <td class="status"><span class=" active">Active</span></td>
-                                            <td class="activate"><a href="#"><i class="fa fa-check " style="color: green;"></i></a></td>
+                                        <td>{{ $item->id}}</td>
+                                        <td>{{ $item->nom_prenom}}</td>
+                                        <td>{{ $item->email}}</td>
+                                        <td>{{ $item->telephone}}</td>
+                                        <td>{{ $item->titre_msg}}</td>
+                                        <td>{{ $item->message}}</td>
+                                        <td>{{ $item->user->nom_prenom}}</td>
+                                        <td>{{ $item->created_at}}</td>
 
-                                        </tr>
+                                    </tr>
+                                    @endforeach
+
 
 
                                 </tbody>
                             </table>
-
+                            @endif
                         </div>
+                        @if($messagesAdmin->isNotEmpty() && $pagination == true)
                         <div class="pagination-container">
                             <nav>
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="btn btn-common text-white" href="#">Previous <i class="lni-chevron-right"></i></a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <ul class="pagination justify-content-center">
 
-                                    <li class="page-item"><a class="btn btn-common text-white" href="#">Next <i class="lni-chevron-right"></i></a></li>
+                                    {{-- Bouton Previous --}}
+                                    @if ($messagesAdmin->onFirstPage())
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Previous</span>
+                                    </li>
+                                    @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $messagesAdmin->previousPageUrl() }}">Previous</a>
+                                    </li>
+                                    @endif
+
+                                    {{-- Affichage des pages --}}
+                                    @foreach ($messagesAdmin->getUrlRange(1, $messagesAdmin->lastPage()) as $page => $url)
+                                    <li class="page-item {{ $page == $messagesAdmin->currentPage() ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                    </li>
+                                    @endforeach
+
+                                    {{-- Bouton Next --}}
+                                    @if ($messagesAdmin->hasMorePages())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $messagesAdmin->nextPageUrl() }}">Next</a>
+                                    </li>
+                                    @else
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Next</span>
+                                    </li>
+                                    @endif
+
                                 </ul>
                             </nav>
                         </div>
+                        @else
+                        <div class="pagination-container">
+                            @if( !( $messagesAdmin->isNotEmpty() ))
+                            <nav>
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link " href="">Pas de message pour le moment</a>
+                                    </li>
+
+                                </ul>
+                            </nav>
+                            @endif
+                        </div>
+                        @endif
                     </div>
                 </div>
 
@@ -295,6 +275,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
     </div>
 </section>
+@else
 
 
 
@@ -398,6 +379,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 </div>
 
+@endif
 @endsection
 
 @section('js')

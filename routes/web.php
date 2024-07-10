@@ -80,8 +80,14 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/ajax.property-supprimer', [PagesController::class, 'propertySupprimerAjax'])->name('ajax.property-supprimer');
     Route::get('/ajax.property-mettreAvant', [PagesController::class, 'propertyMettreAvantAjax'])->name('ajax.property-mettreAvant');
     Route::get('/ajax.property-restaurer', [PagesController::class, 'propertyRestaurerAjax'])->name('ajax.property-restaurer');
-
-
+    
+    
+    Route::get('/ajax.comment-approuver', [PagesController::class, 'commentApprouverAjax'])->name('ajax.comment-approuver');
+    Route::get('/ajax.comment-desapprouver', [PagesController::class, 'commentDesapprouverAjax'])->name('ajax.comment-desapprouver');
+    Route::get('/ajax.comment-supprimer', [PagesController::class, 'commentSupprimerAjax'])->name('ajax.comment-supprimer');
+    Route::get('/ajax.comment-restaurer', [PagesController::class, 'commentRestaurerAjax'])->name('ajax.comment-restaurer');
+    
+    
 
 
     Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');

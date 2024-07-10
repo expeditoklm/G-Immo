@@ -152,10 +152,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             <div class="recent-post">
                                 <div class="tags">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-interraction' ? 'javascript:void(0)' : route('admin.users-interraction') }} "  class="btn btn-outline-primary">
-                                            Utlisateurs interagit avec le système (10)
-                                        </a> -->
-
+                                   
                                         <a href="#" onclick="document.getElementById('post1').submit(); return false;" class="btn btn-outline-primary">
                                         Utlisateurs interagit avec le système (10)
                                         </a>
@@ -208,10 +205,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-activer' ? 'javascript:void(0)' : route('admin.users-activer') }} "  class="btn btn-outline-primary">
-                                            10 Derniers utlisateurs activés 
-                                        </a> -->
-
+                                       
                                         <a href="#" onclick="document.getElementById('post5').submit(); return false;" class="btn btn-outline-primary">
                                         10 Derniers utlisateurs activés 
                                         </a>
@@ -224,9 +218,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                        <!-- <a href="{{ request()->route() && request()->route()->getName() == 'admin.users-supprimer' ? 'javascript:void(0)' : route('admin.users-supprimer') }} "  class="btn btn-outline-primary">
-                                            10 Derniers utlisateurs supprimés 
-                                        </a> -->
+                                       
 
                                         <a href="#" onclick="document.getElementById('post6').submit(); return false;" class="btn btn-outline-primary">
                                         10 Derniers utlisateurs supprimés 

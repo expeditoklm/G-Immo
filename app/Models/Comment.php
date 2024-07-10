@@ -21,7 +21,7 @@ class Comment extends Model
     /**
      * @var array
      */
-    protected $fillable = ['propriete_id','user_id', 'nom_prenom', 'email', 'comment', 'note', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['updateAdmin','approuver','propriete_id','user_id', 'nom_prenom', 'email', 'comment', 'note', 'deleted', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
