@@ -46,7 +46,7 @@ class PagesController extends Controller
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
             }])
-                ->where('deleted', 0)->get();
+                ->where('deleted','!=', 1)->get();
 
             // liste des proprietes de status "à louer" 
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
@@ -212,13 +212,13 @@ class PagesController extends Controller
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
             }])
-                ->where('deleted', 0)->get();
-
+                ->where('deleted','!=', 1)->get();
+        
             //liste des proprietes à louer
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'Rental');
             }])
-                ->where('deleted', 0)->get();
+                ->where('deleted','!=', 1)->get();
 
             // liste des villes qui ont de propriete  
             $uniqueCities = Propriete::select('ville')->distinct()->get();
@@ -271,12 +271,13 @@ class PagesController extends Controller
             // Obtenir le nombre de propriétés par type et statut
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
-            }])->where('deleted', 0)->get();
+            }])->where('deleted','!=', 1)->get();
 
+            
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'Rental');
-            }])->where('deleted', 0)->get();
-
+            }])->where('deleted','!=', 1)->get();
+            
             // Obtenir les villes uniques
             $uniqueCities = Propriete::select('ville')->distinct()->get();
 
@@ -820,7 +821,7 @@ class PagesController extends Controller
             $restaurer = false;
             $titre = 'Liste Des Propriétés';
             $isAdmin = auth()->user()->role === 'admin';
-            $typeProprietes = TypePropriete::get();
+            $typeProprietes = TypePropriete::where('deleted','!=', 1)->get();
             $caracteristiques = Caracteristique::get();
 
             if ($request->has('superficie_min')) {
@@ -1039,7 +1040,7 @@ class PagesController extends Controller
             // }
             $countries = $this->geoNamesService->getCountries();
 
-            $typeProprietes = TypePropriete::where('deleted', 0)->get();
+            $typeProprietes = TypePropriete::where('deleted','!=', 1)->get();
             $caracteristiques = Caracteristique::where('deleted', 0)->get();
             return view('admin/add-property', compact(
                 'typeProprietes',
@@ -1491,7 +1492,7 @@ class PagesController extends Controller
                 throw new \Exception('Property not found');
             }
             $proprieteImages = ProprieteImage::where('propriete_id', $id)->where('deleted', 0)->get();
-            $typeProprietes = TypePropriete::get();
+            $typeProprietes = TypePropriete::where('deleted','!=', 1)->get();
             $caracteristiques = Caracteristique::get();
             return view('admin/modif-property', compact(
                 'caracteristiques',
@@ -2078,7 +2079,7 @@ class PagesController extends Controller
     {
 
         try {
-            $typeProperty = TypePropriete::where('deleted', 0)
+            $typeProperty = TypePropriete::where('deleted','!=', 1)
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
             return view('admin.add-type-property', compact('typeProperty'));
@@ -2164,6 +2165,33 @@ class PagesController extends Controller
                 return redirect()->route('admin.caracteristique-type-property');
             }
             return redirect()->route('admin.form-caracteristique-property');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function formTypePropertyPost(Request $request)
+    {
+
+        try {
+            if ($request->id == null) {
+
+                $typeProperty = new TypePropriete();
+                $typeProperty->libelle = $request->libelle;
+                $typeProperty->deleted = 0;
+                $typeProperty->save();
+                session(['message' => 'Type de propriété ajouté avec succes.', 'message_type' => 'success']);
+            } else {
+                $typeProperty =  TypePropriete::where('id', $request->id)->first();
+                $typeProperty->libelle = $request->libelle;
+                $typeProperty->updated_at = now();
+                $typeProperty->save();
+                session(['message' => 'Type de propriété modifié avec succes.', 'message_type' => 'success']);
+                return redirect()->route('admin.add-type-property');
+            }
+            return redirect()->route('admin.form-type-property');
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
