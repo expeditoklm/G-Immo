@@ -51,8 +51,8 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
         <form name="contact_form" action="{{ route('admin.modif-user-profile') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="text" id="fname" placeholder="Nom et Prénom" name="nom_prenom" value="{{ Auth::user()->nom_prenom }}" required />
-            <textarea placeholder="A propos" name="description" required>{{ Auth::user()->description }}</textarea>
-            <input type="text" id="website" placeholder="Site Web" name="website" value="{{ Auth::user()->website }}" required />
+            <textarea placeholder="A propos" name="description" >{{ Auth::user()->description }}</textarea>
+            <input type="text" id="website" placeholder="Site Web" name="website" value="{{ Auth::user()->website }}"  />
             <div class="d-flex  " style="justify-content: space-between;">
 
                 @if(Auth::user()->sexe == 'Feminin' && !Auth::user()->profile_img)
@@ -65,7 +65,7 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
                 <div class="d-block">
 
                     <label for="">Changer la photo de profile</label>
-                    <input type="file" class="m-0 mt-4 text-center" id="file" name="file"  />
+                    <input type="file"  class="m-0 mt-4 text-center form-control" id="file" name="file"  />
                 </div>
             </div>
 

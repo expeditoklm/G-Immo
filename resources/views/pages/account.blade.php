@@ -41,9 +41,9 @@ top-header-inner
             <h2>Login / Register</h2>
             <ul class="list">
                 <li>
-                    <a href="{{ route('pages.acceuil') }}">Home</a>
+                    <a href="{{ route('pages.acceuil') }}">Acceuil</a>
                 </li>
-                <li>Account</li>
+                <li>Compte</li>
             </ul>
         </div>
     </div>
@@ -64,8 +64,8 @@ top-header-inner
                 <div class="col-lg-6 col-md-12">
                     <div class="profile-authentication-box">
                         <div class="content">
-                            <h3>Sign In</h3>
-                            <p>Don't have an account yet? <a href="my-account.html">Sign up here</a></p>
+                            <h3>Se Connecter</h3>
+                            <p>Vous n'avez pas de compte? <a href="my-account.html">S'inscrire ici</a></p>
                         </div>
                         <form method="POST" class="authentication-form" action="{{ route('login') }}">
                             @csrf
@@ -76,15 +76,15 @@ top-header-inner
                                 <span>OR</span>
                             </div>
                             <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="email" name="email" class="form-control" placeholder="Enter email address">
+                                <label>Addresse E-mail</label>
+                                <input type="email" name="email" class="form-control" placeholder="Entrer votre addresse email ">
                                 <div class="icon">
                                     <i class="ri-mail-line"></i>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Your Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Your password">
+                                <label>Mot de Passe</label>
+                                <input type="password" name="password" class="form-control" placeholder="Votre mot de passe">
                                 <div class="icon">
                                     <i class="ri-lock-line"></i>
                                 </div>
@@ -93,14 +93,14 @@ top-header-inner
                                 <div class="form-check">
                                     <input class="form-check-input" name="remember_token" type="checkbox" id="remember-me">
                                     <label class="form-check-label" for="remember-me">
-                                        Remember me
+                                        Se souvenir de moi
                                     </label>
                                 </div>
                                 <a href="forgot-password.html" class="forgot-password">
-                                    Forgot your password?
+                                    Mot de passe oublier?
                                 </a>
                             </div>
-                            <button type="submit" class="default-btn">Sign In</button>
+                            <button type="submit" class="default-btn">Se Connecter</button>
                         </form>
                     </div>
                 </div>
@@ -108,19 +108,19 @@ top-header-inner
                     <div class="profile-authentication-box with-gap">
                         <div class="content">
                             <h3>Create Your Account</h3>
-                            <p>Already have an account? <a href="my-account.html">Sign in here</a></p>
+                            <p>Already have an account? <a href="my-account.html">S'Inscrire Ici</a></p>
                         </div>
                         <form method="POST" class="authentication-form" action="{{ route('register') }}">
                             @csrf
                             <div class="google-btn">
-                                <button type="submit"><img src="{{asset('assets/images/google.svg')}}" alt="google">Sign in with Google</button>
+                                <button type="submit"><img src="{{asset('assets/images/google.svg')}}" alt="google">Se connecter avec Google</button>
                             </div>
                             <div class="or">
-                                <span>OR</span>
+                                <span>OU</span>
                             </div>
                             <div class="form-group">
-                                <label>Your Name</label>
-                                <input type="text" name="nom_prenom" class="form-control" value="{{ old('nom_prenom') }}" placeholder="Enter name" required>
+                                <label>Votre Nom et Prénom</label>
+                                <input type="text" name="nom_prenom" class="form-control" value="{{ old('nom_prenom') }}" placeholder="Entrer nom" required>
                                 <div class="icon">
                                     <i class="ri-user-3-line"></i>
                                 </div>
@@ -134,11 +134,11 @@ top-header-inner
                                                 <label >Sexe</label>
                                                 <div class="m-0 d-flex">
                                                     <div class="form-check form-check-inline d-flex">
-                                                        <input class="form-check-input m-2 mt-1" type="radio" name="sexe" id="typePnne1" value="Masculin" checked>
+                                                        <input class="form-check-input m-2 mt-1" id="typePenne1" type="radio" name="sexe" id="typePnne1" value="Masculin" checked>
                                                         <label class="form-check-label" for="typePenne1">Masculin</label>
                                                     </div>
                                                     <div class="form-check form-check-inline d-flex">
-                                                        <input class="form-check-input m-2 mt-1" type="radio" name="sexe" id="typePe2" value="Feminin">
+                                                        <input class="form-check-input m-2 mt-1" id="typenne2" type="radio" name="sexe" id="typePe2" value="Feminin">
                                                         <label class="form-check-label" for="typenne2">Féminin</label>
                                                     </div>
 
@@ -150,22 +150,22 @@ top-header-inner
                             </div>
 
                             <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter email address" required>
+                                <label>Addresse E-mail </label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Entrer votre addresse email" required>
                                 <div class="icon">
                                     <i class="ri-mail-line"></i>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Phone</label>
-                                <input type="number" name="telephone" class="form-control" value="{{ old('telephone') }}" placeholder="Enter phone" required>
+                                <label>Telephone</label>
+                                <input type="number" name="telephone" class="form-control" value="{{ old('telephone') }}" placeholder="Entrer votre telephone" required>
                                 <div class="icon">
                                     <i class="ri-phone-line"></i>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Country</label>
+                                <label>Pays</label>
                                 <select class="form-control" value="{{ old('pays') }}" name="pays" id="country" required>
                                     <option value="" selected>Select your country</option>
                                     @foreach ($countries as $country)
@@ -190,15 +190,15 @@ top-header-inner
 
 
                             <div class="form-group">
-                                <label>Your Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Your password" required>
+                                <label>Mot de Passe</label>
+                                <input type="password" name="password" class="form-control" placeholder="Votre Mot de Passe" required>
                                 <div class="icon">
                                     <i class="ri-lock-line"></i>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password" required>
+                                <label>Confirmer Votre Mot de Passe</label>
+                                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirmer Votre Mot de Passe" required>
                                 <div class="icon">
                                     <i class="ri-lock-line"></i>
                                 </div>
@@ -207,11 +207,11 @@ top-header-inner
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="checkbox1">
                                     <label class="form-check-label" for="checkbox1">
-                                        I accept the <a href="terms-conditions.html">Terms and Conditions</a>
+                                        J'accepte les <a href="terms-conditions.html">Termes et Conditions</a>
                                     </label>
                                 </div>
                             </div>
-                            <button type="submit" class="default-btn" id="signup-btn" disabled>Sign Up</button>
+                            <button type="submit" class="default-btn" id="signup-btn" disabled>S'inscrire'</button>
 
                         </form>
                     </div>
@@ -227,11 +227,11 @@ top-header-inner
     <div class="container" data-cues="slideInUp">
         <div class="subscribe-wrap-inner-area">
             <div class="subscribe-content">
-                <h2>Subscribe To Our Newsletter</h2>
+                <h2>Souscrire à notre Newsletter</h2>
                 <form class="subscribe-form" action="{{ route('pages.news-letterss') }}" method="POST">
                     @csrf
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
-                    <button type="submit" name="btn_mail" class="default-btn">Subscribe</button>
+                    <input type="email" name="email" class="form-control" placeholder="Entrer votre email">
+                    <button type="submit" name="btn_mail" class="default-btn">Souscrire</button>
                 </form>
             </div>
         </div>
@@ -275,16 +275,22 @@ top-header-inner
         countrySelect.addEventListener('change', function() {
             var countryCode = this.value;
             if (countryCode) {
+                console.log('oklm')
                 fetch("{{ route('get-cities') }}?country_code=" + countryCode)
                     .then(response => response.json())
                     .then(data => {
                         citySelect.innerHTML = '<option value="">Select your city</option>';
-                        data.forEach(function(city) {
-                            var option = document.createElement('option');
-                            option.value = city.geonameId;
-                            option.textContent = city.name;
-                            citySelect.appendChild(option);
-                        });
+                        // Ensure data is an array
+                        if (Array.isArray(data)) {
+                            data.forEach(function(city) {
+                                var option = document.createElement('option');
+                                option.value = city.geonameId;
+                                option.textContent = city.name;
+                                citySelect.appendChild(option);
+                            });
+                        } else {
+                            console.error('Expected an array but got:', data);
+                        }
                     })
                     .catch(error => {
                         console.error('Error fetching cities:', error);

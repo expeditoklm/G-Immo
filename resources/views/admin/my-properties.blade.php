@@ -629,7 +629,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             @csrf
                             <input type="hidden" name="id" value="{{ $item->id }}">
                         </form>
-                        <!-- @php
+                        @php
                         // Récupérer le nom du pays à partir du code enregistré dans la base de données
                         $userCountryCode = $item->pays;
                         $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
@@ -638,7 +638,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         $userCityCode = $item->ville;
                         $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
                         @endphp
-                        <figure><i class="lni-map-marker"></i> {{ $userCountry}}, {{ $userCity }}, {{ $item->quartier }}</figure> -->
+                        <figure><i class="lni-map-marker"></i> {{ $userCountry}}, {{ $userCity }}, {{ $item->quartier }}</figure>
 
                         @php
                         $totalStars = 5;

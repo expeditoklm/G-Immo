@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Propriete;
 use App\Models\Caracteristique;
 use App\Models\Newslater;
+use App\Models\ProprieteCaracteristique;
 use App\Models\ProprieteImage;
 use App\Models\TypePropriete;
 use App\Models\User;
@@ -799,7 +800,6 @@ class PagesController extends Controller
     }
 
 
-
     public function myProperties(Request $request)
     {
         try {
@@ -1030,8 +1030,6 @@ class PagesController extends Controller
     }
 
 
-
-
     public function addProperty()
     {
         try {
@@ -1041,8 +1039,8 @@ class PagesController extends Controller
             // }
             $countries = $this->geoNamesService->getCountries();
 
-            $typeProprietes = TypePropriete::get();
-            $caracteristiques = Caracteristique::get();
+            $typeProprietes = TypePropriete::where('deleted', 0)->get();
+            $caracteristiques = Caracteristique::where('deleted', 0)->get();
             return view('admin/add-property', compact(
                 'typeProprietes',
                 'caracteristiques',
@@ -1056,7 +1054,6 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
-
 
 
     public function addPropertyPost(Request $request)
@@ -1113,6 +1110,7 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
+
 
     public function modifPropertyPost(Request $request)
     {
@@ -1234,26 +1232,63 @@ class PagesController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
 
-                $messagesAdmin = Message::where('deleted', 0)
+            $messagesAdmin = Message::where('deleted', 0)
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
 
-                $pagination = true;
-                $titre = 'Les Messages Envoyés ';
-                $isAdmin = auth()->user()->role === 'admin';
+            $pagination = true;
+            $titre = 'Les Messages Envoyés ';
+            $isAdmin = auth()->user()->role === 'admin';
 
-                if ($request->has('message-ajouter')) {
+            if ($request->has('btn_message_filter')) {
 
-                    $messagesAdmin = Message::orderBy('created_at', 'desc')
-                        ->limit(5)
-                        ->get();
-                    $pagination = false;
-                    $titre = '10 Derniers Messages Ajoutés';
-                    
-    
-                    return view('admin/messages', compact('messagesAdmin','messages', 'pagination',  'titre', 'isAdmin'));
+                $nom_prenom = $request->input('nom_prenom');
+                $user_name = $request->input('user_name');
+
+                $created_at = $request->input('created_at');
+
+
+                // Construire la requête de base
+                $query = Message::query();
+
+                // Ajouter les filtres de recherche
+                if (!empty($nom_prenom)) {
+                    $query->where('nom_prenom', 'like', '%' . $nom_prenom . '%');
                 }
-                return view('admin/messages', compact('messagesAdmin','messages', 'pagination',  'titre', 'isAdmin'));
+
+                if (!empty($user_name)) {
+                    $query->whereHas('user', function ($q) use ($user_name) {
+                        $q->where('nom_prenom', 'like', '%' . $user_name . '%');
+                    });
+                }
+
+
+
+                if (!empty($created_at)) {
+                    $query->where('created_at', 'like', "%{$created_at}%");
+                }
+
+                $titre = 'Liste Des Utilisateurs';
+
+
+                // Paginer les résultats
+                $messagesAdmin = $query->where('deleted', 0)->paginate(10)->appends($request->except('page'));
+                return view('admin/messages', compact('messagesAdmin', 'messages',  'pagination', 'titre', 'isAdmin'));
+            }
+
+
+            if ($request->has('message-ajouter')) {
+
+                $messagesAdmin = Message::orderBy('created_at', 'desc')
+                    ->limit(5)
+                    ->get();
+                $pagination = false;
+                $titre = '10 Derniers Messages Ajoutés';
+
+
+                return view('admin/messages', compact('messagesAdmin', 'messages', 'pagination',  'titre', 'isAdmin'));
+            }
+            return view('admin/messages', compact('messagesAdmin', 'messages', 'pagination',  'titre', 'isAdmin'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1275,8 +1310,8 @@ class PagesController extends Controller
             })->orderBy('created_at', 'desc')
                 ->where('deleted', 0)
                 ->paginate(10);
-                
-                
+
+
             // debut admin
             $reviewsAdmin = Comment::where('deleted', 0)
                 ->orderBy('created_at', 'desc')
@@ -1291,7 +1326,7 @@ class PagesController extends Controller
 
                 $nom_prenom = $request->input('nom_prenom');
                 $user_name = $request->input('user_name');
-                
+
                 $created_at = $request->input('created_at');
 
 
@@ -1308,9 +1343,9 @@ class PagesController extends Controller
                         $q->where('nom_prenom', 'like', '%' . $user_name . '%');
                     });
                 }
-                
 
-                
+
+
                 if (!empty($created_at)) {
                     $query->where('created_at', 'like', "%{$created_at}%");
                 }
@@ -1320,9 +1355,9 @@ class PagesController extends Controller
 
                 // Paginer les résultats
                 $reviewsAdmin = $query->where('deleted', 0)->paginate(10)->appends($request->except('page'));
-                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+                return view('admin/reviews', compact('reviewsAdmin', 'reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
             }
-           
+
 
             if ($request->has('comment-ajouter')) {
 
@@ -1339,7 +1374,7 @@ class PagesController extends Controller
                 $titre = '10 Derniers Commentaires Ajoutés';
 
 
-                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+                return view('admin/reviews', compact('reviewsAdmin', 'reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
             }
 
             if ($request->has('comment-modifier')) {
@@ -1355,7 +1390,7 @@ class PagesController extends Controller
 
                 $restaurer = false;
                 $titre = '10 Derniers Commentaires Modifiés';
-                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+                return view('admin/reviews', compact('reviewsAdmin', 'reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
             }
 
             if ($request->has('comment-approuver')) {
@@ -1371,7 +1406,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Derniers Commentaires approuvés';
 
-                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+                return view('admin/reviews', compact('reviewsAdmin', 'reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
             }
 
             if ($request->has('comment-desapprouver')) {
@@ -1388,7 +1423,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Derniers Commentaires désapprouvés';
 
-                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+                return view('admin/reviews', compact('reviewsAdmin', 'reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
             }
 
             if ($request->has('comment-supprimer')) {
@@ -1405,11 +1440,11 @@ class PagesController extends Controller
                 $restaurer = true;
                 $titre = '10 Dernières Commentaires Supprimés';
 
-                return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+                return view('admin/reviews', compact('reviewsAdmin', 'reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
             }
 
 
-            return view('admin/reviews', compact('reviewsAdmin','reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
+            return view('admin/reviews', compact('reviewsAdmin', 'reviews', 'geoNamesService', 'pagination', 'restaurer', 'titre', 'isAdmin'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1479,7 +1514,6 @@ class PagesController extends Controller
     }
 
 
-
     public function suppression(Request $request)
     {
         try {
@@ -1519,6 +1553,24 @@ class PagesController extends Controller
                 $propriete = Propriete::where('id', $image->propriete_id)->first();
                 $propriete->updated_at = \now();
                 return redirect()->route('admin.my-properties')->with('success', 'Deleted successfully.');
+            } elseif ($request->has('type_property_sup_id')) {
+                $id = $request->type_property_sup_id;
+                //dd($id);
+                $typePropriete = TypePropriete::where('id', $id)->first();
+                $typePropriete->deleted = 1;
+                $typePropriete->updated_at = \now();
+                $typePropriete->save();
+             
+                return redirect()->route('admin.add-type-property')->with('success', 'Deleted successfully.');
+            } elseif ($request->has('caracteristique_property_sup_id')) {
+                $id = $request->caracteristique_property_sup_id;
+                //dd($id);
+                $caracteristique = Caracteristique::where('id', $id)->first();
+                $caracteristique->deleted = 1;
+                $caracteristique->updated_at = \now();
+                $caracteristique->save();
+             
+                return redirect()->route('admin.caracteristique-type-property')->with('success', 'Deleted successfully.');
             }
         } catch (Exception $e) {
             // Log the exception if needed
@@ -2014,6 +2066,104 @@ class PagesController extends Controller
             $commentaire->updateAdmin = now();
             $commentaire->save();
             return response()->json(['success' => 'Item Bloqued successfully']);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function addTypeProperty()
+    {
+
+        try {
+            $typeProperty = TypePropriete::where('deleted', 0)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+            return view('admin.add-type-property', compact('typeProperty'));
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function caracteristiqueTypeProperty()
+    {
+        try {
+            $caracteristiqueProperty  = Caracteristique::where('deleted', 0)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+            return view('admin.caracteristique-type-property',compact('caracteristiqueProperty'));
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function formTypeProperty(Request $request)
+    {
+        try {
+            $isModif = false;
+            $typeProperty = null;
+            if ($request->has('type_property_modif_id')) {
+                $isModif = true;
+                $typeProperty =  TypePropriete::where('id', $request->type_property_modif_id)->first();
+                //dd($typeProperty);
+            }
+
+            return view('admin.form-type-property', ['isModif' => $isModif, 'typeProperty' => $typeProperty]);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors.404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function formCaracteristiqueProperty(Request $request)
+    {
+        try {
+            $isModif = false;
+            $caracteristiqueProperty = null;
+            if ($request->has('caracteristique_property_modif_id')) {
+                $isModif = true;
+                $caracteristiqueProperty =  Caracteristique::where('id', $request->caracteristique_property_modif_id)->first();
+                //dd($typeProperty);
+            }
+
+            return view('admin.form-caracteristique-property', ['isModif' => $isModif, 'caracteristiqueProperty' => $caracteristiqueProperty]);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('errors.404', ['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function formCaracteristiquePropertyPost(Request $request)
+    {
+
+        try {
+            if ($request->id == null) {
+
+                $caracteristiqueProperty = new Caracteristique();
+                $caracteristiqueProperty->libelle = $request->libelle;
+                $caracteristiqueProperty->deleted = 0;
+                $caracteristiqueProperty->save();
+                session(['message' => 'Caracteristique de propriété ajouté avec succes.', 'message_type' => 'success']);
+            } else {
+                $caracteristiqueProperty =  Caracteristique::where('id', $request->id)->first();
+                $caracteristiqueProperty->libelle = $request->libelle;
+                $caracteristiqueProperty->updated_at = now();
+                $caracteristiqueProperty->save();
+                session(['message' => 'Caracteristique de propriété modifié avec succes.', 'message_type' => 'success']);
+                return redirect()->route('admin.caracteristique-type-property');
+            }
+            return redirect()->route('admin.form-caracteristique-property');
         } catch (Exception $e) {
             Log::error($e->getMessage());
 

@@ -65,8 +65,13 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/admin.users-post', [PagesController::class, 'adminUsersPost'])->name('admin.users-post');
 
     Route::get('/admin.add-type-property', [PagesController::class, 'addTypeProperty'])->name('admin.add-type-property');
+    Route::get('/admin.form-type-property', [PagesController::class, 'formTypeProperty'])->name('admin.form-type-property');
+    Route::post('/admin.form-type-property-post', [PagesController::class, 'formTypePropertyPost'])->name('admin.form-type-property-post');
     Route::get('/admin.caracteristique-type-property', [PagesController::class, 'caracteristiqueTypeProperty'])->name('admin.caracteristique-type-property');
   
+    Route::get('/admin.form-caracteristique-property', [PagesController::class, 'formCaracteristiqueProperty'])->name('admin.form-caracteristique-property');
+    Route::post('/admin.form-caracteristique-property-post', [PagesController::class, 'formCaracteristiquePropertyPost'])->name('admin.form-caracteristique-property-post');
+    
 
     Route::post('/ajax.users-bloquer', [PagesController::class, 'usersBloquerAjax'])->name('ajax.users-bloquer');
     Route::post('/ajax.users-debloquer', [PagesController::class, 'usersDebloquerAjax'])->name('ajax.users-debloquer');

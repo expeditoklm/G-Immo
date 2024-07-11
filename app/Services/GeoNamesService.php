@@ -28,17 +28,17 @@ class GeoNamesService
 
     public function getCitiesByCountryCode($countryCode)
     {
-        // $response = $this->client->get('http://api.geonames.org/searchJSON', [
-        //     'query' => [
-        //         'username' => 'oklmbro', // Remplacez par votre nom d'utilisateur GeoNames
-        //         'country' => $countryCode,
-        //         'featureClass' => 'P', // Seules les villes
-        //         'maxRows' => 10, // Nombre maximal de résultats à retourner
-        //     ]
-        // ]);
+        $response = $this->client->get('http://api.geonames.org/searchJSON', [
+            'query' => [
+                'username' => 'oklmbro', // Remplacez par votre nom d'utilisateur GeoNames
+                'country' => $countryCode,
+                'featureClass' => 'P', // Seules les villes
+                'maxRows' => 10, // Nombre maximal de résultats à retourner
+            ]
+        ]);
 
-        // return json_decode($response->getBody(), true)['geonames'];
-        return null;
+        return json_decode($response->getBody(), true)['geonames'];
+        //return null;
 
     }
 
@@ -54,7 +54,6 @@ class GeoNamesService
         $countryInfo = json_decode($response->getBody(), true)['geonames'][0] ?? null;
 
         return $countryInfo ? $countryInfo['countryName'] : null;
-        //return null;
 
     }
 
@@ -70,6 +69,5 @@ class GeoNamesService
         $cityInfo = json_decode($response->getBody(), true);
 
         return isset($cityInfo['toponymName']) ? $cityInfo['toponymName'] : null;
-        //return null;
     }
 }
