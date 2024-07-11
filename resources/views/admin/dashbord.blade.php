@@ -77,7 +77,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 @section('content')
 
-@include('admin.success_error')
+
 
 <div class="dashborad-box stat bg-white">
 
@@ -125,74 +125,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
 
 
-<div class="dashborad-box">
-    <h4 class="title">Listing</h4>
-    <div class="section-body listing-table">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#id</th>
-                        <th>Nom Prénom</th>
-                        <th>Sexe</th>
-                        <th>Télephone</th>
-                        <th>E-mail</th>
-                        <th>Pays</th>
-                        <th>Ville</th>
-                        <th>Website</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>23 Jan 2020</td>
-                        <td class="rating"><span>5.0</span></td>
-                        <td class="status"><span class=" active">Active</span></td>
-                        <td class="block"><a href="#"><i class="fa fa-ban"></i></a></td>
 
-                    </tr>
-                    <tr>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>Luxury Restaurant</td>
-                        <td>23 Jan 2020</td>
-                        <td class="rating"><span>5.0</span></td>
-                        <td class="status"><span class=" active">Active</span></td>
-                        <td class="activate"><a href="#"><i class="fa fa-check " style="color: green;"></i></a></td>
-
-                    </tr>
-
-
-                </tbody>
-            </table>
-            <div class="pagination-container">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item"><a class="btn btn-common text-white" href="#">Previous <i class="lni-chevron-right"></i></a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-
-                        <li class="page-item"><a class="btn btn-common text-white" href="#">Next <i class="lni-chevron-right"></i></a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -240,12 +173,18 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 </div>
             </div>
 
-            <!-- The Modal -->
+
+            <!-- Formulaire caché -->
+            <form id="post{{ $item->id }}" action="{{ route('suppression') }}" method="POST" style="display: none;">
+                        @csrf
+                        <input type="hidden" name="message2_sup_id" value="{{ $item->id }}">
+                    </form>
+
             <div id="myModal-{{ $item->id }}" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <p>Voulez-vous vraiment supprimer "{{ $item->message }}" ?</p>
-                    <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
+                    <a onclick="document.getElementById('post{{ $item->id }}').submit(); return false;" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
                     <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
                 </div>
             </div>
@@ -298,11 +237,16 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 </div>
             </div>
             <!-- The Modal -->
+            <form id="post2{{ $item->id }}" action="{{ route('suppression') }}" method="POST" style="display: none;">
+                        @csrf
+                        <input type="hidden" name="review2_sup_id" value="{{ $item->id }}">
+                    </form>
+
             <div id="myModal-{{ $item->id }}" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <p>Voulez-vous vraiment supprimer "{{ $item->comment }}" ?</p>
-                    <a href="#" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
+                    <a onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;" class="btn btn-warning btn-xs ml-5 mr-5 border-0" id="confirm-delete">Oui</a>
                     <button class="btn btn-info btn-xs ml-5 mr-5 border-0" id="cancel-delete">Non</button>
                 </div>
             </div>

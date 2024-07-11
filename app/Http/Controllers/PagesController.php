@@ -1528,7 +1528,24 @@ class PagesController extends Controller
 
                 $message->save();
                 return redirect()->route('admin.messages')->with('success', 'Deleted successfully.');
-            } elseif ($request->has('review_sup_id')) {
+            }elseif ($request->has('message2_sup_id')) {
+                $id = $request->message2_sup_id;
+                $message = Message::where('id', $id)->first();
+                $message->deleted = 1;
+                $message->updated_at = \now();
+                
+                $message->save();
+                return redirect()->route('admin.dashbord')->with('success', 'Deleted successfully.');
+            }elseif ($request->has('review2_sup_id')) {
+                $id = $request->review2_sup_id;
+                $review = Comment::where('id', $id)->first();
+                $review->deleted = 1;
+                $review->updated_at = \now();
+                
+                $review->save();
+                return redirect()->route('admin.dashbord')->with('success', 'Deleted successfully.');
+            }
+             elseif ($request->has('review_sup_id')) {
                 $id = $request->review_sup_id;
                 $review = Comment::where('id', $id)->first();
                 $review->deleted = 1;
