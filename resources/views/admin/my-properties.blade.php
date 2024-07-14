@@ -6,6 +6,9 @@ Dashbord | Find Houses
 
 @section('css')
 
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <style>
     .full-width {
         width: 100%;
@@ -115,17 +118,24 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                     </div>
                                 </div>
                                 <!--/ End Form Looking for -->
-                                <!-- Form Location -->
-                                <div class="form-group location">
-                                    <div class="nice-select form-control wide" name="ville" tabindex="0">
-                                        <span class="current"><i class="fa fa-map-marker"></i>Ville</span>
+                                <div class="form-group categories">
+                                    <select name="ville" class="d-none">
+                                        <option value="">Type de Propriété</option>
+                                        @foreach ($uniqueCities as $item)
+                                        <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    <div class="nice-select form-control wide" tabindex="0">
+                                        <span class="current"><i class="fa fa-home" aria-hidden="true"></i>Type de Propriété</span>
                                         <ul class="list">
-                                            <li data-value="1" class="option selected">New York</li>
+                                            @foreach ($uniqueCities as $item)
+                                            <li data-value="{{ $item->id }}" class="option selected">{{ $item->libelle }}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
-                                <!--/ End Form Location -->
-                                <!-- Form Categories -->
+
                                 <div class="form-group categories">
                                     <select name="type_propriete_id" class="d-none">
                                         <option value="">Type de Propriété</option>
@@ -261,14 +271,14 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!-- Area Range -->
                                 <div class="range-slider">
                                     <label>Superficie</label>
-                                    <div id="area-range" data-min="0" data-max="1300" data-unit="m2"></div>
+                                    <div id="area-range" data-min="0" data-max="1000" data-unit="m2"></div>
                                     <div class="clearfix"></div>
                                 </div>
                                 <br>
                                 <!-- Price Range -->
                                 <div class="range-slider">
                                     <label>Prix</label>
-                                    <div id="price-range" data-max="600000" data-unit="XOF  " data-min="0"></div>
+                                    <div id="price-range" data-max="999999999999" data-unit="XOF  " data-min="0"></div>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -303,7 +313,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             <div class="recent-post">
                                 <div class="tags">
                                     <span>
-                                    
+
                                         <a href="#" onclick="document.getElementById('post6').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés ajoutées
                                         </a>
@@ -325,7 +335,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
                                 <div class="tags">
                                     <span>
-                                       
+
                                         <a href="#" onclick="document.getElementById('post1').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés ajoutées
                                         </a>
@@ -338,7 +348,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                        
+
                                         <a href="#" onclick="document.getElementById('post2').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés modifier
                                         </a>
@@ -351,7 +361,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                        
+
                                         <a href="#" onclick="document.getElementById('post3').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés supprimer
                                         </a>
@@ -364,7 +374,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags ">
                                     <span>
-                                        
+
                                         <a href="#" onclick="document.getElementById('post4').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés masqués
                                         </a>
@@ -377,7 +387,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags ">
                                     <span>
-                                        
+
                                         <a href="#" onclick="document.getElementById('post5').submit(); return false;" class="btn btn-outline-primary">
                                             10 Dernières propriétés mise en avant
                                         </a>
@@ -443,8 +453,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         <td>{{ $item->prix}}</td>
                                         <td>{{ $item->surface}}</td>
                                         <td>{{ $item->adresse}}</td>
-                                        <td>{{ $item->pays}}</td>
-                                        <td>{{ $item->ville}}</td>
+                                        <td>Bénin</td>
+                                        <td>{{ $item->ville->libelle}}</td>
                                         <td>{{ $item->quartier}}</td>
                                         <td>{{ $item->vue}}</td>
                                         @if($restaurer==false)
@@ -629,16 +639,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             @csrf
                             <input type="hidden" name="id" value="{{ $item->id }}">
                         </form>
-                        @php
-                        // Récupérer le nom du pays à partir du code enregistré dans la base de données
-                        $userCountryCode = $item->pays;
-                        $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
 
-                        // Récupérer le nom de la ville à partir du code enregistré dans la base de données
-                        $userCityCode = $item->ville;
-                        $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
-                        @endphp
-                        <figure><i class="lni-map-marker"></i> {{ $userCountry}}, {{ $userCity }}, {{ $item->quartier }}</figure>
+                        <figure><i class="lni-map-marker"></i> Bénin, {{ $item->ville->libelle}}, {{ $item->quartier }}</figure>
 
                         @php
                         $totalStars = 5;
@@ -754,6 +756,11 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 @section('js')
 
 <script src="{{asset('assets/admin/js/inner.js')}}"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 
 <script>
     document.querySelectorAll('.masquer').forEach(function(button) {

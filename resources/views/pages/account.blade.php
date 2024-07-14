@@ -167,10 +167,8 @@ top-header-inner
                             <div class="form-group">
                                 <label>Pays</label>
                                 <select class="form-control" value="{{ old('pays') }}" name="pays" id="country" required>
-                                    <option value="" selected>Select your country</option>
-                                    @foreach ($countries as $country)
-                                    <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
-                                    @endforeach
+                                    <option value="" selected>Selectionner votre pays</option>
+                                    <option value="Bénin" >Bénin</option>
                                 </select>
                                 <div class="icon">
                                     <i class="ri-earth-line"></i>
@@ -181,7 +179,10 @@ top-header-inner
                             <div class="form-group">
                                 <label>City</label>
                                 <select class="form-control" value="{{ old('ville') }}" name="ville" id="city" aria-label="Default select example" required>
-                                    <option value="" selected>Select your city</option>
+                                    <option value="" selected>Selectionner votre ville</option>
+                                    @foreach ($cities as $item)
+                                    <option value="{{ $item->id }}">{{ $item->libelle  }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="icon">
                                     <i class="ri-building-line"></i>
@@ -267,40 +268,7 @@ top-header-inner
 </script>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var countrySelect = document.getElementById('country');
-        var citySelect = document.getElementById('city');
 
-        countrySelect.addEventListener('change', function() {
-            var countryCode = this.value;
-            if (countryCode) {
-                console.log('oklm')
-                fetch("{{ route('get-cities') }}?country_code=" + countryCode)
-                    .then(response => response.json())
-                    .then(data => {
-                        citySelect.innerHTML = '<option value="">Select your city</option>';
-                        // Ensure data is an array
-                        if (Array.isArray(data)) {
-                            data.forEach(function(city) {
-                                var option = document.createElement('option');
-                                option.value = city.geonameId;
-                                option.textContent = city.name;
-                                citySelect.appendChild(option);
-                            });
-                        } else {
-                            console.error('Expected an array but got:', data);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching cities:', error);
-                    });
-            } else {
-                citySelect.innerHTML = '<option value="">Select your city</option>';
-            }
-        });
-    });
-</script>
 
 
 

@@ -99,12 +99,10 @@ top-header-inner
                                     <a href="https:{{ $agent->website}}" target="_blank">{{ $agent->website}}</a>
                                 </li>
                                 @endisset
-                                @isset($agent->pays)
                                 <li>
                                     <span>Addresse:</span>
-                                    {{ $agent->pays}}, {{ $agent->ville}}
+                                    Bénin, {{ $agent->ville}}
                                 </li>
-                                @endisset
                             </ul>
                         </div>
                     </div>
@@ -238,7 +236,7 @@ top-header-inner
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $item->id }}">
                                                     </form>
-                                                    <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                                    <span>Bénin, {{ $item->ville }}, {{ $item->quartier }}</span>
                                                 </div>
                                                 <div class="price">{{ $item->prix }} XOF</div>
                                             </div>

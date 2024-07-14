@@ -52,7 +52,7 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
         </div>
     </div>
     <ul class="author__contact">
-        <li><span class="la la-map-marker"><i class="fa fa-map-marker"></i></span>{{ $userCountry}}, {{ $userCity}} </li>
+        <li><span class="la la-map-marker"><i class="fa fa-map-marker"></i></span>Bénin, {{ $user->ville->libelle}} </li>
         <li><span class="la la-phone"><i class="fa fa-phone" aria-hidden="true"></i></span><a href="tel:{{ $user->telephone}}">{{ $user->telephone}}</a></li>
         <li><span class="la la-envelope-o"><i class="fa fa-envelope" aria-hidden="true"></i></span><a href="mailto:{{ $user->email}}">{{ $user->email}}</a></li>
         <li><span class="la la-envelope-o"><i class="fa fa-globe" aria-hidden="true"></i></span><a href="https:{{ $user->website}}">{{ $user->website}}</a></li>

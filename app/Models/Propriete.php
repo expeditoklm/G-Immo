@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $id
  * @property integer $type_propriete_id
  * @property integer $user_id
+ * @property integer $ville_id
  * @property string $titre
  * @property string $description
  * @property string $status
@@ -28,19 +29,22 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $deleted
  * @property string $created_at
  * @property string $updated_at
+ * @property boolean $masquer
+ * @property string $mettreAvant
+ * @property string $updateAdmin
  * @property Comment[] $comments
  * @property ProprieteCaracteristique[] $proprieteCaracteristiques
  * @property ProprieteImage[] $proprieteImages
  * @property TypePropriete $typePropriete
  * @property User $user
+ * @property Ville $ville
  */
 class Propriete extends Model
 {
-    
     /**
      * @var array
      */
-    protected $fillable = ['type_propriete_id', 'masquer','mettreAvant','updateAdmin','user_id', 'titre', 'description', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'surface', 'adresse', 'pays', 'ville', 'quartier', 'emailContact', 'nomContact', 'prenomContact', 'telContact', 'vue', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['type_propriete_id', 'user_id', 'ville_id', 'titre', 'description', 'status', 'nbPiece', 'nbChambre', 'nbToillete', 'prix', 'surface', 'adresse',  'quartier', 'emailContact', 'nomContact', 'prenomContact', 'telContact', 'vue', 'deleted', 'created_at', 'updated_at', 'masquer', 'mettreAvant', 'updateAdmin'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -80,5 +84,13 @@ class Propriete extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function ville()
+    {
+        return $this->belongsTo(Ville::class);
     }
 }

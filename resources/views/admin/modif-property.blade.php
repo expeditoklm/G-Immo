@@ -340,12 +340,9 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                 <div class="col-lg-6 col-md-12 dropdown ">
                     <div class="form-group categories">
                         <label for="address">Pays<span class="text-danger">*</span></label>
-                        <select class="form-control wide js-example-basic-single" onchange="countryHasChanged()" id="country" name="pays" required
+                        <select class="form-control wide js-example-basic-single"  id="country" name="pays" required
                             style="height: 45px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; background-color: #fff; padding: 10px 12px; width: 100%;">
-                            <option value="{{ $propertiesCountryCode }}" selected>{{ $propertiesCountry }}</option>
-                            @foreach ($countries as $country)
-                            <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
-                            @endforeach
+                            <option value="Bénin" >Bénin</option>
                         </select>
                     </div>
                 </div>
@@ -355,7 +352,11 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                         <label for="address">Ville <span class="text-danger">*</span></label>
                         <select class="form-control wide js-example-basic-single" id="city" name="ville" required
                             style="height: 45px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; background-color: #fff; padding: 10px 12px; width: 100%;">
-                            <option value="{{ $propertiesCityCode }}" selected>{{ $propertiesCity }}</option>
+                            <option value="{{ $properties->ville_id}}">{{ $properties->ville->libelle}}</option>
+
+                            @foreach ($cities as $item)
+                                    <option value="{{ $item->id }}">{{ $item->libelle  }}</option>
+                                    @endforeach
                         </select>
                     </div>
                 </div>
@@ -757,32 +758,7 @@ $(document).ready(function() {
         });
     });
 
-    function countryHasChanged() {
-        const countrySelect = document.getElementById('country');
-        const citySelect = document.getElementById('city');
-        const countryCode = countrySelect.value;
-
-        if (countryCode) {
-            fetch("{{ route('get-cities') }}?country_code=" + countryCode)
-                .then(response => response.json())
-                .then(data => {
-                    citySelect.innerHTML = ''; // Clear previous options
-                    data.forEach(city => {
-                        const option = document.createElement('option');
-                        option.value = city.geonameId;
-                        option.textContent = city.name;
-                        citySelect.appendChild(option);
-                    });
-                    $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
-                })
-                .catch(error => {
-                    console.error('Error fetching cities:', error);
-                });
-        } else {
-            citySelect.innerHTML = '<option value="">Select your city</option>';
-            $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
-        }
-    }
+   
 </script>
 
 

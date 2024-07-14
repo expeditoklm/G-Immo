@@ -37,7 +37,7 @@ class User extends Model implements AuthenticatableContract
     /**
      * @var array
      */
-    protected $fillable = ['nom_prenom','bloquer','activer','updatedAdmin', 'sexe', 'telephone', 'email', 'password', 'pays', 'website', 'description', 'ville', 'role', 'profile_img', 'deleted', 'created_at', 'updated_at', 'remember_token', 'email_verified_at'];
+    protected $fillable = ['ville_id','nom_prenom','bloquer','activer','updatedAdmin', 'sexe', 'telephone', 'email', 'password',  'website', 'description',  'role', 'profile_img', 'deleted', 'created_at', 'updated_at', 'remember_token', 'email_verified_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -69,5 +69,11 @@ class User extends Model implements AuthenticatableContract
     public function proprietes()
     {
         return $this->hasMany('App\Models\Propriete');
+    }
+
+
+    public function ville()
+    {
+        return $this->belongsTo(Ville::class, 'ville_id');
     }
 }

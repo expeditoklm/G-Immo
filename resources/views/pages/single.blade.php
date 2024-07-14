@@ -86,16 +86,8 @@ top-header-inner
                                     <h2>{{ $propertiesSingle->titre }}</h2>
 
                                 </div>
-                                @php
-                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
-                                    $userCountryCode = $propertiesSingle->pays;
-                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
-
-                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
-                                    $userCityCode = $propertiesSingle->ville;
-                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
-                                    @endphp
-                                <span class="address">{{ $userCountry }}, {{ $userCity }}, {{ $propertiesSingle->quartier }}</span>
+                               
+                                <span class="address">Bénin, {{ $propertiesSingle->ville->libelle}}, {{ $propertiesSingle->quartier }}</span>
                                 <ul class="info-list">
                                     @if(!is_null($propertiesSingle->nbChambre) && $propertiesSingle->nbChambre != 0)
                                     <li>
@@ -530,7 +522,7 @@ top-header-inner
                                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                                             </form>
 
-                                                            <span>{{ $item->pays }}, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                                            <span>Bénin, {{ $item->ville->libelle}}, {{ $item->quartier }}</span>
                                                         </div>
                                                         <div class="price">
                                                             @isset($item->prix)
@@ -600,15 +592,7 @@ top-header-inner
                             <div class="contact-details">
                                 <h3>Contact supplémentaire</h3>
                                 <ul class="list">
-                                    @php
-                                    // Récupérer le nom du pays à partir du code enregistré dans la base de données
-                                    $userCountryCode = $proprietaire->pays;
-                                    $userCountry = $geoNamesService->getCountryNameByCode($userCountryCode); // À adapter selon votre service
-
-                                    // Récupérer le nom de la ville à partir du code enregistré dans la base de données
-                                    $userCityCode = $proprietaire->ville;
-                                    $userCity = $geoNamesService->getCityNameByCode($userCityCode); // À adapter selon votre service
-                                    @endphp
+                                    
                                     <li>
                                         <span>Email:</span>
                                         <a href="mailto:{{$propertiesSingle->emailContact}}">{{$propertiesSingle->emailContact}}</a>
@@ -619,7 +603,7 @@ top-header-inner
                                     </li>
                                     <li>
                                         <span>Location:</span>
-                                        {{ $userCountry }} , {{ $userCity }}
+                                        Bénin , {{ $propertiesSingle->ville->libelle}}
                                     </li>
                                 </ul>
                             </div>

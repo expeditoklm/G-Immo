@@ -195,3 +195,29 @@ style="background-image: url('{{ asset($item->proprieteImages->first()->url) }}'
 
 
 src="{{ asset($item->proprieteImages->first()->url) }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public function ville()
+    {
+        return $this->belongsTo('App\Models\Ville');
+    }

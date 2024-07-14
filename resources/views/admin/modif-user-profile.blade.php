@@ -70,15 +70,15 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
             </div>
 
             <div class="d-flex" style="justify-content: space-between;">
-                <select class="form-select col-md-4" onchange="countryHasChanged()" id="country" name="pays" aria-label="Default select example" required>
-                    <option value="{{ $userCountryCode }}" selected>{{ $userCountry }}</option>
-                    @foreach ($countries as $country)
-                    <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
-                    @endforeach
+                <select class="form-select col-md-4"  id="country" name="pays" aria-label="Default select example" required>
+                <option value="Bénin" selected>Bénin</option>
                 </select>
 
                 <select class="form-select col-md-4 " id="city" name="ville" aria-label="Default select example" required>
-                    <option value="{{ $userCityCode}}" selected>{{$userCity }}</option>
+                <option value="{{ Auth::user()->ville_id }}" selected>{{ Auth::user()->ville->libelle }}</option>
+                                @foreach ($cities as $item)
+                                    <option value="{{ $item->id }}">{{ $item->libelle  }}</option>
+                                    @endforeach
                 </select>
             </div>
 

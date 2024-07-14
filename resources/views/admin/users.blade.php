@@ -105,20 +105,16 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                     </div>
                                 </div>
                                 <!--/ End Form Looking for -->
-                                <!-- Form Location -->
-                                <div class="form-group location">
-                                    <div class="nice-select form-control wide" name="pays" tabindex="0">
-                                        <span class="current"><i class="fa fa-map-marker"></i>Pays</span>
-                                        <ul class="list">
-                                            <li data-value="1" class="option selected">New York</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group location">
                                     <div class="nice-select form-control wide" name="ville" tabindex="0">
                                         <span class="current"><i class="fa fa-map-marker"></i>Ville</span>
                                         <ul class="list">
-                                            <li data-value="1" class="option selected">New York</li>
+                                        @foreach ($uniqueCities as $item)
+
+<li data-value="{{ $item->id}}" class="option selected">{{ $item->libelle}}</li>
+
+@endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -275,8 +271,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         <td>{{ $item->sexe}}</td>
                                         <td>{{ $item->telephone}}</td>
                                         <td>{{ $item->email}}</td>
-                                        <td>{{ $item->pays}}</td>
-                                        <td>{{ $item->ville}}</td>
+                                        <td>Bénin</td>
+                                        <td>{{ $item->ville->libelle}}</td>
                                         <td>{{ $item->website}}</td>
                                         <td>{{ $item->description}}</td>
                                         <td>{{ $item->created_at}}</td>

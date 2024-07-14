@@ -274,11 +274,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Pays</label>
-                            <select class="form-select" onchange="countryHasChanged()" id="country" name="pays" aria-label="Default select example" required>
-                                <option value="{{ $userCountryCode }}" selected>{{ $userCountry }}</option>
-                                @foreach ($countries as $country)
-                                <option value="{{ $country['countryCode'] }}">{{ $country['countryName'] }}</option>
-                                @endforeach
+                            <select class="form-select" id="country" name="pays" aria-label="Default select example" required>
+                                <option value="Bénin" selected>Bénin</option>
                             </select>
                         </div>
                     </div>
@@ -287,7 +284,10 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <div class="form-group">
                             <label>Ville</label>
                             <select class="form-select" id="city" name="ville" aria-label="Default select example" required>
-                                <option value="{{ $userCityCode}}" selected>{{$userCity }}</option>
+                                <option value="{{ Auth::user()->ville_id }}" selected>{{ Auth::user()->ville->libelle }}</option>
+                                @foreach ($cities as $item)
+                                    <option value="{{ $item->id }}">{{ $item->libelle  }}</option>
+                                    @endforeach
                             </select>
                         </div>
                     </div>
@@ -349,32 +349,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         });
     });
 
-    function countryHasChanged() {
-        const countrySelect = document.getElementById('country');
-        const citySelect = document.getElementById('city');
-        const countryCode = countrySelect.value;
-
-        if (countryCode) {
-            fetch("{{ route('get-cities') }}?country_code=" + countryCode)
-                .then(response => response.json())
-                .then(data => {
-                    citySelect.innerHTML = ''; // Clear previous options
-                    data.forEach(city => {
-                        const option = document.createElement('option');
-                        option.value = city.geonameId;
-                        option.textContent = city.name;
-                        citySelect.appendChild(option);
-                    });
-                    $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
-                })
-                .catch(error => {
-                    console.error('Error fetching cities:', error);
-                });
-        } else {
-            citySelect.innerHTML = '<option value="">Select your city</option>';
-            $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
-        }
-    }
+    
 </script>
 
 
