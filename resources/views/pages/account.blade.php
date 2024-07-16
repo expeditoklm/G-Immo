@@ -208,7 +208,7 @@ top-header-inner
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="checkbox1">
                                     <label class="form-check-label" for="checkbox1">
-                                        J'accepte les <a href="terms-conditions.html">Termes et Conditions</a>
+                                        J'accepte les <a href="{{ request()->route() && request()->route()->getName() == 'pages.privacy-policy' ? 'javascript:void(0)' : route('pages.privacy-policy') }}">Termes et Conditions</a>
                                     </label>
                                 </div>
                             </div>

@@ -212,7 +212,8 @@ src="{{ asset($item->proprieteImages->first()->url) }}"
 
 
 
-
+95194936
+66064948
 
 
 

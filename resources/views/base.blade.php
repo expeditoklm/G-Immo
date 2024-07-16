@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
 
-<!-- Mirrored from templates.envytheme.com/andora/default/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 02 Jun 2024 17:26:02 GMT -->
 
 <head>
     <meta charset="UTF-8">
@@ -52,17 +51,20 @@
     <!-- Start Preloader Area -->
     <div class="preloader-area text-center position-fixed top-0 bottom-0 start-0 end-0" id="preloader">
         <div class="loader position-absolute start-0 end-0">
-            <img src="{{asset('assets/images/favicon.png')}}" alt="favicon">
-            <!-- <img src="{{asset('assets/images/agents/agents1.jpg')}}" style="height: auto; width: 100px " alt="favicon"> -->
+            <!-- <img src="{{asset('assets/images/favicon.png')}}" alt="favicon"> -->
+            <img src="{{asset('assets/images/agents/1.png')}}" style="height: auto; width: 100px " alt="favicon">
 
             <div class="waviy position-relative">
+                <span class="d-inline-block">M</span>
+                <span class="d-inline-block">I</span>
                 <span class="d-inline-block">A</span>
-                <span class="d-inline-block">N</span>
-                <span class="d-inline-block">D</span>
+                <span class="d-inline-block">W</span>
+                <span class="d-inline-block">E</span>
+                <span class="d-inline-block">Z</span>
                 <span class="d-inline-block">O</span>
-                <span class="d-inline-block">R</span>
-                <span class="d-inline-block">A</span>
+                <span class="d-inline-block">N</span>
             </div>
+            
         </div>
     </div>
     <!-- End Preloader Area -->
@@ -107,7 +109,7 @@
                 <div class="col-lg-5 col-md-5 text-end">
                     <div class="top-header-call-info">
                         <i class="ri-phone-line"></i>
-                        <a href="tel:00201068710594">+(002) 0106-8710-594</a>
+                        <a href="tel:22995194936">+(229) 95 1949 36</a>
                     </div>
                 </div>
                 @yield('div_finish3')
@@ -121,7 +123,7 @@
     <nav class="navbar navbar-expand-xl" id="navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">
-                <img src="{{asset('assets/images/logo.png')}}" alt="logo">
+                <img src="{{asset('assets/images/agents/log.png')}}" alt="logo">
             </a>
             <form class="search-form" method="POST" action="{{ route('pages.search-post') }}">
                 @csrf
@@ -273,7 +275,8 @@
                     <div class="single-footer-widget pe-3">
                         <div class="widget-logo">
                             <a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">
-                                <img src="{{asset('assets/images/logo2.png')}}" alt="logo2">
+                                <!-- <img src="{{asset('assets/images/logo2.png')}}" alt="logo2"> -->
+                                <img src="{{asset('assets/images/agents/logo.png')}}" class="m-0 p-0" alt="logo">
                             </a>
                         </div>
                         <p>Lorem ipsum dolor sit amet, elit dollar consectetur adipiscing elit. Diam lectus purus ultricies neque.</p>
@@ -303,60 +306,110 @@
                     <div class="row justify-content-center" data-cues="slideInUp">
                         <div class="col-lg-3 col-sm-6">
                             <div class="single-footer-widget ps-3">
-                                <h3>Company</h3>
+                                <h3>Entreprise</h3>
                                 <ul class="custom-links">
-                                    <li><a href="about-us.html">About Us</a></li>
-                                    <li><a href="contact-us.html">Contact Us</a></li>
-                                    <li><a href="customers-review.html">Our Reviews</a></li>
-                                    <li><a href="terms-conditions.html">Terms & Conditions</a></li>
-                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                    <li><a href="#">À propos de nous</a></li>
+                                    <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.contact-us' ? 'javascript:void(0)' : route('pages.contact-us') }}">Contactez-nous</a></li>
+                                    <li><a href="{{ request()->route() && request()->route()->getName() == 'pages.privacy-policy' ? 'javascript:void(0)' : route('pages.privacy-policy') }}">Politique de Confidentialité</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <div class="single-footer-widget ps-3">
-                                <h3>Resources</h3>
+                                <h3>Ressources</h3>
                                 <ul class="custom-links">
-                                    <li><a href="property-grid.html">Apartments</a></li>
-                                    <li><a href="property-grid.html">Villa</a></li>
-                                    <li><a href="property-grid.html">Sell or Buy</a></li>
-                                    <li><a href="property-grid.html">New Apartment</a></li>
-                                    <li><a href="agents.html">Our Agents</a></li>
+                                    
+
+                                    <li><a href="#" onclick="document.getElementById('post-Apartment1').submit(); return false;">Résidentiel</a></li>
+                                    <!-- Formulaire caché -->
+                                    <form id="post-Apartment1" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="type_propriete_id" value="1">
+                                    </form>
+
+
+                                    <li><a href="#" onclick="document.getElementById('post-Apartment2').submit(); return false;">Commercial</a></li>
+                                    <!-- Formulaire caché -->
+                                    <form id="post-Apartment2" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="type_propriete_id" value="2">
+                                    </form>
+
+
+                                    <li><a href="#" onclick="document.getElementById('post-Apartment3').submit(); return false;">Ferme / Domaine agricole</a></li>
+                                    <!-- Formulaire caché -->
+                                    <form id="post-Apartment3" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="type_propriete_id" value="3">
+                                    </form>
+
+
+                                    <li><a href="#" onclick="document.getElementById('post-Apartment4').submit(); return false;">Parcelle</a></li>
+                                    <!-- Formulaire caché -->
+                                    <form id="post-Apartment4" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="type_propriete_id" value="4">
+                                    </form>
+
+
+                                    <li><a href="#" onclick="document.getElementById('post-Apartment5').submit(); return false;">Duplex/Triplex/Quadruplex</a></li>
+                                    <!-- Formulaire caché -->
+                                    <form id="post-Apartment5" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="type_propriete_id" value="5">
+                                    </form>
+
+                                    <li><a href="#" onclick="document.getElementById('post-Apartment6').submit(); return false;">Bureau / Bâtiment commercial</a></li>
+                                    <!-- Formulaire caché -->
+                                    <form id="post-Apartment6" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="type_propriete_id" value="6">
+                                    </form>
+
+                                    <li><a href="#" onclick="document.getElementById('post-Apartment7').submit(); return false;">Appartements</a></li>
+                                    <!-- Formulaire caché -->
+                                    <form id="post-Apartment7" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="type_propriete_id" value="7">
+                                    </form>
+
+                                    <li><a href="#" onclick="document.getElementById('post-Apartment8').submit(); return false;">Entrepôt</a></li>
+                                    <!-- Formulaire caché -->
+                                    <form id="post-Apartment8" action="{{ route('pages.search-post') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="type_propriete_id" value="8">
+                                    </form>
+
+                        
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="single-footer-widget ps-3">
-                                <h3>Quick Links</h3>
-                                <ul class="custom-links">
-                                    <li><a href="pricing.html">Pricing</a></li>
-                                    <li><a href="what-we-do.html">What We Do</a></li>
-                                    <li><a href="customers-review.html">Testimonial</a></li>
-                                    <li><a href="blog-grid.html">Blog</a></li>
-                                    <li><a href="neighborhood.html">Neighborhood</a></li>
-                                </ul>
-                            </div>
-                        </div>
+ 
+
+
+                        
                         <div class="col-lg-3 col-sm-6">
                             <div class="single-footer-widget">
-                                <h3>Contact Info</h3>
+                                <h3>Informations de contact</h3>
                                 <ul class="info-list">
                                     <li>
-                                        <span>Address:</span>
-                                        45/15 New alsala Avenew Booston town, Austria
+                                        <span>Addresse:</span>
+                                        Cotonou, Bénin
                                     </li>
                                     <li>
-                                        <span>Email:</span>
+                                        <span>Courriel :</span>
                                         <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#95e6e0e5e5fae7e1d5f1f0f8fabbf6faf8"><span class="__cf_email__" data-cfemail="b7c4c2c7c7d8c5c3f7d3d2dad899d4d8da">[email&#160;protected]</span></a>
                                     </li>
                                     <li>
-                                        <span>Phone:</span>
-                                        <a href="tel:00201068710594">+(002) 0106-8710-594</a>
+                                        <span>Téléphone :</span>
+                                        <a href="tel:22995194936">+(229) 95 1949 36</a>
                                     </li>
+
                                     <li>
-                                        <span>Fax:</span>
-                                        <a href="tel:01068710594">+0106-8710-594</a>
+                                        <span>Téléphone :</span>
+                                        <a href="tel:22966064948">+(229) 66 0649 48</a>
                                     </li>
+                                  
                                 </ul>
                             </div>
                         </div>
@@ -365,8 +418,8 @@
             </div>
             <div class="copyright-area">
                 <p>
-                    Copyright <span>Andora</span> All Rights Reserved by <a href="https://envytheme.com/" target="_blank">EnvyTheme</a>
-                </p>
+                    Copyright <span>Miawezon</span> Tout droits reservés 
+                </p>Tout droits reservés
             </div>
         </div>
     </footer>

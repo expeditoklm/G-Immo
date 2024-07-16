@@ -38,13 +38,15 @@ class PagesController extends Controller
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
             }])
-                ->where('deleted','!=', 1)->get();
+                ->where('deleted','!=', 1)
+                ->get();
 
             // liste des proprietes de status "à louer" 
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'Rental');
             }])
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->get();
 
                 $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
 
@@ -53,32 +55,50 @@ class PagesController extends Controller
     
 
             //Residentiel
-            $nbResidential = Propriete::where('type_propriete_id', 1)->where('deleted', 0)->count();
+            $nbResidential = Propriete::where('type_propriete_id', 1)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
             //Commercial
-            $nbCommercial = Propriete::where('type_propriete_id', 2)->where('deleted', 0)->count();
+            $nbCommercial = Propriete::where('type_propriete_id', 2)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
             //Agricole
-            $nbFarm = Propriete::where('type_propriete_id', 3)->where('deleted', 0)->count();
+            $nbFarm = Propriete::where('type_propriete_id', 3)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
             //Parcelle
-            $nbLand = Propriete::where('type_propriete_id', 4)->where('deleted', 0)->count();
+            $nbLand = Propriete::where('type_propriete_id', 4)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
             //Duplexe
-            $nbDuplex = Propriete::where('type_propriete_id', 5)->where('deleted', 0)->count();
+            $nbDuplex = Propriete::where('type_propriete_id', 5)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
             //Bureau , Entreprise
-            $nbOffice = Propriete::where('type_propriete_id', 6)->where('deleted', 0)->count();
+            $nbOffice = Propriete::where('type_propriete_id', 6)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
             //Appartement
-            $nbApartment = Propriete::where('type_propriete_id', 7)->where('deleted', 0)->count();
+            $nbApartment = Propriete::where('type_propriete_id', 7)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
             //Entrepot
-            $nbWarehouse = Propriete::where('type_propriete_id', 8)->where('deleted', 0)->count();
+            $nbWarehouse = Propriete::where('type_propriete_id', 8)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
 
 
             // 6 proprietes à vendre recemment ajouté 
             $propertiesForSalle = Propriete::where('status', 'For Sale')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             // 6 proprietes de type "Residentiel,Du/Tri/Quadriplex,Apartment" recemment ajouté 
             $propertiesHouse = Propriete::where('type_propriete_id', 1)
-                ->where('deleted', 0)
+                ->where('masquer', 0)
                 ->orWhere('type_propriete_id', 5)
                 ->orWhere('type_propriete_id', 7)
                 ->orderBy('created_at', 'desc')
@@ -90,73 +110,95 @@ class PagesController extends Controller
                 ->orWhere('prix', DB::raw('(SELECT MAX(prix) FROM proprietes)'))
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             // 6 proprietes de status "A louer" dont les prix sont élevé recemment ajouté 
             $propertiesRental = Propriete::where('status', 'Rental')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             // 6 proprietes de type "Appartement" recemment ajouté 
             $propertiesApartment = Propriete::where('type_propriete_id', 7)
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             // 6 proprietes de type "Parcelle" recemment ajouté 
             $propertiesParcel = Propriete::where('type_propriete_id', 3)
                 ->orWhere('type_propriete_id', 4)
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             $propertiesCommercial = Propriete::where('type_propriete_id', 8)
                 ->orWhere('type_propriete_id', 2)
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             // 4 proprietes les plus cheres
             $propertiesHigh = Propriete::orderBy('prix', 'desc')
                 ->limit(4)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             // 3 proprietes de status  "à vendre" recemment ajouté 
             $propertiesForSale = Propriete::where('status', 'For Sale')
                 ->orderBy('prix', 'asc')
                 ->orderBy('created_at', 'desc')
                 ->limit(3)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             // 6 commentaire qui possede une "note superieur à 2" recemment ajouté  et 
             // qui se retrouve parmis les utilisateur qui on de compte 
             $comments = Comment::where('note', '>', 2)
                 ->whereHas('user')
+                ->where('deleted', 0)
+                ->where('approuver', 1)
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->get();
 
 
             // Nombre total de clients qui ont commenter
-            $nbCustomer = Comment::count();
+            $nbCustomer = Comment::where('deleted', 0)
+                ->where('approuver', 1)->count();
 
             // Nombre de commentaires avec une note supérieure à 2
             $nbClientNoteSatisfaction = Comment::where('note', '>', 2)->count();
 
             // Nombre total de commentaires
-            $nbClientNote = Comment::count();
+            $nbClientNote = Comment::where('deleted', 0)
+            ->where('approuver', 1)->count();
 
             // Pourcentage de satisfaction des clients
             $percentClientSatisfaction = ($nbClientNoteSatisfaction * 100) / $nbClientNote;
 
 
             // Nombre de propriétés à vendre
-            $nbPropertyForSale = Propriete::where('status', 'For Sale')->where('deleted', 0)->count();
+            $nbPropertyForSale = Propriete::where('status', 'For Sale')->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
 
 
             // Nombre de propriétés à louer
-            $nbPropertyRental = Propriete::where('status', 'Rental')->where('deleted', 0)->count();
+            $nbPropertyRental = Propriete::where('status', 'Rental')->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
 
 
             return view('pages/acceuil', compact(
@@ -205,13 +247,15 @@ class PagesController extends Controller
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
             }])
-                ->where('deleted','!=', 1)->get();
+                ->where('deleted','!=', 1)
+                ->get();
         
             //liste des proprietes à louer
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'Rental');
             }])
-                ->where('deleted','!=', 1)->get();
+                ->where('deleted','!=', 1)
+                ->get();
 
                 $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
 
@@ -223,10 +267,14 @@ class PagesController extends Controller
             $popularProperties = Propriete::orderBy('vue', 'desc')
                 ->orderBy('created_at', 'desc')
                 ->take(10)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->get();
 
             // liste des proprietés 
-            $properties = Propriete::where('deleted', 0)->paginate(10);
+            $properties = Propriete::where('deleted', 0)
+            ->where('masquer', 0)
+            ->paginate(10);
 
             // enregistrement une newsletterss
             if ($request->has('btn_newslater')) {
@@ -320,6 +368,7 @@ class PagesController extends Controller
             if (!empty($nbPiece)) {
                 $query->where('nbPiece', $nbPiece);
             }
+         
 
             // Ajouter la recherche par mot-clé
             if (!empty($searchTerm)) {
@@ -355,10 +404,14 @@ class PagesController extends Controller
             }
             $popularProperties = Propriete::orderBy('vue', 'desc')
                 ->take(10)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+            ->where('masquer', 0)
+            ->get();
 
             // Paginer les résultats
-            $properties = $query->where('deleted', 0)->paginate(10)->appends($request->except('page'));
+            $properties = $query->where('deleted', 0)
+            ->where('masquer', 0)
+            ->paginate(10)->appends($request->except('page'));
 
             // Retourner la vue avec les résultats
             return view('pages.search', compact(
@@ -398,7 +451,7 @@ class PagesController extends Controller
             //id de la proprete dont ton veux connaitre les details
             $id = $request->id;
 
-            $propertiesSingle = Propriete::where('id', $id)->first();
+            $propertiesSingle = Propriete::where('id', $id)->where('masquer', 0)->first();
             if (!$propertiesSingle) {
                 throw new \Exception('Property not found');
             }
@@ -424,7 +477,9 @@ class PagesController extends Controller
                 ->where('prix', '<=', $propertiesSingle->prix + 10000)
                 ->where('id', '!=', $id)
                 ->take(2)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+            ->where('masquer', 0)
+            ->get();
              // Créez une nouvelle instance de Client
        
             //enregistrement dun message 
@@ -535,12 +590,15 @@ class PagesController extends Controller
 
             $properties = Propriete::where('user_id', $id)
                 ->limit(6)
-                ->where('deleted', 0)->get();
+                ->where('deleted', 0)
+                ->where('masquer', 0)->get();
 
             $commentaires = Comment::whereHas('propriete', function ($query) use ($id) {
                 $query->where('user_id', $id);
-            })->where('deleted', 0)->get();
-
+            })->where('deleted', 0)
+            ->where('approuver', 1)->get();
+         
+            
             if ($request->has('btn_msg')) {
                 Message::create([
                     'user_id' => FacadesAuth::user()->id,
@@ -578,6 +636,32 @@ class PagesController extends Controller
         }
     }
 
+    public function privacyPolicy(Request $request)
+    {
+        try {
+           
+           
+            if ($request->has('btn_newslater')) {
+
+                Newslater::create([
+                    'email' => $request->email,
+                    'deleted' => 0,
+                ]);
+                return redirect()->route('pages.privacy-policy')->with('success', 'E-mail sent successfully.');
+            }
+
+            return view('pages.privacy-policy');
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    
+
     public function dashbord(Request $request)
     {
         try {
@@ -591,11 +675,13 @@ class PagesController extends Controller
              
 
 
-            $nbProperties = Propriete::where('user_id', $user_id)->where('deleted', 0)->count();
+            $nbProperties = Propriete::where('user_id', $user_id)->where('deleted', 0)
+            ->where('masquer', 0)
+            ->count();
 
             $nbReviews = Comment::whereHas('propriete', function ($query) use ($user_id) {
                 $query->where('user_id', $user_id);
-            })->where('deleted', 0)->count();
+            })->where('deleted', 0)->where('approuver', 1)->count();
 
             $nbMessages = Message::where('proprietaire_id', $user_id)->where('deleted', 0)->count();
 
@@ -610,6 +696,7 @@ class PagesController extends Controller
             })->orderByDesc('created_at')
                 ->limit(3)
                 ->where('deleted', 0)
+                ->where('approuver', 1)
                 ->get();
 
             if ($request->has('btn_modif')) {
@@ -768,12 +855,14 @@ class PagesController extends Controller
             
 
             $properties = Propriete::where('user_id', FacadesAuth::id())
-                ->where('deleted', 0)
+            ->where('masquer', 0)
+            ->where('deleted', 0)
                 ->orderBy('updated_at', 'desc')
                 ->paginate(10);
 
 
             $adminPropertiesView = Propriete::where('deleted', 0)
+
                 ->orderBy('updated_at', 'desc')
                 ->paginate(15);
 
@@ -994,15 +1083,23 @@ class PagesController extends Controller
     public function addProperty()
     {
         try {
-            $cities = Ville::get();
+            if(auth()->user()->bloquer === 1){
+                
+                $cities = Ville::get();
+    
+                $typeProprietes = TypePropriete::where('deleted','!=', 1)->get();
+                $caracteristiques = Caracteristique::where('deleted', 0)->get();
+                return view('admin/add-property', compact(
+                    'typeProprietes',
+                    'caracteristiques',
+                    'cities',
+                ));
+            }else{
+                session(['message' => 'Votre compte est temporairement bloquer.', 'message_type' => 'danger']);
 
-            $typeProprietes = TypePropriete::where('deleted','!=', 1)->get();
-            $caracteristiques = Caracteristique::where('deleted', 0)->get();
-            return view('admin/add-property', compact(
-                'typeProprietes',
-                'caracteristiques',
-                'cities',
-            ));
+                return redirect()->back();
+
+            }
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1266,6 +1363,7 @@ class PagesController extends Controller
                 $query->where('user_id', FacadesAuth::id());
             })->orderBy('created_at', 'desc')
                 ->where('deleted', 0)
+                ->where('approuver', 1)
                 ->paginate(10);
 
 
@@ -1320,6 +1418,7 @@ class PagesController extends Controller
 
                 $reviewsAdmin = Comment::orderBy('updateAdmin', 'desc')
                     ->where('created_at', 'desc')
+                    ->where('deleted', 0)
                     ->limit(10)
                     ->get();
 
@@ -1338,6 +1437,7 @@ class PagesController extends Controller
 
                 $reviewsAdmin = Comment::orderBy('updateAdmin', 'desc')
                     ->where('updated_at', 'desc')
+                    ->where('deleted', 0)
                     ->limit(10)
                     ->get();
 
@@ -1353,6 +1453,7 @@ class PagesController extends Controller
             if ($request->has('comment-approuver')) {
                 $reviewsAdmin = Comment::orderBy('updateAdmin', 'desc')
                     ->where('approuver', 1)
+                    ->where('deleted', 0)
                     ->limit(10)
                     ->get();
 

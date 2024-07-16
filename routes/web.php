@@ -42,6 +42,8 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::post('/get-cities', [PagesController::class, 'getCities'])->name('get-cities');
     Route::post('/change-password', [PagesController::class, 'changePassword'])->name('change-password');
     Route::get('/check-image/{idProperty}', [PagesController::class, 'checkImage']);
+    Route::get('/privacy-policy', [PagesController::class, 'privacyPolicy'])->name('pages.privacy-policy');
+    Route::post('/privacy-policy', [PagesController::class, 'privacyPolicy'])->name('pages.privacy-policys');
 
     FacadesAuth::routes();
 });
@@ -57,6 +59,9 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/single', [PagesController::class, 'single'])->name('pages.single');
     Route::post('/single', [PagesController::class, 'single'])->name('pages.single');
     Route::get('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
+  
+
+
     Route::post('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
     Route::post('/my-properties-post', [PagesController::class, 'myPropertiesPost'])->name('admin.my-properties-post');

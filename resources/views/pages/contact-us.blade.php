@@ -79,7 +79,7 @@ top-header-inner
                                 </div>
                                 <div class="info">
                                     <h4>Notre emplacement</h4>
-                                    <span>45/15 New alsala Avenew Booston town, Austria</span>
+                                    <span>Cotonou, Bénin</span>
                                 </div>
                             </div>
                             <div class="box">
@@ -89,10 +89,10 @@ top-header-inner
                                 <div class="info">
                                     <h4>Numéro de téléphone</h4>
                                     <span>
-                                        <a href="tel:00201068710594">+(002) 0106-8710-594</a>
+                                    <a href="tel:22995194936">+(229) 95 1949 36</a>
                                     </span>
                                     <span>
-                                        <a href="tel:00201068710588">+(002) 0106-8710-588</a>
+                                    <a href="tel:22966064948">+(229) 66 0649 48</a>
                                     </span>
                                 </div>
                             </div>
