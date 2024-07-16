@@ -439,7 +439,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             <input type="hidden" name="id" value="{{ $item->propriete->id }}">
                         </form>
                       
-                        <figure><i class="lni-map-marker"></i> Bénin, {{ $item->ville->libelle}}, {{ $item->quartier }}</figure>
+                        <figure><i class="lni-map-marker"></i> Bénin, {{ $item->propriete->ville->libelle}}, {{ $item->propriete->quartier }}</figure>
 
                         @php
                         $totalStars = 5;

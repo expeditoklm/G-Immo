@@ -84,7 +84,6 @@ top-header-inner
                             <div class="left-content">
                                 <div class="title">
                                     <h2>{{ $propertiesSingle->titre }}</h2>
-
                                 </div>
                                
                                 <span class="address">Bénin, {{ $propertiesSingle->ville->libelle}}, {{ $propertiesSingle->quartier }}</span>
@@ -224,10 +223,13 @@ top-header-inner
                                 @php
                                 // Obtenir les cinq dernières images, triées par date de création en ordre décroissant
                                 $images = $propertiesSingle->proprieteImages->sortByDesc('created_at')->take(5);
+                                //$image = $propertiesSingle->proprieteImages->sortByDesc('created_at')->take(20);
+                                $imageCount = $images->count();
 
                                 // Séparer les quatre dernières images et la cinquième image
-                                $mainImages = $images->take(4 );
-                                $extraImage = $images->skip(4)->first();
+                                $mainImages = $images->take($imageCount -1 );
+                                $extraImage = $images->skip($imageCount -1)->first();
+                                //$extraImage = $image->last();
                                 @endphp
 
 

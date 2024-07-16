@@ -120,14 +120,14 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <!--/ End Form Looking for -->
                                 <div class="form-group categories">
                                     <select name="ville" class="d-none">
-                                        <option value="">Type de Propriété</option>
+                                        <option value="">Ville</option>
                                         @foreach ($uniqueCities as $item)
                                         <option value="{{ $item->id }}">{{ $item->libelle }}</option>
                                         @endforeach
 
                                     </select>
                                     <div class="nice-select form-control wide" tabindex="0">
-                                        <span class="current"><i class="fa fa-home" aria-hidden="true"></i>Type de Propriété</span>
+                                        <span class="current"><i class="fa fa-home" aria-hidden="true"></i>Ville</span>
                                         <ul class="list">
                                             @foreach ($uniqueCities as $item)
                                             <li data-value="{{ $item->id }}" class="option selected">{{ $item->libelle }}</li>

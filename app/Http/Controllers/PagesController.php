@@ -616,8 +616,8 @@ class PagesController extends Controller
                 $request->validate([
                     'nom_prenom' => 'required|string|max:255',
                     'ville' => 'required|string',
-                    'website' => 'required|string|max:500',
-                    'description' => 'required|string|max:1000',
+                    'website' => 'nullable|string|max:500',
+                    'description' => 'nullable|string|max:1000',
                     'new_password' => 'nullable|string|min:8|confirmed',
                 ]);
 
@@ -713,18 +713,16 @@ class PagesController extends Controller
     {
         try {
             $nom_prenom = $request->nom_prenom;
-            $pays = $request->pays;
             $ville = $request->ville;
             $website = $request->website;
             $description = $request->description;
 
             $user = User::where('id', FacadesAuth::user()->id)->first();
             $user->nom_prenom = $nom_prenom;
-            $user->pays = $pays;
-            $user->ville = $ville;
+            $user->ville_id = $ville;
             $user->website = $website;
             $user->description = $description;
-            $user->updated_at = \now();
+            $user->updated_at = now();
 
             if ($request->file('file')) {
                 $image = $request->file('file');

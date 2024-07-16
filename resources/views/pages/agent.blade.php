@@ -101,7 +101,7 @@ top-header-inner
                                 @endisset
                                 <li>
                                     <span>Addresse:</span>
-                                    Bénin, {{ $agent->ville}}
+                                    Bénin, {{ $agent->ville->libelle}}
                                 </li>
                             </ul>
                         </div>
@@ -236,7 +236,7 @@ top-header-inner
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $item->id }}">
                                                     </form>
-                                                    <span>Bénin, {{ $item->ville }}, {{ $item->quartier }}</span>
+                                                    <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
                                                 </div>
                                                 <div class="price">{{ $item->prix }} XOF</div>
                                             </div>

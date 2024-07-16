@@ -298,7 +298,9 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 <td>
                     <div class="inner">
                         <h2>{{ $item->nom_prenom }}</h2>
-                        <figure><i class="lni-map-marker"></i> {{ $item->email }} / {{ $item->telephone }}</figure>
+                        <figure><i class="lni-map-marker"></i> {{ $item->email }} 
+                        @isset($item->telephone ) / @endif
+                        {{ $item->telephone }}</figure>
                         <h6>{{ $item->created_at }}</h2>
                     </div>
                 </td>
