@@ -207,7 +207,10 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-12 col-xs-12 pl-0 pr-0 user-dash">
                         <div class="user-profile-box mb-0">
-                            <div class="text-center mt-2"><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"> </div>
+                            <div class="text-center mt-2">
+                            <img src="{{asset('assets/images/agents/1.png')}}" style="height: auto; width: 100px " alt="favicon">
+
+                            </div>
 
                             @if($user)
                             <div class="user-profile d-block align-items-center ">

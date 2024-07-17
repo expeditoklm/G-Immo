@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('nomPage')
-Acceuil | Andora
+Acceuil | Miawezon
 @endsection
 
 @section('css')

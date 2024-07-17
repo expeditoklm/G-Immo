@@ -156,11 +156,11 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             @foreach ($messages as $item)
             <div class="message">
                 <div class="thumb">
-                    <img class="img-fluid" src="{{ asset('assets/admin/images/testimonials/ts-1.jpg') }}" alt="">
+                    <img class="img-fluid" src="{{ asset('assets/images/category/category14.png') }}" alt="">
                 </div>
 
                 <div class="body">
-                    <h6>{{ $item->user->nom_prenom }}</h6>
+                    <h6>{{ $item->nom_prenom }}</h6>
                     <p class="post-time">{{ $item->created_at }}</p>
                     <p class="content mb-0 mt-2">{{ $item->message }}</p>
                     <div class="controller">
@@ -204,7 +204,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             @foreach ($reviews as $item)
             <div class="message">
                 <div class="thumb">
-                    <img class="img-fluid" src="{{asset('assets/admin/images/testimonials/ts-4.jpg')}}" alt="">
+                    <img class="img-fluid" src="{{ asset('assets/images/category/category13.png') }}" alt="">
                 </div>
                 <div class="body">
                     <h5>{{ $item->propriete->titre}}</h5>

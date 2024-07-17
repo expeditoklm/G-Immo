@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Log;
 
 class PagesController extends Controller
 {
-    
+
 
 
     public function acceuil()
@@ -38,7 +38,7 @@ class PagesController extends Controller
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
             }])
-                ->where('deleted','!=', 1)
+                ->where('deleted', '!=', 1)
                 ->get();
 
             // liste des proprietes de status "à louer" 
@@ -48,44 +48,44 @@ class PagesController extends Controller
                 ->where('deleted', 0)
                 ->get();
 
-                $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
+            $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
 
-                $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
-                
-    
+            $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
+
+
 
             //Residentiel
             $nbResidential = Propriete::where('type_propriete_id', 1)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
             //Commercial
             $nbCommercial = Propriete::where('type_propriete_id', 2)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
             //Agricole
             $nbFarm = Propriete::where('type_propriete_id', 3)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
             //Parcelle
             $nbLand = Propriete::where('type_propriete_id', 4)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
             //Duplexe
             $nbDuplex = Propriete::where('type_propriete_id', 5)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
             //Bureau , Entreprise
             $nbOffice = Propriete::where('type_propriete_id', 6)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
             //Appartement
             $nbApartment = Propriete::where('type_propriete_id', 7)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
             //Entrepot
             $nbWarehouse = Propriete::where('type_propriete_id', 8)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
 
 
             // 6 proprietes à vendre recemment ajouté 
@@ -183,7 +183,7 @@ class PagesController extends Controller
 
             // Nombre total de commentaires
             $nbClientNote = Comment::where('deleted', 0)
-            ->where('approuver', 1)->count();
+                ->where('approuver', 1)->count();
 
             // Pourcentage de satisfaction des clients
             $percentClientSatisfaction = ($nbClientNoteSatisfaction * 100) / $nbClientNote;
@@ -191,14 +191,14 @@ class PagesController extends Controller
 
             // Nombre de propriétés à vendre
             $nbPropertyForSale = Propriete::where('status', 'For Sale')->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
 
 
             // Nombre de propriétés à louer
             $nbPropertyRental = Propriete::where('status', 'Rental')->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
 
 
             return view('pages/acceuil', compact(
@@ -227,7 +227,7 @@ class PagesController extends Controller
                 'propertiesHigh',
                 'propertiesForSale',
                 'comments',
-             
+
             ));
         } catch (Exception $e) {
             // Log the exception if needed
@@ -241,27 +241,27 @@ class PagesController extends Controller
     public function search(Request $request)
     {
         try {
-             // Créez une nouvelle instance de Client
-           
+            // Créez une nouvelle instance de Client
+
             //liste des proprietes à vendre
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
             }])
-                ->where('deleted','!=', 1)
+                ->where('deleted', '!=', 1)
                 ->get();
-        
+
             //liste des proprietes à louer
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'Rental');
             }])
-                ->where('deleted','!=', 1)
+                ->where('deleted', '!=', 1)
                 ->get();
 
-                $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
+            $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
 
-                $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
-                
-    
+            $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
+
+
 
             //10  proprietes recemment ajouté et qui ont plus de vue 
             $popularProperties = Propriete::orderBy('vue', 'desc')
@@ -273,8 +273,8 @@ class PagesController extends Controller
 
             // liste des proprietés 
             $properties = Propriete::where('deleted', 0)
-            ->where('masquer', 0)
-            ->paginate(10);
+                ->where('masquer', 0)
+                ->paginate(10);
 
             // enregistrement une newsletterss
             if ($request->has('btn_newslater')) {
@@ -294,7 +294,7 @@ class PagesController extends Controller
                 'typeProprieteRental',
                 'uniqueCities',
                 'popularProperties',
-      
+
 
             ));
         } catch (Exception $e) {
@@ -309,22 +309,22 @@ class PagesController extends Controller
     public function searchPost(Request $request)
     {
         try {
-             // Créez une nouvelle instance de Client
-           
+            // Créez une nouvelle instance de Client
+
             // Obtenir le nombre de propriétés par type et statut
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'For Sale');
-            }])->where('deleted','!=', 1)->get();
+            }])->where('deleted', '!=', 1)->get();
 
-            
+
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
                 $query->where('proprietes.status', 'Rental');
-            }])->where('deleted','!=', 1)->get();
-            
+            }])->where('deleted', '!=', 1)->get();
+
             $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
 
             $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
-            
+
 
 
             // Récupérer les entrées du formulaire
@@ -368,7 +368,7 @@ class PagesController extends Controller
             if (!empty($nbPiece)) {
                 $query->where('nbPiece', $nbPiece);
             }
-         
+
 
             // Ajouter la recherche par mot-clé
             if (!empty($searchTerm)) {
@@ -405,13 +405,13 @@ class PagesController extends Controller
             $popularProperties = Propriete::orderBy('vue', 'desc')
                 ->take(10)
                 ->where('deleted', 0)
-            ->where('masquer', 0)
-            ->get();
+                ->where('masquer', 0)
+                ->get();
 
             // Paginer les résultats
             $properties = $query->where('deleted', 0)
-            ->where('masquer', 0)
-            ->paginate(10)->appends($request->except('page'));
+                ->where('masquer', 0)
+                ->paginate(10)->appends($request->except('page'));
 
             // Retourner la vue avec les résultats
             return view('pages.search', compact(
@@ -420,7 +420,7 @@ class PagesController extends Controller
                 'typeProprieteRental',
                 'uniqueCities',
                 'popularProperties',
-             
+
             ));
         } catch (Exception $e) {
             // Log the exception if needed
@@ -478,14 +478,13 @@ class PagesController extends Controller
                 ->where('id', '!=', $id)
                 ->take(2)
                 ->where('deleted', 0)
-            ->where('masquer', 0)
-            ->get();
-             // Créez une nouvelle instance de Client
-       
+                ->where('masquer', 0)
+                ->get();
+            // Créez une nouvelle instance de Client
+
             //enregistrement dun message 
             if ($request->has('btn_msg3')) {
                 Message::create([
-                    'user_id' => FacadesAuth::user()->id,
                     'nom_prenom' => $request->nom_prenom,
                     'email' => $request->email,
                     'titre_msg' => $request->titre_msg,
@@ -511,7 +510,7 @@ class PagesController extends Controller
                 ])->with('success', 'E-mail sent successfully.');
             }
 
-            return view('pages/single', compact( 'id', 'proprietaire', 'propertiesSingle', 'similarProperties'));
+            return view('pages/single', compact('id', 'proprietaire', 'propertiesSingle', 'similarProperties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -527,28 +526,26 @@ class PagesController extends Controller
             if ($request->has('btn_msg2')) {
 
                 Message::create([
-                    'user_id' => FacadesAuth::user()->id,
                     'nom_prenom' => $request->nom_prenom,
                     'email' => $request->email,
                     'titre_msg' => $request->titre_msg,
                     'telephone' => $request->telephone,
                     'message' => $request->message,
                     'deleted' => 0,
-                    'proprietaire_id' => 1
+                    'proprietaire_id' => 6
                 ]);
                 return redirect()->route('pages.contact-us')->with('success', 'Message sent successfully.');
             }
             if ($request->has('btn_msg4')) {
 
                 Message::create([
-                    'user_id' => FacadesAuth::user()->id,
                     'nom_prenom' => $request->nom_prenom,
                     'email' => $request->email,
                     'titre_msg' => $request->titre_msg,
                     'telephone' => $request->telephone,
                     'message' => $request->message,
                     'deleted' => 0,
-                    'proprietaire_id' => 1
+                    'proprietaire_id' => 6
                 ]);
                 return redirect()->route('admin.user-profile')->with('success', 'Message sent successfully.');
             }
@@ -596,12 +593,11 @@ class PagesController extends Controller
             $commentaires = Comment::whereHas('propriete', function ($query) use ($id) {
                 $query->where('user_id', $id);
             })->where('deleted', 0)
-            ->where('approuver', 1)->get();
-         
-            
+                ->where('approuver', 1)->get();
+
+
             if ($request->has('btn_msg')) {
                 Message::create([
-                    'user_id' => FacadesAuth::user()->id,
                     'nom_prenom' => $request->nom_prenom,
                     'email' => $request->email,
                     'telephone' => $request->telephone,
@@ -639,8 +635,8 @@ class PagesController extends Controller
     public function privacyPolicy(Request $request)
     {
         try {
-           
-           
+
+
             if ($request->has('btn_newslater')) {
 
                 Newslater::create([
@@ -660,24 +656,25 @@ class PagesController extends Controller
         }
     }
 
-    
+
 
     public function dashbord(Request $request)
     {
         try {
-            $user_id = FacadesAuth::id();
 
+            $user_id = FacadesAuth::id();
+            
             $cities = Ville::get();
-           
+
             $user = FacadesAuth::user();
 
-       
-             
+
+
 
 
             $nbProperties = Propriete::where('user_id', $user_id)->where('deleted', 0)
-            ->where('masquer', 0)
-            ->count();
+                ->where('masquer', 0)
+                ->count();
 
             $nbReviews = Comment::whereHas('propriete', function ($query) use ($user_id) {
                 $query->where('user_id', $user_id);
@@ -690,7 +687,7 @@ class PagesController extends Controller
                 ->limit(3)
                 ->where('deleted', 0)
                 ->get();
-
+             //   dd($messages);
             $reviews = Comment::whereHas('propriete', function ($query) use ($user_id) {
                 $query->where('user_id', $user_id);
             })->orderByDesc('created_at')
@@ -760,19 +757,19 @@ class PagesController extends Controller
     {
         try {
 
-           
+
             $user = FacadesAuth::user();
 
             // Récupérer le nom du pays à partir du code enregistré dans la base de données
-            
-             // À adapter selon votre service
+
+            // À adapter selon votre service
 
             // Récupérer le nom de la ville à partir du code enregistré dans la base de données
-           
-             // À adapter selon votre service
+
+            // À adapter selon votre service
 
             $user = User::where('id', FacadesAuth::user()->id)->first();
-            return view('admin/profile', compact('user',  ));
+            return view('admin/profile', compact('user',));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -786,7 +783,7 @@ class PagesController extends Controller
     {
         try {
             $cities = Ville::get();
-            return view('admin.modif-user-profile',compact('cities'));
+            return view('admin.modif-user-profile', compact('cities'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -852,11 +849,11 @@ class PagesController extends Controller
             $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
 
             $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
-            
+
 
             $properties = Propriete::where('user_id', FacadesAuth::id())
-            ->where('masquer', 0)
-            ->where('deleted', 0)
+                ->where('masquer', 0)
+                ->where('deleted', 0)
                 ->orderBy('updated_at', 'desc')
                 ->paginate(10);
 
@@ -870,7 +867,7 @@ class PagesController extends Controller
             $restaurer = false;
             $titre = 'Liste Des Propriétés';
             $isAdmin = auth()->user()->role === 'admin';
-            $typeProprietes = TypePropriete::where('deleted','!=', 1)->get();
+            $typeProprietes = TypePropriete::where('deleted', '!=', 1)->get();
             $caracteristiques = Caracteristique::get();
 
             if ($request->has('superficie_min')) {
@@ -952,7 +949,7 @@ class PagesController extends Controller
                 $adminPropertiesView = $properties->orderBy('created_at', 'desc')->paginate(10);
 
                 // Retourner les résultats à la vue ou faire tout autre traitement nécessaire
-                return view('admin/my-properties', compact('uniqueCities','caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             };
 
 
@@ -969,7 +966,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Dernières Propriétés Ajoutées';
                 $isAdmin = auth()->user()->role === 'admin';
-                return view('admin/my-properties', compact('uniqueCities','caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -987,7 +984,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Dernières Propriétés Ajoutées';
                 $isAdmin = auth()->user()->role === 'admin';
-                return view('admin/my-properties', compact('uniqueCities','caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1004,7 +1001,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Dernières Propriétés Modifiées';
                 $isAdmin = auth()->user()->role === 'admin';
-                return view('admin/my-properties', compact('uniqueCities','caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1023,7 +1020,7 @@ class PagesController extends Controller
                 $titre = '10 Dernières Propriétés Supprimées';
                 $isAdmin = auth()->user()->role === 'admin';
 
-                return view('admin/my-properties', compact('uniqueCities','caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1044,7 +1041,7 @@ class PagesController extends Controller
 
 
 
-                return view('admin/my-properties', compact('uniqueCities','caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1066,10 +1063,10 @@ class PagesController extends Controller
 
 
 
-                return view('admin/my-properties', compact('uniqueCities','caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
-            return view('admin/my-properties', compact('uniqueCities','caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+            return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1083,22 +1080,21 @@ class PagesController extends Controller
     public function addProperty()
     {
         try {
-            if(auth()->user()->bloquer === 1){
-                
+            if (auth()->user()->bloquer == 0) {
+
                 $cities = Ville::get();
-    
-                $typeProprietes = TypePropriete::where('deleted','!=', 1)->get();
+
+                $typeProprietes = TypePropriete::where('deleted', '!=', 1)->get();
                 $caracteristiques = Caracteristique::where('deleted', 0)->get();
                 return view('admin/add-property', compact(
                     'typeProprietes',
                     'caracteristiques',
                     'cities',
                 ));
-            }else{
+            } else {
                 session(['message' => 'Votre compte est temporairement bloquer.', 'message_type' => 'danger']);
 
                 return redirect()->back();
-
             }
         } catch (Exception $e) {
             // Log the exception if needed
@@ -1336,6 +1332,7 @@ class PagesController extends Controller
                 $messagesAdmin = Message::orderBy('created_at', 'desc')
                     ->limit(5)
                     ->get();
+                    
                 $pagination = false;
                 $titre = '10 Derniers Messages Ajoutés';
 
@@ -1356,8 +1353,8 @@ class PagesController extends Controller
     public function reviews(Request $request)
     {
         try {
-             // Créez une nouvelle instance de Client
-             // Passez l'instance de Client au service
+            // Créez une nouvelle instance de Client
+            // Passez l'instance de Client au service
 
             $reviews = Comment::whereHas('propriete', function ($query) {
                 $query->where('user_id', FacadesAuth::id());
@@ -1537,7 +1534,7 @@ class PagesController extends Controller
                 throw new \Exception('Property not found');
             }
             $proprieteImages = ProprieteImage::where('propriete_id', $id)->where('deleted', 0)->get();
-            $typeProprietes = TypePropriete::where('deleted','!=', 1)->get();
+            $typeProprietes = TypePropriete::where('deleted', '!=', 1)->get();
             $caracteristiques = Caracteristique::get();
             return view('admin/modif-property', compact(
                 'caracteristiques',
@@ -1569,24 +1566,23 @@ class PagesController extends Controller
 
                 $message->save();
                 return redirect()->route('admin.messages')->with('success', 'Deleted successfully.');
-            }elseif ($request->has('message2_sup_id')) {
+            } elseif ($request->has('message2_sup_id')) {
                 $id = $request->message2_sup_id;
                 $message = Message::where('id', $id)->first();
                 $message->deleted = 1;
                 $message->updated_at = \now();
-                
+
                 $message->save();
                 return redirect()->route('admin.dashbord')->with('success', 'Deleted successfully.');
-            }elseif ($request->has('review2_sup_id')) {
+            } elseif ($request->has('review2_sup_id')) {
                 $id = $request->review2_sup_id;
                 $review = Comment::where('id', $id)->first();
                 $review->deleted = 1;
                 $review->updated_at = \now();
-                
+
                 $review->save();
                 return redirect()->route('admin.dashbord')->with('success', 'Deleted successfully.');
-            }
-             elseif ($request->has('review_sup_id')) {
+            } elseif ($request->has('review_sup_id')) {
                 $id = $request->review_sup_id;
                 $review = Comment::where('id', $id)->first();
                 $review->deleted = 1;
@@ -1619,7 +1615,7 @@ class PagesController extends Controller
                 $typePropriete->deleted = 1;
                 $typePropriete->updated_at = \now();
                 $typePropriete->save();
-             
+
                 return redirect()->route('admin.add-type-property')->with('success', 'Deleted successfully.');
             } elseif ($request->has('caracteristique_property_sup_id')) {
                 $id = $request->caracteristique_property_sup_id;
@@ -1628,7 +1624,7 @@ class PagesController extends Controller
                 $caracteristique->deleted = 1;
                 $caracteristique->updated_at = \now();
                 $caracteristique->save();
-             
+
                 return redirect()->route('admin.caracteristique-type-property')->with('success', 'Deleted successfully.');
             }
         } catch (Exception $e) {
@@ -1639,6 +1635,20 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
+
+    // public function newsLetters()
+    // {
+    //     try {
+    //         return view('pages.newsLetters');
+
+    //     } catch (Exception $e) {
+    //         // Log the exception if needed
+    //         Log::error($e->getMessage());
+
+    //         // Return a custom error view
+    //         return view('errors/404', ['message' => $e->getMessage()]);
+    //     }
+    // }
     public function newsLetterss(Request $request)
     {
         try {
@@ -1650,6 +1660,14 @@ class PagesController extends Controller
                 ]);
                 return redirect()->route('pages.account')->with('success', 'E-mail sent successfully.');
             }
+            // if ($request->has('btn_news')) {
+
+            //     Newslater::create([
+            //         'email' => $request->email,
+            //         'deleted' => 0,
+            //     ]);
+            //     return redirect(page)->route('pages.account')->with('success', 'E-mail sent successfully.');
+            // }
             if ($request->has('btn_newslater')) {
 
                 $message = $request->message;
@@ -1669,6 +1687,43 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
+
+    public function showEmailForm(Request $request)
+    {
+        $targetUrl = session('target_url', url('/'));
+        $id = session('id', $request->id);
+        return view('pages/newsLetters', compact('targetUrl','id'));
+    }
+
+    public function storeEmail(Request $request)
+    {
+        $request->session()->put('email', $request->email);
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:newslaters,email'
+        ]);
+
+        if ($validator->fails()) {
+            // Vérifiez si l'erreur concerne l'email unique
+            if ($validator->errors()->has('email') && $validator->errors()->get('email')[0] === 'The email has already been taken.') {
+                session(['message' => 'E-mail envoyé avec succès.', 'message_type' => 'success']);
+                // Rediriger sans enregistrer l'email car il est déjà présent dans la table
+                return redirect($request->input('target_url') . '?id=' . $request->input('id'));
+            } else {
+                // Traiter d'autres erreurs de validation si nécessaire
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }
+
+        Newslater::create([
+            'email' => $request->email,
+            'deleted' => 0,
+        ]);
+        session(['message' => 'E-mail envoyé avec succès.', 'message_type' => 'success']);
+
+        return redirect($request->input('target_url') . '?id=' . $request->input('id'));
+    }
+
 
     public function deleteImage($id)
     {
@@ -1708,7 +1763,7 @@ class PagesController extends Controller
             $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
 
             $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
-            
+
             $users = User::where('deleted', 0)
                 ->orderBy('created_at', 'desc')
                 ->paginate(15);
@@ -1732,7 +1787,7 @@ class PagesController extends Controller
                     $query->where('nom_prenom', 'like', '%' . $nom_prenom . '%');
                 }
 
-               
+
 
                 if (!empty($ville)) {
                     $query->where('ville_id', $ville);
@@ -1747,7 +1802,7 @@ class PagesController extends Controller
 
                 // Paginer les résultats
                 $users = $query->where('deleted', 0)->paginate(10)->appends($request->except('page'));
-                return view('admin/users', compact('uniqueCities','pagination', 'restaurer', 'titre', 'users'));
+                return view('admin/users', compact('uniqueCities', 'pagination', 'restaurer', 'titre', 'users'));
             }
             if ($request->has('users-interraction')) {
                 $users = User::whereHas('proprietes')
@@ -1759,7 +1814,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = 'Liste Des Utilisateurs Recemment Interragir avec le Système';
 
-                return view('admin/users', compact('uniqueCities','pagination', 'restaurer', 'titre', 'users'));
+                return view('admin/users', compact('uniqueCities', 'pagination', 'restaurer', 'titre', 'users'));
             }
 
             if ($request->has('users-ajouter')) {
@@ -1777,7 +1832,7 @@ class PagesController extends Controller
                 $titre = '10 Derniers Utilisateurs Ajoutés';
 
 
-                return view('admin/users', compact('uniqueCities','pagination', 'restaurer', 'titre', 'users'));
+                return view('admin/users', compact('uniqueCities', 'pagination', 'restaurer', 'titre', 'users'));
             }
 
             if ($request->has('users-modifier')) {
@@ -1793,7 +1848,7 @@ class PagesController extends Controller
 
                 $restaurer = false;
                 $titre = '10 Derniers Utilisateurs Modifiés';
-                return view('admin/users', compact('uniqueCities','pagination', 'restaurer', 'titre', 'users'));
+                return view('admin/users', compact('uniqueCities', 'pagination', 'restaurer', 'titre', 'users'));
             }
 
             if ($request->has('users-bloquer')) {
@@ -1809,7 +1864,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Derniers Utilisateurs Bloqués';
 
-                return view('admin/users', compact('uniqueCities','pagination', 'restaurer', 'titre', 'users'));
+                return view('admin/users', compact('uniqueCities', 'pagination', 'restaurer', 'titre', 'users'));
             }
 
             if ($request->has('users-activer')) {
@@ -1826,7 +1881,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Derniers Utilisateurs Activés';
 
-                return view('admin/users', compact('uniqueCities','pagination', 'restaurer', 'titre', 'users'));
+                return view('admin/users', compact('uniqueCities', 'pagination', 'restaurer', 'titre', 'users'));
             }
 
             if ($request->has('users-supprimer')) {
@@ -1843,9 +1898,9 @@ class PagesController extends Controller
                 $restaurer = true;
                 $titre = '10 Dernières Utilisateurs Supprimés';
 
-                return view('admin/users', compact('uniqueCities','pagination', 'restaurer', 'titre', 'users'));
+                return view('admin/users', compact('uniqueCities', 'pagination', 'restaurer', 'titre', 'users'));
             }
-            return view('admin/users', compact('uniqueCities','pagination', 'restaurer', 'titre', 'users'));
+            return view('admin/users', compact('uniqueCities', 'pagination', 'restaurer', 'titre', 'users'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -2138,7 +2193,7 @@ class PagesController extends Controller
     {
 
         try {
-            $typeProperty = TypePropriete::where('deleted','!=', 1)
+            $typeProperty = TypePropriete::where('deleted', '!=', 1)
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
             return view('admin.add-type-property', compact('typeProperty'));
@@ -2155,7 +2210,7 @@ class PagesController extends Controller
             $caracteristiqueProperty  = Caracteristique::where('deleted', 0)
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
-            return view('admin.caracteristique-type-property',compact('caracteristiqueProperty'));
+            return view('admin.caracteristique-type-property', compact('caracteristiqueProperty'));
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
@@ -2257,5 +2312,4 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
-    
 }

@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('nomPage')
-Properties | Andora
+Properties | Miawezon
 @endsection
 
 @section('css')
@@ -58,12 +58,12 @@ top-header-inner
         <div class="privacy-policy-content">
             <p>Dernière mise à jour le 01 Août 2024.</p>
             <p>
-                Bonjour, nous somme <strong>Andora</strong>, et vous souhaitons la bienvenue dans notre politique de confidentialité qui s'applique également à nos clients.
+                Bonjour, nous somme <strong>Miawezon</strong>, et vous souhaitons la bienvenue dans notre politique de confidentialité qui s'applique également à nos clients.
                 <br>
-                Cette politique définit la manière dont nous traitons vos informations personnelles si vous êtes un utilisateur d'Andora ou un visiteur de notre site.
+                Cette politique définit la manière dont nous traitons vos informations personnelles si vous êtes un utilisateur d'Miawezon ou un visiteur de notre site.
             </p>
             <p>
-                Lorsque nous disons « nous », « nos » ou <strong>'Andora'</strong>, c'est parce que c'est ce que nous sommes et que nous possédons et gérons le site.
+                Lorsque nous disons « nous », « nos » ou <strong>'Miawezon'</strong>, c'est parce que c'est ce que nous sommes et que nous possédons et gérons le site.
                 <br>
                 Si nous disons « politique », nous parlons de cette politique de confidentialité. Si nous disons « conditions d'utilisation », nous parlons des règles d'utilisation du site. Les règles varient selon le produit ; chaque produit les rend disponibles et demande le consentement à ces dernières et à cette politique.
             </p>
@@ -90,9 +90,9 @@ top-header-inner
             <p>Lorsque nous avons votre consentement pour le faire (par exemple, si vous vous êtes abonné à l'une de nos listes de diffusion ou si vous avez indiqué que vous souhaitiez recevoir des offres ou des informations de notre part), nous vous envoyons des communications marketing par courrier électronique sur des produits et services qui, selon nous, pourraient vous intéresser. Vous pouvez vous désinscrire de ces communications si vous préférez ne plus les recevoir à l'avenir en utilisant la fonction « se désinscrire » fournie dans la communication.
                 <p>Vous avez également la possibilité de faire des choix concernant <u>Les cookies</u>, , comme décrit ci-dessous. En modifiant les préférences de votre navigateur, vous pouvez accepter tous les cookies, être averti lorsqu'un cookie est installé ou rejeter tous les cookies. Si vous refusez les cookies, certaines parties de notre site pourraient ne pas fonctionner correctement dans votre cas.</p>
             <h4>les cookies (pas ceux que vous mangez !) et analyses Web</h4>
-            <p>Nous utilisons des cookies pour identifier et suivre les visiteurs, leurs actions sur le site et leurs préférences d'accès au site. Ces cookies contiennent l'adresse IP et l'heure de la visite des visiteurs. Les visiteurs de <strong>Andora</strong> qui ne souhaitent pas que des cookies soient placés sur leur navigateur doivent configurer leur navigateur pour refuser les cookies avant d'utiliser le site de <strong>Andora</strong> </p>
+            <p>Nous utilisons des cookies pour identifier et suivre les visiteurs, leurs actions sur le site et leurs préférences d'accès au site. Ces cookies contiennent l'adresse IP et l'heure de la visite des visiteurs. Les visiteurs de <strong>Miawezon</strong> qui ne souhaitent pas que des cookies soient placés sur leur navigateur doivent configurer leur navigateur pour refuser les cookies avant d'utiliser le site de <strong>Miawezon</strong> </p>
             <h4>Combien de temps conservons-nous vos informations personnelles</h4>
-            <p>Nous conservons vos informations personnelles aussi longtemps que nécessaire pour vous fournir les services et pour nous conformer à nos obligations légales. Si vous ne souhaitez plus que nous utilisions vos informations personnelles ou que nous vous fournissions les services <strong>Andora</strong> , vous pouvez demander que nous supprimions vos informations personnelles et que nous fermions votre compte.</p>
+            <p>Nous conservons vos informations personnelles aussi longtemps que nécessaire pour vous fournir les services et pour nous conformer à nos obligations légales. Si vous ne souhaitez plus que nous utilisions vos informations personnelles ou que nous vous fournissions les services <strong>Miawezon</strong> , vous pouvez demander que nous supprimions vos informations personnelles et que nous fermions votre compte.</p>
             <h4>Quand devons-nous mettre à jour cette politique ?</h4>
             <p>Nous devrons modifier cette politique de temps à autre pour nous assurer qu'elle reste à jour avec les dernières exigences légales et tout changement dans nos pratiques de gestion de la confidentialité. Lorsque nous modifierons la politique, nous vous informerons de ces changements ; si nécessaire, une copie de la dernière version de cette politique sera toujours disponible sur cette page.
                 <h4>Comment nous contacter</h4>

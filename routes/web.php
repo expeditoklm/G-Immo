@@ -32,6 +32,12 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::get('/details', [PagesController::class, 'details'])->name('pages.details');
     Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
     Route::get('/not-found', [PagesController::class, 'notFound'])->name('pages.not-found');
+   // Route::get('/news-letters', [PagesController::class, 'newsLetters'])->name('pages.news-letters');
+
+    
+    Route::get('/enter-email', [PagesController::class, 'showEmailForm'])->name('enter.email');
+Route::post('/enter-email', [PagesController::class, 'storeEmail'])->name('store.email');
+
     Route::post('/news-letterss', [PagesController::class, 'newsLetterss'])->name('pages.news-letterss');
     Route::post('/add-property-post', [PagesController::class, 'addPropertyPost'])->name('add-property-post');
     Route::post('/upload-image', [PagesController::class, 'uploadImage'])->name('upload-image');
@@ -45,53 +51,53 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::get('/privacy-policy', [PagesController::class, 'privacyPolicy'])->name('pages.privacy-policy');
     Route::post('/privacy-policy', [PagesController::class, 'privacyPolicy'])->name('pages.privacy-policys');
 
+
+
+
+
+
+
+
     FacadesAuth::routes();
 });
 
 
 
-
-Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
+Route::middleware([ 'check.session.variable', 'check.max.execution.time'])->group(function () {
     Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
     Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
     Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
     Route::post('/agent', [PagesController::class, 'agent'])->name('pages.agent');
     Route::get('/single', [PagesController::class, 'single'])->name('pages.single');
     Route::post('/single', [PagesController::class, 'single'])->name('pages.single');
+});
+
+
+Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
+    
     Route::get('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
-  
-
-
     Route::post('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
     Route::post('/my-properties-post', [PagesController::class, 'myPropertiesPost'])->name('admin.my-properties-post');
-
     Route::get('/admin.users', [PagesController::class, 'adminUsers'])->name('admin.users');
     Route::get('/admin.users-post', [PagesController::class, 'adminUsersPost'])->name('admin.users-post');
-
     Route::get('/admin.add-type-property', [PagesController::class, 'addTypeProperty'])->name('admin.add-type-property');
     Route::get('/admin.form-type-property', [PagesController::class, 'formTypeProperty'])->name('admin.form-type-property');
     Route::post('/admin.form-type-property-post', [PagesController::class, 'formTypePropertyPost'])->name('admin.form-type-property-post');
     Route::get('/admin.caracteristique-type-property', [PagesController::class, 'caracteristiqueTypeProperty'])->name('admin.caracteristique-type-property');
-  
     Route::get('/admin.form-caracteristique-property', [PagesController::class, 'formCaracteristiqueProperty'])->name('admin.form-caracteristique-property');
     Route::post('/admin.form-caracteristique-property-post', [PagesController::class, 'formCaracteristiquePropertyPost'])->name('admin.form-caracteristique-property-post');
-    
-
     Route::post('/ajax.users-bloquer', [PagesController::class, 'usersBloquerAjax'])->name('ajax.users-bloquer');
     Route::post('/ajax.users-debloquer', [PagesController::class, 'usersDebloquerAjax'])->name('ajax.users-debloquer');
     Route::get('/ajax.users-activer', [PagesController::class, 'usersActiverAjax'])->name('ajax.users-activer');
     Route::get('/ajax.users-desactiver', [PagesController::class, 'usersDesactiverAjax'])->name('ajax.users-desactiver');
     Route::get('/ajax.users-supprimer', [PagesController::class, 'usersSupprimerAjax'])->name('ajax.users-supprimer');
     Route::get('/ajax.users-restaurer', [PagesController::class, 'usersRestaurerAjax'])->name('ajax.users-restaurer');
-
     Route::get('/ajax.property-masquer', [PagesController::class, 'propertyMasquerAjax'])->name('ajax.property-masquer');
     Route::get('/ajax.property-demasquer', [PagesController::class, 'propertyDemasquerAjax'])->name('ajax.property-demasquer');
     Route::get('/ajax.property-supprimer', [PagesController::class, 'propertySupprimerAjax'])->name('ajax.property-supprimer');
     Route::get('/ajax.property-mettreAvant', [PagesController::class, 'propertyMettreAvantAjax'])->name('ajax.property-mettreAvant');
     Route::get('/ajax.property-restaurer', [PagesController::class, 'propertyRestaurerAjax'])->name('ajax.property-restaurer');
-    
-    
     Route::get('/ajax.comment-approuver', [PagesController::class, 'commentApprouverAjax'])->name('ajax.comment-approuver');
     Route::get('/ajax.comment-desapprouver', [PagesController::class, 'commentDesapprouverAjax'])->name('ajax.comment-desapprouver');
     Route::get('/ajax.comment-supprimer', [PagesController::class, 'commentSupprimerAjax'])->name('ajax.comment-supprimer');
@@ -118,18 +124,13 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
 
     // Ajoutez d'autres routes nécessitant une authentification ici
 });
-Route::middleware(['auth', 'check.session.variable', 'check.max.execution.time'])->group(function () {
+Route::middleware(['auth','check.max.execution.time'])->group(function () {
 
 
-
-    Route::post('/agent', [PagesController::class, 'agent'])->name('pages.agent');
-    Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
-    Route::post('/single', [PagesController::class, 'single'])->name('pages.single');
     Route::get('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::post('/dashbord', [PagesController::class, 'dashbord'])->name('admin.dashbord');
     Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
-    Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
-    Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
+
 
     Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');
     Route::get('/messages', [PagesController::class, 'messages'])->name('admin.messages');

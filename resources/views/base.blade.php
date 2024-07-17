@@ -419,7 +419,7 @@
             <div class="copyright-area">
                 <p>
                     Copyright <span>Miawezon</span> Tout droits reservés 
-                </p>Tout droits reservés
+                </p>
             </div>
         </div>
     </footer>
@@ -454,6 +454,6 @@
     @yield('js')
 </body>
 
-<!-- Mirrored from templates.envytheme.com/andora/default/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 02 Jun 2024 17:27:39 GMT -->
+<!-- Mirrored from templates.envytheme.com/miawezon/default/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 02 Jun 2024 17:27:39 GMT -->
 
 </html>

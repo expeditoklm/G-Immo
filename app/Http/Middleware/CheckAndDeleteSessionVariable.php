@@ -15,27 +15,14 @@ class CheckAndDeleteSessionVariable
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (session()->has('propriete_id')) {
-            $proprieteId = session('propriete_id');
-
-            // Suppression de la base de données
-
-            $propriete = Propriete::where('id', $proprieteId)->first();
-            $propriete->delete();
-            
-            
-            $proprieteImages = ProprieteImage::where('propriete_id', $proprieteId)->get();
-            if ($proprieteImages->isNotEmpty()) {
-                foreach ($proprieteImages as $image) {
-                    $image->delete();
-                }
-            }
-
-            // Supprimer la variable de session
-            session()->forget('propriete_id');
+        if (!$request->session()->has('email')) {
+            return redirect()->route('enter.email')->with([
+                'target_url'=> $request->url(),
+                'id'=> $request->id,]);
         }
+
         return $next($request);
-    }
+    }  
 }

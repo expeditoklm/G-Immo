@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('nomPage')
-Property | Andora
+Property | Miawezon
 @endsection
 
 @section('css')
