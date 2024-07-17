@@ -202,7 +202,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         <td>{{ $item->telephone}}</td>
                                         <td>{{ $item->titre_msg}}</td>
                                         <td>{{ $item->message}}</td>
-                                        <td>{{ $item->user->nom_prenom}}</td>
+                                        <td>{{ $item->users->nom_prenom}}</td>
                                         <td>{{ $item->created_at}}</td>
 
                                     </tr>

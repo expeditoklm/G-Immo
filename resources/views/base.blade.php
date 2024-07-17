@@ -279,7 +279,7 @@
                                 <img src="{{asset('assets/images/agents/logo.png')}}" class="m-0 p-0" alt="logo">
                             </a>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, elit dollar consectetur adipiscing elit. Diam lectus purus ultricies neque.</p>
+                        <p>Découvrez des solutions immobilières adaptées à vos besoins avec notre expertise et notre engagement pour un avenir serein</p>
                         <div class="widget-social">
                             <a href="https://www.facebook.com/" target="_blank">
                                 <i class="ri-facebook-fill"></i>

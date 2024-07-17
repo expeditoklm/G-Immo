@@ -85,7 +85,7 @@ top-header-inner
                                 <div class="title">
                                     <h2>{{ $propertiesSingle->titre }}</h2>
                                 </div>
-                               
+
                                 <span class="address">Bénin, {{ $propertiesSingle->ville->libelle}}, {{ $propertiesSingle->quartier }}</span>
                                 <ul class="info-list">
                                     @if(!is_null($propertiesSingle->nbChambre) && $propertiesSingle->nbChambre != 0)
@@ -330,9 +330,11 @@ top-header-inner
                             </ul>
 
 
-                            <form class="review-form">
+                            <form class="review-form" action="{{ route('pages.single') }}" method="POST">
+                                    @csrf
+
                                 <div class="title">
-                                    <h3>Add A Review</h3>
+                                    <h3>Ajouter un commentaire</h3>
                                     <ul class="rating">
                                         <li data-value="1"><i class="ri-star-line"></i></li>
                                         <li data-value="2"><i class="ri-star-line"></i></li>
@@ -342,37 +344,30 @@ top-header-inner
                                     </ul>
                                 </div>
                                 <input type="hidden" name="rating" id="rating" value="0">
+                                <input type="hidden" name="id" value="{{ $propertiesSingle->id}}">
+
                                 <div class="row justify-content-center">
                                     <div class="col-lg-6 col-md-12">
                                         <div class="form-group">
-                                            <label>Your Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter your name">
+                                            <label>Votre Nom et Prénom</label>
+                                            <input type="text" name="nom_prenom" class="form-control" placeholder="Enter your name">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="form-group">
-                                            <label>Email Address</label>
-                                            <input type="email" class="form-control" placeholder="Enter email address">
+                                            <label>Addresse Email </label>
+                                            <input type="email" name="email" class="form-control" placeholder="Enter email address">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group top-css">
-                                            <label>Your Review Here</label>
-                                            <textarea class="form-control" placeholder="Your review..."></textarea>
+                                            <label>Votre nouveau commentaire ici</label>
+                                            <textarea class="form-control" name="comment" placeholder="Your review..."></textarea>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="check1">
-                                                <label class="form-check-label" for="check1">
-                                                    Save my name, email, and website in this browser for the next time I review.
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <button type="submit" class="default-btn">Submit Review</button>
+                                        <button type="submit" name="btn_comment" class="default-btn">Soumettre le Commentaire</button>
                                     </div>
                                 </div>
                             </form>
@@ -594,7 +589,7 @@ top-header-inner
                             <div class="contact-details">
                                 <h3>Contact supplémentaire</h3>
                                 <ul class="list">
-                                    
+
                                     <li>
                                         <span>Email:</span>
                                         <a href="mailto:{{$propertiesSingle->emailContact}}">{{$propertiesSingle->emailContact}}</a>
@@ -643,27 +638,31 @@ top-header-inner
 
 
 
-@section('script')
-
+@section('js')
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
         const stars = document.querySelectorAll('.rating li');
         const ratingInput = document.getElementById('rating');
 
         stars.forEach(star => {
             star.addEventListener('mouseover', function() {
+                ratingInput.value = this.dataset.value;
                 resetStars();
                 highlightStars(this.dataset.value);
+                console.log(this.dataset.value)
             });
 
             star.addEventListener('click', function() {
+
                 ratingInput.value = this.dataset.value;
                 resetStars();
                 highlightStars(this.dataset.value, true);
             });
 
             star.addEventListener('mouseout', function() {
+                ratingInput.value = this.dataset.value;
                 resetStars();
                 if (ratingInput.value) {
                     highlightStars(ratingInput.value, true);
@@ -690,7 +689,7 @@ top-header-inner
                 }
             });
         }
+
     });
-
-
-    @endsection
+</script>
+@endsection

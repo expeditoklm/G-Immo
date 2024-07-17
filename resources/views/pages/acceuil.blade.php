@@ -1977,17 +1977,17 @@ row justify-content-center align-items-center
                     <div class="testimonial-card">
                         <div class="info">
                             <div class="image">
-                                @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
+                                @if($item->commenter_sexe  == 'Feminin' && !$item->commenter_profile_img)
                                 <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
+                                @elseif($item->commenter_sexe  == 'Masculin' && !$item->commenter_profile_img)
                                 <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
                                 @else
-                                <img src="{{ asset($item->user->profile_img) }}" alt="image">
+                                <img src="{{ asset($item->commenter_profile_img) }}" alt="image">
                                 @endif
                             </div>
                             <div class="title">
-                                <h3>{{ $item->nom_prenom }}</h3>
-                                <span>{{ $item->propriete->user->nom_prenom }} / {{ $item->propriete->titre }} </span>
+                                <h3>{{ $item->commenter_name  }}</h3>
+                                <span>{{ $item->proprietor_name }} / {{ $item->propriete_title }} </span>
                             </div>
                         </div>
                         <p>“{{ $item->comment }}”</p>

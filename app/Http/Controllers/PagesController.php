@@ -165,13 +165,27 @@ class PagesController extends Controller
 
             // 6 commentaire qui possede une "note superieur à 2" recemment ajouté  et 
             // qui se retrouve parmis les utilisateur qui on de compte 
-            $comments = Comment::where('note', '>', 2)
-                ->whereHas('user')
-                ->where('deleted', 0)
-                ->where('approuver', 1)
-                ->orderBy('created_at', 'desc')
-                ->limit(6)
-                ->get();
+          // Requête pour récupérer les commentaires avec les utilisateurs associés
+          $comments = DB::table('comments')
+          ->join('users as commenters', 'comments.email', '=', 'commenters.email')
+          ->join('proprietes', 'comments.propriete_id', '=', 'proprietes.id')
+          ->join('users as proprietors', 'proprietes.user_id', '=', 'proprietors.id')
+          ->select(
+              'comments.*',
+              'commenters.nom_prenom as commenter_name',
+              'commenters.sexe as commenter_sexe',
+              'commenters.profile_img as commenter_profile_img',
+              'proprietes.titre as propriete_title',
+              'proprietors.nom_prenom as proprietor_name'
+          )
+          ->where('comments.note', '>', 2)
+          ->where('comments.deleted', 0)
+          ->where('comments.approuver', 1)
+          ->orderBy('comments.created_at', 'desc')
+          ->limit(6)
+          ->get();
+      
+          
 
 
             // Nombre total de clients qui ont commenter
@@ -497,6 +511,21 @@ class PagesController extends Controller
                 return redirect()->route('pages.single', [
                     'id' => $id,
                 ])->with('success', 'Message sent successfully.');
+            }
+            if ($request->has('btn_comment')) {
+                Comment::create([
+                    'nom_prenom' => $request->nom_prenom,
+                    'email' => $request->email,
+                    'note' => $request->rating,
+                    'comment' => $request->comment,
+                    'deleted' => 0,
+                    'approuver' => 1,
+                    'propriete_id' => $propertiesSingle->id
+                ]);
+
+                return redirect()->route('pages.single', [
+                    'id' => $id,
+                ])->with('success', 'Commentaire envoyé avec success.');
             }
             //enregistrement dune newsletterss
             if ($request->has('btn_newslater')) {

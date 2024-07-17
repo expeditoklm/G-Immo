@@ -38,7 +38,7 @@ top-header-inner
 <div class="page-banner-area">
     <div class="container">
         <div class="page-banner-content">
-            <h2>Login / Register</h2>
+            <h2>S'identifier / S'enregistrer</h2>
             <ul class="list">
                 <li>
                     <a href="{{ route('pages.acceuil') }}">Acceuil</a>
@@ -65,7 +65,7 @@ top-header-inner
                     <div class="profile-authentication-box">
                         <div class="content">
                             <h3>Se Connecter</h3>
-                            <p>Vous n'avez pas de compte? <a href="my-account.html">S'inscrire ici</a></p>
+                            <p>Vous n'avez pas de compte? <a href="#">S'inscrire à votre droite</a></p>
                         </div>
                         <form method="POST" class="authentication-form" action="{{ route('login') }}">
                             @csrf
@@ -77,14 +77,14 @@ top-header-inner
                             </div>
                             <div class="form-group">
                                 <label>Addresse E-mail</label>
-                                <input type="email" name="email" class="form-control" placeholder="Entrer votre addresse email ">
+                                <input type="email" name="email" class="form-control" placeholder="Entrer votre addresse email "required>
                                 <div class="icon">
                                     <i class="ri-mail-line"></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Mot de Passe</label>
-                                <input type="password" name="password" class="form-control" placeholder="Votre mot de passe">
+                                <input type="password" name="password" class="form-control" placeholder="Votre mot de passe"required>
                                 <div class="icon">
                                     <i class="ri-lock-line"></i>
                                 </div>
@@ -96,7 +96,7 @@ top-header-inner
                                         Se souvenir de moi
                                     </label>
                                 </div>
-                                <a href="forgot-password.html" class="forgot-password">
+                                <a href="#" class="forgot-password">
                                     Mot de passe oublier?
                                 </a>
                             </div>
@@ -107,10 +107,10 @@ top-header-inner
                 <div class="col-lg-6 col-md-12">
                     <div class="profile-authentication-box with-gap">
                         <div class="content">
-                            <h3>Create Your Account</h3>
-                            <p>Already have an account? <a href="my-account.html">S'Inscrire Ici</a></p>
+                            <h3>Créez votre compte</h3>
+                            <p>Vous avez déjà un compte ? <a href="#">Se Connecter à votre gauche</a></p>
                         </div>
-                        <form method="POST" class="authentication-form" action="{{ route('register') }}">
+                        <form method="POST" class="authentication-form" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="google-btn">
                                 <button type="submit"><img src="{{asset('assets/images/google.svg')}}" alt="google">Se connecter avec Google</button>
@@ -177,7 +177,7 @@ top-header-inner
 
 
                             <div class="form-group">
-                                <label>City</label>
+                                <label>Ville</label>
                                 <select class="form-control" value="{{ old('ville') }}" name="ville" id="city" aria-label="Default select example" required>
                                     <option value="" selected>Selectionner votre ville</option>
                                     @foreach ($cities as $item)
@@ -186,6 +186,22 @@ top-header-inner
                                 </select>
                                 <div class="icon">
                                     <i class="ri-building-line"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Régistre de Commerce (RCCM)</label>
+                                <input type="file" name="rccm" class="form-control" value="{{ old('telephone') }}" placeholder="Entrer votre telephone" required>
+                                <div class="icon">
+                                <i class="ri-file-text-line"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Pièce d'Identité</label>
+                                <input type="file" name="identite" class="form-control" value="{{ old('telephone') }}" placeholder="Entrer votre telephone" required>
+                                <div class="icon">
+                                <i class="ri-passport-line"></i> 
                                 </div>
                             </div>
 
@@ -212,7 +228,7 @@ top-header-inner
                                     </label>
                                 </div>
                             </div>
-                            <button type="submit" class="default-btn" id="signup-btn" disabled>S'inscrire'</button>
+                            <button type="submit" class="default-btn" id="signup-btn" disabled>S'inscrire</button>
 
                         </form>
                     </div>

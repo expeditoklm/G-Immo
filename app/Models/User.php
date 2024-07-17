@@ -37,7 +37,7 @@ class User extends Model implements AuthenticatableContract
     /**
      * @var array
      */
-    protected $fillable = ['ville_id','nom_prenom','bloquer','activer','updatedAdmin', 'sexe', 'telephone', 'email', 'password',  'website', 'description',  'role', 'profile_img', 'deleted', 'created_at', 'updated_at', 'remember_token', 'email_verified_at'];
+    protected $fillable = ['ville_id','nom_prenom','bloquer','activer','updatedAdmin', 'sexe', 'telephone', 'email', 'password',  'website', 'description',  'role', 'profile_img', 'rccm','identite','deleted', 'created_at', 'updated_at', 'remember_token', 'email_verified_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

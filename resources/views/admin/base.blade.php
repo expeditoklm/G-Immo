@@ -208,7 +208,10 @@
                     <div class="col-lg-3 col-md-12 col-xs-12 pl-0 pr-0 user-dash">
                         <div class="user-profile-box mb-0">
                             <div class="text-center mt-2">
-                            <img src="{{asset('assets/images/agents/1.png')}}" style="height: auto; width: 100px " alt="favicon">
+                             <a href="{{ route('pages.acceuil') }}">
+
+                                 <img src="{{asset('assets/images/agents/1.png')}}" style="height: auto; width: 100px " alt="favicon">
+                             </a>   
 
                             </div>
 

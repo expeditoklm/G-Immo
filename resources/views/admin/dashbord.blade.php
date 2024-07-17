@@ -155,10 +155,6 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
             @foreach ($messages as $item)
             <div class="message">
-                <div class="thumb">
-                    <img class="img-fluid" src="{{ asset('assets/images/category/category14.png') }}" alt="">
-                </div>
-
                 <div class="body">
                     <h6>{{ $item->nom_prenom }}</h6>
                     <p class="post-time">{{ $item->created_at }}</p>
@@ -203,9 +199,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
             @foreach ($reviews as $item)
             <div class="message">
-                <div class="thumb">
-                    <img class="img-fluid" src="{{ asset('assets/images/category/category13.png') }}" alt="">
-                </div>
+               
                 <div class="body">
                     <h5>{{ $item->propriete->titre}}</h5>
                     <h6>{{ $item->nom_prenom}}</h6>

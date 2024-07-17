@@ -257,7 +257,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         <td>{{ $item->propriete->titre}}</td>
                                         <td>{{ $item->comment}}</td>
                                         <td>{{ $item->note}}</td>
-                                        <td>{{ $item->user->nom_prenom}}</td>
+                                        <td>{{ $item->propriete->user->nom_prenom}}</td>
                                         <td>{{ $item->created_at}}</td>
 
                                         @if($restaurer==false)

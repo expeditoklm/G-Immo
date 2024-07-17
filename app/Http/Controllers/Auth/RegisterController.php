@@ -21,6 +21,7 @@ class RegisterController extends Controller
             'website' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'profile_img' => 'nullable|string|max:255',
+        
             'telephone' => 'nullable|integer',
             'pays' => 'nullable|string|max:255',
             'ville' => 'nullable|string|max:255',
@@ -47,17 +48,34 @@ class RegisterController extends Controller
             'profile_img' => $request->profile_img,
             'telephone' => $request->telephone,
             'pays' => $request->pays,
-            'ville' => $request->ville,
+            'ville_id' => $request->ville,
             'role' => $request->role ?? 'agent', // Assigner le rôle par défaut si applicable
             'deleted' => 0,
             'bloquer' => 0,
-            'activer' => 1,
+            'activer' => 0,
 
         ]);
+        //dd($request->file('rccm'));
+        if ($request->file('rccm')) {
+            $rccm = $request->file('rccm');
+            $rccmName = time() . '.' . $rccm->extension();
+            $rccmPath = $rccm->storeAs('uploads', $rccmName, 'public');
+
+            $user->rccm = '/storage/' . $rccmPath;
+        }
+
+        if ($request->file('identite')) {
+            $identite = $request->file('identite');
+            $identiteName = time() . '.' . $identite->extension();
+            $identitePath = $identite->storeAs('uploads', $identiteName, 'public');
+
+            $user->identite = '/storage/' . $identitePath;
+        }
+        $user->save();
 
         // Vérifier si l'utilisateur a été créé avec succès
         if ($user) {
-            return redirect()->back()->with('success', 'Votre compte a été créé avec succès. Veuillez vous connecter pour continuer.');
+            return redirect()->back()->with('success', 'Votre compte a été créé avec succès. Veuillez vous patienter,le temps d\'analyser  votre dossier.');
         } else {
             return redirect()->back()->with('error', 'Inscription échouée.');
         }
