@@ -8230,6 +8230,10 @@ html input[disabled] {
   display: none;
 }
 
+.hp-6 .checkboxes input[type=radio] {
+  display: none;
+}
+
 .hp-6 .checkboxes label:before {
   content: "";
   display: inline-block;
@@ -8249,6 +8253,20 @@ html input[disabled] {
 }
 
 .hp-6 .checkboxes input[type=checkbox]:checked + label:before {
+  content: "\f00c";
+  font-family: "FontAwesome";
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 15px;
+  background-color: #FF385C;
+  border: 2px solid transparent;
+  -webkit-transition: border-color 0s;
+  transition: border-color 0s;
+}
+
+
+.hp-6 .checkboxes input[type=radio]:checked + label:before {
   content: "\f00c";
   font-family: "FontAwesome";
   font-size: 12px;
@@ -12267,6 +12285,10 @@ section.visited-cities {
   background: #687389;
 }
 
+.th-17 .checkboxes input[type=radio]:checked + label:before {
+  background: #687389;
+}
+
 .th-17 .dropdown-filter span::after,
 .th-17 .form-group .nice-select i,
 .th-17 a.btn.btn-yellow:hover,
@@ -15795,6 +15817,10 @@ a.button {
   display: none;
 }
 
+.inner-pages .checkboxes input[type=radio] {
+  display: none;
+}
+
 .inner-pages .checkboxes label:before {
   content: "";
   display: inline-block;
@@ -15814,6 +15840,19 @@ a.button {
 }
 
 .inner-pages .checkboxes input[type=checkbox]:checked + label:before {
+  content: "\f00c";
+  font-family: "FontAwesome";
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 15px;
+  background-color: #FF385C;
+  border: 2px solid transparent;
+  -webkit-transition: border-color 0s;
+  transition: border-color 0s;
+}
+
+.inner-pages .checkboxes input[type=radio]:checked + label:before {
   content: "\f00c";
   font-family: "FontAwesome";
   font-size: 12px;

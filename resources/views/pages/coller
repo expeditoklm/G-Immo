@@ -1387,7 +1387,14 @@ top-header-inner
 
 
 
+ <!-- Formulaire caché -->
+                    <form id="post2{{ $item->id }}" action="{{ route('modif-property') }}" method="POST" style="display: none;">
+                        @csrf
+                        <input type="hidden" name="property_modif_id" value="{{ $item->id }}">
+                    </form>
 
+                    <a href="#" class="edit" onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;"><i class="lni-pencil"></i>Edit</a>
+                    
 
 
 
@@ -1402,3 +1409,16 @@ top-header-inner
                     <button class="btn btn-info btn-xs ml-5 mr-5 border-0 cancel-delete" data-id="{{ $item->id }}" id="cancel-delete">Non</button>
                 </div>
             </div>                    document.getElementById('myModal-' + id).style.display = 'none';
+
+
+
+
+ovh lws
+
+
+
+
+
+laravel media library
+
+statamique

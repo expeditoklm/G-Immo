@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class PagesController extends Controller
@@ -697,10 +698,6 @@ class PagesController extends Controller
 
             $user = FacadesAuth::user();
 
-
-
-
-
             $nbProperties = Propriete::where('user_id', $user_id)->where('deleted', 0)
                 ->where('masquer', 0)
                 ->count();
@@ -879,6 +876,10 @@ class PagesController extends Controller
 
             $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
 
+            $users = User::where('deleted', 0)
+            ->orderBy('created_at', 'desc')
+            ->where('activer', 1)
+            ->get();
 
             $properties = Propriete::where('user_id', FacadesAuth::id())
                 ->where('masquer', 0)
@@ -1095,7 +1096,7 @@ class PagesController extends Controller
                 return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
-            return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+            return view('admin/my-properties', compact('users','uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1105,13 +1106,45 @@ class PagesController extends Controller
         }
     }
 
+    
+    public function adminAddUser(Request $request)
+    {
+        try {
+            if($request->has('isAdmin')){
+                $isAdmin = $request->input('isAdmin');
+            }else{
+                $isAdmin = '';
+            }
+           
+                $cities = Ville::get();
+                return view('admin/addUser', compact(
+                    'cities',
+                    'isAdmin'
+                ));
+            
+           
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
 
-    public function addProperty()
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+    
+
+    public function addProperty(Request $request)
     {
         try {
             if (auth()->user()->bloquer == 0) {
 
                 $cities = Ville::get();
+
+                if($request->has('proprietaire')){
+                    $ppt_user_id = $request->input('proprietaire');
+                }else{
+                    $ppt_user_id = '';
+                }
 
                 $typeProprietes = TypePropriete::where('deleted', '!=', 1)->get();
                 $caracteristiques = Caracteristique::where('deleted', 0)->get();
@@ -1119,6 +1152,7 @@ class PagesController extends Controller
                     'typeProprietes',
                     'caracteristiques',
                     'cities',
+                    'ppt_user_id'
                 ));
             } else {
                 session(['message' => 'Votre compte est temporairement bloquer.', 'message_type' => 'danger']);
@@ -1160,7 +1194,16 @@ class PagesController extends Controller
             $property->deleted = 0;
             $property->masquer = 0;
             $property->mettreAvant = now();
-            $property->user_id = $request->user()->id;
+            if($request->has('proprietaire')){
+                $property->user_id = $request->proprietaire;
+            }else{
+                $property->user_id = $request->user()->id;
+            }
+            
+
+            if(FacadesAuth::user()->role === 'admin'){
+                $property->updateAdmin = now();
+            }
 
             $property->save();
 
@@ -1191,6 +1234,139 @@ class PagesController extends Controller
         }
     }
 
+    public function registerUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nom_prenom' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'telephone' => 'required|string|max:20',
+            'website' => 'nullable|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+            'description' => 'nullable|string',
+            'pays' => 'required|string|max:255',
+            'ville_id' => 'required|integer',
+            'quartier' => 'required|string|max:255',
+            'adresse' => 'nullable|string|max:255',
+            'rccm' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'identite' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+       
+        $user = User::create([
+            'nom_prenom' => $request->nom_prenom,
+            'email' => $request->email,
+            'telephone' => $request->telephone,
+            'website' => $request->website,
+            'sexe' => $request->sexe,
+            'password' => Hash::make($request->password),
+            'description' => $request->description,
+            'pays' => $request->pays,
+            'ville_id' => $request->ville_id,
+            'quartier' => $request->quartier,
+            'adresse' => $request->adresse,
+            'updateAdmin' => now(),
+            'deleted' => 0,
+            'bloquer' => 0,
+            'activer' => 0,
+          
+        ]);
+
+        if ($request->has('isAdmin')) {
+            $user->role = 'admin';
+        }
+
+        if ($request->file('rccm')) {
+            $rccm = $request->file('rccm');
+            $rccmName = time() . '.' . $rccm->extension();
+            $rccmPath = $rccm->storeAs('uploads', $rccmName, 'public');
+
+            $user->rccm = '/storage/' . $rccmPath;
+        }
+
+        if ($request->file('identite')) {
+            $identite = $request->file('identite');
+            $identiteName = time() . '.' . $identite->extension();
+            $identitePath = $identite->storeAs('uploads', $identiteName, 'public');
+
+            $user->identite = '/storage/' . $identitePath;
+        }
+        if ($user->sexe == 'Feminin') {
+            $user->profile_img = '/assets/images/user/f-user.png';
+        }else{
+            $user->profile_img = '/assets/images/user/m-user.jpg';
+        }
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'Utilisateur enregistré avec succès.');
+    }
+
+    
+
+    // public function myPropertiesPostAdmin(Request $request)
+    // {
+    //     try {
+
+    //         // Création d'une nouvelle propriété
+    //         $property = new Propriete();
+    //         $property->titre = $request->titre;
+    //         $property->description = $request->description;
+    //         $property->status = $request->status;
+    //         $property->type_propriete_id = $request->type_propriete_id;
+    //         $property->prix = $request->prix;
+    //         $property->surface = $request->surface;
+    //         $property->ville_id = $request->ville;
+    //         $property->quartier = $request->quartier;
+    //         $property->adresse = $request->adresse;
+    //         $property->nbPiece = $request->nbPiece;
+    //         $property->nbChambre = $request->nbChambre;
+    //         $property->nbToillete = $request->nbToillete;
+    //         $property->nomContact = $request->nomContact;
+    //         $property->prenomContact = $request->prenomContact;
+    //         $property->emailContact = $request->emailContact;
+    //         $property->telContact = $request->telContact;
+    //         $property->deleted = 0;
+    //         $property->masquer = 0;
+    //         $property->mettreAvant = now();
+            
+
+    //         if(FacadesAuth::user()->role === 'admin'){
+    //             $property->updateAdmin = now();
+    //         }
+
+            
+
+    //         $property->save();
+
+    //         // Sauvegarde des caractéristiques
+    //         if ($request->has('caracteristiques')) {
+    //             $property->caracteristiques()->sync($request->caracteristiques);
+    //         }
+
+    //         if ($request->has('addByAdmin')) {
+    //             $property->updateAdmin =  \now();
+    //         }
+    //         // Sauvegarde des images
+    //         $uploadedImageUrls = json_decode($request->uploadedImageUrls, true);
+    //         foreach ($uploadedImageUrls as $imageUrl) {
+    //             ProprieteImage::create([
+    //                 'url' => $imageUrl,
+    //                 'propriete_id' => $property->id,
+    //                 'deleted' => 0,
+    //             ]);
+    //         }
+    //         session(['message' => 'Propriété ajouté avec succes.', 'message_type' => 'success']);
+
+    //         return response()->json(['success' => true, 'property_id' => $request]);
+    //     } catch (Exception $e) {
+    //         Log::error($e->getMessage());
+
+    //         return view('errors/404', ['message' => $e->getMessage()]);
+    //     }
+    // }
 
     public function modifPropertyPost(Request $request)
     {
@@ -1223,7 +1399,10 @@ class PagesController extends Controller
             $property->updated_at = \now();
 
             $property->user_id = $request->user()->id;
-
+            
+            if(FacadesAuth::user()->role === 'admin'){
+                $property->updateAdmin = now();
+            }
             $property->save();
 
             // Sauvegarde des caractéristiques

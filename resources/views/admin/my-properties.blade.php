@@ -8,6 +8,12 @@ Dashbord | Find Houses
 
 <!-- Select2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .nice-select {
+        display: none;
+       
+    }
+</style>
 
 <style>
     .full-width {
@@ -88,10 +94,44 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <div class="text-heading text-left">
                             <p class="pb-2"><a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">Home </a> &nbsp;/&nbsp; <span>{{$titre}}</span></p>
                         </div>
+                        <div class="d-flex justify-content-between ">
+                            <h3 class="mb-0">{{ $titre }}</h3>
+                  
+  
 
-                        <h3>{{$titre}}</h3>
+
+
+                    
+
+
+                        </div>
+
                     </div>
+                    <!-- Container pour aligner le formulaire à droite -->
+<div class="d-flex justify-content-end" style="margin-right: 100px;">
+    <form class="form" method="get" action="{{ route('admin.add-property') }}" style="max-width: 300px;">
+        @csrf
+
+        <div class="form-group">
+            <div class="d-flex justify-content-between align-items-center">
+                <select name="proprietaire" class="form-control select2" id="proprietaire">
+                    <option value="">Le propriétaire</option>
+                    @foreach ($users as $item)
+                    <option value="{{ $item->id }}">{{ $item->nom_prenom }}</option>
+                    @endforeach
+                </select>
+                <div class="ml-2">
+                    <button type="submit" class="btn btn-lg btn-primary">Créer</button>
                 </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+                </div>
+
+                
             </div>
         </section>
         <div class="row ">
@@ -458,8 +498,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         <td>{{ $item->quartier}}</td>
                                         <td>{{ $item->vue}}</td>
                                         @if($restaurer==false)
-                                        <td class="view-details" title="Voir"><a href="#"><i class="fa fa-eye text-warning" title="Voir"></i></a></td>
-                                        <td class="edit" title="Modifier"><a href="#"><i class="fa fa-pencil text-primary " title="Modifier"></i></a></td>
+                                        <td class="view-details" title="Voir"><a href="#" onclick="document.getElementById('poster{{ $item->id }}').submit(); return false;"><i class="fa fa-eye text-warning" title="Voir"></i></a></td>
+                                        <td class="edit" title="Modifier"><a href="#" onclick="document.getElementById('po{{ $item->id }}').submit(); return false;"><i class="fa fa-pencil text-primary " title="Modifier"></i></a></td>
                                         @if($item->masquer == 0)
                                         <td title="Masquer" id="titleMasquer{{ $item->id}}"><a href="#" class="delete-icon" data-id="Masquer{{ $item->id}}"><i class="fa fa-check" style="color: green;" id="masque{{ $item->id}}"></i></a></td>
                                         @else
@@ -472,6 +512,23 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         @else
                                         <td title="Restaurer"><a href="#" class="delete-icon" data-id="Restaurer{{ $item->id}}"><i class="fa fa-trash" style="color: green;"></i></a></td>
                                         @endif
+                                        <!-- Formulaire caché -->
+                                        <form id="po{{ $item->id }}" action="{{ route('modif-property') }}" method="POST" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="property_modif_id" value="{{ $item->id }}">
+                                        </form>
+
+
+
+
+
+                                        <!-- Formulaire caché -->
+                                        <form id="poster{{ $item->id }}" action="{{ route('pages.single') }}" method="POST" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $item->id }}">
+                                        </form>
+
+
 
 
 
@@ -968,5 +1025,23 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         });
     });
 </script>
+
+
+
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#proprietaire').select2({
+            placeholder: "Le propriétaire",
+            allowClear: true
+        });
+    });
+
+
+</script>
+
 
 @endsection

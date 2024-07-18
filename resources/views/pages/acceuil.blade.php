@@ -67,7 +67,7 @@ row justify-content-center align-items-center
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
-                                       
+
                                             <div class="form-group">
                                                 <label>Emplacement</label>
                                                 <select name="ville" class="form-select form-control">
@@ -210,7 +210,7 @@ row justify-content-center align-items-center
                     <div class="content">
                         <h3>
                             <a href="#" onclick="document.getElementById('post-Residential').submit(); return false;">
-                            Résidentiel
+                                Résidentiel
                             </a>
                         </h3>
 
@@ -418,8 +418,16 @@ row justify-content-center align-items-center
                         <div class="col-xl-4 col-md-6">
                             <div class="properties-item">
                                 <div class="properties-image">
-                                    <a href="{{ route('pages.single') }}">
-                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
+                                <a href="property-details.html">
+                                    <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                    </div>
                                     </a>
                                     <ul class="action">
 
@@ -516,8 +524,8 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                    
-                                    <span>Bénin, {{ $item->ville->libelle}}, {{ $item->quartier }}</span>
+
+                                            <span>Bénin, {{ $item->ville->libelle}}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -527,13 +535,15 @@ row justify-content-center align-items-center
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                            @else
-                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                            @endif
+                                            <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                            </div>
                                             <a href="#" onclick="document.getElementById('post9{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -587,9 +597,15 @@ row justify-content-center align-items-center
                         <div class="col-xl-4 col-md-6">
                             <div class="properties-item">
                                 <div class="properties-image">
-                                    <a href="{{ route('pages.single') }}">
-                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
-                                    </a>
+                                <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                    </div>
                                     <ul class="action">
 
                                         <li>
@@ -684,7 +700,7 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                    <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
+                                            <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -694,13 +710,15 @@ row justify-content-center align-items-center
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                            @else
-                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                            @endif
+                                            <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                            </div>
                                             <a href="#" onclick="document.getElementById('post12{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -754,9 +772,15 @@ row justify-content-center align-items-center
                         <div class="col-xl-4 col-md-6">
                             <div class="properties-item">
                                 <div class="properties-image">
-                                    <a href="{{ route('pages.single') }}">
-                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
-                                    </a>
+                                <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                    </div>
                                     <ul class="action">
 
                                         <li>
@@ -851,8 +875,8 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                  
-                                    <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
+
+                                            <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -862,13 +886,15 @@ row justify-content-center align-items-center
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                            @else
-                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                            @endif
+                                            <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                            </div>
                                             <a href="#" onclick="document.getElementById('post15{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -922,9 +948,15 @@ row justify-content-center align-items-center
                         <div class="col-xl-4 col-md-6">
                             <div class="properties-item">
                                 <div class="properties-image">
-                                    <a href="{{ route('pages.single') }}">
-                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
-                                    </a>
+                                <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                    </div>
                                     <ul class="action">
 
                                         <li>
@@ -1019,8 +1051,8 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                       
-                                    <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
+
+                                            <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1030,13 +1062,15 @@ row justify-content-center align-items-center
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                            @else
-                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                            @endif
+                                            <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                            </div>
                                             <a href="#" onclick="document.getElementById('post19{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -1090,9 +1124,15 @@ row justify-content-center align-items-center
                         <div class="col-xl-4 col-md-6">
                             <div class="properties-item">
                                 <div class="properties-image">
-                                    <a href="{{ route('pages.single') }}">
-                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
-                                    </a>
+                                <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                    </div>
                                     <ul class="action">
 
                                         <li>
@@ -1187,8 +1227,8 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                  
-                                    <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
+
+                                            <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1198,13 +1238,15 @@ row justify-content-center align-items-center
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                            @else
-                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                            @endif
+                                            <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                            </div>
                                             <a href="#" onclick="document.getElementById('post23{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -1258,9 +1300,15 @@ row justify-content-center align-items-center
                         <div class="col-xl-4 col-md-6">
                             <div class="properties-item">
                                 <div class="properties-image">
-                                    <a href="{{ route('pages.single') }}">
-                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
-                                    </a>
+                                <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                    </div>
                                     <ul class="action">
 
                                         <li>
@@ -1355,8 +1403,8 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                            
-                                    <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
+
+                                            <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1366,13 +1414,15 @@ row justify-content-center align-items-center
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                            @else
-                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                            @endif
+                                            <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                            </div>
                                             <a href="#" onclick="document.getElementById('post27{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -1426,9 +1476,15 @@ row justify-content-center align-items-center
                         <div class="col-xl-4 col-md-6">
                             <div class="properties-item">
                                 <div class="properties-image">
-                                    <a href="{{ route('pages.single') }}">
-                                        <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
-                                    </a>
+                                <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                    </div>
                                     <ul class="action">
 
                                         <li>
@@ -1523,7 +1579,7 @@ row justify-content-center align-items-center
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                             </form>
 
-                                    <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
+                                            <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
                                         </div>
                                         <div class="price">
                                             @isset($item->prix)
@@ -1533,13 +1589,15 @@ row justify-content-center align-items-center
                                     </div>
                                     <div class="bottom">
                                         <div class="user">
-                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                            @else
-                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                            @endif
+                                            <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                            </div>
                                             <a href="#" onclick="document.getElementById('post31{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                             <!-- Formulaire caché -->
@@ -1658,7 +1716,16 @@ row justify-content-center align-items-center
             @php
             $count++;
             @endphp
-            <div class="slide {{ $count == 1 ? 'active' : '' }}" style="background-image: url('{{ asset($item->proprieteImages->first()->url) }}');">
+            <div class="slide {{ $count == 1 ? 'active' : '' }}"
+             style=
+             "
+             width: 500px; 
+                                                height: 550px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+             ">
                 <div class="properties-content">
                     <div class="info">
                         <div class="media">
@@ -1713,8 +1780,8 @@ row justify-content-center align-items-center
                         </form>
 
 
-                 
-                                    <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
+
+                        <span>Bénin, {{ $item->ville->libelle }}, {{ $item->quartier }}</span>
                     </div>
                     <ul class="info-list">
                         @if(!is_null($item->nbChambre) && $item->nbChambre != 0)
@@ -1760,13 +1827,15 @@ row justify-content-center align-items-center
                             @endif
                         </div>
                         <div class="user">
-                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                            @else
-                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                            @endif
+                            <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                            </div>
                             <a href="#" onclick="document.getElementById('post1{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                             <!-- Formulaire caché -->
@@ -1798,9 +1867,15 @@ row justify-content-center align-items-center
             <div class="col-xl-4 col-md-6">
                 <div class="properties-item">
                     <div class="properties-image">
-                        <a href="{{ route('pages.single') }}">
-                            <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
-                        </a>
+                    <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                    </div>
                         <ul class="action">
 
                             <li>
@@ -1895,8 +1970,8 @@ row justify-content-center align-items-center
                                     <input type="hidden" name="id" value="{{ $item->id }}">
                                 </form>
 
-                               
-                                    <span>Bénin, {{ $item->ville->libelle}}, {{ $item->quartier }}</span>
+
+                                <span>Bénin, {{ $item->ville->libelle}}, {{ $item->quartier }}</span>
                             </div>
                             <div class="price">
                                 @isset($item->prix)
@@ -1906,13 +1981,18 @@ row justify-content-center align-items-center
                         </div>
                         <div class="bottom">
                             <div class="user">
-                                @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                @else
-                                <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                @endif
+
+                                <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                </div>
+
+
                                 <a href="#" onclick="document.getElementById('post5{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                 <!-- Formulaire caché -->
@@ -1977,13 +2057,15 @@ row justify-content-center align-items-center
                     <div class="testimonial-card">
                         <div class="info">
                             <div class="image">
-                                @if($item->commenter_sexe  == 'Feminin' && !$item->commenter_profile_img)
-                                <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                @elseif($item->commenter_sexe  == 'Masculin' && !$item->commenter_profile_img)
-                                <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                @else
-                                <img src="{{ asset($item->commenter_profile_img) }}" alt="image">
-                                @endif
+                                <div class="rounded-circle" style="
+                                    width: 80px; 
+                                    height: 80px; 
+                                    background-image: url('{{ asset($item->commenter_profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                </div>
                             </div>
                             <div class="title">
                                 <h3>{{ $item->commenter_name  }}</h3>

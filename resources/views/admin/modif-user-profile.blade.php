@@ -107,32 +107,7 @@ col-lg-6 col-md-6 col-xs-6 widget-boxed mt-33 mt-0 offset-lg-2 offset-md-3
         });
     });
 
-    function countryHasChanged() {
-        const countrySelect = document.getElementById('country');
-        const citySelect = document.getElementById('city');
-        const countryCode = countrySelect.value;
 
-        if (countryCode) {
-            fetch("{{ route('get-cities') }}?country_code=" + countryCode)
-                .then(response => response.json())
-                .then(data => {
-                    citySelect.innerHTML = ''; // Clear previous options
-                    data.forEach(city => {
-                        const option = document.createElement('option');
-                        option.value = city.geonameId;
-                        option.textContent = city.name;
-                        citySelect.appendChild(option);
-                    });
-                    $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
-                })
-                .catch(error => {
-                    console.error('Error fetching cities:', error);
-                });
-        } else {
-            citySelect.innerHTML = '<option value="">Select your city</option>';
-            $('#city').select2(); // Re-initialiser Select2 pour le champ des villes
-        }
-    }
 </script>
 
 

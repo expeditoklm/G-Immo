@@ -89,7 +89,7 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
  <!-- Début Formulaire -->
 <form id="form1" method="POST" >
     @csrf
-
+    <input type="hidden" name="proprietaire" value="{{$ppt_user_id}}">
     <div class="single-add-property">
         <h3>Description de la propriété et prix</h3>
         <div class="property-form-group">

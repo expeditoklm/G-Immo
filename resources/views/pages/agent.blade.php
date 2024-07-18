@@ -58,13 +58,17 @@ top-header-inner
         <div class="row justify-content-center align-items-center" data-cues="slideInUp">
             <div class="col-lg-5 col-md-12">
                 <div class="agent-profile-image">
-                    @if($agent->sexe == 'Feminin' && !$agent->profile_img)
-                    <img src="{{ asset('assets/images/user/fe-user.png') }}" alt="image">
-                    @elseif($agent->sexe == 'Masculin' && !$agent->profile_img)
-                    <img src="{{ asset('assets/images/user/ma-user.jpg') }}" alt="image">
-                    @else
-                    <img src="{{ asset($agent->profile_img) }}" alt="image">
-                    @endif
+                <div class="m-0" 
+                    style="
+                        width: 300px; 
+                        height: 500px; 
+                        background-image: url('{{ asset($agent->profile_img) }}'); 
+                        background-size: contain; 
+                        background-repeat: no-repeat; 
+                        background-position: center;
+                    ">
+                </div>
+
                 </div>
             </div>
             <div class="col-lg-7 col-md-12">
@@ -141,9 +145,16 @@ top-header-inner
                                 <div class="col-xl-6 col-md-12">
                                     <div class="properties-item">
                                         <div class="properties-image">
-                                            <a href="property-details.html">
-                                                <img src="{{ asset($item->proprieteImages->first()->url) }}" alt="image">
-                                            </a>
+                                            
+                                            <div  style=
+                                            "width: 500px;
+                                                height: 300px; 
+                                                background-image: url('{{ asset($item->proprieteImages->first()->url) }}'); 
+                                                background-size: cover; 
+                                                background-repeat: no-repeat; 
+                                                background-position: center;
+                                            ">
+                                            </div>
                                             <ul class="action">
 
                                                 <li>
@@ -240,15 +251,18 @@ top-header-inner
                                                 </div>
                                                 <div class="price">{{ $item->prix }} XOF</div>
                                             </div>
+                                            
                                             <div class="bottom">
                                                 <div class="user">
-                                                    @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                                    <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                                    @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                                    <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                                    @else
-                                                    <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                                    @endif
+                                                <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                </div>
                                                     <a href="#" onclick="document.getElementById('post4{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                                     <!-- Formulaire caché -->

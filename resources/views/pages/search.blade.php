@@ -224,7 +224,7 @@ top-header-inner
                                         </form>
 
                                         <li>
-                                            <a href="#" class="link-btn" onclick="document.getElementById('post2{{ $item->id }}').submit(); return false;">
+                                            <a href="#" class="link-btn" onclick="document.getElementById('post2-{{ $item->id }}').submit(); return false;">
                                                 {{ $item->status }}
                                             </a>
                                         </li>
@@ -328,13 +328,15 @@ top-header-inner
 
                                 <div class="price-and-user">
                                     <div class="user">
-                                        @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                        <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                        @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                        <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                        @else
-                                        <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                        @endif
+                                    <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                </div>
                                         <a href="#" onclick="document.getElementById('post4{{ $item->user->id }}').submit(); return false;">
                                             {{ $item->user->nom_prenom }}
                                         </a>
@@ -518,15 +520,18 @@ top-header-inner
                                 </li>
                                 @endif
                             </ul>
+                          
                             <div class="bottom">
                                 <div class="user">
-                                    @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                    <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                    @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                    <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                    @else
-                                    <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                    @endif
+                                <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($item->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                </div>
                                     <a href="#" onclick="document.getElementById('post5{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                     <!-- Formulaire caché -->

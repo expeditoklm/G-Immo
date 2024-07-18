@@ -196,14 +196,17 @@ top-header-inner
                                     {{ $propertiesSingle->prix }} XOF
                                     @endif
                                 </div>
+
                                 <div class="user">
-                                    @if($propertiesSingle->user->sexe == 'Feminin' && !$propertiesSingle->user->profile_img)
-                                    <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                    @elseif($propertiesSingle->user->sexe == 'Masculin' && !$propertiesSingle->user->profile_img)
-                                    <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                    @else
-                                    <img src="{{ asset($propertiesSingle->user->profile_img) }}" alt="image">
-                                    @endif
+                                    <div class="rounded-circle" style="
+                                    width: 40px; 
+                                    height: 40px; 
+                                    background-image: url('{{ asset($propertiesSingle->user->profile_img) }}'); 
+                                    background-size: cover; 
+                                    background-repeat: no-repeat; 
+                                    background-position: center;
+                                ">
+                                    </div>
                                     <a href="#" onclick="document.getElementById('post3{{ $propertiesSingle->user->id }}').submit(); return false;">{{ $propertiesSingle->user->nom_prenom }}</a>
 
                                     <!-- Formulaire caché -->
@@ -236,8 +239,11 @@ top-header-inner
                                 @foreach($mainImages as $image)
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="block-image">
-                                        <img src="{{ asset($image->url) }}" alt="image">
-
+                                        <!-- <img src="{{ asset($image->url) }}" alt="image"> -->
+                                        <img src="{{ asset($image->url) }}" style="width: 500px; 
+                                        height: 220px; 
+                                        object-fit: cover; 
+                                        object-position: center;" alt="Image description">
                                     </div>
                                 </div>
                                 @endforeach
@@ -246,7 +252,12 @@ top-header-inner
                         <div class="col-lg-8 col-md-12">
                             <div class="block-image">
                                 @if($extraImage)
-                                <img src="{{ asset($extraImage->url) }}" alt="image">
+                                <img src="{{ asset($extraImage->url) }}" style="width: 1000px; 
+                                    height: 470px; 
+                                    object-fit: cover; 
+                                    object-position: center;" alt="Image description">
+
+                                <!-- <img src="{{ asset($extraImage->url) }}" alt="image"> -->
                                 @endif
                             </div>
                         </div>
@@ -298,13 +309,40 @@ top-header-inner
                                 <h2>{{ $propertiesSingle->comments->count() }} Comments</h2>
                                 @endif
                                 <ul class="comments-list">
+                                    @php
+                                    $comments = DB::table('comments')
+                                    ->join('users as commenters', 'comments.email', '=', 'commenters.email')
+                                    ->join('proprietes', 'comments.propriete_id', '=', 'proprietes.id')
+                                    ->join('users as proprietors', 'proprietes.user_id', '=', 'proprietors.id')
+                                    ->select(
+                                    'comments.*',
+                                    'commenters.nom_prenom as commenter_name',
+                                    'commenters.profile_img as commenter_profile_img',
+                                    'commenters.sexe as commenter_sexe',
+                                    'proprietes.titre as propriete_title',
+                                    'proprietors.nom_prenom as proprietor_name'
+                                    )
+                                    ->whereIn('comments.id', $propertiesSingle->comments->pluck('id'))
+                                    ->get();
+                                    @endphp
+
                                     @foreach ($propertiesSingle->comments as $item)
+                                    @php
+                                    $comment = $comments->firstWhere('id', $item->id);
+                                    //dd($comment->commenter_profile_img);
+                                    @endphp
+
                                     <li>
                                         <div class="image">
-                                            <img src="{{ asset('assets/images/user/user1.png') }}" alt="image">
+
+                                            @if ($comment && $comment->commenter_profile_img)
+                                            <img src="{{ asset($comment->commenter_profile_img) }}" class="img-fluid rounded-circle m-0 shadow" style="width: 65px; height: 65px; object-fit: cover;" alt="image">
+                                            @else
+                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" class="img-fluid rounded-circle m-0 shadow" style="width: 65px; height: 65px; object-fit: cover;" alt="image">
+                                            @endif
                                         </div>
                                         <div class="info">
-                                            <h4>{{ $item->nom_prenom }}</h4>
+                                            <h4>{{ $item->nom_prenom ?? 'Anonyme' }}</h4>
                                             <span>{{ $item->created_at }}</span>
                                             @php
                                             $totalStars = 5;
@@ -313,29 +351,27 @@ top-header-inner
                                             @endphp
 
                                             <ul class="rating">
-                                                @for ($i = 0; $i < $filledStars; $i++) <li>
-                                                    <i class="ri-star-fill"></i>
+                                                @for ($i = 0; $i < $filledStars; $i++) <li><i class="ri-star-fill"></i>
                                     </li>
                                     @endfor
 
-                                    @for ($i = 0; $i < $grayStars; $i++) <li><i class="ri-star-line"></i>
+                                    @for ($i = 0; $i < $grayStars; $i++) <li><i class="ri-star-line"></i></li>
                                         @endfor
-
-
                                 </ul>
                                 <p>{{ $item->comment }}.</p>
                             </div>
                             </li>
                             @endforeach
+
                             </ul>
 
 
                             <form class="review-form" action="{{ route('pages.single') }}" method="POST">
-                                    @csrf
+                                @csrf
 
                                 <div class="title">
                                     <h3>Ajouter un commentaire</h3>
-                                    <ul class="rating">
+                                    <ul class="rating" id="ratin">
                                         <li data-value="1"><i class="ri-star-line"></i></li>
                                         <li data-value="2"><i class="ri-star-line"></i></li>
                                         <li data-value="3"><i class="ri-star-line"></i></li>
@@ -365,7 +401,7 @@ top-header-inner
                                             <textarea class="form-control" name="comment" placeholder="Your review..."></textarea>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-lg-12 col-md-12">
                                         <button type="submit" name="btn_comment" class="default-btn">Soumettre le Commentaire</button>
                                     </div>
@@ -529,13 +565,15 @@ top-header-inner
                                                     </div>
                                                     <div class="bottom">
                                                         <div class="user">
-                                                            @if($item->user->sexe == 'Feminin' && !$item->user->profile_img)
-                                                            <img src="{{ asset('assets/images/user/f-user.png') }}" alt="image">
-                                                            @elseif($item->user->sexe == 'Masculin' && !$item->user->profile_img)
-                                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" alt="image">
-                                                            @else
-                                                            <img src="{{ asset($item->user->profile_img) }}" alt="image">
-                                                            @endif
+                                                            <div class="rounded-circle" style="
+                                                            width: 40px; 
+                                                            height: 40px; 
+                                                            background-image: url('{{ asset($propertiesSingle->user->profile_img) }}'); 
+                                                            background-size: cover; 
+                                                            background-repeat: no-repeat; 
+                                                            background-position: center;
+                                                        ">
+                                                            </div>
                                                             <a href="#" onclick="document.getElementById('post7{{ $item->user->id }}').submit(); return false;">{{ $item->user->nom_prenom }}</a>
 
                                                             <!-- Formulaire caché -->
@@ -643,7 +681,7 @@ top-header-inner
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-        const stars = document.querySelectorAll('.rating li');
+        const stars = document.querySelectorAll('#ratin li');
         const ratingInput = document.getElementById('rating');
 
         stars.forEach(star => {

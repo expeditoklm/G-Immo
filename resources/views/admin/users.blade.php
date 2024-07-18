@@ -77,8 +77,23 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         <div class="text-heading text-left">
                             <p class="pb-2"><a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">Acceuil</a> &nbsp;/&nbsp; <span>{{$titre}}</span></p>
                         </div>
+                        <div class="d-flex justify-content-between ">
+                            <h3>{{$titre}}</h3>
+                            <button onclick="document.getElementById('post').submit(); return false;" class="btn btn-primary mt-0" style="margin-left: 100px;">Nouvel Agent</button>
 
-                        <h3>{{$titre}}</h3>
+                            <!-- Formulaire caché -->
+                            <form id="post" action="{{ route('admin.add-user') }}" method="get" style="display: none;">
+                                @csrf
+                            </form>
+
+                            <button onclick="document.getElementById('posty').submit(); return false;" class="btn btn-primary mt-0" style="margin-left: 100px;">Nouvel Admin</button>
+
+                            <!-- Formulaire caché -->
+                            <form id="posty" action="{{ route('admin.add-user') }}" method="get" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="isAdmin" value="true">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,16 +120,16 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                     </div>
                                 </div>
                                 <!--/ End Form Looking for -->
-                                
+
                                 <div class="form-group location">
                                     <div class="nice-select form-control wide" name="ville" tabindex="0">
                                         <span class="current"><i class="fa fa-map-marker"></i>Ville</span>
                                         <ul class="list">
-                                        @foreach ($uniqueCities as $item)
+                                            @foreach ($uniqueCities as $item)
 
-<li data-value="{{ $item->id}}" class="option selected">{{ $item->libelle}}</li>
+                                            <li data-value="{{ $item->id}}" class="option selected">{{ $item->libelle}}</li>
 
-@endforeach
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -148,9 +163,9 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                             <div class="recent-post">
                                 <div class="tags">
                                     <span>
-                                   
+
                                         <a href="#" onclick="document.getElementById('post1').submit(); return false;" class="btn btn-outline-primary">
-                                        Utlisateurs interagit avec le système (10)
+                                            Utlisateurs interagit avec le système (10)
                                         </a>
 
                                         <form id="post1" action="{{ route('admin.users') }}" method="GET" style="display: none;">
@@ -161,10 +176,10 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                       
+
 
                                         <a href="#" onclick="document.getElementById('post2').submit(); return false;" class="btn btn-outline-primary">
-                                        10 Derniers utlisateurs ajoutés 
+                                            10 Derniers utlisateurs ajoutés
                                         </a>
 
                                         <form id="post2" action="{{ route('admin.users') }}" method="GET" style="display: none;">
@@ -176,7 +191,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <div class="tags">
                                     <span>
                                         <a href="#" onclick="document.getElementById('post3').submit(); return false;" class="btn btn-outline-primary">
-                                        10 Derniers utlisateurs modifiés
+                                            10 Derniers utlisateurs modifiés
                                         </a>
 
                                         <form id="post3" action="{{ route('admin.users') }}" method="GET" style="display: none;">
@@ -187,10 +202,10 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                        
+
 
                                         <a href="#" onclick="document.getElementById('post4').submit(); return false;" class="btn btn-outline-primary">
-                                        10 Derniers utlisateurs bloqués 
+                                            10 Derniers utlisateurs bloqués
                                         </a>
 
                                         <form id="post4" action="{{ route('admin.users') }}" method="GET" style="display: none;">
@@ -201,9 +216,9 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                       
+
                                         <a href="#" onclick="document.getElementById('post5').submit(); return false;" class="btn btn-outline-primary">
-                                        10 Derniers utlisateurs activés 
+                                            10 Derniers utlisateurs activés
                                         </a>
 
                                         <form id="post5" action="{{ route('admin.users') }}" method="GET" style="display: none;">
@@ -214,10 +229,10 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 </div>
                                 <div class="tags">
                                     <span>
-                                       
+
 
                                         <a href="#" onclick="document.getElementById('post6').submit(); return false;" class="btn btn-outline-primary">
-                                        10 Derniers utlisateurs supprimés 
+                                            10 Derniers utlisateurs supprimés
                                         </a>
 
                                         <form id="post6" action="{{ route('admin.users') }}" method="GET" style="display: none;">
@@ -244,6 +259,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                 <thead>
                                     <tr>
                                         <th>#id</th>
+                                        <th>Type&nbsp;&nbsp;&nbsp;</th>
                                         <th>Nom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prénom&nbsp;&nbsp;</th>
                                         <th>Sexe</th>
                                         <th>Télephone&nbsp;&nbsp;&nbsp;</th>
@@ -267,6 +283,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                     <tr id="titleSupprimer{{ $item->id}}">
 
                                         <td>{{ $item->id}}</td>
+                                        <td>{{ $item->role}}</td>
                                         <td>{{ $item->nom_prenom}}</td>
                                         <td>{{ $item->sexe}}</td>
                                         <td>{{ $item->telephone}}</td>

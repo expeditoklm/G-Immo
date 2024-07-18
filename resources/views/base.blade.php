@@ -203,8 +203,8 @@
     <!-- Start Responsive Navbar Area -->
     <div class="responsive-navbar offcanvas offcanvas-end" tabindex="-1" id="navbarOffcanvas">
         <div class="offcanvas-header">
-            <a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} " class="logo d-inline-block">
-                <img src="{{asset('assets/images/logo.png')}}" alt="logo">
+            <a class="navbar-brand" href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} ">
+                <img src="{{asset('assets/images/agents/log.png')}}" alt="logo">
             </a>
             <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" class="close-btn">
                 <i class="ri-close-line"></i>

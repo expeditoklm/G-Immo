@@ -24,7 +24,7 @@ $table->enum('status', ['active', 'inactive', 'pending']);
 8D62aW428G34
 composer require krlove/eloquent-model-generator --dev
 
-
+ 
 @foreach ($typeProprietes as $item)
 {{ $item->id}}
 @endforeach

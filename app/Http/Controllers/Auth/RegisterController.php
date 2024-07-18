@@ -45,7 +45,6 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'website' => $request->website,
             'description' => $request->description,
-            'profile_img' => $request->profile_img,
             'telephone' => $request->telephone,
             'pays' => $request->pays,
             'ville_id' => $request->ville,
@@ -53,6 +52,7 @@ class RegisterController extends Controller
             'deleted' => 0,
             'bloquer' => 0,
             'activer' => 0,
+            
 
         ]);
         //dd($request->file('rccm'));
@@ -70,6 +70,11 @@ class RegisterController extends Controller
             $identitePath = $identite->storeAs('uploads', $identiteName, 'public');
 
             $user->identite = '/storage/' . $identitePath;
+        }
+        if ($user->sexe == 'Feminin') {
+            $user->profile_img = '/assets/images/user/f-user.png';
+        }else{
+            $user->profile_img = '/assets/images/user/m-user.jpg';
         }
         $user->save();
 

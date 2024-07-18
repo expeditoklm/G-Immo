@@ -32,6 +32,9 @@ Route::middleware(['check.max.execution.time'])->group(function () {
     Route::get('/details', [PagesController::class, 'details'])->name('pages.details');
     Route::get('/account', [PagesController::class, 'account'])->name('pages.account');
     Route::get('/not-found', [PagesController::class, 'notFound'])->name('pages.not-found');
+
+    Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
+    Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
    // Route::get('/news-letters', [PagesController::class, 'newsLetters'])->name('pages.news-letters');
 
     
@@ -64,8 +67,7 @@ Route::post('/enter-email', [PagesController::class, 'storeEmail'])->name('store
 
 
 Route::middleware([ 'check.session.variable', 'check.max.execution.time'])->group(function () {
-    Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('pages.contact-us');
-    Route::post('/contact-us-post', [PagesController::class, 'contactUs'])->name('pages.contacts-us-post');
+
     Route::get('/agent', [PagesController::class, 'agent'])->name('pages.agent');
     Route::post('/agent', [PagesController::class, 'agent'])->name('pages.agent');
     Route::get('/single', [PagesController::class, 'single'])->name('pages.single');
@@ -80,6 +82,7 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/my-properties', [PagesController::class, 'myProperties'])->name('admin.my-properties');
     Route::post('/my-properties-post', [PagesController::class, 'myPropertiesPost'])->name('admin.my-properties-post');
     Route::get('/admin.users', [PagesController::class, 'adminUsers'])->name('admin.users');
+    Route::get('/admin.add-user', [PagesController::class, 'adminAddUser'])->name('admin.add-user');
     Route::get('/admin.users-post', [PagesController::class, 'adminUsersPost'])->name('admin.users-post');
     Route::get('/admin.add-type-property', [PagesController::class, 'addTypeProperty'])->name('admin.add-type-property');
     Route::get('/admin.form-type-property', [PagesController::class, 'formTypeProperty'])->name('admin.form-type-property');
@@ -104,7 +107,7 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     Route::get('/ajax.comment-restaurer', [PagesController::class, 'commentRestaurerAjax'])->name('ajax.comment-restaurer');
     
     
-
+    Route::post('/register-user', [PagesController::class, 'registerUser'])->name('user.register');
 
     Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');
     Route::get('/modif-profile', [PagesController::class, 'modifUserProfile'])->name('admin.modif-user-profile');
