@@ -9,7 +9,7 @@ Dashbord | Find Houses
 <!-- Select2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-    .nice-select {
+   .isMasque .nice-select {
         display: none;
        
     }
@@ -96,14 +96,6 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         </div>
                         <div class="d-flex justify-content-between ">
                             <h3 class="mb-0">{{ $titre }}</h3>
-                  
-  
-
-
-
-                    
-
-
                         </div>
 
                     </div>
@@ -113,7 +105,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         @csrf
 
         <div class="form-group">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center isMasque">
                 <select name="proprietaire" class="form-control select2" id="proprietaire">
                     <option value="">Le propriétaire</option>
                     @foreach ($users as $item)

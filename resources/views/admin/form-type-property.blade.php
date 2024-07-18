@@ -89,7 +89,7 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
         </div>
 
 
-        <button type="submit" name="btn_new_type" class="btn btn-primary col-md-4 m-0">Nouveau</a>
+        <button type="submit" name="btn_new_type" class="btn btn-primary col-md-4 m-0">{{ $isModif ? 'Modifier' : 'Enregistrer' }}</a>
 
     </form>
 </div>
