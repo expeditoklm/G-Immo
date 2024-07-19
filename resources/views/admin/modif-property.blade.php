@@ -294,8 +294,8 @@ col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2
                         <label for="status">Status <span class="text-danger">*</span></label>
                         <select name="status" class="form-control wide" required>
                             <option value="{{$properties->status}}"  selected>{{$properties->status}}</option>
-                            <option value="Rental">Louer</option>
-                            <option value="For Sale">Vendre</option>
+                            <option value="À Louer">Louer</option>
+                            <option value="À Vendre">Vendre</option>
                         </select>
                     </div>
                 </div>

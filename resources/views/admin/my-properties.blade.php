@@ -192,14 +192,14 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         <option value="">Status</option>
 
 
-                                        <option value="For Sale">Vendre</option>
-                                        <option value="Rental">Louer</option>
+                                        <option value="À Vendre">Vendre</option>
+                                        <option value="À Louer">Louer</option>
                                     </select>
                                     <div class="nice-select form-control wide" tabindex="0">
                                         <span class="current"><i class="fa fa-home"></i>Status de la Propriété</span>
                                         <ul class="list">
-                                            <li data-value="For Sale" class="option selected">Vendre</li>
-                                            <li data-value="Rental" class="option">Louer</li>
+                                            <li data-value="À Vendre" class="option selected">Vendre</li>
+                                            <li data-value="À Louer" class="option">Louer</li>
                                         </ul>
                                     </div>
                                 </div>

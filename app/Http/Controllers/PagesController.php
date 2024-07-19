@@ -37,16 +37,18 @@ class PagesController extends Controller
         try {
             // liste des proprietes de status "à vendre"  
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
-                $query->where('proprietes.status', 'For Sale');
+                $query->where('proprietes.status', 'À Vendre');
+                $query->where('proprietes.masquer', 0);
+
             }])
                 ->where('deleted', '!=', 1)
                 ->get();
 
             // liste des proprietes de status "à louer" 
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
-                $query->where('proprietes.status', 'Rental');
+                $query->where('proprietes.status', 'À Louer');
             }])
-                ->where('deleted', 0)
+                ->where('deleted', '!=', 1)
                 ->get();
 
             $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
@@ -90,7 +92,7 @@ class PagesController extends Controller
 
 
             // 6 proprietes à vendre recemment ajouté 
-            $propertiesForSalle = Propriete::where('status', 'For Sale')
+            $propertiesForSalle = Propriete::where('status', 'À Vendre')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->where('deleted', 0)
@@ -116,7 +118,7 @@ class PagesController extends Controller
                 ->get();
 
             // 6 proprietes de status "A louer" dont les prix sont élevé recemment ajouté 
-            $propertiesRental = Propriete::where('status', 'Rental')
+            $propertiesRental = Propriete::where('status', 'À Louer')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->where('deleted', 0)
@@ -156,7 +158,7 @@ class PagesController extends Controller
                 ->get();
 
             // 3 proprietes de status  "à vendre" recemment ajouté 
-            $propertiesForSale = Propriete::where('status', 'For Sale')
+            $propertiesForSale = Propriete::where('status', 'À Vendre')
                 ->orderBy('prix', 'asc')
                 ->orderBy('created_at', 'desc')
                 ->limit(3)
@@ -166,27 +168,27 @@ class PagesController extends Controller
 
             // 6 commentaire qui possede une "note superieur à 2" recemment ajouté  et 
             // qui se retrouve parmis les utilisateur qui on de compte 
-          // Requête pour récupérer les commentaires avec les utilisateurs associés
-          $comments = DB::table('comments')
-          ->join('users as commenters', 'comments.email', '=', 'commenters.email')
-          ->join('proprietes', 'comments.propriete_id', '=', 'proprietes.id')
-          ->join('users as proprietors', 'proprietes.user_id', '=', 'proprietors.id')
-          ->select(
-              'comments.*',
-              'commenters.nom_prenom as commenter_name',
-              'commenters.sexe as commenter_sexe',
-              'commenters.profile_img as commenter_profile_img',
-              'proprietes.titre as propriete_title',
-              'proprietors.nom_prenom as proprietor_name'
-          )
-          ->where('comments.note', '>', 2)
-          ->where('comments.deleted', 0)
-          ->where('comments.approuver', 1)
-          ->orderBy('comments.created_at', 'desc')
-          ->limit(6)
-          ->get();
-      
-          
+            // Requête pour récupérer les commentaires avec les utilisateurs associés
+            $comments = DB::table('comments')
+                ->join('users as commenters', 'comments.email', '=', 'commenters.email')
+                ->join('proprietes', 'comments.propriete_id', '=', 'proprietes.id')
+                ->join('users as proprietors', 'proprietes.user_id', '=', 'proprietors.id')
+                ->select(
+                    'comments.*',
+                    'commenters.nom_prenom as commenter_name',
+                    'commenters.sexe as commenter_sexe',
+                    'commenters.profile_img as commenter_profile_img',
+                    'proprietes.titre as propriete_title',
+                    'proprietors.nom_prenom as proprietor_name'
+                )
+                ->where('comments.note', '>', 2)
+                ->where('comments.deleted', 0)
+                ->where('comments.approuver', 1)
+                ->orderBy('comments.created_at', 'desc')
+                ->limit(6)
+                ->get();
+
+
 
 
             // Nombre total de clients qui ont commenter
@@ -205,13 +207,13 @@ class PagesController extends Controller
 
 
             // Nombre de propriétés à vendre
-            $nbPropertyForSale = Propriete::where('status', 'For Sale')->where('deleted', 0)
+            $nbPropertyForSale = Propriete::where('status', 'À Vendre')->where('deleted', 0)
                 ->where('masquer', 0)
                 ->count();
 
 
             // Nombre de propriétés à louer
-            $nbPropertyRental = Propriete::where('status', 'Rental')->where('deleted', 0)
+            $nbPropertyRental = Propriete::where('status', 'À Louer')->where('deleted', 0)
                 ->where('masquer', 0)
                 ->count();
 
@@ -260,21 +262,23 @@ class PagesController extends Controller
 
             //liste des proprietes à vendre
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
-                $query->where('proprietes.status', 'For Sale');
+                $query->where('proprietes.status', 'À Vendre');
+                $query->where('proprietes.masquer', 0);
+
             }])
                 ->where('deleted', '!=', 1)
                 ->get();
 
             //liste des proprietes à louer
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
-                $query->where('proprietes.status', 'Rental');
+                $query->where('proprietes.status', 'À Louer');
             }])
                 ->where('deleted', '!=', 1)
                 ->get();
 
-            $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
+                $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
 
-            $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
+                $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
 
 
 
@@ -328,12 +332,14 @@ class PagesController extends Controller
 
             // Obtenir le nombre de propriétés par type et statut
             $typeProprieteForSale = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
-                $query->where('proprietes.status', 'For Sale');
+                $query->where('proprietes.status', 'À Vendre');
+                $query->where('proprietes.masquer', 0);
             }])->where('deleted', '!=', 1)->get();
 
 
             $typeProprieteRental = TypePropriete::withCount(['proprietes as proprietes_count' => function ($query) {
-                $query->where('proprietes.status', 'Rental');
+                $query->where('proprietes.status', 'À Louer');
+                $query->where('proprietes.masquer', 0);
             }])->where('deleted', '!=', 1)->get();
 
             $uniqueCityIds = Propriete::select('ville_id')->distinct()->pluck('ville_id');
@@ -693,7 +699,7 @@ class PagesController extends Controller
         try {
 
             $user_id = FacadesAuth::id();
-            
+
             $cities = Ville::get();
 
             $user = FacadesAuth::user();
@@ -713,7 +719,7 @@ class PagesController extends Controller
                 ->limit(3)
                 ->where('deleted', 0)
                 ->get();
-             //   dd($messages);
+            //   dd($messages);
             $reviews = Comment::whereHas('propriete', function ($query) use ($user_id) {
                 $query->where('user_id', $user_id);
             })->orderByDesc('created_at')
@@ -877,9 +883,9 @@ class PagesController extends Controller
             $uniqueCities = Ville::whereIn('id', $uniqueCityIds)->get();
 
             $users = User::where('deleted', 0)
-            ->orderBy('created_at', 'desc')
-            ->where('activer', 1)
-            ->get();
+                ->orderBy('created_at', 'desc')
+                ->where('activer', 1)
+                ->get();
 
             $properties = Propriete::where('user_id', FacadesAuth::id())
                 ->where('masquer', 0)
@@ -979,7 +985,7 @@ class PagesController extends Controller
                 $adminPropertiesView = $properties->orderBy('created_at', 'desc')->paginate(10);
 
                 // Retourner les résultats à la vue ou faire tout autre traitement nécessaire
-                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('users', 'uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             };
 
 
@@ -996,7 +1002,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Dernières Propriétés Ajoutées';
                 $isAdmin = auth()->user()->role === 'admin';
-                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('users', 'uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1014,7 +1020,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Dernières Propriétés Ajoutées';
                 $isAdmin = auth()->user()->role === 'admin';
-                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('users', 'uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1031,7 +1037,7 @@ class PagesController extends Controller
                 $restaurer = false;
                 $titre = '10 Dernières Propriétés Modifiées';
                 $isAdmin = auth()->user()->role === 'admin';
-                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('users', 'uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1050,7 +1056,7 @@ class PagesController extends Controller
                 $titre = '10 Dernières Propriétés Supprimées';
                 $isAdmin = auth()->user()->role === 'admin';
 
-                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('users', 'uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1071,7 +1077,7 @@ class PagesController extends Controller
 
 
 
-                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('users', 'uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
 
@@ -1093,10 +1099,10 @@ class PagesController extends Controller
 
 
 
-                return view('admin/my-properties', compact('uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+                return view('admin/my-properties', compact('users', 'uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
             }
 
-            return view('admin/my-properties', compact('users','uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
+            return view('admin/my-properties', compact('users', 'uniqueCities', 'caracteristiques', 'typeProprietes', 'isAdmin', 'pagination', 'titre', 'restaurer', 'adminPropertiesView', 'properties'));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1106,23 +1112,21 @@ class PagesController extends Controller
         }
     }
 
-    
+
     public function adminAddUser(Request $request)
     {
         try {
-            if($request->has('isAdmin')){
+            if ($request->has('isAdmin')) {
                 $isAdmin = $request->input('isAdmin');
-            }else{
+            } else {
                 $isAdmin = '';
             }
-           
-                $cities = Ville::get();
-                return view('admin/addUser', compact(
-                    'cities',
-                    'isAdmin'
-                ));
-            
-           
+
+            $cities = Ville::get();
+            return view('admin/addUser', compact(
+                'cities',
+                'isAdmin'
+            ));
         } catch (Exception $e) {
             // Log the exception if needed
             Log::error($e->getMessage());
@@ -1131,7 +1135,7 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
-    
+
 
     public function addProperty(Request $request)
     {
@@ -1140,9 +1144,9 @@ class PagesController extends Controller
 
                 $cities = Ville::get();
 
-                if($request->has('proprietaire')){
+                if ($request->has('proprietaire')) {
                     $ppt_user_id = $request->input('proprietaire');
-                }else{
+                } else {
                     $ppt_user_id = '';
                 }
 
@@ -1194,19 +1198,21 @@ class PagesController extends Controller
             $property->deleted = 0;
             $property->masquer = 0;
             $property->mettreAvant = now();
-            if($request->has('proprietaire')){
-                $property->user_id = $request->proprietaire;
-            }else{
+            //$property->user_id = $request->user()->id;
+
+            if ($request->filled('proprietaire')) {
+                $property->user_id = $request->input('proprietaire');
+            } else {
                 $property->user_id = $request->user()->id;
             }
             
 
-            if(FacadesAuth::user()->role === 'admin'){
+            if (FacadesAuth::user()->role === 'admin') {
                 $property->updateAdmin = now();
             }
 
+            
             $property->save();
-
             // Sauvegarde des caractéristiques
             if ($request->has('caracteristiques')) {
                 $property->caracteristiques()->sync($request->caracteristiques);
@@ -1215,6 +1221,7 @@ class PagesController extends Controller
             if ($request->has('addByAdmin')) {
                 $property->updateAdmin =  \now();
             }
+          
             // Sauvegarde des images
             $uploadedImageUrls = json_decode($request->uploadedImageUrls, true);
             foreach ($uploadedImageUrls as $imageUrl) {
@@ -1224,6 +1231,7 @@ class PagesController extends Controller
                     'deleted' => 0,
                 ]);
             }
+
             session(['message' => 'Propriété ajouté avec succes.', 'message_type' => 'success']);
 
             return response()->json(['success' => true, 'property_id' => $request]);
@@ -1241,6 +1249,7 @@ class PagesController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'telephone' => 'required|string|max:20',
             'website' => 'nullable|string|max:255',
+            'sexe' => 'required|string|in:Masculin,Feminin',
             'password' => 'required|string|min:8|confirmed',
             'description' => 'nullable|string',
             'pays' => 'required|string|max:255',
@@ -1255,7 +1264,7 @@ class PagesController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-       
+
         $user = User::create([
             'nom_prenom' => $request->nom_prenom,
             'email' => $request->email,
@@ -1272,11 +1281,13 @@ class PagesController extends Controller
             'deleted' => 0,
             'bloquer' => 0,
             'activer' => 0,
-          
+
         ]);
 
-        if ($request->has('isAdmin')) {
+        if ($request->filled('isAdmin')) {
             $user->role = 'admin';
+        }else{
+            $user->role = 'agent';
         }
 
         if ($request->file('rccm')) {
@@ -1296,7 +1307,7 @@ class PagesController extends Controller
         }
         if ($user->sexe == 'Feminin') {
             $user->profile_img = '/assets/images/user/f-user.png';
-        }else{
+        } else {
             $user->profile_img = '/assets/images/user/m-user.jpg';
         }
         $user->save();
@@ -1304,69 +1315,8 @@ class PagesController extends Controller
         return redirect()->route('admin.users')->with('success', 'Utilisateur enregistré avec succès.');
     }
 
-    
 
-    // public function myPropertiesPostAdmin(Request $request)
-    // {
-    //     try {
 
-    //         // Création d'une nouvelle propriété
-    //         $property = new Propriete();
-    //         $property->titre = $request->titre;
-    //         $property->description = $request->description;
-    //         $property->status = $request->status;
-    //         $property->type_propriete_id = $request->type_propriete_id;
-    //         $property->prix = $request->prix;
-    //         $property->surface = $request->surface;
-    //         $property->ville_id = $request->ville;
-    //         $property->quartier = $request->quartier;
-    //         $property->adresse = $request->adresse;
-    //         $property->nbPiece = $request->nbPiece;
-    //         $property->nbChambre = $request->nbChambre;
-    //         $property->nbToillete = $request->nbToillete;
-    //         $property->nomContact = $request->nomContact;
-    //         $property->prenomContact = $request->prenomContact;
-    //         $property->emailContact = $request->emailContact;
-    //         $property->telContact = $request->telContact;
-    //         $property->deleted = 0;
-    //         $property->masquer = 0;
-    //         $property->mettreAvant = now();
-            
-
-    //         if(FacadesAuth::user()->role === 'admin'){
-    //             $property->updateAdmin = now();
-    //         }
-
-            
-
-    //         $property->save();
-
-    //         // Sauvegarde des caractéristiques
-    //         if ($request->has('caracteristiques')) {
-    //             $property->caracteristiques()->sync($request->caracteristiques);
-    //         }
-
-    //         if ($request->has('addByAdmin')) {
-    //             $property->updateAdmin =  \now();
-    //         }
-    //         // Sauvegarde des images
-    //         $uploadedImageUrls = json_decode($request->uploadedImageUrls, true);
-    //         foreach ($uploadedImageUrls as $imageUrl) {
-    //             ProprieteImage::create([
-    //                 'url' => $imageUrl,
-    //                 'propriete_id' => $property->id,
-    //                 'deleted' => 0,
-    //             ]);
-    //         }
-    //         session(['message' => 'Propriété ajouté avec succes.', 'message_type' => 'success']);
-
-    //         return response()->json(['success' => true, 'property_id' => $request]);
-    //     } catch (Exception $e) {
-    //         Log::error($e->getMessage());
-
-    //         return view('errors/404', ['message' => $e->getMessage()]);
-    //     }
-    // }
 
     public function modifPropertyPost(Request $request)
     {
@@ -1399,8 +1349,8 @@ class PagesController extends Controller
             $property->updated_at = \now();
 
             $property->user_id = $request->user()->id;
-            
-            if(FacadesAuth::user()->role === 'admin'){
+
+            if (FacadesAuth::user()->role === 'admin') {
                 $property->updateAdmin = now();
             }
             $property->save();
@@ -1540,7 +1490,7 @@ class PagesController extends Controller
                 $messagesAdmin = Message::orderBy('created_at', 'desc')
                     ->limit(5)
                     ->get();
-                    
+
                 $pagination = false;
                 $titre = '10 Derniers Messages Ajoutés';
 
@@ -1844,19 +1794,7 @@ class PagesController extends Controller
         }
     }
 
-    // public function newsLetters()
-    // {
-    //     try {
-    //         return view('pages.newsLetters');
-
-    //     } catch (Exception $e) {
-    //         // Log the exception if needed
-    //         Log::error($e->getMessage());
-
-    //         // Return a custom error view
-    //         return view('errors/404', ['message' => $e->getMessage()]);
-    //     }
-    // }
+    
     public function newsLetterss(Request $request)
     {
         try {
@@ -1900,7 +1838,7 @@ class PagesController extends Controller
     {
         $targetUrl = session('target_url', url('/'));
         $id = session('id', $request->id);
-        return view('pages/newsLetters', compact('targetUrl','id'));
+        return view('pages/newsLetters', compact('targetUrl', 'id'));
     }
 
     public function storeEmail(Request $request)

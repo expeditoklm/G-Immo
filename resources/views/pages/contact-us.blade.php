@@ -103,10 +103,10 @@ top-header-inner
                                 <div class="info">
                                     <h4>Notre adresse e-mail</h4>
                                     <span>
-                                        <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#3d4e484d4d524f4954535b527d5c5359524f5c135e5250"><span class="__cf_email__" data-cfemail="66151316160914120f080009260708020914074805090b">[email&#160;protected]</span></a>
+                                        <a href="mailto:expeditlachilo796@gmail.com"><span class="__cf_email__">expeditlachilo796@gmail.com</span></a>
                                     </span>
                                     <span>
-                                        <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#e0838f8e94818394a0898e868fce838f8d"><span class="__cf_email__" data-cfemail="b2d1dddcc6d3d1c6f2dbdcd4dd9cd1dddf">[email&#160;protected]</span></a>
+                                        <a href="mailto:expeditlachilo796@gmail.com"><span class="__cf_email__">expeditlachilo795@gmail.com</span></a>
                                     </span>
                                 </div>
                             </div>

@@ -101,7 +101,8 @@
                         <li>
                             <div class="mail-info">
                                 <i class="ri-mail-line"></i>
-                                <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#22515752524d50566246474f4d0c414d4f"><span class="__cf_email__" data-cfemail="e4979194948b9690a48081898bca878b89">[email&#160;protected]</span></a>
+                                <a href="mailto:expeditlachilo796@gmail.com"><span class="__cf_email__">expeditlachilo796@gmail.com</span></a>
+
                             </div>
                         </li>
                     </ul>
@@ -398,7 +399,8 @@
                                     </li>
                                     <li>
                                         <span>Courriel :</span>
-                                        <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#95e6e0e5e5fae7e1d5f1f0f8fabbf6faf8"><span class="__cf_email__" data-cfemail="b7c4c2c7c7d8c5c3f7d3d2dad899d4d8da">[email&#160;protected]</span></a>
+                                        <a href="mailto:expeditlachilo796@gmail.com"><span class="__cf_email__">expeditlachilo796@gmail.com</span></a>
+
                                     </li>
                                     <li>
                                         <span>Téléphone :</span>

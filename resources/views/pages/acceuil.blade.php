@@ -46,14 +46,14 @@ row justify-content-center align-items-center
                     <h1>Plus qu'une propriété, nous offrons des possibilités.</h1>
                     <div class="search-info-tabs">
                         <ul class="nav nav-tabs" id="search_tab" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" id="sell-tab" data-bs-toggle="tab" href="#sell" role="tab" aria-controls="sell">Vendre</a></li>
-                            <li class="nav-item"><a class="nav-link" id="rent-tab" data-bs-toggle="tab" href="#rent" role="tab" aria-controls="rent">Louer</a></li>
+                            <li class="nav-item"><a class="nav-link active" id="rent-tab" data-bs-toggle="tab" href="#rent" role="tab" aria-controls="rent">Louer</a></li>
+                            <li class="nav-item"><a class="nav-link " id="sell-tab" data-bs-toggle="tab" href="#sell" role="tab" aria-controls="sell">Vendre</a></li>
                         </ul>
                         <div class="tab-content" id="search_tab_content">
-                            <div class="tab-pane fade show active" id="sell" role="tabpanel">
+                            <div class="tab-pane fade " id="sell" role="tabpanel">
                                 <form class="search-form" method="get" action="{{ route('pages.search-post') }}">
                                     @csrf
-                                    <input type="hidden" name="status" value="For Sale">
+                                    <input type="hidden" name="status" value="À Vendre">
                                     <div class="row justify-content-center align-items-end">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
@@ -109,16 +109,16 @@ row justify-content-center align-items-center
                                     </div>
                                 </form>
                             </div>
-                            <div class="tab-pane fade" id="rent" role="tabpanel">
+                            <div class="tab-pane fade show active" id="rent" role="tabpanel">
                                 <form class="search-form" method="get" action="{{ route('pages.search-post') }}">
                                     @csrf
-                                    <input type="hidden" name="status" value="Rental">
+                                    <input type="hidden" name="status" value="À Louer">
                                     <div class="row justify-content-center align-items-end">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="form-group">
                                                 <label>Type de propriété </label>
                                                 <select name="type_propriete_id" class="form-select form-control">
-                                                    <option value="" selected>Statut de la propriété</option>
+                                                    <option value="" selected>Le Type de propriété</option>
                                                     @foreach ($typeProprieteRental as $item)
                                                     <option value="{{ $item->id}}">{{ $item->libelle}} ({{ $item->proprietes_count}})</option>
                                                     @endforeach
@@ -131,7 +131,7 @@ row justify-content-center align-items-center
                                                 <select name="ville" class="form-select form-control">
                                                     <option value="" selected>Toutes les villes</option>
                                                     @foreach ($uniqueCities as $item)
-                                                    <option value="{{ $item->ville}}">{{ $item->ville}}</option>
+                                                    <option value="{{ $item->id}}">{{ $item->libelle}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
