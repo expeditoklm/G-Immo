@@ -87,14 +87,17 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                 </div>
                 
             </div>
-            <button onclick="document.getElementById('post').submit(); return false;" class="btn btn-primary mt-5 mb-0" style="margin-left: 100px;">Nouvel Agent</button>
+            <div class="d-block">
+    <button onclick="document.getElementById('post').submit(); return false;" class="btn btn-primary mt-5 mb-0">Nouvel Agent</button>
+    <button onclick="document.getElementById('posty').submit(); return false;" class="btn btn-primary mt-5 mb-0">Nouvel Admin</button>
+</div>
 
+           
             <!-- Formulaire caché -->
             <form id="post" action="{{ route('admin.add-user') }}" method="get" style="display: none;">
                 @csrf
             </form>
 
-            <button onclick="document.getElementById('posty').submit(); return false;" class="btn btn-primary mt-5 mb-0" style="margin-left: 50px;">Nouvel Admin</button>
 
             <!-- Formulaire caché -->
             <form id="posty" action="{{ route('admin.add-user') }}" method="get" style="display: none;">
