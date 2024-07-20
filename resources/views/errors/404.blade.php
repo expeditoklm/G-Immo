@@ -55,7 +55,7 @@ top-header-inner
                 <div class="not-found-content text-center">
                     <img src="assets/images/error.png" alt="error-image">
                     <h3>Oops! That page can't be found</h3>
-                    <a href="javascript:history.back()" class="default-btn">
+                    <a href="{{ route('pages.acceuil') }}" class="default-btn">
                         Back to Home
                     </a>
                 </div>

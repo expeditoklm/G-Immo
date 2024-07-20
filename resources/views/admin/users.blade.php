@@ -79,24 +79,28 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                         </div>
                         <div class="d-flex justify-content-between ">
                             <h3>{{$titre}}</h3>
-                            <button onclick="document.getElementById('post').submit(); return false;" class="btn btn-primary mt-0" style="margin-left: 100px;">Nouvel Agent</button>
-
-                            <!-- Formulaire caché -->
-                            <form id="post" action="{{ route('admin.add-user') }}" method="get" style="display: none;">
-                                @csrf
-                            </form>
-
-                            <button onclick="document.getElementById('posty').submit(); return false;" class="btn btn-primary mt-0" style="margin-left: 100px;">Nouvel Admin</button>
-
-                            <!-- Formulaire caché -->
-                            <form id="posty" action="{{ route('admin.add-user') }}" method="get" style="display: none;">
-                                @csrf
-                                <input type="hidden" name="isAdmin" value="true">
-                            </form>
+                        
                         </div>
+                        
                     </div>
+                    
                 </div>
+                
             </div>
+            <button onclick="document.getElementById('post').submit(); return false;" class="btn btn-primary mt-5 mb-0" style="margin-left: 100px;">Nouvel Agent</button>
+
+            <!-- Formulaire caché -->
+            <form id="post" action="{{ route('admin.add-user') }}" method="get" style="display: none;">
+                @csrf
+            </form>
+
+            <button onclick="document.getElementById('posty').submit(); return false;" class="btn btn-primary mt-5 mb-0" style="margin-left: 50px;">Nouvel Admin</button>
+
+            <!-- Formulaire caché -->
+            <form id="posty" action="{{ route('admin.add-user') }}" method="get" style="display: none;">
+                @csrf
+                <input type="hidden" name="isAdmin" value="true">
+            </form>
         </section>
         <div class="row">
             <aside class="col-lg-4 col-md-12 car full-width">

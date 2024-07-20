@@ -140,7 +140,7 @@
                         <div class="left-side">
                             <!-- Logo -->
                             <div id="logo">
-                                <a href="{{ request()->route() && request()->route()->getName() == 'pages.agent' ? 'javascript:void(0)' : route('pages.agent') }} "><img src="{{asset('assets/images/favicon.png') }}" alt="favicon"></a>
+                                <a href="{{ request()->route() && request()->route()->getName() == 'pages.acceuil' ? 'javascript:void(0)' : route('pages.acceuil') }} "><img src="{{asset('assets/images/agents/log.png')}}" alt="logo"></a>
                             </div>
                             <!-- Mobile Navigation -->
                             <div class="mmenu-trigger">

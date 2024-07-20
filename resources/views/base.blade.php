@@ -237,7 +237,15 @@
             <div class="others-option">
 
                 <div class="option-item nav-item">
+                    @auth
+                    <a onclick="document.getElementById('deconnection2').submit(); return false;" href="{{ request()->route() && request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="default-btn {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}" style="margin-right: 70px; margin-bottom: 10px;">Déconnexion</a>
+                    <form id="deconnection2" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    @else
                     <a href="{{ request()->route() && request()->route()->getName() == 'pages.account' ? 'javascript:void(0)' : route('pages.account') }}" class="default-btn {{ request()->route() && request()->route()->getName() == 'pages.account' ? 'active' : '' }}" style="margin-right: 70px; margin-bottom: 10px;">Se connecter / S'inscrire</a>
+                    @endauth
+
                     @auth
                     <a href="{{ request()->route() && request()->route()->getName() == 'admin.dashbord' ? 'javascript:void(0)' : route('admin.dashbord') }}" class="default-btn">Admin</a>
                     @endauth
