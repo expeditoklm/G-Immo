@@ -100,8 +100,15 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
                     </div>
                     <!-- Container pour aligner le formulaire à droite -->
-<div class="d-flex justify-content-end" style="margin-right: 100px;">
-    <form class="form" method="get" action="{{ route('admin.add-property') }}" style="max-width: 300px;">
+
+
+
+                </div>
+
+                
+            </div>
+            <div class="d-block">
+            <form class="form btn btn-light mt-5 mb-0" method="get" action="{{ route('admin.add-property') }}" style="max-width: 300px; ">
         @csrf
 
         <div class="form-group">
@@ -118,13 +125,8 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
             </div>
         </div>
     </form>
-</div>
+   </div>
 
-
-                </div>
-
-                
-            </div>
         </section>
         <div class="row ">
 
