@@ -108,6 +108,10 @@ Route::middleware(['auth', 'check.max.execution.time'])->group(function () {
     
     
     Route::post('/register-user', [PagesController::class, 'registerUser'])->name('user.register');
+    Route::get('/modif-user', [PagesController::class, 'modifUser'])->name('user.modif');
+    Route::post('/modif-user', [PagesController::class, 'modifUserPost'])->name('user.modif');
+    Route::get('/modif-comment', [PagesController::class, 'modifComment'])->name('comment.modif');
+    Route::post('/modif-comment', [PagesController::class, 'modifCommentPost'])->name('comment.modif');
 
     Route::get('/profile', [PagesController::class, 'userProfile'])->name('admin.user-profile');
     Route::get('/modif-profile', [PagesController::class, 'modifUserProfile'])->name('admin.modif-user-profile');

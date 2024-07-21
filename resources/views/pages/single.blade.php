@@ -306,64 +306,67 @@ top-header-inner
 
                             <div class="comments-area">
                                 @if($propertiesSingle->comments->isNotEmpty())
-                                <h2>{{ $propertiesSingle->comments->count() }} Comments</h2>
+                                    <h2>{{ $propertiesSingle->comments->count() }} Comments</h2>
                                 @endif
                                 <ul class="comments-list">
                                     @php
-                                    $comments = DB::table('comments')
-                                    ->join('users as commenters', 'comments.email', '=', 'commenters.email')
-                                    ->join('proprietes', 'comments.propriete_id', '=', 'proprietes.id')
-                                    ->join('users as proprietors', 'proprietes.user_id', '=', 'proprietors.id')
-                                    ->select(
-                                    'comments.*',
-                                    'commenters.nom_prenom as commenter_name',
-                                    'commenters.profile_img as commenter_profile_img',
-                                    'commenters.sexe as commenter_sexe',
-                                    'proprietes.titre as propriete_title',
-                                    'proprietors.nom_prenom as proprietor_name'
-                                    )
-                                    ->whereIn('comments.id', $propertiesSingle->comments->pluck('id'))
-                                    ->get();
+                                        $comments = DB::table('comments')
+                                        ->join('users as commenters', 'comments.email', '=', 'commenters.email')
+                                        ->join('proprietes', 'comments.propriete_id', '=', 'proprietes.id')
+                                        ->join('users as proprietors', 'proprietes.user_id', '=', 'proprietors.id')
+                                        ->select(
+                                        'comments.*',
+                                        'commenters.nom_prenom as commenter_name',
+                                        'commenters.profile_img as commenter_profile_img',
+                                        'commenters.sexe as commenter_sexe',
+                                        'proprietes.titre as propriete_title',
+                                        'proprietors.nom_prenom as proprietor_name'
+                                        )
+                                        ->whereIn('comments.id', $propertiesSingle->comments->pluck('id'))
+                                        ->get();
                                     @endphp
 
                                     @foreach ($propertiesSingle->comments as $item)
-                                    @php
-                                    $comment = $comments->firstWhere('id', $item->id);
-                                    //dd($comment->commenter_profile_img);
-                                    @endphp
+                                    @if ($item->deleted == 0 && $item->approuver == 1)
+                                        @php
+                                            $comment = $comments->firstWhere('id', $item->id);
+                                            //dd($comment->commenter_profile_img);
+                                        @endphp
 
-                                    <li>
-                                        <div class="image">
+                                        <li>
+                                            <div class="image">
 
-                                            @if ($comment && $comment->commenter_profile_img)
-                                            <img src="{{ asset($comment->commenter_profile_img) }}" class="img-fluid rounded-circle m-0 shadow" style="width: 65px; height: 65px; object-fit: cover;" alt="image">
-                                            @else
-                                            <img src="{{ asset('assets/images/user/m-user.jpg') }}" class="img-fluid rounded-circle m-0 shadow" style="width: 65px; height: 65px; object-fit: cover;" alt="image">
-                                            @endif
-                                        </div>
-                                        <div class="info">
-                                            <h4>{{ $item->nom_prenom ?? 'Anonyme' }}</h4>
-                                            <span>{{ $item->created_at }}</span>
-                                            @php
-                                            $totalStars = 5;
-                                            $filledStars = $item->note;
-                                            $grayStars = $totalStars - $filledStars;
-                                            @endphp
+                                                @if ($comment && $comment->commenter_profile_img)
+                                                <img src="{{ asset($comment->commenter_profile_img) }}" class="img-fluid rounded-circle m-0 shadow" style="width: 65px; height: 65px; object-fit: cover;" alt="image">
+                                                @else
+                                                <img src="{{ asset('assets/images/user/m-user.jpg') }}" class="img-fluid rounded-circle m-0 shadow" style="width: 65px; height: 65px; object-fit: cover;" alt="image">
+                                                @endif
+                                            </div>
+                                            <div class="info">
+                                                <h4>{{ $item->nom_prenom ?? 'Anonyme' }}</h4>
+                                                <span>{{ $item->created_at }}</span>
+                                                @php
+                                                    $totalStars = 5;
+                                                    $filledStars = $item->note;
+                                                    $grayStars = $totalStars - $filledStars;
+                                                @endphp
 
-                                            <ul class="rating">
-                                                @for ($i = 0; $i < $filledStars; $i++) <li><i class="ri-star-fill"></i>
-                                    </li>
-                                    @endfor
+                                                <ul class="rating">
+                                                    @for ($i = 0; $i < $filledStars; $i++) 
+                                                        <li><i class="ri-star-fill"></i></li>
+                                                    @endfor
 
-                                    @for ($i = 0; $i < $grayStars; $i++) <li><i class="ri-star-line"></i></li>
-                                        @endfor
+                                                    @for ($i = 0; $i < $grayStars; $i++) 
+                                                        <li><i class="ri-star-line"></i></li>
+                                                    @endfor
+                                                </ul>
+                                                <p>{{ $item->comment }}.</p>
+                                            </div>
+                                        </li>
+                                    @endif
+                                    @endforeach
+
                                 </ul>
-                                <p>{{ $item->comment }}.</p>
-                            </div>
-                            </li>
-                            @endforeach
-
-                            </ul>
 
 
                             <form class="review-form" action="{{ route('pages.single') }}" method="POST">

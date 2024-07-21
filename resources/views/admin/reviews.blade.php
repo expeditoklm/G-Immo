@@ -261,8 +261,22 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                         <td>{{ $item->created_at}}</td>
 
                                         @if($restaurer==false)
-                                        <td title="Voir"><a href="#" class="delete-icon" data-id="Voir{{ $item->id}}"><i class="fa fa-eye text-warning"></i></a></td>
-                                        <td title="Modifier"><a href="#" class="delete-icon" data-id="Modifier{{ $item->id}}"><i class="fa fa-pencil text-primary " title="Modifier"></i></a></td>
+                                        <td title="Voir"><a href="#" onclick="document.getElementById('post9{{ $item->id }}').submit(); return false;" class="delete-icon" data-id="Voir{{ $item->id}}"><i class="fa fa-eye text-warning"></i></a></td>
+                                        <td title="Modifier"><a href="#" onclick="document.getElementById('post10{{ $item->id }}').submit(); return false;" class="delete-icon" data-id="Modifier{{ $item->id}}"><i class="fa fa-pencil text-primary " title="Modifier"></i></a></td>
+
+                                            <!-- Formulaire caché -->
+                                            <form id="post9{{ $item->id }}" action="{{ route('pages.single') }}" method="get" style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $item->propriete->id }}">
+                                            </form>
+                                            <!-- Formulaire caché -->
+                                            <form id="post10{{ $item->id }}" action="{{ route('comment.modif') }}" method="get" style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                            </form>
+
+
+
 
 
                                         @if($item->approuver == 1)

@@ -196,14 +196,20 @@ class PagesController extends Controller
                 ->where('approuver', 1)->count();
 
             // Nombre de commentaires avec une note supérieure à 2
-            $nbClientNoteSatisfaction = Comment::where('note', '>', 2)->count();
+            $nbClientNoteSatisfaction = Comment::where('note', '>', 2)
+            ->where('deleted', 0)
+            ->where('approuver', 1)->count();
 
             // Nombre total de commentaires
             $nbClientNote = Comment::where('deleted', 0)
                 ->where('approuver', 1)->count();
 
             // Pourcentage de satisfaction des clients
-            $percentClientSatisfaction = ($nbClientNoteSatisfaction * 100) / $nbClientNote;
+            if($nbClientNote != 0){
+                $percentClientSatisfaction = ($nbClientNoteSatisfaction * 100) / $nbClientNote;
+            }else{
+                $percentClientSatisfaction = 0;
+            }
 
 
             // Nombre de propriétés à vendre
@@ -1136,6 +1142,41 @@ class PagesController extends Controller
         }
     }
 
+    public function modifComment(Request $request)
+    {
+        try {
+                $id = $request->input('id');
+                $comment = Comment::where('id', $id)->first();
+    
+
+            $cities = Ville::get();
+            return view('admin/modifComment', compact(
+                'cities',
+                'comment'
+            ));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function modifCommentPost(Request $request)
+    {
+        $id =  $request->id;
+        $comment = Comment::where('id', $id)->first();
+        $comment->comment = $request->commentaire;
+        $comment->updated_at = now();
+        $comment->updateAdmin = now();
+        $comment->save();
+
+        return redirect()->route('admin.reviews')->with('success', 'Commentaire modifié avec succès.');
+    }
+
+    
+
 
     public function addProperty(Request $request)
     {
@@ -2055,8 +2096,70 @@ class PagesController extends Controller
             return view('errors/404', ['message' => $e->getMessage()]);
         }
     }
+    
+    public function modifUser(Request $request)
+    {
+        try {
+   
+                $id = $request->input('id');
+                $user = User::where('id', $id)->first();
+          
+
+            $cities = Ville::get();
+            return view('admin/modifUser', compact(
+                'cities',
+                'user'
+            ));
+        } catch (Exception $e) {
+            // Log the exception if needed
+            Log::error($e->getMessage());
+
+            // Return a custom error view
+            return view('errors/404', ['message' => $e->getMessage()]);
+        }
+    }
+
+    
+    public function modifUserPost(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nom_prenom' => 'required|string|max:255',
+            'website' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'pays' => 'required|string|max:255',
+            'ville_id' => 'required|integer',
+            'quartier' => 'required|string|max:255',
+            'adresse' => 'nullable|string|max:255',
+            'role' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $id =  $request->id;
+        $user = User::where('id', $id)->first();
 
 
+     
+            $user->nom_prenom = $request->nom_prenom;
+           
+            $user->website = $request->website;
+          
+            $user->description = $request->description;
+            $user->ville_id = $request->ville_id;
+            $user->quartier = $request->quartier;
+            $user->addresse = $request->addresse;
+            $user->role = $request->role;
+            $user->updated_at = now();
+            $user->updateAdmin = now();
+ 
+
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'Utilisateur modifié avec succès.');
+    }
+    
 
     public function usersBloquerAjax(Request $request)
     {

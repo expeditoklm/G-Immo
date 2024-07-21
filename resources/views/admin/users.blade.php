@@ -267,12 +267,15 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
                                     <tr>
                                         <th>#id</th>
                                         <th>Type&nbsp;&nbsp;&nbsp;</th>
+                                        <th>Image&nbsp;&nbsp;&nbsp;</th>
                                         <th>Nom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prénom&nbsp;&nbsp;</th>
                                         <th>Sexe</th>
                                         <th>Télephone&nbsp;&nbsp;&nbsp;</th>
                                         <th>E-mail&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                         <th>Pays&nbsp;&nbsp;</th>
                                         <th>Ville&nbsp;&nbsp;</th>
+                                        <th>Quartier&nbsp;&nbsp;</th>
+                                        <th>Addresse&nbsp;&nbsp;</th>
                                         <th>Website&nbsp;&nbsp;</th>
                                         <th>Description&nbsp;&nbsp;</th>
                                         <th>Date&nbsp;Création&nbsp;Compte</th>
@@ -291,19 +294,39 @@ col-lg-9 col-md-12 col-xs-12 pl-0 user-dash2
 
                                         <td>{{ $item->id}}</td>
                                         <td>{{ $item->role}}</td>
+                                        <td class="image myelist">
+                                            <img alt="my-properties-3" src="{{ asset($item->profile_img) }}" class="img-fluid">
+                                        </td>
                                         <td>{{ $item->nom_prenom}}</td>
                                         <td>{{ $item->sexe}}</td>
                                         <td>{{ $item->telephone}}</td>
                                         <td>{{ $item->email}}</td>
                                         <td>Bénin</td>
                                         <td>{{ $item->ville->libelle}}</td>
+                                        <td>{{ $item->quartier}}</td>
+                                        <td>{{ $item->addresse}}</td>
                                         <td>{{ $item->website}}</td>
                                         <td>{{ $item->description}}</td>
                                         <td>{{ $item->created_at}}</td>
 
                                         @if($restaurer==false)
-                                        <td title="Voir"><a href="#" class="delete-icon" data-id="Voir{{ $item->id}}"><i class="fa fa-eye text-warning"></i></a></td>
-                                        <td title="Modifier"><a href="#" class="delete-icon" data-id="Modifier{{ $item->id}}"><i class="fa fa-pencil text-primary " title="Modifier"></i></a></td>
+                                        <td title="Voir"><a href="#" onclick="document.getElementById('post9{{ $item->id }}').submit(); return false;" class="delete-icon" data-id="Voir{{ $item->id}}"><i class="fa fa-eye text-warning"></i></a></td>
+
+                                            <!-- Formulaire caché -->
+                                            <form id="post9{{ $item->id }}" action="{{ route('pages.agent') }}" method="POST" style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                            </form>
+                                        
+                                        <td title="Modifier"><a href="#" onclick="document.getElementById('post10{{ $item->id }}').submit(); return false;" class="delete-icon" data-id="Voir{{ $item->id}}" class="delete-icon" data-id="Modifier{{ $item->id}}"><i class="fa fa-pencil text-primary " title="Modifier"></i></a></td>
+                                        
+                                         <!-- Formulaire caché -->
+                                         <form id="post10{{ $item->id }}" action="{{ route('user.modif') }}" method="GET" style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                            </form>
+
+
 
                                         @if($item->bloquer == 0)
                                         <td title="Bloquer" id="titleBloquer{{ $item->id}}"><a href="#" class="delete-icon" data-id="Bloquer{{ $item->id}}"><i class="fa fa-ban" id="bloque{{ $item->id}}"></i></a></td>
